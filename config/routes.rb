@@ -2,6 +2,7 @@ MTSDip::Application.routes.draw do
   get "main/home"
 
   root :to => 'main#home'
+  resources :doctors
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

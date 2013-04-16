@@ -1,0 +1,21 @@
+ .doctors
+ {
+   list-style: none;
+   width: 150px;
+   padding: 5px;
+ }
+
+ .doctors li
+ {
+   width: 150px;
+   padding: 5px;
+ }
+ .doctors li:hover 
+ {
+   background-color: yellow; 
+ }
+ 
+ .selected_doctor
+ {
+   background-color: yellow; 
+ }

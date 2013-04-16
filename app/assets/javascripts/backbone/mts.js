@@ -13,3 +13,14 @@
 //= require ./views/spec_collection_view
 
 
+// DOCTORS
+
+//= require_tree ./templates/doctor
+
+
+//= require ./models/doctor_model
+//= require ./collections/doctors_collection
+
+
+//= require ./views/doctor/doctor_view
+//= require ./views/doctor/doctors_list_view
