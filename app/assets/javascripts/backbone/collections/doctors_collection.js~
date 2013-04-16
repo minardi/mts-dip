@@ -1,0 +1,8 @@
+ (function(app) {
+  
+    app.DoctorsCollection = Backbone.Collection.extend({
+     url: '/doctors', 
+     model: DoctorModel
+    })
+   
+ })(window);   

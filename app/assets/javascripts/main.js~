@@ -1,0 +1,11 @@
+
+$(function () {	
+	var app = new CatsView({el: $("#cats")});
+	var doctorsView = new DoctorsListView({el:$(".doctors")});
+	
+	
+	Backbone.Mediator.sub('doctor_unselected', function(attr) {
+	  console.log(attr);
+	},this);
+	 
+});
