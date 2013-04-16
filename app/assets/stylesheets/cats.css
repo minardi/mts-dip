@@ -1,0 +1,17 @@
+#cats {
+    font-size: 250%;
+    border: 1px solid #000000;
+	background-color: #dddddd;
+	width: 750px;	
+	border-round: 5px;
+}
+
+.cat:nth-child(even) {
+	background-color: #000000;
+	color: #00FF00;
+}
+
+.cat:nth-child(odd) {
+	background-color: #0000FF;
+	color: #FF0000;
+}
