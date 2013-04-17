@@ -23,8 +23,8 @@
 	 is_select = false;
 	 this.$el.removeClass("selected_doctor");
 	 Backbone.Mediator.pub('doctor_unselected', { 
-	                                             id: this.model.get("id"),
-	                                             name: this.model.get("name")   
+	                                             id: this.model.get("id")
+	                                              
 	                                          });
 	 
        } else {
@@ -33,7 +33,8 @@
 	 
 	 Backbone.Mediator.pub('doctor_selected', { 
 	                                             id: this.model.get("id"),
-	                                             name: this.model.get("name")   
+	                                             name: this.model.get("name"),
+			                              name: this.model.get("duration") 
 	                                          });
 	 
        }
