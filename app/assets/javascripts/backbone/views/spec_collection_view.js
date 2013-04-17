@@ -2,8 +2,6 @@
 
 	app.SpecsView = Backbone.View.extend({
 			
-			tagName: "ul",
-			className: "speclist",
 			template: JST["backbone/templates/specializations/spec_list"],
 
 	  		initialize: function() {
