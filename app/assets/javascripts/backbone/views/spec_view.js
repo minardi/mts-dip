@@ -3,19 +3,37 @@
 	app.SpecView = Backbone.View.extend({
 
 	    	tagName: "li",
+	    	template: JST["backbone/templates/specializations/spec"],
 
 			events: {
-				"click": "specSelected"
+				"click": "specSelect"
 			},
 
-			specSelected: function() {
-				Backbone.Mediator.pub("specSelect");
+			initialize: function() {
+				
+			},
+
+			specSelect: function() {
+
+				var is_selected = this.model.get("is_selected");
+
+				this.$el.toggleClass("selected_spec");
+       
+       			if (is_select) {
+	 				is_selected = false;	 				
+	 				Backbone.Mediator.pub("spec_unselected", { spec_name: this.model.get("name") });
+	 			} else {
+	 				is_selected = true;
+	 				Backbone.Mediator.pub("spec_selected", { spec_name: this.model.get("name") });
+	            }
+       
+       			this.model.set("is_selected", is_selected);
 			},
 
 			render: function() {
-				this.$el.append(this.model.get("name"));
+				this.$el.html(this.template(this.model.toJSON()));
 		        return this; 
-		    },
+		    }
 	});
 
 

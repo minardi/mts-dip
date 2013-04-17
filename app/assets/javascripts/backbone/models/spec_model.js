@@ -2,9 +2,10 @@
 
 	app.SpecModel = Backbone.Model.extend({
     
-			initialize: function() {
-	  		 	
-		    }
+		defaults: {
+			name: "",
+			is_selected: false
+		}
 	});
 
 })(window);
