@@ -7,7 +7,7 @@ gem 'rails', '3.2.9'
 
 gem 'sqlite3'
 gem "ejs"
-gem "therubyracer"
+gem 'therubyracer'
 gem "less-rails" 
 gem "twitter-bootstrap-rails"
 
