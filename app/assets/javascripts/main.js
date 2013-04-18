@@ -1,7 +1,6 @@
 $(function () {	
 
-  var specializationList = new SpecsView({el:$("#specialization")}),
-  	  doctorsView = new DoctorsListView({el:$(".doctors")});
-	
+  var specializationList = new SpecsView({el:$("#specialization_list")}),
+  	  doctorsView = new DoctorsListView({el:$(".doctors")});	
  
 });

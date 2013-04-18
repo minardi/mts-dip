@@ -17,7 +17,7 @@
 			
 			render: function() {
 				this.$el.html(this.template());
-				$("body").append(this.$el);	 //correct "body" for current element in template
+				$("#specializations").append(this.$el);
 				this.specs.each(this.addSpec, this);	
 				return this;
 			}				

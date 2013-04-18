@@ -1,12 +1,12 @@
 (function(app) {
 
-	app.DSTableView = Backbone.View.extend({		
+	app.DailySchedulesView = Backbone.View.extend({		
 
 			tagName: "tbody", //tbody потому, что table уже есть на странице (спрятанная)
-			template: JST["backbone/templates/daily_schedules/daily_schedules_list"],
+			template: JST["backbone/daily_schedule/daily_schedules_template"],
 						
 			initialize: function() {
-				this.daily_schedules = new app.DSCollection();
+				this.daily_schedules = new app.DailySchedules();
 
 				Backbone.Mediator.sub("day_selected", this.addDaiySchedule, this);
 				Backbone.Mediator.sub("day_unselected", this.removeDaiySchedule, this);
@@ -38,8 +38,11 @@
                     													  });
 				this.daily_schedules.remove(daily_schedule_to_remove);
 
-				//спросить про удаление вьюшки, соответствующей удаляемой модели
+				//не доделано
 			},
+
+			//где-то тут Валик должен написать свой кусок
+
 
 			render: function() {		
 				this.$el.html(this.template());

@@ -1,5 +1,4 @@
-
+//= require ./specializations/config
 //= require ./doctors/config
 
-//= require ./specializations/config
 

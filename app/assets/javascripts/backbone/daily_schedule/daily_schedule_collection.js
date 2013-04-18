@@ -1,8 +1,8 @@
 (function(app) {
 
-	app.DSCollection = Backbone.Collection.extend({		
+	app.DailySchedules = Backbone.Collection.extend({		
 
-		model: app.DSModel
+		model: app.DailySchedule
 		
 	});	
 
