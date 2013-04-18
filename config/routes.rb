@@ -2,6 +2,9 @@ MTSDip::Application.routes.draw do
 
 
 
+  resources :specializations
+
+
   get "main/home"
 
   root :to => 'main#home'
