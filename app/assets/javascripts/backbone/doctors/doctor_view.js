@@ -3,7 +3,7 @@
   app.DoctorView = Backbone.View.extend({
 
     tagName: "li",
-    template: JST["backbone/templates/doctor/doctor"],
+    template: JST["backbone/doctors/doctor_template"],
     
     events: {
       "click "   : "chose",

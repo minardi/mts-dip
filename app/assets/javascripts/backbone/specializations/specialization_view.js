@@ -19,12 +19,12 @@
 
 				this.$el.toggleClass("selected_spec");
        
-       			if (is_select) {
+       			if (is_selected) {
 	 				is_selected = false;	 				
-	 				Backbone.Mediator.pub("spec_unselected", { spec_name: this.model.get("name") });
+	 				Backbone.Mediator.pub("spec_unselected", { id: this.model.get("id") });
 	 			} else {
 	 				is_selected = true;
-	 				Backbone.Mediator.pub("spec_selected", { spec_name: this.model.get("name") });
+	 				Backbone.Mediator.pub("spec_selected", { id: this.model.get("id") });
 	            }
        
        			this.model.set("is_selected", is_selected);

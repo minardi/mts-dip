@@ -2,7 +2,7 @@
 
   app.DoctorsListView = Backbone.View.extend({
 
-    template: JST["backbone/templates/doctor/doctor_list"],
+    template: JST["backbone/doctors/doctors_template"],
     
 
     initialize: function() {     

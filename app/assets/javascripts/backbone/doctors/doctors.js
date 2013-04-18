@@ -5,4 +5,4 @@
      model: window.DoctorModel
     })
    
- })(window);   
+ })(window);  
