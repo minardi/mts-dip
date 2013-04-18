@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-
+  Specialization.create  [{name: 'Therapists'}, {name: 'Surgeon'}]
 
   5.times do |n|
    Doctor.create(:name=>"Kuznecov#{n}",:specialization_id=>n)
