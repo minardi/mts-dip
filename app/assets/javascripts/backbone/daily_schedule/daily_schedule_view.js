@@ -3,14 +3,17 @@
 	app.DailyScheduleView = Backbone.View.extend({		
 
 		tagName: "tr",
-		className: this.model.get("doctor_name") + this.model.get("date"), 
+		className: this.model.get("doctor_id") + this.model.get("date"), 
 			
-		//get template from Sveta
 		template: JST["backbone/daily_schedule/daily_schedule_template"],
 		
 		events: {
       		"click td" : "ticketAdd",
       		"dblclick td" : "ticketRemove",
+    	},
+
+    	initialize: function() {
+    		console.log(this.model);
     	},
 
     	ticketAdd: function(event) {
@@ -28,15 +31,27 @@
 		},
 
 		//tr with doctor timelines
-		//need changes due to template
-		render: function() {		
+		render: function() {
+			console.log(this.model);		
 			this.$el.html(this.template(this.model.toJSON()));
 
 			var session_duration = this.model.get("duration");
 
-			for (var i = 1; i <= session_duration; i++) {
-				var td_id = this.model.get("doctor_name") + "_" + this.model.get("date") + "_" + i; //not finished
-				this.$el.append("td").attr("id", td_id);
+			switch (session_duration){
+				case 15:
+				timelines_num = 32;
+				break;
+				case 30:
+				timelines_num = 16;
+				break;
+				case 60:
+				timelines_num = 8;
+				break;
+			}
+
+			//adds spans for timelines
+			for (var i = 1; i <= timelines_num; i++) {
+				this.$el.children(1).append("span");
 			}
 
       		return this;		

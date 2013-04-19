@@ -6,12 +6,27 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-  Specialization.create  [{name: 'Therapists'}, {name: 'Surgeon'}]
+# Specialization.create  [{name: 'Therapists'}, {name: 'Surgeon'}]
 
-  5.times do |n|
-   Doctor.create(:name=>"Kuznecov#{n}",:specialization_id=>n)
-  end  
+#  5.times do |n|
+#   Doctor.create(:name=>"Kuznecov#{n}",:specialization_id=>n)
+#  end  
  
-  5.times do |n|
-   Doctor.create(:name=>"Smetanin#{n}",:specialization_id=>n)
- end 
+#  5.times do |n|
+#  Doctor.create(:name=>"Smetanin#{n}",:specialization_id=>n)
+# end 
+
+
+ spec = Specialization.create(:name => "Hirurg")
+ 
+ spec.doctors.create(:name => "Jenya")
+ spec.doctors.create(:name => "Valik")
+ spec.doctors.create(:name => "Igor") 
+  
+  
+ spec = Specialization.create(:name => "Terapevt")
+ 
+ spec.doctors.create(:name => "Dima")
+
+
+ spec = Specialization.create(:name => "Okulist")

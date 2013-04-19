@@ -2,8 +2,8 @@
 
 	app.DailySchedules = Backbone.Collection.extend({		
 
-		model: app.DailySchedule
-		
+		model: app.DailySchedule,
+	
 	});	
 
 })(window);

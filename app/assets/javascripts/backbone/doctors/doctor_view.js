@@ -34,7 +34,7 @@
 	 Backbone.Mediator.pub('doctor_selected', { 
 	                                             id: this.model.get("id"),
 	                                             name: this.model.get("name"),
-			                              name: this.model.get("duration") 
+			                              duration: this.model.get("duration") 
 	                                          });
 	 
        }

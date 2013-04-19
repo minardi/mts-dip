@@ -12,12 +12,12 @@
 			
 			addSpec: function(model) {
 				var spec = new app.SpecView({model: model});
-				this.$el.append(spec.render().el);					
+				this.$el.find("ul").append(spec.render().el);					
 			},
 			
 			render: function() {
 				this.$el.html(this.template());
-				$("#specializations").append(this.$el);
+				//this.$el.find("ul").append(this.$el);
 				this.specs.each(this.addSpec, this);	
 				return this;
 			}				
