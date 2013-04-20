@@ -6,27 +6,173 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-# Specialization.create  [{name: 'Therapists'}, {name: 'Surgeon'}]
-
-#  5.times do |n|
-#   Doctor.create(:name=>"Kuznecov#{n}",:specialization_id=>n)
-#  end  
+spec = Specialization.create(:name => "Hirurg")
  
-#  5.times do |n|
-#  Doctor.create(:name=>"Smetanin#{n}",:specialization_id=>n)
-# end 
-
-
- spec = Specialization.create(:name => "Hirurg")
- 
- spec.doctors.create(:name => "Jenya")
- spec.doctors.create(:name => "Valik")
- spec.doctors.create(:name => "Igor") 
+spec.doctors.create(:name => "Jenya")
+spec.doctors.create(:name => "Valik")
+spec.doctors.create(:name => "Igor") 
   
   
- spec = Specialization.create(:name => "Terapevt")
+spec = Specialization.create(:name => "Terapevt")
  
- spec.doctors.create(:name => "Dima")
+spec.doctors.create(:name => "Dima")
 
+spec = Specialization.create(:name => "Okulist")
+ 
+WeeklySchedule.create(doctor_id: 1,schedule: {
+        sun: {
+            start: '12:00',
+            end: '15:00'
+        },
+        
+        mon: {
+            start: '15:00',
+            end: '17:00'
+        },
+        
+        tue: {
+            start: '12:00',
+            end: '16:00'            
+        },
+        
+        wed: {
+            start: '8:00',
+            end: '11:00'                        
+        },
+        
+        thu: {
+            start: '9:00',
+            end: '13:00'             
+        },
+        
+        fri: {
+            start: '12:00',
+            end: '16:00'             
+        },
+        
+        sat: {
+            start: '15:00',
+            end: '17:00'                         
+        }
+    }
+        
+     )
+     
 
- spec = Specialization.create(:name => "Okulist")
+WeeklySchedule.create(doctor_id: 2,schedule: {
+        
+        sun: {
+            start: '10:00',
+            end: '14:00'
+        },
+        
+        mon: {
+            start: '13:00',
+            end: '15:00'
+        },
+        
+        tue: {
+            start: '10:00',
+            end: '12:00'            
+        },
+        
+        wed: {
+            start: '11:00',
+            end: '15:00'                        
+        },
+        
+        thu: {
+            start: '13:00',
+            end: '15:00'             
+        },
+        
+        fri: {
+            start: '10:00',
+            end: '12:00'             
+        },
+        
+        sat: {
+            start: '12:00',
+            end: '14    :00'                         
+        }
+    }
+     )
+
+     
+WeeklySchedule.create(doctor_id: 3,schedule: {
+        
+        sun: {
+            start: '8:00',
+            end: '12:00'
+        },
+        
+        mon: {
+            start: '15:00',
+            end: '17:00'
+        },
+        
+        tue: {
+            start: '12:00',
+            end: '16:00'            
+        },
+        
+        wed: {
+            start: '9:00',
+            end: '13:00'                        
+        },
+        
+        thu: {
+            start: '15:00',
+            end: '17:00'             
+        },
+        
+        fri: {
+            start: '8:00',
+            end: '12:00'             
+        },
+        
+        sat: {
+            start: '14:00',
+            end: '16:00'                         
+        }
+    }
+     )
+     
+WeeklySchedule.create(doctor_id: 4,schedule: {
+        
+        sun: {
+            start: '10:00',
+            end: '14:00'
+        },
+        
+        mon: {
+            start: '13:00',
+            end: '15:00'
+        },
+        
+        tue: {
+            start: '10:00',
+            end: '12:00'            
+        },
+        
+        wed: {
+            start: '11:00',
+            end: '15:00'                        
+        },
+        
+        thu: {
+            start: '13:00',
+            end: '15:00'             
+        },
+        
+        fri: {
+            start: '10:00',
+            end: '12:00'             
+        },
+        
+        sat: {
+            start: '12:00',
+            end: '14    :00'                         
+        }
+    }
+     )
