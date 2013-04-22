@@ -38,8 +38,8 @@
       // publishid mediator event with doctor, before remove model
       $.each(doctors, function(index,doctor) {
 	Backbone.Mediator.pub('doctor_unselected', { 
-	                                             id: doctor.get("id"),
-	                                             name: doctor.get("name")   
+	                                             id: doctor.get("id")
+	                                            
 	                                          });
 	
       }); 
