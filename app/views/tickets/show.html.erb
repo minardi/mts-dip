@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date time:</b>
+  <%= @ticket.date_time %>
+</p>
+
+<p>
+  <b>Doctor:</b>
+  <%= @ticket.doctor_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_ticket_path(@ticket) %> |
+<%= link_to 'Back', tickets_path %>

@@ -3,3 +3,5 @@
 
 //= require ./specializations/config
 
+//= require ./tickets/config
+
