@@ -3,7 +3,6 @@
 	app.SpecView = Backbone.View.extend({
 
 	    	tagName: "li",
-	    	className: "speclist_item",
 	    	template: JST["backbone/specializations/specialization_template"],
 
 			events: {

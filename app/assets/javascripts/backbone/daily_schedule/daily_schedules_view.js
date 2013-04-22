@@ -4,41 +4,56 @@
 
 			el: $("#daily_schedules"), 
 			template: JST["backbone/daily_schedule/daily_schedules_template"],
+
+			views: {},
 						
 			initialize: function() {
 				this.daily_schedules = new app.DailySchedules();
 
-				Backbone.Mediator.sub("day_selected", this.addDailySchedule, this);
-				Backbone.Mediator.sub("day_unselected", this.removeDailySchedule, this);
+				Backbone.Mediator.sub("weekly_selectItem", this.addDailySchedule, this);
+				Backbone.Mediator.sub("weekly_unselectItem", this.removeDailySchedule, this);
 				this.render();
-				Backbone.Mediator.pub("day_selected", {date: "11:11:0000", doctor_id: 1, doctor_name: "Ivanov", duration: 15, timeline_start: 900, timeline_end: 1100});
 			},
 
 			addDailySchedule: function(attr) {
+
+				var schedule_array = attr["schedule"].split(" - ");
+					schedule_start = schedule_array[0];
+					schedule_end = schedule_array[1];
 				
-				daily_schedule = new app.DailySchedule( {  date: attr["date"],
-													  doctor_id: attr["doctor_id"],
-													doctor_name: attr["doctor_name"],
-													   duration: attr["duration"],
-													   timeline: {start: attr["timeline_start"], 
-																  end: 	attr["timeline_end"]  	
-															     }
-												} );
+				daily_schedule = new app.DailySchedule( { doctor_id: attr["id"],
+													      doctor_name: attr["name"],
+													      //duration: attr["duration"],
+													      schedule_start: schedule_start,
+													      schedule_end: schedule_end
+												      } );
+
+				console.log(daily_schedule);
 
 				this.daily_schedules.add(daily_schedule);
-				console.log(daily_schedule);
-				//app.DailyScheduleView is undefined. WTF??
+
 				daily_schedule_view = new app.DailyScheduleView( {model: daily_schedule} );
+
+				//добавить дату
+				this.views[daily_schedule.get("doctor_id")] = daily_schedule_view;
+
 				this.$el.find("#daily_schedules_content").append(daily_schedule_view.render().el);
 			},
 
 			removeDailySchedule: function(attr) {
 
-				//определяем удаляемый daily schedule по дате и доктору
-				var daily_schedule_to_remove = this.daily_schedules.where({ date: attr["date"],
-																			doctor_id: attr["doctor_id"]
+				//определяем удаляемый daily schedule по дате и доктору (добавить дату)
+				var daily_schedule_to_remove = this.daily_schedules.where({ 
+																			doctor_id: attr["id"]
                     													  });
 				this.daily_schedules.remove(daily_schedule_to_remove);
+				console.log(this.views);
+				var view_to_remove = this.views[attr["id"]];
+            
+            	if(view_to_remove) {
+                	view_to_remove.remove();
+                	delete this.views[attr["id"]];
+                }
 			},
 
 			render: function() {		

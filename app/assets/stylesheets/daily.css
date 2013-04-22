@@ -1,0 +1,19 @@
+.timelines span {
+	/*evaluate span with depending on timeline_num*/
+	display: table-cell;
+	height: 10px;
+	border: 1px solid black;
+	background-color: gray; 
+}
+
+.timeline_32 {
+	width: 8px;
+}
+
+.timeline_16 {
+	width: 16px;	
+}
+
+.timeline_8 {
+	width: 32px;	
+}

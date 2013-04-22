@@ -3,17 +3,12 @@
 	app.DailyScheduleView = Backbone.View.extend({		
 
 		tagName: "tr",
-		className: this.model.get("doctor_id") + this.model.get("date"), 
 			
 		template: JST["backbone/daily_schedule/daily_schedule_template"],
 		
 		events: {
-      		"click td" : "ticketAdd",
-      		"dblclick td" : "ticketRemove",
-    	},
-
-    	initialize: function() {
-    		console.log(this.model);
+      		"click td span" : "ticketAdd",
+      		"dblclick td span" : "ticketRemove",
     	},
 
     	ticketAdd: function(event) {
@@ -30,29 +25,39 @@
 			}
 		},
 
-		//tr with doctor timelines
 		render: function() {
-			console.log(this.model);		
+			this.$el.addClass(this.model.get("doctor_id"));	
 			this.$el.html(this.template(this.model.toJSON()));
 
-			var session_duration = this.model.get("duration");
+			var session_duration = this.model.get("duration"),
+				timelines_num = 0,
+				timeline_class = "timeline_32";
 
 			switch (session_duration){
 				case 15:
-				timelines_num = 32;
+					timelines_num = 32;
+					timeline_class = "timeline_32";
 				break;
 				case 30:
-				timelines_num = 16;
+					timelines_num = 16;
+					timeline_class = "timeline_16";
 				break;
 				case 60:
-				timelines_num = 8;
+					timelines_num = 8;
+					timeline_class = "timeline_8";
 				break;
 			}
 
 			//adds spans for timelines
 			for (var i = 1; i <= timelines_num; i++) {
-				this.$el.children(1).append("span");
+				timeline = document.createElement("span");
+				timeline.className = timeline_class;
+				timeline.text = "&nbsp";
+				this.$el.find(".timelines").append(timeline);
 			}
+
+			//paint timelines depending on schedule_start and schedule_end
+			//this.model.get("schedule_start"), this.model.get("schedule_end") - начало и конец рабочего дня.
 
       		return this;		
 		}		
