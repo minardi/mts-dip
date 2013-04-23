@@ -4,19 +4,23 @@
         
         //el : $('#weekly-table'),
         
+        template : JST["backbone/weekly_schedule/weekly_schedules_template"],
+        
         views : {},
         
         collect: new WeeklyCollection(),
         
         initialize : function(){
             
-            this.renderDate ();
+            
             
             this.collect.fetch();
-            
+
             Backbone.Mediator.sub('doctor_selected', this.addSchedule, this);
             Backbone.Mediator.sub('doctor_unselected', this.removeSchedule, this)
-
+            
+            this.$el.html(this.template());
+            this.renderDate ();
         },
 
         
@@ -75,7 +79,7 @@
         render : function(view){
             
             this.$el.show()
-            this.$el.append(view.render().el)
+            this.$el.find('table').append(view.render().el)
             
             return this;
         },
