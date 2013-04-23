@@ -1,0 +1,35 @@
+#under-head {
+	margin-top: 2%;
+}
+header {
+	width: 600px;
+	height: 155px;
+	background:url(../images/headpic.png) no-repeat;
+	
+}
+
+#DocTable {
+	text-align: center;
+}
+
+#list, #work-time {
+	margin: 30px 0 20px 0;
+	
+}
+#drop_menu_block {
+	display:block; 
+	position: static;
+}
+
+#list_item {
+	background: 5adfd9;	
+}
+
+#list {
+	width: 200px;
+}
+
+#work-time table {
+	/*margin-top: 10px;*/
+	width: 710px;
+}
