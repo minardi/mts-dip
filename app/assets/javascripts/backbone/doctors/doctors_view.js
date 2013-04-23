@@ -3,12 +3,16 @@
   app.DoctorsListView = Backbone.View.extend({
 
     template: JST["backbone/doctors/doctors_template"],
-    
+    tagName: "ul",
 
-    initialize: function() {     
+    initialize: function() {  
+      this.$el.append(this.render().el);
+      this.$el = this.$el.find("ul");
+      
+      
       this.AllDoctors = new DoctorsCollection();
       this.CurentDoctors = new DoctorsCollection();
-      this.CurentDoctors.on("reset",this.addAllDoctors,this)
+      this.CurentDoctors.on("reset",this.addAllDoctors,this);
       
       Backbone.Mediator.sub('spec_selected', this.pushDoctors,this);
       Backbone.Mediator.sub('spec_unselected', this.popDoctors,this);
