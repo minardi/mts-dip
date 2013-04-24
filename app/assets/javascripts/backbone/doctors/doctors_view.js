@@ -13,6 +13,7 @@
       
       this.AllDoctors = new DoctorsCollection();
       this.CurentDoctors = new DoctorsCollection();
+      
       this.CurentDoctors.on("reset",this.addAllDoctors,this);
       
       Backbone.Mediator.sub('spec_selected', this.pushDoctors,this);

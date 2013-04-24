@@ -33,3 +33,8 @@ header {
 	/*margin-top: 10px;*/
 	width: 710px;
 }
+
+.select_ticket
+{
+  background-color: green !important;
+}
