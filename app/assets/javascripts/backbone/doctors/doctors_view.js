@@ -6,9 +6,10 @@
     tagName: "ul",
 
     initialize: function() {  
-      this.$el.append(this.render().el);
-      this.$el = this.$el.find("ul");
       
+      this.$el.append(this.template);
+      this.$el = this.$el.find("ul");
+      this.$el.hide();
       
       this.AllDoctors = new DoctorsCollection();
       this.CurentDoctors = new DoctorsCollection();
@@ -18,6 +19,7 @@
       Backbone.Mediator.sub('spec_unselected', this.popDoctors,this);
       
       this.AllDoctors.fetch();
+       
     },
     
     pushDoctors: function(attr) {
@@ -29,8 +31,12 @@
 	} 
 	
       },this);
-     
-      this.CurentDoctors.trigger("reset");
+      
+      if (this.CurentDoctors.length != 0) {
+         this.$el.show();            
+      }    
+      
+      this.CurentDoctors.trigger("reset");	
       
     },
     
@@ -49,11 +55,18 @@
       }); 
       
       this.CurentDoctors.remove(doctors);
-      this.CurentDoctors.trigger("reset");      
+      
+      if (this.CurentDoctors.length == 0) {
+         this.$el.hide();         	   
+      }
+      
+      this.CurentDoctors.trigger("reset");   
+         
     },  
     
     addAllDoctors: function() {
       this.$el.html("");
+        
       this.CurentDoctors.each(this.addOneDoctor,this)
     }, 
     
