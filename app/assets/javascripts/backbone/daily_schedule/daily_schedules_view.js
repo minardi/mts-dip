@@ -10,7 +10,8 @@
 
 				Backbone.Mediator.sub("weekly_selectItem", this.addDailySchedule, this);
 				Backbone.Mediator.sub("weekly_unselectItem", this.removeDailySchedule, this);
-				this.render();			
+				this.render();
+				this.$el.hide();		
 			},
 
 			addDailySchedule: function(attr) {
@@ -18,43 +19,19 @@
 				var schedule_array = attr["schedule"].split(" - "),
 					schedule_start = schedule_array[0],
 					schedule_end = schedule_array[1];
-					
-					/*day = "";
-
-				switch (attr["day"]){
-					case "sun":
-						day = "Sunday";
-					break;
-					case "mon":
-						day = "Monday";
-					break;
-					case "tue":
-						day = "Tuesday";
-					break;
-					case "wed":
-						day = "Wednesday";
-					break;
-					case "thu":
-						day = "Thursday";
-					break;
-					case "fri":
-						day = "Friday";
-					break;
-					case "sat":
-						day = "Saturday";
-					break;					
-				}*/
 				
 				daily_schedule = new app.DailySchedule( { doctor_id: attr["id"],
 													      doctor_name: attr["name"],
 													      day: attr["day"],
-													      //duration: attr["duration"],
+													      duration: attr["duration"],
 													      schedule_start: schedule_start,
 													      schedule_end: schedule_end,
 													      visible: true
 												      } );
 
 				this.daily_schedules.add(daily_schedule);
+
+				this.$el.show();
 
 				daily_schedule_view = new app.DailyScheduleView( {model: daily_schedule} );
 
@@ -69,6 +46,10 @@
                     													  });
 				daily_schedule_to_remove[0].set("visible", false);
 				this.daily_schedules.remove(daily_schedule_to_remove);
+
+				if (this.daily_schedules.length == 0) {
+					this.$el.hide();	
+				}
 			},
 
 			render: function() {		
