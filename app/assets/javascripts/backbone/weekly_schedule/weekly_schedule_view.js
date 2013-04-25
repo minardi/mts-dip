@@ -5,7 +5,7 @@
         tagName : 'tr',
         
         initialize : function(){
-            
+            this.model.on('change:selected', this.unselected, this)
         },
         
         events : {
@@ -34,7 +34,7 @@
         
         selectItem : function(e){
             
-            var target = e.target,
+            var target = e.target || e,
             attr_data = $(target).attr('id').split('-');
             
             if(attr_data.length === 2){
@@ -50,7 +50,7 @@
                             day : attr_data[1]
                         }
                     );
-                    
+                     
                 }else{
                     
                     Backbone.Mediator.pub('weekly_unselectItem', 
@@ -81,6 +81,22 @@
             }
             
             return result;
+            
+        },
+        
+        unselected : function (obj, value){
+            var self = this;
+            
+            if(value === false){
+
+                this.$el.find('.active').each(function(i){
+                    
+                    self.selectItem(this)
+                });
+                
+                this.remove();
+                
+            }
             
         }
         

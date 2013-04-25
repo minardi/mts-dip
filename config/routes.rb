@@ -3,6 +3,8 @@ MTSDip::Application.routes.draw do
 
 
   resources :tickets
+   
+  
 
 
   resources :specializations
@@ -14,6 +16,8 @@ MTSDip::Application.routes.draw do
   resources :doctors
     
   resources :weekly_schedules
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -2,8 +2,6 @@
 
 	app.WeeklyCollectionView = Backbone.View.extend({
         
-        //el : $('#weekly-table'),
-        
         template : JST["backbone/weekly_schedule/weekly_schedules_template"],
         
         views : {},
@@ -12,31 +10,57 @@
         
         initialize : function(){
             
+            this.collect.on("add", this.addSchedule, this)
             
-            
-            this.collect.fetch();
-
-            Backbone.Mediator.sub('doctor_selected', this.addSchedule, this);
+            Backbone.Mediator.sub('doctor_selected', this.addHandler, this);
             Backbone.Mediator.sub('doctor_unselected', this.removeSchedule, this)
             
-            this.$el.html(this.template());
-            this.renderDate ();
+            this.render();
         },
-
         
-        addSchedule : function(data){
-
+        getSchedule : function(id){
+            var self = this;
             
-            var model = this.collect.where({doctor_id : data.id})[0],
-            view = {};
+            this.collect.findByParam({doctor_id: id}, 
+                function (model){
+                    self.collect.add(model)
+                    }
+            );
+        },
+        
+        addHandler : function(data){
+            var model = [];
+            this.schedule_data = data;
+            
+            if(this.collect.length > 0){
+                model = this.collect.where({doctor_id : data.id});
+            }else{
+                this.$el.removeClass('hidden') 
+            }
+           
+            if(model.length === 0){
+                this.getSchedule(data.id);   
+            }else{
+                this.addSchedule(model[0])
+            }
+           
+        },
+        
+        addSchedule : function (model) {
+            
+            var view = {};
             
             if(model){
-            
-                model.set({'doctor_name' : data.name});
-                model.set({'doctor_duration' : data.duration});
+                
+                model.set({
+                    'doctor_name' : this.schedule_data.name,
+                    'doctor_duration' : this.schedule_data.duration,
+                    'selected' : true
+                    }
+                );
                 
                 view = new WeeklyView({model : model});
-                this.render(view);
+                this.$el.find('table').append(view.render().$el);
                 this.views[model.get('doctor_id')] = view;
                 
             }else{
@@ -70,33 +94,26 @@
             
             {
                 id : days[date.getDay()],
-                text : days[date.getDay()] + ' ' + date.getDate() + ' ' + (date.getMonth()+1) + ' ' + date.getFullYear()
+                text :  ' ' + date.getDate() + ' ' + (date.getMonth()+1) + ' ' + date.getFullYear()
                  
-            }));
+            }).prepend($('<p />', {text : days[date.getDay()]})));
 
         },
         
-        render : function(view){
-            
-            this.$el.show()
-            this.$el.find('table').append(view.render().el)
-            
+        render : function(){
+            this.$el.append(this.template());
+            //this.$el.show();
+            this.renderDate();
+
             return this;
         },
         
         removeSchedule : function(data) {
-            
-            var view = this.views[data.id];
-            
-            if(view){
-                
-                view.remove();
-                delete this.views[data.id];
-                
-            }else{
-                console.warn('schedule list for this doctor is not exist')
-            }
+            var model = this.collect.where({doctor_id : data.id});
+            model = model[0];
+            model.set({selected : false})
         }
+            
         
     });
     

@@ -13,8 +13,14 @@ class WeeklySchedulesController < ApplicationController
   # GET /weekly_schedules/1
   # GET /weekly_schedules/1.json
   def show
-    @weekly_schedule = WeeklySchedule.find(params[:id])
-
+    if params[:doctor_id] != nil then   
+        @weekly_schedule =  WeeklySchedule.find_by_doctor_id(params[:doctor_id])
+    else
+    
+         @weekly_schedule = WeeklySchedule.find(params[:id])
+    
+    end
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @weekly_schedule }
@@ -31,7 +37,19 @@ class WeeklySchedulesController < ApplicationController
       format.json { render json: @weekly_schedule }
     end
   end
-
+  
+  #GET /weekly_schedules/search
+  #GET /weekly_schedules/search.json
+  
+  def search
+    @weekly_schedule = WeeklySchedule.find_by_doctor_id(params[:doctor_id])
+    
+    respond_to do |format|
+      format.html # search.html.erb
+      format.json { render json: @weekly_schedule }
+    end
+  end
+  
   # GET /weekly_schedules/1/edit
   def edit
     @weekly_schedule = WeeklySchedule.find(params[:id])
