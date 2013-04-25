@@ -6,6 +6,8 @@
         
         collect: new WeeklyCollection(),
         
+        days : {},
+        
         initialize : function(){
             
             this.collect.on("add", this.addSchedule, this)
@@ -16,18 +18,10 @@
             this.render();
         },
         
-        getSchedule : function(id){
-            var self = this;
-            
-            this.collect.findByParam({doctor_id: id}, 
-                function (model){
-                    self.collect.add(model)
-                    }
-            );
-        },
-        
         addHandler : function(data){
-            var model = [];
+            var model = [],
+                self = this;
+            
             this.schedule_data = data;
             
             if(this.collect.length > 0){
@@ -37,7 +31,11 @@
             }
            
             if(model.length === 0){
-                this.getSchedule(data.id);   
+                this.collect.findByParam({doctor_id: data.id}, 
+                function (model){
+                    self.collect.add(model)
+                    }
+                );  
             }else{
                 this.addSchedule(model[0])
             }
@@ -57,9 +55,12 @@
                     }
                 );
                 
+                model.setDate(this.days);
+                
+                
                 view = new WeeklyView({model : model});
                 this.$el.find('table').append(view.render().$el);
-                this.views[model.get('doctor_id')] = view;
+
                 
             }else{
                 console.warn("this doctor don't have schedule list ");
@@ -71,44 +72,52 @@
         renderDate : function(){
             
             var date = new Date(),
-            day = date.getDay(),
-            current_date = date.getDate(),
-            i=0
-            ;
+                day = date.getDay(),
+                current_date = date.getDate(),
+                i=0,
+                days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
             
-            for(i;i<7;i++){
+            for(i=0;i<7;i++){
                 date.setDate(current_date+(i-day));
-                this.renderDay(date)
+                this.renderDay(date, days[i])
             }
             
         },
         
-        renderDay : function(date) {
-           var elem = this.$el.find('thead tr'),
-           days = ['Sunday', 'Monday','Tuesday','Wednesday', 'Thursday', 'Friday', 'Saturday']
-           ;
-           
-           elem.append($('<td>', 
+        renderDay : function(date, day) {
+            var elem = this.$el.find('thead tr');
             
-            {
-                id : days[date.getDay()],
-                text :  ' ' + date.getDate() + ' ' + (date.getMonth()+1) + ' ' + date.getFullYear()
+            this.days[day] = ' ' + date.getDate() + ' ' + 
+                (date.getMonth()+1) + ' ' + date.getFullYear();
+           
+            elem.append(
+                $('<td>', 
+            
+                    {
+                        id : day,
+                        text :  this.days[day]
                  
-            }).prepend($('<p />', {text : days[date.getDay()]})));
+                    }
+                ).prepend(
+                    $('<p />', 
+                        {
+                            text : day
+                        }
+                    )
+                )
+            );
 
         },
         
         render : function(){
             this.$el.append(this.template());
-            //this.$el.show();
             this.renderDate();
 
             return this;
         },
         
         removeSchedule : function(data) {
-            var model = this.collect.where({doctor_id : data.id});
-            model = model[0];
+            var model = this.collect.where({doctor_id : data.id})[0];
             model.set({selected : false})
         }
             
