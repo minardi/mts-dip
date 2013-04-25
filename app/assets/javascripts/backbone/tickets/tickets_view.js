@@ -11,8 +11,8 @@
   
       Backbone.Mediator.sub('ticket_added', this.addTicket,this);
       
-      Backbone.Mediator.sub('timelime_render', function() {
-	this.Tickets.fetch();
+      Backbone.Mediator.sub('timelime_render', function(attrs) {	
+	this.Tickets.fetchByParam(attrs);
       },this);
       
     },
@@ -46,6 +46,7 @@
     },
     
     addAllTickets: function() {
+      console.log("tickets load",this.Tickets.length)
       this.Tickets.each(this.addOneTicket,this);
     }, 
     

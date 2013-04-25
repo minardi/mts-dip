@@ -2,9 +2,9 @@ $(function () {
 
 
   var specializationList = new SpecsView({el:$("#specializations")}),
-  	  doctorsView = new DoctorsListView({el:$(".doctors")}),
+  	  doctorsView = new DoctorsView({el:$(".doctors")}),
   	  dayTimelines = new DailySchedulesView({el:$("#daily_schedules")}),
-      ticketsView = new TicketsView({el: $("#tickets")}),
-      weekly = new WeeklyCollectionView({el : $('#weekly-table')});  	
+          ticketsView = new TicketsView(),
+          weekly = new WeeklyCollectionView({el : $('#weekly-table')});  	
  
 });

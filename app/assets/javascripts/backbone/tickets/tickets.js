@@ -16,8 +16,37 @@
 	   
 	if (models.length > 0) is_null = true;
         return is_null;       
+     },
+    
+  
+    fetchByParam: function(parametrs) {
+
+            var url = this.url+".json?",
+                params = [],
+                self = this;
+                 
+            for (name in parametrs) {
+                params.push( name + "=" + encodeURIComponent( parametrs[name] ))
+            }
+            
+            url += params.join('&');
+	    
+            $.get(url, function(attrs) {
+	      
+	        $.each(attrs, function(index,attr) {
+		  
+		   if (self.where(attr).length == 0) {
+		     var model = new TicketModel(attr);
+		     self.add(model);		     
+		   }		  
+		});
+// 		
+		self.trigger("reset");
+	    });
+            
      }
      
+     
     })
-   
+    
  })(window);  

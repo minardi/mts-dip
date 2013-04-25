@@ -1,6 +1,6 @@
 (function(app) { 
 
-  app.DoctorsListView = Backbone.View.extend({
+  app.DoctorsView = Backbone.View.extend({
 
     template: JST["backbone/doctors/doctors_template"],
     tagName: "ul",
@@ -8,7 +8,7 @@
     initialize: function() {  
       
       this.$el.append(this.template);
-      this.$el = this.$el.find("ul");
+      this.$el = this.$el.find(":first-child") ;
       this.$el.hide();
       
       this.AllDoctors = new DoctorsCollection();

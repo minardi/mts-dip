@@ -2,7 +2,12 @@ class TicketsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def index
-    @tickets = Ticket.all
+    
+    if params["doctor_id"] != nil
+      @tickets = Ticket.where(:doctor_id => params["doctor_id"], :data => params["data"]);
+    else
+      @tickets = Ticket.all  
+    end  
 
     respond_to do |format|
       format.html # index.html.erb
