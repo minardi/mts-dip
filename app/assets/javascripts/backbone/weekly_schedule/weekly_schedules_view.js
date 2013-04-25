@@ -4,8 +4,6 @@
         
         template : JST["backbone/weekly_schedule/weekly_schedules_template"],
         
-        views : {},
-        
         collect: new WeeklyCollection(),
         
         initialize : function(){

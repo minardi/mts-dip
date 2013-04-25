@@ -90,7 +90,6 @@
             if(value === false){
 
                 this.$el.find('.active').each(function(i){
-                    
                     self.selectItem(this)
                 });
                 
