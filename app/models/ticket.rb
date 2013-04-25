@@ -1,3 +1,3 @@
 class Ticket < ActiveRecord::Base
-  attr_accessible :date_time, :doctor_id
+  attr_accessible :data, :time, :doctor_id, :selector_id 
 end

@@ -1,10 +1,12 @@
 (function(app) {
   
   app.TicketModel = Backbone.Model.extend({
-    
+    urlRoot: "tickets", 
     defaults:  {
         doctor_id: 0,
-        date_time: ""
+        data: "",
+        time: "",
+	selector_id: ""
     }
 
   })

@@ -3,17 +3,24 @@
   app.DoctorsListView = Backbone.View.extend({
 
     template: JST["backbone/doctors/doctors_template"],
-    
+    tagName: "ul",
 
-    initialize: function() {     
+    initialize: function() {  
+      
+      this.$el.append(this.template);
+      this.$el = this.$el.find("ul");
+      this.$el.hide();
+      
       this.AllDoctors = new DoctorsCollection();
       this.CurentDoctors = new DoctorsCollection();
-      this.CurentDoctors.on("reset",this.addAllDoctors,this)
+      
+      this.CurentDoctors.on("reset",this.addAllDoctors,this);
       
       Backbone.Mediator.sub('spec_selected', this.pushDoctors,this);
       Backbone.Mediator.sub('spec_unselected', this.popDoctors,this);
       
       this.AllDoctors.fetch();
+       
     },
     
     pushDoctors: function(attr) {
@@ -25,8 +32,12 @@
 	} 
 	
       },this);
-     
-      this.CurentDoctors.trigger("reset");
+      
+      if (this.CurentDoctors.length != 0) {
+         this.$el.show();            
+      }    
+      
+      this.CurentDoctors.trigger("reset");	
       
     },
     
@@ -45,11 +56,18 @@
       }); 
       
       this.CurentDoctors.remove(doctors);
-      this.CurentDoctors.trigger("reset");      
+      
+      if (this.CurentDoctors.length == 0) {
+         this.$el.hide();         	   
+      }
+      
+      this.CurentDoctors.trigger("reset");   
+         
     },  
     
     addAllDoctors: function() {
       this.$el.html("");
+        
       this.CurentDoctors.each(this.addOneDoctor,this)
     }, 
     

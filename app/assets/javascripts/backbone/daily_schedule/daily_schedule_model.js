@@ -5,9 +5,11 @@
 		defaults: {
 			doctor_id: "",
 			doctor_name: "Ivanov",
-			duration: 30,
+			duration: 15,
+			day: "",
 			schedule_start: "10:00",
 			schedule_end: "12:00",
+			visible: true
 		},
 
 	});	

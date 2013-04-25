@@ -8,14 +8,14 @@
 
 spec = Specialization.create(:name => "Hirurg")
  
-spec.doctors.create(:name => "Jenya")
-spec.doctors.create(:name => "Valik")
-spec.doctors.create(:name => "Igor") 
+spec.doctors.create(:name => "Jenya", :duration => 15)
+spec.doctors.create(:name => "Valik", :duration => 30)
+spec.doctors.create(:name => "Igor", :duration => 60) 
   
   
 spec = Specialization.create(:name => "Terapevt")
  
-spec.doctors.create(:name => "Dima")
+spec.doctors.create(:name => "Dima", :duration => 30)
 
 spec = Specialization.create(:name => "Okulist")
  

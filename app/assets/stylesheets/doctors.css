@@ -7,7 +7,6 @@
 
  .doctors li
  {
-   width: 150px;
    padding: 5px;
  }
  .doctors li:hover 
