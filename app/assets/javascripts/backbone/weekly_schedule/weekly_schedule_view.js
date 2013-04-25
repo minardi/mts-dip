@@ -67,7 +67,7 @@
                     Backbone.Mediator.pub('weekly_unselectItem', 
                         {
                             id : this.model.get('id'),
-                            day : attr_data[1]                            
+                            data : this.model.get('schedule')[attr_data[1]]['data']                            
                         }
                     );
                     
