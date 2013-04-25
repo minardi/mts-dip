@@ -36,6 +36,8 @@
 				daily_schedule_view = new app.DailyScheduleView( {model: daily_schedule} );
 
 				this.$el.find("#daily_schedules_content").append(daily_schedule_view.render().el);
+				
+				Backbone.Mediator.pub("timelime_render");
 			},
 
 			removeDailySchedule: function(attr) {

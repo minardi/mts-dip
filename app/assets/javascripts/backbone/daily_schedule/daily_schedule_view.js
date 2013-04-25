@@ -7,8 +7,8 @@
 		template: JST["backbone/daily_schedule/daily_schedule_template"],
 		
 		events: {
-      		"click td span" : "ticketAdd",
-      		"dblclick td span" : "ticketRemove",
+      		"click .worktime" : "ticketAdd",
+      		
     	},
 
     	initialize: function() {
@@ -16,29 +16,29 @@
     	},
 
     	ticketAdd: function(event) {
-    		$(event.target).addClass("selected_ticket");
 			var ticket_id = $(event.target).attr("id"),
 			    data = ticket_id.split("_");
 
 			Backbone.Mediator.pub("ticket_added", { doctor_id: data[0],
-													day:  data[1],
-													timeline: data[2]
-												  });
+								 data:  data[1],
+								 time: data[2],
+			                                        selector_id: ticket_id       
+								});
+			
 		},
 
 		ticketRemove: function(event) {
 
-			if( $(event.target).hasClass("selected_ticket") ) {
+			
 				var ticket_id = $(event.target).attr("id"),
 				    data = ticket_id.split("_");
-				$(event.target).removeClass("selected_ticket");
-
-
+				
 				Backbone.Mediator.pub("ticket_removed", { doctor_id: data[0],
-														  day:  data[1],
-														  timeline: data[2]
-												  		});
-			}
+									   data:  data[1],
+									   time: data[2],
+			                                                  selector_id: ticket_id
+									 });
+			
 		},
 
 		deleteSchedule: function() {
@@ -54,7 +54,7 @@
 
 			var session_duration = this.model.get("duration"),
 				timelines_num = 0,
-				timeline_class = "timeline_32",
+				timeline_class = "timeline",
 				timeline_width = "",
 				timeline_start = this.model.get("schedule_start"),
 				timeline_end = this.model.get("schedule_end"),
@@ -75,15 +75,12 @@
 			switch (session_duration){
 				case 15:
 					timelines_num = 36;
-					timeline_class = "timeline_32";
 				break;
 				case 30:
 					timelines_num = 18;
-					timeline_class = "timeline_16";
 				break;
 				case 60:
 					timelines_num = 9;
-					timeline_class = "timeline_8";
 				break;
 			}
 
@@ -105,6 +102,7 @@
 
 				//меняем стиль рабочих часов
 				if ( (timeline_time >= timeline_start ) && ( timeline_time < timeline_end ) ) {
+				        $(timeline).addClass("worktime");
 					$(timeline).css("background-color", "blue");
 				};
 				

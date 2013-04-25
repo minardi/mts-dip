@@ -5,7 +5,13 @@
      model: window.TicketModel,
      
      is_there: function(attrs) {
-       var models = this.where(attrs),
+       
+       var hesh = {
+	             doctor_id: attrs["doctor_id"],
+                     data: attrs["data"],
+                     time: attrs["time"] 
+                  },
+           models = this.where(attrs),
            is_null = false;
 	   
 	if (models.length > 0) is_null = true;
