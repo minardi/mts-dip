@@ -37,10 +37,9 @@
 
 				this.$el.find("#daily_schedules_content").append(daily_schedule_view.render().el);
 				
-				Backbone.Mediator.pub("timelime_render",{
+				Backbone.Mediator.pub("timeline_render",{
 				                                          doctor_id: attr["id"],
-			                                                  data: attr["day"]
-				   
+			                                                  data: attr["day"]				   
 				                                        });
 			},
 
