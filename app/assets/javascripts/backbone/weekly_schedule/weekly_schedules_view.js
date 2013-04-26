@@ -110,8 +110,31 @@
             var model = this.collect.where({doctor_id : data.id});
             model = model[0];
             model.set({selected : false})
-        }
+        },
+             events: {
+            "click thead td":"dayPick",
+        },
+
+        dayPick: function(e) {
+            e = event || window.event;
+
+            var work_day = $(e.target).index(),
+                tr = this.$el.find("tr");
             
+            if($(e.target).hasClass('active')){
+                $(e.target).removeClass('active');
+            }else{
+                $(e.target).addClass('active');
+            };
+
+            $(tr).each(function(index) {
+                if(index !== 0){
+
+                var n = $(this).find("td").get(work_day);
+                
+                $(n).trigger("click");}
+            });
+        },
         
     });
     

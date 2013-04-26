@@ -11,8 +11,8 @@
   
       Backbone.Mediator.sub('ticket_added', this.addTicket,this);
       
-      Backbone.Mediator.sub('timelime_render', function(attrs) {	
-	this.Tickets.fetchByParam(attrs);
+      Backbone.Mediator.sub('timelime_render', function(attrs) {  
+  this.Tickets.fetchByParam(attrs);
       },this);
       
     },
@@ -21,15 +21,15 @@
     addTicket: function(attrs) {
       
       if (this.Tickets.is_there(attrs) == false) {
-	
-	var model = new TicketModel(attrs),
-	    view = new TicketView({
-	                             model:model, 
-			              el: $("#"+attrs["selector_id"])	       
-	                         });
-	    
+  
+  var model = new TicketModel(attrs),
+      view = new TicketView({
+                               model:model, 
+                    el: $("#"+attrs["selector_id"])        
+                           });
+      
         view.render();
-	model.save();
+  model.save();
         this.Tickets.push(model);      
         
       } 
@@ -39,8 +39,8 @@
     
     addOneTicket: function(ticket) {
        var view = new TicketView({
-	                           model : ticket, 
-				    el: $("#"+ticket.get("selector_id"))	  
+                             model : ticket, 
+            el: $("#"+ticket.get("selector_id"))    
                                 });
        view.render();
     },
