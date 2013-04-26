@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130426074133) do
+ActiveRecord::Schema.define(:version => 20130426162830) do
 
   create_table "doctors", :force => true do |t|
     t.integer  "duration"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20130426074133) do
     t.string   "time"
     t.string   "data"
     t.string   "selector_id"
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|
