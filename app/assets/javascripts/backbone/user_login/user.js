@@ -5,7 +5,7 @@
     defaults : {
         id : 0,
         name : '',
-        role : {'unknown'},
+        role : {'guest'},
     }       
   });
  
