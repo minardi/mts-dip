@@ -1,19 +1,12 @@
 MTSDip::Application.routes.draw do
 
-
-
-  get "users/new"
-
   resources :users
 
-
   resources :tickets
-   
-  
-
 
   resources :specializations
 
+  resources :sessions, only: [:new, :create, :destroy]
 
   get "main/home"
 
