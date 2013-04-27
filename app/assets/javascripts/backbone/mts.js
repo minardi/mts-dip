@@ -4,3 +4,5 @@
 //= require ./daily_schedule/config
 //= require ./tickets/config
 //= require ./user_login/config
+
+//= require ./week_user_ticket/config

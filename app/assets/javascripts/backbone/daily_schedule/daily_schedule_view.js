@@ -110,7 +110,7 @@
 				$(timeline).addClass(timeline_class);
 				$(timeline).attr("id", this.model.get("doctor_id") + 
 									   "_" + 
-									   this.model.get("day") + 
+									   this.model.get("data") + 
 									   "_" + 
 									   timeline_time);
 
