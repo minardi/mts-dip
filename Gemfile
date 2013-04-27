@@ -23,7 +23,9 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+
 gem 'rails-backbone', '0.9.0' 
+
 
 gem 'jquery-rails'
 

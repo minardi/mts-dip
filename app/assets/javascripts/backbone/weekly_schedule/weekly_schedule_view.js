@@ -56,7 +56,7 @@
                             id : this.model.get('doctor_id'),
                             duration : this.model.get('doctor_duration'),
                             schedule : $(target).text(),
-                            data : this.model.get('schedule')[attr_data[1]]['data']
+                            day : this.model.get('schedule')[attr_data[1]]['data']
                         }
                     );
                 
@@ -67,7 +67,7 @@
                     Backbone.Mediator.pub('weekly_unselectItem', 
                         {
                             id : this.model.get('id'),
-                            data : this.model.get('schedule')[attr_data[1]]['data']                            
+                            day : this.model.get('schedule')[attr_data[1]]['data']                            
                         }
                     );
                     

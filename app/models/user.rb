@@ -1,11 +1,19 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :password
+  attr_accessible :email, :name, :password
+  has_many :tickets, dependent: :destroy #уничтожение билетиков вместе с пол-м
 
-<<<<<<< HEAD
-  #validates: email, :presence => true
-  #validates: password, :presence => true
-=======
-  validates :email, :presence => true
+  before_save { |user| user.email = email.downcase }
+  before_save :create_remember_token
 
->>>>>>> 8e4bd4e0a5d9b4da7e09ba98b95f572b722a4904
+  validates :name,  presence: true, length: { maximum: 50 }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }
+  validates :password, presence: true, length: { minimum: 6 }
+
+  private
+
+  def create_remember_token
+    self.remember_token = SecureRandom.urlsafe_base64
+  end
+
 end

@@ -5,7 +5,7 @@
 			template: JST["backbone/specializations/specializations_template"],
 
 	  		initialize: function() {
-	  			this.specs = new SpecsCollection(),
+	  			this.specs = new SpecsCollection();
 	  			this.specs.on("reset", this.render, this);
 	  			this.specs.fetch();
 	  		},
