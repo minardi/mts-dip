@@ -2,18 +2,15 @@ MTSDip::Application.routes.draw do
 
   resources :users
 
-
-  resources :users
-
   resources :tickets
 
   resources :specializations
 
-  resources :sessions, only: [:new, :create, :destroy]
+  #resources :sessions, only: [:new, :create, :destroy]
 
-  match '/signup',  to: 'users#new'
-  match '/signin',  to: 'sessions#new'
-  match '/signout', to: 'sessions#destroy', via: :delete
+  #match '/signup',  to: 'users#new'
+  #match '/signin',  to: 'sessions#new'
+  #match '/signout', to: 'sessions#destroy', via: :delete
 
   get "main/home"
 
