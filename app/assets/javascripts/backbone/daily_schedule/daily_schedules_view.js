@@ -19,27 +19,27 @@
 				var schedule_array = attr["schedule"].split(" - "),
 					schedule_start = schedule_array[0],
 					schedule_end = schedule_array[1];
-				
+
 				daily_schedule = new app.DailySchedule( { doctor_id: attr["id"],
 													      doctor_name: attr["name"],
-													      day: attr["day"],
+													      day: attr["data"],
 													      duration: attr["duration"],
 													      schedule_start: schedule_start,
 													      schedule_end: schedule_end,
 													      visible: true
 												      } );
-
+				//what the f*ck?
 				this.daily_schedules.add(daily_schedule);
-
 				this.$el.show();
 
 				daily_schedule_view = new app.DailyScheduleView( {model: daily_schedule} );
+
 
 				this.$el.find("#daily_schedules_content").append(daily_schedule_view.render().el);
 				
 				Backbone.Mediator.pub("timeline_render",{
 				                                          doctor_id: attr["id"],
-			                                                  data: attr["day"]				   
+			                                              data: attr["data"]				   
 				                                        });
 			},
 
