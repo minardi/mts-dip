@@ -5,7 +5,6 @@
 			template: JST["backbone/current_schedule/current_schedules_template"],
 						
 			initialize: function() {
-				this.current_schedules = new app.DailySchedules();
 
 				Backbone.Mediator.sub("user_logined", this.render, this);
 
@@ -17,13 +16,13 @@
 												        });	
 			},
 
-			addDailySchedule: function(attr) {
+			addSchedule: function(attr) {
 
 				var schedule_array = attr["schedule"].split(" - "),
 					schedule_start = schedule_array[0],
 					schedule_end = schedule_array[1];
 
-				daily_schedule = new app.DailySchedule( { doctor_id: attr["id"],
+				var current_schedule = new app.CurrentSchedule( { doctor_id: attr["id"],
 													      doctor_name: attr["name"],
 													      day: attr["day"],
 													      duration: attr["duration"],
@@ -34,14 +33,13 @@
 
 				this.$el.show();
 
-				current_schedule_view = new app.CurrentScheduleView( {model: daily_schedule} );
-
+				current_schedule_view = new app.CurrentScheduleView( {model: current_schedule} );
 				this.$el.find("#current_schedules_content").append(current_schedule_view.render().el);
 
-				Backbone.Mediator.pub("timeline_render",{
+				/*Backbone.Mediator.pub("timeline_render",{
 				                                          doctor_id: attr["id"],
 			                                              data: attr["day"]				   
-				                                        });
+				                                        });*/
 			},
 
 			formatDate: function(date) {
@@ -74,19 +72,19 @@
 					var mySchedule = new app.WeeklyModel(),
 						doctorHelpModel = new app.DoctorModel();
 
-						mySchedule.urlRoot =  "/weekly_schedules/" + param["id"] +".json";
-						doctorHelpModel.urlRoot =  "/doctors/" + param["id"] +".json";
+					mySchedule.urlRoot =  "/weekly_schedules/" + param["id"] +".json";
+					doctorHelpModel.urlRoot =  "/doctors/" + param["id"] +".json";
 
 					//обязательно сначала фетч и описание sync для доктора, после - для mySchedule
 					doctorHelpModel.fetch();
 
-					doctorHelpModel.on("sync", function () {
+					doctorHelpModel.on("change", function () {
 						duration = doctorHelpModel.get("duration");
 					}, this);
 
 					mySchedule.fetch();
 
-					mySchedule.on("sync", function () {
+					mySchedule.on("change", function () {
 
 						var daily_array = {},
 					    	date = new Date();
@@ -103,7 +101,7 @@
 
 					    for(i=0;i<=6;i++) {
 
-						    this.addDailySchedule({id: param["id"],
+						    this.addSchedule({id: param["id"],
 						    					   name: param["name"],
 						    					   day: this.formatDate(date),
 						    					   duration: doctorHelpModel.get("duration"),

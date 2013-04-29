@@ -7,7 +7,6 @@
 		template: JST["backbone/current_schedule/current_schedule_template"],
 
 		render: function() {
-			this.$el.addClass(this.model.get("doctor_id"));	
 			this.$el.html(this.template(this.model.toJSON()));
 
 			var session_duration = this.model.get("duration"),

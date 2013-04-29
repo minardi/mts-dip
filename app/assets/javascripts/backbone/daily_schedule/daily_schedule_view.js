@@ -28,7 +28,6 @@
 		},
 
 		ticketRemove: function(event) {
-
 			
 				var ticket_id = $(event.target).attr("id"),
 				    data = ticket_id.split("_");
