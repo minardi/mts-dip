@@ -9,10 +9,6 @@
 				"click": "specSelect"
 			},
 
-			initialize: function() {
-				
-			},
-
 			specSelect: function() {
 
 				var is_selected = this.model.get("is_selected");

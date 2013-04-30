@@ -22,7 +22,7 @@
 					schedule_start = schedule_array[0],
 					schedule_end = schedule_array[1];
 
-				var current_schedule = new app.CurrentSchedule( { doctor_id: attr["id"],
+				var daily_schedule = new app.DailySchedule( { doctor_id: attr["id"],
 													      doctor_name: attr["name"],
 													      day: attr["day"],
 													      duration: attr["duration"],
@@ -33,13 +33,13 @@
 
 				this.$el.show();
 
-				current_schedule_view = new app.CurrentScheduleView( {model: current_schedule} );
+				current_schedule_view = new app.CurrentScheduleView( {model: daily_schedule} );
 				this.$el.find("#current_schedules_content").append(current_schedule_view.render().el);
 
-				/*Backbone.Mediator.pub("timeline_render",{
+				Backbone.Mediator.pub("timeline_render",{
 				                                          doctor_id: attr["id"],
 			                                              data: attr["day"]				   
-				                                        });*/
+				                                        });
 			},
 
 			formatDate: function(date) {

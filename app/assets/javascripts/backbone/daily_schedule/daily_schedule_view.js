@@ -7,37 +7,30 @@
 		template: JST["backbone/daily_schedule/daily_schedule_template"],
 		
 		events: {
-      		"click .worktime" : "ticketAdd",
-      		
+      		"click .worktime" : "timelineSelect",	
     	},
 
     	initialize: function() {
     		this.model.on("change", this.deleteSchedule, this);
     	},
 
-    	ticketAdd: function(event) {
+    	timelineSelect: function(event) {
 			var ticket_id = $(event.target).attr("id"),
-			    data = ticket_id.split("_");
+				doctor_id = ticket_id.slice(3, ticket_id.indexOf("_")),
+				data = ticket_id.slice(ticket_id.indexOf("_") + 1, ticket_id.indexOf("t") - 1),
+				time = ticket_id.slice(ticket_id.indexOf("t") + 1);
 
-			Backbone.Mediator.pub("ticket_added", { doctor_id: data[0],
-													 data:  data[1],
-													 time: data[2],
+			time = time.charAt(0) +
+				   time.charAt(1) +
+				   ":" +
+				   time.charAt(2) +
+				   time.charAt(3);
+
+			Backbone.Mediator.pub("ticket_added", { doctor_id: doctor_id,
+													data:  data,
+													time: time,
 			                                        selector_id: ticket_id       
-												  });
-			
-		},
-
-		ticketRemove: function(event) {
-			
-				var ticket_id = $(event.target).attr("id"),
-				    data = ticket_id.split("_");
-				
-				Backbone.Mediator.pub("ticket_removed", { doctor_id: data[0],
-														   data:  data[1],
-														   time: data[2],
-			                                                  selector_id: ticket_id
-													    });
-			
+												  });	
 		},
 
 		deleteSchedule: function() {
@@ -99,7 +92,7 @@
 					$(timeline).css("background-color", "blue");
 				};
 				
-				//убираем : по просьбе Димы
+				//убираем : по
 				timeline_time = timeline_time.charAt(0) +
 								timeline_time.charAt(1) +
 								timeline_time.charAt(3) +
@@ -107,10 +100,12 @@
 
 				$(timeline).css("width", timeline_width);
 				$(timeline).addClass(timeline_class);
-				$(timeline).attr("id", this.model.get("doctor_id") + 
+				$(timeline).attr("id", "doc" +
+									   this.model.get("doctor_id") + 
 									   "_" + 
-									   this.model.get("data") + 
+									   this.model.get("day") + 
 									   "_" + 
+									   "t" +
 									   timeline_time);
 
 				this.$el.find(".timelines").append(timeline);
