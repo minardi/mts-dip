@@ -38,3 +38,13 @@ header {
 {
   background-color: green !important;
 }
+
+
+.time_row span { 
+  height: 24px;
+  width: 21%;
+  background: #CCCCF0;
+  display: block;
+  float: left;
+  margin: 1px;
+}

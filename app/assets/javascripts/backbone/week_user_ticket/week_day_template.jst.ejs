@@ -1,0 +1,12 @@
+    <td><%= day %>, <%= date %>-<%= month %>-<%= year %></td>
+
+    <%for(var i=0;i<9;i++) {%>
+       
+       <td class = "time_row"> 
+	     <span id = "<%=year%>_<%=month%>_<%=date%>_<%=8+i%>_00"> </span>
+		 <span id = "<%=year%>_<%=month%>_<%=date%>_<%=8+i%>_15"> </span>
+		 <span id = "<%=year%>_<%=month%>_<%=date%>_<%=8+i%>_30"> </span>
+		 <span id = "<%=year%>_<%=month%>_<%=date%>_<%=8+i%>_45"> </span>
+	   </td>
+
+    <%}%>
