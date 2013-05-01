@@ -7,8 +7,6 @@
 						
 			initialize: function() {
 				this.daily_schedules = new app.DailySchedules();
-				//model in collection is undefined 
-				console.log(this.daily_schedules);
 
 				Backbone.Mediator.sub("weekly_selectItem", this.addDailySchedule, this);
 				Backbone.Mediator.sub("weekly_unselectItem", this.removeDailySchedule, this);
@@ -47,6 +45,7 @@
 			},
 
 			removeDailySchedule: function(attr) {
+
 				var daily_schedule_to_remove = this.daily_schedules.where({ 
 																			doctor_id: attr["id"],
 																			data: attr["data"]

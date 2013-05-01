@@ -7,7 +7,6 @@
 	  		initialize: function() {
 	  			this.specs = new SpecsCollection();
 	  			this.specs.on("reset", this.render, this);
-	  			this.specs.fetch();
 	  		},
 			
 			addSpec: function(model) {

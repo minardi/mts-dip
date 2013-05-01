@@ -19,6 +19,8 @@ MTSDip::Application.routes.draw do
     
   resources :weekly_schedules
 
+  match 'weekly_schedules/:id/getduration' => 'weekly_schedules#getduration'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
