@@ -7,21 +7,23 @@
     
   
     initialize: function() {
-       this.addTickets(); 
+       this.WeekTickets = new WeekTicketsCollection; 
+
+       this.addTickets();       
     },
 
     addTickets: function() {
-      var WeekTickets = new WeekTicketsCollection,
+
           search_hash = {
                           user_id: 1,    // здесь нужно будет подставить Юзера
-                          //дата в формате "год месяц день" 
-                          data: this.model.get("year")+" "+
-                                this.model.get("month")+" "+
+                          //дата в формате "год_месяц_день" 
+                          data: this.model.get("year")+"_"+
+                                this.model.get("month")+"_"+
                                 this.model.get("date")   
                         };
-       
-      
-      WeekTickets.fetchByParam(search_hash, this.renderTickets, this);
+
+
+      this.WeekTickets.fetchByParam(search_hash, this.renderTickets, this);
 
     },
 
@@ -30,16 +32,18 @@
        
              if ( context != null ) {
                 self = context;
-             }
+             }             
 
           $.each(attrs, function(index, attr) {
 
             var model = new WeekTicketModel(attr),
-                // формат год_месяц_дата_час_минуты
-                selector_id = self.model.get("year")+"_"+
+                time = model.get("time").split(":"),  
+                // формат userid_год_месяц_дата_часминуты
+                selector_id = "user"+1+"_"+  // Здесь вместо 1 нужно будет вставить юзера
+                              self.model.get("year")+"_"+
                               self.model.get("month")+"_"+
-                              self.model.get("date")+"_"+
-                              model.get("time"),
+                              self.model.get("date")+"_t"+
+                              time[0]+""+time[1];
 
                 view = new WeekTicketView({
                                             model:model,

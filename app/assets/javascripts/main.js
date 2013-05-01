@@ -7,9 +7,9 @@ $(function () {
 
       ticketsView = new TicketsView(),
       weekly = new WeeklyCollectionView({el : $('#weekly-table')}),
-      weekdays = new WeekDaysView({el : $('#week_user_tickets')});  	
+      weekdays = new WeekDaysView({el : $('#week_user_tickets')}),  	
 
-  	  currentTimelines = new CurrentSchedulesView({el:$("#current_schedules")}),
+  	  currentTimelines = new CurrentSchedulesView({el:$("#current_schedules")});
 
       
  

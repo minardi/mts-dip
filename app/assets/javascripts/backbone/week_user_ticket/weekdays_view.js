@@ -18,16 +18,17 @@
 
       for(var i = 0; i < 7; i++) {
         date.setDate(date.getDate()+(i-date.getDay()));
-        
+          
         
         var model = new WeekDayModel({
                                            date: date.getDate(),
                                            month: (date.getMonth()+1),
                                            year:date.getFullYear(),
-                                           day:days[date.getDay()] 
+                                           day:days[date.getDay()],
+                                           user_id: 1  // здесь нужно будет подставить Юзера
                                         }),
         
-            view = new WeekDayView({model:model});
+        view = new WeekDayView({model:model});
 
         this.$el.append(view.render().el);
 

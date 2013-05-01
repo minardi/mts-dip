@@ -6,8 +6,7 @@
         doctor_id: 0,
         data: "",
         time: "",
-	    selector_id: "",
-	    user_id: 0
+	      user_id: 0
     }
 
   })

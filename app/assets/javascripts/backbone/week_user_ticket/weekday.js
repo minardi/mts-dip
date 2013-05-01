@@ -1,7 +1,6 @@
 (function(app) {
   
   app.WeekDayModel = Backbone.Model.extend({
-
     
     defaults:  {
         year: 0,

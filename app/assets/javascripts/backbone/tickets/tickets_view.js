@@ -46,16 +46,22 @@
 
 
     addTicket: function(attrs) {
-      
+
+     var  time = attrs["time"].split(":"),
+          selector_id = "doc"+attrs["doctor_id"]+"_"+
+                       attrs["data"]+"_t"+time[0]+""+time[1]; 
+
+
+    console.log(selector_id);  
     if (this.Tickets.is_there(attrs) == false) {
      
      // this attrs for save user id withaut user
-     attrs["user_id"] = 22;
+     attrs["user_id"] = 1;
 
      var model = new TicketModel(attrs),
          view = new TicketView({
                                model:model, 
-                               el: $("#"+attrs["selector_id"])        
+                               el: $("#"+selector_id)        
                            });
       
         view.render();
@@ -69,9 +75,14 @@
     
     addOneTicket: function(ticket) {
 
+      var  time = ticket.get("time").split(":"),
+           selector_id = "doc"+ticket.get("doctor_id")+"_"+
+                         ticket.get("data")+"_t"+time[0]+""+time[1]; 
+
+       console.log(selector_id);
        var view = new TicketView({
-                             model : ticket, 
-            el: $("#"+ticket.get("selector_id"))    
+                                   model : ticket, 
+                                   el: $("#"+selector_id)    
                                 });
        view.render();
     },

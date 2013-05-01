@@ -4,7 +4,7 @@
      url: '/tickets', 
      model: window.TicketModel,
      
-       is_there: function(attrs) {
+      is_there: function(attrs) {
        
            var hesh = {
 	                    doctor_id: attrs["doctor_id"],
@@ -24,26 +24,28 @@
 
         var url = this.url+".json?",
             params = [],
-            not_set_attrs = {},
+            add_attrs = {},
             self = this;
 
         for (name in parametrs) {
             params.push( name + "=" + encodeURIComponent( parametrs[name] ));
         }
             
-         url += params.join('&');
+        url += params.join('&');
 	    
         $.get(url, function(attrs) {
 
-	        $.each(attrs, function(index,attr) { 
-		       if (self.where(attr).length == 0) {
+	        $.each(attrs, function(index,attr) {
+
+		        if (self.where(attr).length == 0) {
+
 		          var model = new TicketModel(attr);
 		          self.add(model);
-                  not_set_attrs[index] = attr;		     
+              add_attrs[index] = attr;		     
 		        }		  
-		    });
+		      });
 
-            if (callback != null) callback(not_set_attrs, context);
+            if (callback != null) callback(add_attrs, context);
        });   
      }
      
