@@ -21,19 +21,29 @@
           
         
         var model = new WeekDayModel({
-                                           date: date.getDate(),
-                                           month: (date.getMonth()+1),
+                                           date: this.pre_nil(date.getDate()),
+                                           month: this.pre_nil(date.getMonth()+1),
                                            year:date.getFullYear(),
                                            day:days[date.getDay()],
                                            user_id: 1  // здесь нужно будет подставить Юзера
                                         }),
-        
+         
+       
         view = new WeekDayView({model:model});
 
         this.$el.append(view.render().el);
 
       }
 
+    },
+
+    pre_nil: function (data) {
+      
+      if (data < 10) {
+         data = "0" + data;
+      }    
+      
+      return data; 
     },
 
 
