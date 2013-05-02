@@ -70,6 +70,7 @@
                                                         id: doctor.get("id")                                   
                                                       });
            doctor.set({is_render: false});
+           doctor.set({is_select: false});
         }  
 
       },this) 

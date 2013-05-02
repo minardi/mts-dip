@@ -11,6 +11,8 @@
 
     initialize: function() {
       this.model.bind('change', this.render, this);
+
+      if (this.model.get("is_select")) { this.$el.addClass("selected_doctor");}   
     },
 
     

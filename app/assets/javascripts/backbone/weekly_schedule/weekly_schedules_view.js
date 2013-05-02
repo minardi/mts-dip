@@ -118,7 +118,8 @@
         
         removeSchedule : function(data) {
             var model = this.collect.where({doctor_id : data.id})[0];
-            model.set({selected : false})
+                if (model != null) { model.set({selected : false}) }
+                
         },
              events: {
             "click thead td":"dayPick",
