@@ -20,22 +20,22 @@
        var is_select = this.model.get("is_select");
        
        if (is_select) {
-	 is_select = false;
-	 this.$el.removeClass("selected_doctor");
-	 Backbone.Mediator.pub('doctor_unselected', { 
-	                                             id: this.model.get("id")
+	         is_select = false;
+	         this.$el.removeClass("selected_doctor");
+	         Backbone.Mediator.pub('doctor_unselected', { 
+	                                                      id: this.model.get("id")
 	                                              
-	                                          });
+	                                                    });
 	 
-       } else {
-	 is_select = true;
-	 this.$el.addClass("selected_doctor");
+        } else {
+	        is_select = true;
+	        this.$el.addClass("selected_doctor");
 	 
-	 Backbone.Mediator.pub('doctor_selected', { 
-	                                             id: this.model.get("id"),
-	                                             name: this.model.get("name"),
-			                              duration: this.model.get("duration") 
-	                                          });
+	        Backbone.Mediator.pub('doctor_selected', { 
+	                                                   id: this.model.get("id"),
+	                                                   name: this.model.get("name"),
+			                                               duration: this.model.get("duration") 
+	                                                  });
 	 
        }
        

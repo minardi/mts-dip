@@ -12,68 +12,93 @@
       this.$el.hide();
       
       this.AllDoctors = new DoctorsCollection();
-      this.CurentDoctors = new DoctorsCollection();
+      this.FetchDoctors = new DoctorsCollection();
+
+      this.FetchDoctors.on("reset",this.addSelDoctors,this);
       
-      this.CurentDoctors.on("reset",this.addAllDoctors,this);
+      Backbone.Mediator.sub('spec_selected', this.fetchDoctors,this);
+      Backbone.Mediator.sub('spec_unselected', this.unselDoctors,this);
       
-      Backbone.Mediator.sub('spec_selected', this.pushDoctors,this);
-      Backbone.Mediator.sub('spec_unselected', this.popDoctors,this);
-      
-      this.AllDoctors.fetch();
-       
     },
+
+    fetchDoctors: function(attr) {
+      var docs_length = this.AllDoctors.where({
+                                                specialization_id:attr["id"]
+                                              }).length; 
+
+      if (docs_length == 0) {
+         this.FetchDoctors.fetchBySpecId(attr["id"]);  
+      } else {  
+
+        this.AllDoctors.each(function(doctor) {
+         
+           if (doctor.get("specialization_id") == attr["id"]) {
+             doctor.set({is_render:true});
+           } 
+        
+        },this)
+
+        this.addAllDoctors(); 
+      }
+      
+    },
+
+    addSelDoctors: function() {
+
+      this.FetchDoctors.each(function(doctor) {
+
+         doctor.set({is_render:true});
+         this.AllDoctors.add(doctor);        
+         this.addOneDoctor(doctor);        
+
+         this.addAllDoctors();
+      },this);
+    },
+
     
-    pushDoctors: function(attr) {
+    
+    unselDoctors: function(attr) {
+        
+      // publishid mediator event with doctor, before remove model
       
       this.AllDoctors.each(function(doctor) {
-	
-	if (doctor.get("specialization_id") == attr["id"]) {
-	  this.CurentDoctors.push(doctor);	  
-	} 
-	
-      },this);
+        // проверяю если моделька подходит по параметрам спец и отрендерина то ... 
+       
+        if ((attr["id"] == doctor.get("specialization_id"))&&(doctor.get("is_render") == true)) {
+          
+           Backbone.Mediator.pub('doctor_unselected', { 
+                                                        id: doctor.get("id")                                   
+                                                      });
+           doctor.set({is_render: false});
+        }  
+
+      },this) 
       
-      if (this.CurentDoctors.length != 0) {
-         this.$el.show();            
-      }    
       
-      this.CurentDoctors.trigger("reset");	
-      
-    },
-    
-    popDoctors: function(attr) {
-      var doctors = this.CurentDoctors.where({
-	               specialization_id: parseInt(attr["id"],10)
-                     });
-      
-      // publishid mediator event with doctor, before remove model
-      $.each(doctors, function(index,doctor) {
-	Backbone.Mediator.pub('doctor_unselected', { 
-	                                             id: doctor.get("id")
-	                                            
-	                                          });
-	
-      }); 
-      
-      this.CurentDoctors.remove(doctors);
-      
-      if (this.CurentDoctors.length == 0) {
+      if (this.AllDoctors.where({is_render:true}).length == 0) {
          this.$el.hide();         	   
       }
       
-      this.CurentDoctors.trigger("reset");   
+      this.addAllDoctors();   
          
     },  
     
-    addAllDoctors: function() {
-      this.$el.html("");
-        
-      this.CurentDoctors.each(this.addOneDoctor,this)
+    addAllDoctors: function(attr) {
+      
+      this.$el.html(""); 
+      this.AllDoctors.each(this.addOneDoctor,this)
     }, 
     
-    addOneDoctor: function(m) {      
-      var view = new DoctorView({model:m});
-      this.$el.append(view.render().el);      
+    addOneDoctor: function(m) {
+
+        if (m.get("is_render") == true) {
+           this.$el.show();   
+           var view = new DoctorView({model:m});
+           
+           m.set({is_render: true});
+           this.$el.append(view.render().el); 
+        } 
+
     },
    
     // Re-render the titles of the stick item.

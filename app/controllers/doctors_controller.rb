@@ -2,7 +2,15 @@ class DoctorsController < ApplicationController
   # GET /doctors
   # GET /doctors.json
   def index
-    @doctors = Doctor.all
+    
+    if params[:specialization_id] != nil 
+      @doctors = Doctor.where(:specialization_id => params[:specialization_id])
+
+    else
+      @doctors = Doctor.all
+    end 
+     
+    
 
     respond_to do |format|
       format.html # index.html.erb

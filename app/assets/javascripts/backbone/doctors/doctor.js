@@ -5,8 +5,9 @@
       return {
         name: "",
         duration: 0,
-		is_select: false,
-		specialization_id: null
+		    is_select: false,
+		    specialization_id: null,
+        is_render: false
 	
       }
     }
