@@ -69,19 +69,9 @@
 
 				if (param["role"] == "doctor") {
 
-					var mySchedule = new app.WeeklyModel(),
-						doctorHelpModel = new app.DoctorModel();
+					var mySchedule = new app.WeeklyModel();
 
-					mySchedule.urlRoot =  "/weekly_schedules/" + param["id"] +".json";
-					doctorHelpModel.urlRoot =  "/doctors/" + param["id"] +".json";
-
-					//обязательно сначала фетч и описание sync для доктора, после - для mySchedule
-					doctorHelpModel.fetch();
-
-					doctorHelpModel.on("change", function () {
-						duration = doctorHelpModel.get("duration");
-					}, this);
-
+					mySchedule.urlRoot =  "/weekly_schedules/" + param["id"] +"/getduration.json";
 					mySchedule.fetch();
 
 					mySchedule.on("change", function () {
@@ -101,10 +91,10 @@
 
 					    for(i=0;i<=6;i++) {
 
-						    this.addSchedule({id: param["id"],
+						    this.addSchedule({id:  param["id"],
 						    					   name: param["name"],
 						    					   day: this.formatDate(date),
-						    					   duration: doctorHelpModel.get("duration"),
+						    					   duration: mySchedule.get("doctor_duration"),
 						    					   schedule: daily_array[i]
 						    					  });
 
