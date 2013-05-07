@@ -30,7 +30,7 @@
                     $('<td />', 
                         {
                            text : schedule[i].start + ' - ' + schedule[i].end,
-                           id : this.model.get('doctor_name') + '-' + i,
+                           id : 'doc'+ this.model.get('doctor_id') + '-' + i,
                            "class" : 'schedule-item'
                         }
                     )
