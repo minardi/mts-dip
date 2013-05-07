@@ -15,6 +15,8 @@
     	},
 
     	timelineSelect: function(event) {
+
+    		//отдельный метод
 			var ticket_id = $(event.target).attr("id"),
 				doctor_id = ticket_id.slice(3, ticket_id.indexOf("_")),
 				data = ticket_id.slice(ticket_id.indexOf("_") + 1, ticket_id.indexOf("t") - 1),
@@ -41,18 +43,23 @@
 		},
 
 		render: function() {
-			this.$el.addClass(this.model.get("doctor_id"));	
-			this.$el.html(this.template(this.model.toJSON()));
+			//разделить по действиям
 
-			var session_duration = this.model.get("duration"),
+			var duration = this.model.get("duration"),
+				date = new Date(0, 0, 0, 8, 0, 0, 0),
+				//запилить хэшом
 				timelines_num = 0,
 				timeline_class = "timeline",
 				timeline_width = "",
 				timeline_start = this.model.get("schedule_start"),
-				timeline_end = this.model.get("schedule_end"),
-				date = new Date();
+				timeline_end = this.model.get("schedule_end");
+				
+
+			this.$el.addClass(this.model.get("doctor_id"));	
+			this.$el.html(this.template(this.model.toJSON()));
 
 			//добавляем нули при необходимости (для совпадения форматов времени сеанса и текущего времени таймлайна)
+			//ОТДЕЛЬНЫЙ МЕТОД
 			if (timeline_start.length == 4) {
 				timeline_start = "0" + timeline_start;
 			}
@@ -61,22 +68,24 @@
 			}
 
 			//начало рабочего дня - 8:00
-			date.setHours(8, 0);
+			//date.setHours(8, 0);
 
 			//устанавливаем кол-во таймлайнов в зависимости от duration
-			switch (session_duration){
+			//учесть 45 минут
+			switch (duration) {
 				case 15:
 					timelines_num = 36;
-				break;
+					break;
 				case 30:
 					timelines_num = 18;
-				break;
+					break;
 				case 60:
 					timelines_num = 9;
-				break;
+					break;
 			}
 
 			//вычисляем ширину 1-го таймлайна
+			//округлить
 			timeline_width = ((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - timelines_num) / +timelines_num + "px";
 
 			//рисуем спаны-таймлайны
@@ -97,7 +106,7 @@
 								timeline_time.charAt(1) +
 								timeline_time.charAt(3) +
 								timeline_time.charAt(4);
-
+				//сделать змейкой
 				$(timeline).css("width", timeline_width);
 				$(timeline).addClass(timeline_class);
 				$(timeline).attr("id", "doc" +
@@ -111,7 +120,7 @@
 				this.$el.find(".timelines").append(timeline);
 
 				//увеличиваем время для след. таймлайна
-				date.setMinutes(date.getMinutes() + session_duration);
+				date.setMinutes(date.getMinutes() + duration);
 			}
 
       		return this;		

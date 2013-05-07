@@ -2,7 +2,7 @@
 
 	app.DailySchedulesView = Backbone.View.extend({		
 
-			el: $("#daily_schedules"), 
+			//el: $("#daily_schedules"), 
 			template: JST["backbone/daily_schedule/daily_schedules_template"],
 						
 			initialize: function() {
@@ -23,7 +23,7 @@
 
 			    daily_schedule = new app.DailySchedule( { doctor_id: attr["id"],
 													      doctor_name: attr["name"],
-													      data: attr["data"],
+													      day: attr["day"],
 													      duration: attr["duration"],
 													      schedule_start: schedule_start,
 													      schedule_end: schedule_end,
@@ -48,7 +48,7 @@
 
 				var daily_schedule_to_remove = this.daily_schedules.where({ 
 																			doctor_id: attr["id"],
-																			data: attr["data"]
+																			day: attr["day"]
                     													  });
 				daily_schedule_to_remove[0].set("visible", false);
 				this.daily_schedules.remove(daily_schedule_to_remove);

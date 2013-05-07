@@ -6,20 +6,23 @@
     template: JST["backbone/doctors/doctor_template"],
     
     events: {
-      "click "   : "chose",
+      "click" : "chose",
     },
 
     initialize: function() {
-      this.model.bind('change', this.render, this);
+      this.model.on("change", this.render, this);
 
-      if (this.model.get("is_select")) { this.$el.addClass("selected_doctor");}   
+      if (this.model.is_select) { 
+        this.$el.addClass("selected_doctor");
+      }   
     },
 
     
     // Switch this view into `"editing"` mode, displaying the input field.
     chose: function(el) {
       
-       var is_select = this.model.get("is_select");
+      //refactor as a specializations
+       var is_select = this.model.is_select;
        
        if (is_select) {
 	         is_select = false;
@@ -41,7 +44,7 @@
 	 
        }
        
-       this.model.set({"is_select":is_select});
+       this.model.is_select = is_select;
        
        return false;
        
