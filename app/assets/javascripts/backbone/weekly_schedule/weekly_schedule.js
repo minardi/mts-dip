@@ -7,12 +7,9 @@ WeeklyModel = Backbone.Model.extend({
             doctor_id : 0 ,
             doctor_name : '' ,
             doctor_duration : 0 ,
-           // selected : false
         },
         
         selected : false,
-        
-        urlRoot : '/weekly_schedules',
         
         initialize : function() {
             
@@ -32,8 +29,8 @@ WeeklyModel = Backbone.Model.extend({
             var schedule = this.get('schedule');
             
             schedule[day]['selected'] = (schedule[day]['selected'] === true) ? false :  true; 
-            
             this.set({'schedule' : schedule});
+            
             return schedule[day]['selected'];
         },
         
@@ -46,13 +43,9 @@ WeeklyModel = Backbone.Model.extend({
             }
             
             this.set({schedule : schedule});
-            return false;
+            
         }
         
-        
-        
-        
-      
  });
  
  }(window))

@@ -5,11 +5,11 @@
         tagName : 'tr',
         
         initialize : function(){
-            this.model.on('change:selected', this.unselectItem, this)
+            this.model.on('change:selected', this.selfRemove, this)
         },
         
         events : {
-            'click .schedule-item' : 'selectItem'
+            'click .schedule-item' : 'selectHandler'
         },
         
         render : function(){
@@ -41,14 +41,28 @@
             return this;
         },
         
-        selectItem : function(e){
-            var target = e.target || e,
-            attr_data = $(target).attr('id').split('-');
+        activeTrigger : function(elem){
             
-            if(attr_data.length === 2){
+        (elem.hasClass('active')) ? elem.removeClass('active') : elem.addClass('active');
+                   
+        },
+        
+        selectHandler : function(e){
+            
+            target = $(e.target);
+            
+            this.selectItem(target.attr('id').split('-')[1]);
+            
+            this.activeTrigger(target) 
+            
+        
+        },
+        
+        selectItem : function(day) {
+            
+            if(day) {
                 
-                if(this.model.scheduleTrigger(attr_data[1])){
-                    $(target).addClass('active');
+                if(this.model.scheduleTrigger(day)) {
                     
                     Backbone.Mediator.pub('weekly_selectItem', 
                         {
@@ -56,37 +70,39 @@
                             id : this.model.get('doctor_id'),
                             duration : this.model.get('doctor_duration'),
                             schedule : $(target).text(),
-                            day : this.model.get('schedule')[attr_data[1]]['data']
+                            day : this.model.get('schedule')[day]['data']
                         }
                     );
                 
                      
                 }else{
-                    $(target).removeClass('active');
-                    
+        
                     Backbone.Mediator.pub('weekly_unselectItem', 
                         {
                             id : this.model.get('id'),
-                            day : this.model.get('schedule')[attr_data[1]]['data']                            
+                            day : this.model.get('schedule')[day]['data']                            
                         }
                     );
                     
                 }
                 
             }else{
-                console.warn('wrong id or selected element');
+                console.warn('wrong parametr day in function selectItem');
             }
 
         },
         
-        unselectItem : function (obj, value){
-            var self = this;
+        unselectedItem : function () {
+            
+            console.log(this);
+            
+        },
+        
+        selfRemove : function (obj, value) {
             
             if(value === false){
-                this.$el.find('.active').each(function(i){
-                    self.selectItem(this)
-                });
                 
+                this.unselectedItem();
                 this.remove();
                 
             }

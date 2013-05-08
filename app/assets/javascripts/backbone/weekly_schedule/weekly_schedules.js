@@ -8,8 +8,6 @@
         
         findByParam : function (parametrs, callback){
             
-            
-            
             var url = '/weekly_schedules/search.json?',
                 params = [];
                  
