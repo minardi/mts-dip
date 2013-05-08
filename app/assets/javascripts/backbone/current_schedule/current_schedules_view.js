@@ -46,21 +46,9 @@
 
 				var dd = date.getDate(),
 					mm = date.getMonth() + 1,
-					yy = date.getFullYear() % 100;
+					yyyy = date.getFullYear();
 
-  				if (dd < 10) {
-  					dd = '0' + dd;
-  				}
-
-  				if (mm < 10) {
-  					mm = '0' + mm;
-  				}	
-
-  				if (yy < 10) {
-  					yy = '0' + yy;
-  				}
-
-  				return dd + '.' + mm + '.' + yy;
+  				return dd + '-' + mm + '-' + yyyy;
 			},
 				
 			render: function(param) {

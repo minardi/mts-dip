@@ -87,8 +87,8 @@
         renderDay : function(date, day) {
             var elem = this.$el.find('thead tr');
             
-            this.days[day] = date.getDate() + '_' + 
-                (date.getMonth()+1) + '_' + date.getFullYear();
+            this.days[day] = date.getDate() + '-' + 
+                (date.getMonth()+1) + '-' + date.getFullYear();
            
             elem.append(
                 $('<td>', 
