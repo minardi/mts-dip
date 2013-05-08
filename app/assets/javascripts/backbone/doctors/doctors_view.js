@@ -6,7 +6,7 @@
     tagName: "ul",
 
     initialize: function() {  
-      
+      //Димон, wtf???
       this.$el.append(this.template);
       this.$el = this.$el.find(":first-child") ;
       this.$el.hide();
@@ -36,7 +36,7 @@
              doctor.set({is_render:true});
            } 
         
-        },this)
+        }, this)
 
         this.addAllDoctors(); 
       }
@@ -87,7 +87,7 @@
     addAllDoctors: function(attr) {
       
       this.$el.html(""); 
-      this.AllDoctors.each(this.addOneDoctor,this)
+      this.AllDoctors.each(this.addOneDoctor, this)
     }, 
     
     addOneDoctor: function(m) {
@@ -96,7 +96,7 @@
            this.$el.show();   
            var view = new DoctorView({model:m});
            
-           m.set({is_render: true});
+           //m.set({is_render: true});
            this.$el.append(view.render().el); 
         } 
 

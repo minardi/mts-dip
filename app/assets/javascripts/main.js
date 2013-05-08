@@ -1,8 +1,7 @@
 $(function () {	
 
-
   var specializationList = new SpecsView({el:$("#specializations")}),
-  	  doctorsView = new DoctorsView({el:$(".doctors")}),
+  	  doctorsView = new DoctorsView({el:$("#doctors")}),
   	  dayTimelines = new DailySchedulesView({el:$("#daily_schedules")}),
 
       ticketsView = new TicketsView(),

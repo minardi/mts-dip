@@ -2,7 +2,6 @@
 
 	app.DailySchedulesView = Backbone.View.extend({		
 
-			el: $("#daily_schedules"), 
 			template: JST["backbone/daily_schedule/daily_schedules_template"],
 						
 			initialize: function() {
@@ -15,19 +14,24 @@
 				this.$el.hide();	
 			},
 
+			splitScheduleStr: function(schedule_str) {
+
+				var schedule_array = schedule_str.split(" - ");
+
+				return {start: schedule_array[0],
+						end: schedule_array[1]}
+			},
+
 			addDailySchedule: function(attr) {
 
-				var schedule_array = attr["schedule"].split(" - "),
-					schedule_start = schedule_array[0],
-					schedule_end = schedule_array[1];
+				var schedule_time = this.splitScheduleStr(attr["schedule"]);
 
 			    daily_schedule = new app.DailySchedule( { doctor_id: attr["id"],
 													      doctor_name: attr["name"],
-													      data: attr["data"],
+													      day: attr["day"],
 													      duration: attr["duration"],
-													      schedule_start: schedule_start,
-													      schedule_end: schedule_end,
-													      visible: true
+													      schedule_start: schedule_time.start,
+													      schedule_end: schedule_time.end,
 												      } );
 
 				this.daily_schedules.add(daily_schedule);
@@ -39,16 +43,15 @@
 				
 				Backbone.Mediator.pub("timeline_render",{
 				                                          doctor_id: attr["id"],
-			                                              data: attr["data"]	   
+			                                              data: attr["day"]	   
 				                                        });
-				console.log(attr);
 			},
 
 			removeDailySchedule: function(attr) {
 
 				var daily_schedule_to_remove = this.daily_schedules.where({ 
 																			doctor_id: attr["id"],
-																			data: attr["data"]
+																			day: attr["day"]
                     													  });
 				daily_schedule_to_remove[0].set("visible", false);
 				this.daily_schedules.remove(daily_schedule_to_remove);

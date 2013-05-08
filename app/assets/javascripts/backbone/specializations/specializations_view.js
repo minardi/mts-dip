@@ -11,12 +11,11 @@
 			
 			addSpec: function(model) {
 				var spec = new app.SpecView({model: model});
-				this.$el.find("ul").append(spec.render().el);					
+				this.$el.children("ul").append(spec.render().el);					
 			},
 			
 			render: function() {
 				this.$el.html(this.template());
-				//this.$el.find("ul").append(this.$el);
 				this.specs.each(this.addSpec, this);	
 				return this;
 			}				

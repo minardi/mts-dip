@@ -15,103 +15,133 @@
     	},
 
     	timelineSelect: function(event) {
-			var ticket_id = $(event.target).attr("id"),
-				doctor_id = ticket_id.slice(3, ticket_id.indexOf("_")),
-				data = ticket_id.slice(ticket_id.indexOf("_") + 1, ticket_id.indexOf("t") - 1),
-				time = ticket_id.slice(ticket_id.indexOf("t") + 1);
+    		var element = event.target;
+    			parsed_id = this.ticketIdParse(element);
+    			console.log(parsed_id);
 
-			time = time.charAt(0) +
-				   time.charAt(1) +
-				   ":" +
-				   time.charAt(2) +
-				   time.charAt(3);
-
-			Backbone.Mediator.pub("ticket_added", { doctor_id: doctor_id,
-													data:  data,
-													time: time,
-			                                        selector_id: ticket_id       
-												  });	
+			Backbone.Mediator.pub("ticket_added", { doctor_id: parsed_id.doctor_id,
+													data: parsed_id.data,
+													time: parsed_id.time,
+											        selector_id: parsed_id.selector_id });	
 		},
 
 		deleteSchedule: function() {
+
 			if (this.model.get("visible") == false) {
 				delete this.model;
 				this.remove();
 			}
 		},
 
-		render: function() {
-			this.$el.addClass(this.model.get("doctor_id"));	
-			this.$el.html(this.template(this.model.toJSON()));
+    	ticketIdParse: function(element) {
 
-			var session_duration = this.model.get("duration"),
-				timelines_num = 0,
-				timeline_class = "timeline",
-				timeline_width = "",
-				timeline_start = this.model.get("schedule_start"),
-				timeline_end = this.model.get("schedule_end"),
-				date = new Date();
+    		var ticket_id = $(element).attr("id"),
+				doctor_id = ticket_id.slice(3, ticket_id.indexOf("_")),
+				data = ticket_id.slice(ticket_id.indexOf("_") + 1, ticket_id.indexOf("t") - 1),
+				time = ticket_id.slice(ticket_id.indexOf("t") + 1);
 
-			//добавляем нули при необходимости (для совпадения форматов времени сеанса и текущего времени таймлайна)
-			if (timeline_start.length == 4) {
-				timeline_start = "0" + timeline_start;
-			}
-			if (timeline_end.length == 4) {
-				timeline_end = "0" + timeline_end;
-			}
+			time = time.charAt(0) + time.charAt(1) + ":" + time.charAt(2) + time.charAt(3);
+	
+			return {doctor_id: doctor_id,
+					data:  data,
+					time: time,
+			        selector_id: ticket_id}
+    	},
 
-			//начало рабочего дня - 8:00
-			date.setHours(8, 0);
+		timeFix: function(time) {
 
-			//устанавливаем кол-во таймлайнов в зависимости от duration
-			switch (session_duration){
+			(time.length == 4) ? (time = "0" + time) : time = time;
+			return time;
+		},
+
+		formateDayStr: function(day_str) {	
+
+				var day_arr = day_str.split("-"),
+					dd = day_arr[0],
+					mm = day_arr[1];
+
+				if (dd < 10) {
+  					dd = '0' + dd;
+  				}
+
+  				if (mm < 10) {
+  					mm = '0' + mm;
+  				}	
+					
+				return dd + "." + mm + "." + day_arr[2].slice(2);
+		},
+
+		getTimelineAttrs: function(model) {
+
+			var duration = model.get("duration"),
+				date = new Date(0, 0, 0, 8, 0, 0, 0),
+				amount = 0,
+				cssclass = "timeline",
+				start = this.timeFix(model.get("schedule_start")),
+				end = this.timeFix(model.get("schedule_end"));
+
+			switch (duration) {
 				case 15:
-					timelines_num = 36;
-				break;
+					amount = 36;
+					break;
 				case 30:
-					timelines_num = 18;
-				break;
+					amount = 18;
+					break;
+				case 45:
+					amount = 12;
+					break;
 				case 60:
-					timelines_num = 9;
-				break;
+					amount = 9;
+					break;
 			}
 
-			//вычисляем ширину 1-го таймлайна
-			timeline_width = ((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - timelines_num) / +timelines_num + "px";
+			width = (((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(2) + "px";
 
-			//рисуем спаны-таймлайны
-			for (var i = 1; i <= timelines_num; i++) {
+
+			return {duration: duration,
+					date: date,
+					amount: amount,
+					start: start,
+					end: end,
+					cssclass: cssclass,
+					width: width}
+		},
+
+		setTimelineAttrs: function(element, doctor_id, day, time, width, cssclass) {
+
+			time = time.charAt(0) + time.charAt(1) + time.charAt(3) + time.charAt(4);
+
+			$(element).attr("id", "doc" + doctor_id + "_" + day + "_t" + time);
+			$(element).css("width", width);
+			$(element).addClass(cssclass);
+		},
+
+		render: function() {
+
+			this.$el.html(this.template({ doctor_name: this.model.get("doctor_name"), 
+										  day: this.formateDayStr(this.model.get("day")) }));
+
+			timeline_attrs = this.getTimelineAttrs(this.model);
+
+			for (var i = 1; i <= timeline_attrs.amount; i++) {
 
 				timeline = document.createElement("span");
-				time = date.toTimeString();
-				timeline_time = time.slice(0, 5);
+				current_time = timeline_attrs.date.toTimeString();
+				current_time = current_time.slice(0, 5);
 
-				//меняем стиль рабочих часов
-				if ( (timeline_time >= timeline_start ) && ( timeline_time < timeline_end ) ) {
+				if ( (current_time >= timeline_attrs.start) && (current_time < timeline_attrs.end) ) {
 				    $(timeline).addClass("worktime");
-					$(timeline).css("background-color", "blue");
 				};
 				
-				//убираем : по
-				timeline_time = timeline_time.charAt(0) +
-								timeline_time.charAt(1) +
-								timeline_time.charAt(3) +
-								timeline_time.charAt(4);
+				this.setTimelineAttrs(timeline, 
+									  this.model.get("doctor_id"),
+									  this.model.get("day"), current_time,
+									  timeline_attrs.width, 
+									  timeline_attrs.cssclass);
 
-				$(timeline).css("width", timeline_width);
-				$(timeline).addClass(timeline_class);
-				$(timeline).attr("id", "doc" +
-									   this.model.get("doctor_id") + 
-									   "_" + 
-									   this.model.get("day") + 
-									   "_" + 
-									   "t" +
-									   timeline_time);
+				this.$el.children(".timelines").append(timeline);
 
-				this.$el.find(".timelines").append(timeline);
-
-				//увеличиваем время для след. таймлайна
-				date.setMinutes(date.getMinutes() + session_duration);
+				timeline_attrs.date.setMinutes(timeline_attrs.date.getMinutes() + timeline_attrs.duration);
 			}
 
       		return this;		
