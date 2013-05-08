@@ -18,7 +18,7 @@
 
         },
 
-       selectStick: function(attr) {  
+       selectStick: function(attrs) {  
 
             var date = new Date(),
                 year = 1900 + date.getYear(),
@@ -29,14 +29,15 @@
                 seconds = date.getSeconds(),
                 model = new app.TicketModel();
                 console.log(this.allTickets);
-                console.log(this.CurentTickets);
-                //console.log(attr);
-                //console.log(model);
- 
+
+
             this.allTickets.each(function(model) {
-                //console.log(this.CurentTickets);
-               // if (ticket.get("data") <=??? ) {
-                    this.CurentTickets.add(model);//}
+                console.log(model.get("data").split("_"));
+                var date = model.get("data").split("_");
+                
+               /*if (model.get("data") <=??? ) {*/
+                    this.CurentTickets.add(model);
+                    this.addStick(model);//}
             }, this);
 
               console.log(this.CurentTickets);
@@ -44,16 +45,14 @@
         },
 
         addStickers: function() {
-            this.CurentTickets.each(this.addStick, this);
-            this.selectStick();
 
+            this.CurentTickets.each(this.addStick, this);
 
         },
 
         addStick: function(model) {
 
-            var model = new TicketModel(),
-                view = new NextTicketView({model:model});
+            var view = new NextTicketView({model:model});
 
             this.$el.append(view.render().el);
 
