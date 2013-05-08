@@ -4,8 +4,10 @@
           
     defaults : {
         id : 0,
+        email: '',
+        password: '',
         name : '',
-        role : {'guest'},
+        role : 'guest'
     }       
   });
  

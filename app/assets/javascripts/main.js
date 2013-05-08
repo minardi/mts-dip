@@ -8,8 +8,11 @@ $(function () {
       weekly = new WeeklyCollectionView({el : $('#weekly-table')}),
       weekdays = new WeekDaysView({el : $('#week_user_tickets')}),  	
 
-  	  currentTimelines = new CurrentSchedulesView({el:$("#current_schedules")});
+  	  currentTimelines = new CurrentSchedulesView({el:$("#current_schedules")}),
 
+      user = new UserView({el: $("#login_block")});
+
+      console.log(user.render().el);
       
  
 });
