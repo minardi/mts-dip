@@ -7,7 +7,9 @@
         email: '',
         password: '',
         name : '',
-        role : 'guest'
+        role : {
+        		type : 'guest'
+        	   }
     }       
   });
  
