@@ -10,7 +10,11 @@
         
         initialize : function(){
             
-            this.collect.on("add", this.addSchedule, this)
+            this.collect.on("reset", this.addSchedule, this);
+            
+            this.collect.on("all", function(eventName) {
+                      console.log(eventName);
+                    });
             
             Backbone.Mediator.sub('doctor_selected', this.addHandler, this);
             Backbone.Mediator.sub('doctor_unselected', this.removeSchedule, this)
@@ -31,22 +35,19 @@
             }
            
             if(model.length === 0){
-                this.collect.findByParam({doctor_id: data.id}, 
-                function (model){
-                    self.collect.add(model)
-                    }
-                );  
+                this.collect.shiftUrl('search')
+                this.collect.fetch({data : {doctor_id: data.id}});  
             }else{
                 this.addSchedule(model[0])
             }
            
         },
         
-        addSchedule : function (model) {
+        addSchedule : function (collection, model, data) {
             
             var view = {};
-            
-            if(model){
+            console.log(collection, model, data)
+            /*if(model){
                 
                 model.set({
                     'doctor_name' : this.schedule_data.name,
@@ -64,7 +65,7 @@
                 
             }else{
                 console.warn("this doctor don't have schedule list ");
-            }
+            }*/
           
             
         },

@@ -43,7 +43,7 @@
         
         activeTrigger : function(elem){
             
-        (elem.hasClass('active')) ? elem.removeClass('active') : elem.addClass('active');
+            (elem.hasClass('active')) ? elem.removeClass('active') : elem.addClass('active');
                    
         },
         
@@ -52,10 +52,7 @@
             target = $(e.target);
             
             this.selectItem(target.attr('id').split('-')[1]);
-            
             this.activeTrigger(target) 
-            
-        
         },
         
         selectItem : function(day) {
@@ -94,7 +91,17 @@
         
         unselectedItem : function () {
             
-            console.log(this);
+            var schedule = this.model.get('schedule');
+            
+            for (day in schedule){
+                
+                if(schedule[day]['selected'] === true){
+                    
+                    this.selectItem(day);
+                    this.activeTrigger(this.$el.find('#doc'+ this.model.get('doctor_id') + '-' + day));
+                }
+                
+            }
             
         },
         
