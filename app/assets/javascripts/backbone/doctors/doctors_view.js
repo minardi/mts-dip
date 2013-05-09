@@ -51,7 +51,6 @@
          this.AllDoctors.add(doctor);        
          this.addOneDoctor(doctor);        
 
-         this.addAllDoctors();
       },this);
     },
 
@@ -70,7 +69,7 @@
                                                         id: doctor.get("id")                                   
                                                       });
            doctor.set({is_render: false});
-           doctor.set({is_select: false});
+
         }  
 
       },this) 
@@ -96,7 +95,6 @@
            this.$el.show();   
            var view = new DoctorView({model:m});
            
-           //m.set({is_render: true});
            this.$el.append(view.render().el); 
         } 
 
