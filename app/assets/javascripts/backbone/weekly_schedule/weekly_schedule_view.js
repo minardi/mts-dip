@@ -4,6 +4,8 @@
         
         tagName : 'tr',
         
+        collTemplate :  JST["backbone/weekly_schedule/weekly_schedule_collTemplate"],
+        
         initialize : function(){
             this.model.on('change:selected', this.selfRemove, this)
         },
@@ -17,21 +19,25 @@
             var schedule =  this.model.get('schedule');
  
             this.$el.append(
-                $('<td />', 
-                    {
-                        text : this.model.get('doctor_name')
-                    }
-                )
+            
+                this.collTemplate(
+                        {
+                            text : this.model.get('doctor_name'),
+                            id : 'doc'+ this.model.get('doctor_id') + '-name',
+                            class_name : "schedule-name"
+                        }
+                    )
             );
             
             for(i in schedule){
                 
                 this.$el.append(
-                    $('<td />', 
+                
+                    this.collTemplate(
                         {
-                           text : schedule[i].start + ' - ' + schedule[i].end,
-                           id : 'doc'+ this.model.get('doctor_id') + '-' + i,
-                           "class" : 'schedule-item'
+                            text : schedule[i].start + ' - ' + schedule[i].end,
+                            id : 'doc'+ this.model.get('doctor_id') + '-' + i,
+                            class_name : "schedule-item"
                         }
                     )
                 );
