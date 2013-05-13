@@ -12,9 +12,11 @@ MTSDip::Application.routes.draw do
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
 
-  get "main/home"
 
+  get "main/home"
   root :to => 'main#home'
+
+  match '/doctors/:specialization_id', to: "doctors#index"
   resources :doctors
     
   resources :weekly_schedules
