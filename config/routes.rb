@@ -21,6 +21,8 @@ MTSDip::Application.routes.draw do
 
   match 'weekly_schedules/:id/getduration' => 'weekly_schedules#getduration'
 
+  match 'tickets/:user_id/doctor_name' => 'tickets#doctor_name'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

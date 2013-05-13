@@ -1,52 +1,37 @@
 (function(app) {
     app.NextTicketsView = Backbone.View.extend({
 
-        tagName:"ul",
-       // template: JST["backbone/tickets/next_tickets_template"],
-
         initialize: function() {
 
-            this.allTickets = new TicketsCollection();
-            this.CurentTickets = new TicketsCollection();
+            //this.allTickets = new TicketsCollection();
+            this.Tickets = new TicketsCollection();
             
-            this.CurentTickets.on("reset", this.addStickers, this);
-            this.allTickets.on("reset", this.selectStick, this);
+            this.Tickets.on("reset", this.render, this);
 
-            Backbone.Mediator.sub('user_login', this.render, this);
-
-            this.allTickets.fetch();
+            Backbone.Mediator.sub("user_login", this.Tickets.updateURL);
 
         },
 
-       selectStick: function(attrs) {  
+       selectStick: function() {  
 
-            var date = new Date(),
-                year = 1900 + date.getYear(),
-                month = 1 + date.getMonth(),
-                day = date.getDate(),
-                hours = date.getHours(),
-                minutes = date.getMinutes(),
-                seconds = date.getSeconds(),
-                model = new app.TicketModel();
-                console.log(this.allTickets);
+            // var model = new app.TicketModel();
+            //     console.log(this.allTickets);
 
 
-            this.allTickets.each(function(model) {
-                console.log(model.get("data").split("_"));
-                var date = model.get("data").split("_");
+            // this.allTickets.each(function(model) {
                 
-               /*if (model.get("data") <=??? ) {*/
-                    this.CurentTickets.add(model);
-                    this.addStick(model);//}
-            }, this);
+            //    if (model.get("data") <=?????????Wait Nor's new Date???????????????? ) {
+            //         this.CurentTickets.add(model);
+            //         //this.addStick(model);//???????????????????Delete before release?????????????????}
+            // }, this);
 
-              console.log(this.CurentTickets);
+            //   console.log(this.CurentTickets);
 
         },
 
         addStickers: function() {
 
-            this.CurentTickets.each(this.addStick, this);
+            this.Tickets.each(this.addStick, this);
 
         },
 
@@ -59,7 +44,8 @@
         },
 
         render:function() {
-
+            console.log(this.Tickets);
+            console.log("blabla");
             this.$el.html("");
             this.addStickers();
             return this;
