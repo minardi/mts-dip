@@ -31,6 +31,8 @@ WeeklyModel = Backbone.Model.extend({
             schedule[day]['selected'] = (schedule[day]['selected'] === true) ? false :  true; 
             this.set({'schedule' : schedule});
             
+            this.trigger('select:schedule_day', day, schedule[day]['selected']);
+            
             return schedule[day]['selected'];
         },
         

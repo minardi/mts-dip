@@ -5,7 +5,7 @@ class WeeklySchedulesController < ApplicationController
     @weekly_schedules = WeeklySchedule.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { render json: @weekly_schedules }
       format.json { render json: @weekly_schedules }
     end
   end
@@ -22,7 +22,7 @@ class WeeklySchedulesController < ApplicationController
     end
     
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render json: @weekly_schedule }
       format.json { render json: @weekly_schedule }
     end
   end
@@ -33,7 +33,7 @@ class WeeklySchedulesController < ApplicationController
     @weekly_schedule = WeeklySchedule.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render json: @weekly_schedule }
       format.json { render json: @weekly_schedule }
     end
   end
@@ -45,7 +45,7 @@ class WeeklySchedulesController < ApplicationController
     @weekly_schedule = WeeklySchedule.find_by_doctor_id(params[:doctor_id])
     
     respond_to do |format|
-      format.html # search.html.erb
+      format.html { render json: @weekly_schedule }
       format.json { render json: @weekly_schedule }
     end
   end

@@ -7,7 +7,8 @@
         collTemplate :  JST["backbone/weekly_schedule/weekly_schedule_collTemplate"],
         
         initialize : function(){
-            this.model.on('change:selected', this.selfRemove, this)
+            this.model.on('select:schedule_day', this.activeTrigger, this);
+            this.model.on('change:selected', this.selfRemove, this);   
         },
         
         events : {
@@ -47,9 +48,10 @@
             return this;
         },
         
-        activeTrigger : function(elem){
-            
-            (elem.hasClass('active')) ? elem.removeClass('active') : elem.addClass('active');
+        activeTrigger : function(day, trigger){
+            elem = this.$el.find('#doc'+ this.model.get('doctor_id') + '-' + day)
+            console.log(     trigger);
+            (!trigger)? $(elem).removeClass('active') : $(elem).addClass('active');
                    
         },
         
@@ -58,7 +60,6 @@
             target = $(e.target);
             
             this.selectItem(target.attr('id').split('-')[1]);
-            this.activeTrigger(target) 
         },
         
         selectItem : function(day) {
@@ -104,7 +105,6 @@
                 if(schedule[day]['selected'] === true){
                     
                     this.selectItem(day);
-                    this.activeTrigger(this.$el.find('#doc'+ this.model.get('doctor_id') + '-' + day));
                 }
                 
             }

@@ -16,12 +16,7 @@
         
         initialize : function(){
             
-            this.collect.on("reset", this.addScheduleHelper, this);
-            
-            /*this.collect.on("all", function(eventName) {
-                      console.log(eventName);
-                    });
-            */
+            this.collect.on("add", this.addSchedule, this);
             
             Backbone.Mediator.sub('doctor_selected', this.addHandler, this);
             Backbone.Mediator.sub('doctor_unselected', this.removeSchedule, this)
@@ -43,16 +38,11 @@
            
             if(model.length === 0){
                 this.collect.shiftUrl('search')
-                this.collect.fetch({data : {doctor_id: data.id}});  
+                this.collect.fetch({remove : false, update : true, data : {doctor_id: data.id}});  
             }else{
                 this.addSchedule(model[0])
             }
            
-        },
-        
-        addScheduleHelper : function (collection, data) {
-
-            this.addSchedule(collection.where({doctor_id : data.data.doctor_id})[0])
         },
         
         addSchedule : function (model) {
@@ -78,8 +68,6 @@
             }else{
                 console.warn("this doctor don't have schedule list ");
             }
-          
-            
         },
         
         renderDate : function(){
@@ -120,20 +108,29 @@
             return (val <= 9) ? '0' + val : val;
         },
         
-        render : function(){
+        render : function() {
             this.$el.append(this.template());
             this.renderDate();
 
             return this;
         },
         
+        hideElem: function() {
+            
+            if(this.collect.where({selected : true}).length === 0) {
+                this.$el.addClass('hidden')
+            }
+            
+        },
+        
         removeSchedule : function(data) {
             var model = this.collect.where({doctor_id : data.id})[0];
                 if (model) {
                     model.set({selected : false}) 
+                } else {
+                    console.warn('something wrong with schedule remove function')
                 }
-            console.log(this.collect.length)
-                
+            this.hideElem();
         },
 
         dayPick: function(e) {
