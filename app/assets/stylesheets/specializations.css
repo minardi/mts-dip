@@ -1,13 +1,13 @@
  #specializations li {
  list-style: none;
-   width: 150px;
+   width: 100px;
    padding: 5px;
  }
 
 #specializations li:hover, .active:hover {
-   background-color: yellow; 
+   background-color: #5ce0da; 
 }
 
 .selected_spec, .active{
-	background-color: yellow; 
+	background-color: #55cac5; 
 }

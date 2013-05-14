@@ -18,39 +18,40 @@
     },
 
     
-    // Switch this view into `"editing"` mode, displaying the input field.
     chose: function(el) {
-      
-      //refactor as a specializations
-       var is_select = this.model.is_select;
-       
-       if (is_select) {
-	         is_select = false;
-	         this.$el.removeClass("selected_doctor");
-	         Backbone.Mediator.pub('doctor_unselected', { 
-	                                                      id: this.model.get("id")
-	                                              
-	                                                    });
-	 
-        } else {
-	        is_select = true;
-	        this.$el.addClass("selected_doctor");
-	 
-	        Backbone.Mediator.pub('doctor_selected', { 
-	                                                   id: this.model.get("id"),
-	                                                   name: this.model.get("name"),
-			                                               duration: this.model.get("duration") 
-	                                                  });
-	 
-       }
-       
-       this.model.is_select = is_select;
-       
-       return false;
+           
+       this.model.is_select ? this.doctorUnsel() : this.doctorSel() ;
        
     },
 
-    // Re-render the titles of the stick item.
+    doctorSel: function() {
+      Backbone.Mediator.pub('doctor_selected', { 
+                                                     id: this.model.get("id"),
+                                                     name: this.model.get("name"),
+                                                     duration: this.model.get("duration") 
+                                                });
+      this.$el.addClass("selected_doctor");
+
+
+      this.model.is_select = true; 
+
+      return false;
+
+    },
+
+    doctorUnsel: function() {
+      Backbone.Mediator.pub('doctor_unselected', { 
+                                                        id: this.model.get("id")
+                                                
+                            }) 
+
+      this.$el.removeClass("selected_doctor");
+       
+      this.model.is_select = false;  
+      
+      return false;
+    },
+
     render: function() {
       this.$el.html(this.template(this.model.toJSON()));
       return this;

@@ -12,6 +12,7 @@
       Backbone.Mediator.sub('ticket_added', this.addTicket,this);
       
       Backbone.Mediator.sub('timeline_render', function(attrs) {  
+        
         var hesh_tickets = this.Tickets.where(attrs);
 
         if ( hesh_tickets.length != 0 ) {
@@ -30,7 +31,7 @@
     },    
     
     addTicketsWithHash: function(attrs, context) {
-       var SelTickets = new TicketsCollection(),
+       //var SelTickets = new TicketsCollection(),
            self = this;
        
        if ( context != null ) {
@@ -39,9 +40,11 @@
 
        $.each(attrs, function(index, attr) {
          var model = new TicketModel(attr);
-         SelTickets.add(model);
+        // SelTickets.add(model);
+         self.addOneTicket(model);        
        })
-       SelTickets.each(self.addOneTicket,self);
+
+       //SelTickets.each(self.addOneTicket,self);
     },
 
 

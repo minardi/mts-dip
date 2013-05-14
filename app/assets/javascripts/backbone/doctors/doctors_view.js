@@ -3,18 +3,16 @@
   app.DoctorsView = Backbone.View.extend({
 
     template: JST["backbone/doctors/doctors_template"],
-    tagName: "ul",
 
     initialize: function() {  
-      //Димон, wtf???
+
       this.$el.append(this.template);
-      this.$el = this.$el.find(":first-child") ;
-      this.$el.hide();
+      this.setElement(this.$el.children("ul"));
+     
       
       this.AllDoctors = new DoctorsCollection();
-      this.FetchDoctors = new DoctorsCollection();
 
-      this.FetchDoctors.on("reset",this.addSelDoctors,this);
+      this.AllDoctors.on("add", this.addSelDoctors,this);
       
       Backbone.Mediator.sub('spec_selected', this.fetchDoctors,this);
       Backbone.Mediator.sub('spec_unselected', this.unselDoctors,this);
@@ -22,62 +20,28 @@
     },
 
     fetchDoctors: function(attr) {
-      var docs_length = this.AllDoctors.where({
-                                                specialization_id:attr["id"]
-                                              }).length; 
-
-      if (docs_length == 0) {
-         this.FetchDoctors.fetchBySpecId(attr["id"]);  
-      } else {  
-
-        this.AllDoctors.each(function(doctor) {
-         
-           if (doctor.get("specialization_id") == attr["id"]) {
-             doctor.set({is_render:true});
-           } 
-        
-        }, this)
-
-        this.addAllDoctors(); 
-      }
       
-    },
-
-    addSelDoctors: function() {
-
-      this.FetchDoctors.each(function(doctor) {
-
-         doctor.set({is_render:true});
-         this.AllDoctors.add(doctor);        
-         this.addOneDoctor(doctor);        
-
-         this.addAllDoctors();
-      },this);
-    },
-
-    
-    
-    unselDoctors: function(attr) {
-        
-      // publishid mediator event with doctor, before remove model
-      
-      this.AllDoctors.each(function(doctor) {
-        // проверяю если моделька подходит по параметрам спец и отрендерина то ... 
+       this.AllDoctors.setDoctors(attr["id"]);
        
-        if ((attr["id"] == doctor.get("specialization_id"))&&(doctor.get("is_render") == true)) {
-          
-           Backbone.Mediator.pub('doctor_unselected', { 
-                                                        id: doctor.get("id")                                   
-                                                      });
-           doctor.set({is_render: false});
-           doctor.set({is_select: false});
-        }  
+       this.addAllDoctors(); 
+      
+    },
 
-      },this) 
+    addSelDoctors: function(collect) {
+  
+      collect.is_render = true;
+
+      this.addOneDoctor(collect);
+    },
+
+    
+    
+    unselDoctors: function(attr) {        
       
+      this.AllDoctors.unsetDoctors(attr["id"]);      
       
-      if (this.AllDoctors.where({is_render:true}).length == 0) {
-         this.$el.hide();         	   
+      if (this.AllDoctors.lengthByAttr({is_render:true}) === 0) {
+          this.ElHide();         	   
       }
       
       this.addAllDoctors();   
@@ -90,19 +54,26 @@
       this.AllDoctors.each(this.addOneDoctor, this)
     }, 
     
-    addOneDoctor: function(m) {
+    addOneDoctor: function(m) {      
+      var view;
 
-        if (m.get("is_render") == true) {
-           this.$el.show();   
-           var view = new DoctorView({model:m});
+        if (m.is_render === true) {           
+           view = new DoctorView({model:m});
+           this.ElShow(); 
            
-           //m.set({is_render: true});
            this.$el.append(view.render().el); 
         } 
 
     },
    
-    // Re-render the titles of the stick item.
+    ElShow: function() {
+      this.$el.removeClass("hidden");
+    },
+
+    ElHide: function() {
+       this.$el.addClass("hidden");
+    },
+
     render: function() {     
       this.$el.html(this.template());
       return this;

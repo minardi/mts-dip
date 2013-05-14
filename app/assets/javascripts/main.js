@@ -11,8 +11,5 @@ $(function () {
   	  currentTimelines = new CurrentSchedulesView({el:$("#current_schedules")}),
 
       user = new UserView({el: $("#login_block")});
-
-      console.log(user.render().el);
-      
  
 });
