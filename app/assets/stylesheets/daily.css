@@ -15,3 +15,7 @@
 #daily_schedules tbody td, #current_schedules tbody td {
 	padding: 0px;
 }
+
+.timelines .worktime {
+	background-color: blue;
+}

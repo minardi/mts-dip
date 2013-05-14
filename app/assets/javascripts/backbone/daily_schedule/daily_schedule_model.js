@@ -8,10 +8,9 @@
 			duration: 15,
 			day: "",
 			schedule_start: "10:00",
-			schedule_end: "12:00"		
-		},
-
-		visible: true
+			schedule_end: "12:00",
+			visible: true		
+		},	
 
 	});	
 

@@ -4,13 +4,19 @@
         
         template : JST["backbone/weekly_schedule/weekly_schedules_template"],
         
+        collTemplate :  JST["backbone/weekly_schedule/weekly_schedule_collTemplate"],
+        
         collect: new WeeklyCollection(),
+        
+        events: {
+            "click thead td" : "dayPick",
+        },
         
         days : {},
         
         initialize : function(){
             
-            this.collect.on("add", this.addSchedule, this)
+            this.collect.on("add", this.addSchedule, this);
             
             Backbone.Mediator.sub('doctor_selected', this.addHandler, this);
             Backbone.Mediator.sub('doctor_unselected', this.removeSchedule, this)
@@ -31,11 +37,8 @@
             }
            
             if(model.length === 0){
-                this.collect.findByParam({doctor_id: data.id}, 
-                function (model){
-                    self.collect.add(model)
-                    }
-                );  
+                this.collect.shiftUrl('search')
+                this.collect.fetch({remove : false, update : true, data : {doctor_id: data.id}});  
             }else{
                 this.addSchedule(model[0])
             }
@@ -45,7 +48,7 @@
         addSchedule : function (model) {
             
             var view = {};
-            
+                   
             if(model){
                 
                 model.set({
@@ -65,8 +68,6 @@
             }else{
                 console.warn("this doctor don't have schedule list ");
             }
-          
-            
         },
         
         renderDate : function(){
@@ -87,42 +88,52 @@
         renderDay : function(date, day) {
             var elem = this.$el.find('thead tr');
             
-            this.days[day] = date.getDate() + '_' + 
-                (date.getMonth()+1) + '_' + date.getFullYear();
+            this.days[day] = this.dateWithZero(date.getDate()) + '-' + 
+                this.dateWithZero((date.getMonth()+1)) + '-' + date.getFullYear();
            
             elem.append(
-                $('<td>', 
             
+                this.collTemplate(
                     {
-                        id : day,
-                        text :  this.days[day]
-                 
+                        text : '<p>'+day+'</p> ' + this.days[day],
+                        id : day ,
+                        class_name : 'table-day'
                     }
-                ).prepend(
-                    $('<p />', 
-                        {
-                            text : day
-                        }
-                    )
                 )
             );
 
         },
         
-        render : function(){
+        dateWithZero : function (val) {
+            return (val <= 9) ? '0' + val : val;
+        },
+        
+        render : function() {
             this.$el.append(this.template());
             this.renderDate();
 
             return this;
         },
         
+        hideElem: function() {
+            
+            if(this.collect.where({selected : true}).length === 0) {
+                this.$el.addClass('hidden')
+            }
+            
+        },
+        
         removeSchedule : function(data) {
             var model = this.collect.where({doctor_id : data.id})[0];
                 if (model != null) { model.set({selected : false}) }
                 
-        },
-             events: {
-            "click thead td":"dayRender",
+        },          
+                if (model) {
+                    model.set({selected : false}) 
+                } else {
+                    console.warn('something wrong with schedule remove function')
+                }
+            this.hideElem();
         },
 
         dayRender: function(e) {

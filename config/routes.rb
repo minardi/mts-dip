@@ -1,20 +1,23 @@
 MTSDip::Application.routes.draw do
 
+  match 'users/login' => 'users#login'
   resources :users
-
+  
   resources :tickets
 
   resources :specializations
 
-  resources :sessions, only: [:new, :create, :destroy]
+  # resources :sessions, only: [:new, :create, :destroy]
 
-  match '/signup',  to: 'users#new'
-  match '/signin',  to: 'sessions#new'
-  match '/signout', to: 'sessions#destroy', via: :delete
+  # match '/signup',  to: 'users#new'
+  # match '/signin',  to: 'sessions#new'
+  # match '/signout', to: 'sessions#destroy', via: :delete
+
 
   get "main/home"
-
   root :to => 'main#home'
+
+  match '/doctors/:specialization_id', to: "doctors#index"
   resources :doctors
     
   resources :weekly_schedules
@@ -22,6 +25,7 @@ MTSDip::Application.routes.draw do
   match 'weekly_schedules/:id/getduration' => 'weekly_schedules#getduration'
 
   match 'tickets/:user_id/doctor_name' => 'tickets#doctor_name'
+
 
 
   # The priority is based upon order of creation:

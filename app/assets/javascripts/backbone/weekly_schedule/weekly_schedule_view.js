@@ -4,12 +4,15 @@
         
         tagName : 'tr',
         
+        collTemplate :  JST["backbone/weekly_schedule/weekly_schedule_collTemplate"],
+        
         initialize : function(){
-            this.model.on('change:selected', this.unselectItem, this)
+            this.model.on('select:schedule_day', this.activeTrigger, this);
+            this.model.on('change:selected', this.selfRemove, this);   
         },
         
         events : {
-            'click .schedule-item' : 'selectItem'
+            'click .schedule-item' : 'selectHandler'
         },
         
         render : function(){
@@ -17,21 +20,25 @@
             var schedule =  this.model.get('schedule');
  
             this.$el.append(
-                $('<td />', 
-                    {
-                        text : this.model.get('doctor_name')
-                    }
-                )
+            
+                this.collTemplate(
+                        {
+                            text : this.model.get('doctor_name'),
+                            id : 'doc'+ this.model.get('doctor_id') + '-name',
+                            class_name : "schedule-name"
+                        }
+                    )
             );
             
             for(i in schedule){
                 
                 this.$el.append(
-                    $('<td />', 
+                
+                    this.collTemplate(
                         {
-                           text : schedule[i].start + ' - ' + schedule[i].end,
-                           id : 'doc'+ this.model.get('doctor_id') + '-' + i,
-                           "class" : 'schedule-item'
+                            text : schedule[i].start + ' - ' + schedule[i].end,
+                            id : 'doc'+ this.model.get('doctor_id') + '-' + i,
+                            class_name : "schedule-item"
                         }
                     )
                 );
@@ -41,14 +48,25 @@
             return this;
         },
         
-        selectItem : function(e){
-            var target = e.target || e,
-            attr_data = $(target).attr('id').split('-');
+        activeTrigger : function(day, trigger){
+            elem = this.$el.find('#doc'+ this.model.get('doctor_id') + '-' + day)
+            console.log(     trigger);
+            (!trigger)? $(elem).removeClass('active') : $(elem).addClass('active');
+                   
+        },
+        
+        selectHandler : function(e){
             
-            if(attr_data.length === 2){
+            target = $(e.target);
+            
+            this.selectItem(target.attr('id').split('-')[1]);
+        },
+        
+        selectItem : function(day) {
+            
+            if(day) {
                 
-                if(this.model.scheduleTrigger(attr_data[1])){
-                    $(target).addClass('active');
+                if(this.model.scheduleTrigger(day)) {
                     
                     Backbone.Mediator.pub('weekly_selectItem', 
                         {
@@ -56,37 +74,48 @@
                             id : this.model.get('doctor_id'),
                             duration : this.model.get('doctor_duration'),
                             schedule : $(target).text(),
-                            day : this.model.get('schedule')[attr_data[1]]['data']
+                            day : this.model.get('schedule')[day]['data']
                         }
                     );
                 
                      
                 }else{
-                    $(target).removeClass('active');
-                    
+        
                     Backbone.Mediator.pub('weekly_unselectItem', 
                         {
                             id : this.model.get('id'),
-                            day : this.model.get('schedule')[attr_data[1]]['data']                            
+                            day : this.model.get('schedule')[day]['data']                            
                         }
                     );
                     
                 }
                 
             }else{
-                console.warn('wrong id or selected element');
+                console.warn('wrong parametr day in function selectItem');
             }
 
         },
         
-        unselectItem : function (obj, value){
-            var self = this;
+        unselectedItem : function () {
+            
+            var schedule = this.model.get('schedule');
+            
+            for (day in schedule){
+                
+                if(schedule[day]['selected'] === true){
+                    
+                    this.selectItem(day);
+                }
+                
+            }
+            
+        },
+        
+        selfRemove : function (obj, value) {
             
             if(value === false){
-                this.$el.find('.active').each(function(i){
-                    self.selectItem(this)
-                });
                 
+                this.unselectedItem();
                 this.remove();
                 
             }
