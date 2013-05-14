@@ -1,45 +1,75 @@
 (function(app) {
 
 	app.UserView = Backbone.View.extend({
-        
-        el: '#login_block',
+		
+		el: '#login_block',
 
-        initialize: function() {
-            // console.log(this.el.innerHTML);
-        },
+		initialize: function() {
+			
+			var logUser = new app.UserModel();
+			this.render();
+			
+		},
 
-        template: JST["backbone/user_login/nav_template"],
-        
-        // inrole_template: JST["backbone/user_login/role_template"],
+		nav_template: JST["backbone/user_login/nav_template"],
+		
+		inrole_template: JST["backbone/user_login/user_template"],
 
-        events: {
-            
-            "click #btn_login": "user_login" 
-        },
+		events: {
+			
+			"click #btn_login": "user_login" 
+		},
 
-        user_login: function(e) {
+		user_login: function() {
 
-            var user_email = $(e.currentTarget).find('input[type=text]').val();
-            var user_password = $(e.currentTarget).find('input[type=password]').val();
-            // console.log(user_log);
+			var user_email = this.$el.find('input[type=text]').val(),
+					user_password = this.$el.find('input[type=password]').val();
+			
+			logUser = new app.UserModel({ email: user_email,
+									  								password: user_password
+																	});
+			logUser.on('sync', this.check_login, this);
+			logUser.save();			
+		},
 
-            var logUser = new UserModel({ email: user_email,
-                                          password: user_password
-                                        });
-            console.log(logUser);
-        },
+		check_login: function(params) {
+			
+			if(logUser.get('login')) {
+				console.log(params);
+				Backbone.Mediator.pub('login_user', 
+									                        {
+									                            id : logUser.get('id')
+									                        }
+                    					);
+				this.$el.html(this.inrole_template({ name: logUser.get('name')}));
+				return this;
+			} else {
 
-        render: function() {
-            
-            //var template = this.template(this.model.toJSON());
-            
-            this.$el.html(this.template);
-            return this;
+				this.$el.append(
+                    $('<div />', 
+                        {
+                           text : 'Login Error! Check input items!',
+                           "class" : 'alert alert-error'
+                        }
+                    )
+                .prepend(
+                    $('<button />', 
+                        {
+                            "class" : "close"
+                        }
+                    )
+                )
+            );
+			}
+		},
 
-        }
+		render: function() {
 
+				this.$el.html(this.nav_template);
+				return this;
+		}
 
-    });
+	});
 
-        
+		
 })(window);

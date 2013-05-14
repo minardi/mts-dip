@@ -4,11 +4,16 @@
           
     defaults : {
         id : 0,
-        email: '',
-        password: '',
+        email : '',
+        password : '',
         name : '',
-        role : 'guest'
-    }       
+        login : false,
+        role : {
+                 key: 'guest'
+               }
+    },
+
+    url : 'users/login.json'
   });
  
  })(window);

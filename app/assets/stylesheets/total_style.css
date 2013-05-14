@@ -18,6 +18,7 @@ header {
 }
 #drop_menu_block {
 	display:block; 
+  min-width: 120px;
 	position: static;
 }
 
@@ -48,3 +49,11 @@ header {
   float: left;
   margin: 1px;
 }
+
+/*.span2{
+  background-color: #3366CC;
+}*/
+
+/*#btn_login {
+  background: #69ccc9;
+}*/
