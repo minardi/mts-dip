@@ -122,28 +122,47 @@
                 
         },
              events: {
-            "click thead td":"dayPick",
+            "click thead td":"dayRender",
         },
 
-        dayPick: function(e) {
-            e = event || window.event;
+        dayRender: function(e) {
 
-            var work_day = $(e.target).index(),
-                tr = this.$el.find("tr");
+            // var massiv = this.collect.where({selected : true});
+
+            //  var schedule = this.model.get('schedule');
             
-            if($(e.target).hasClass('active')){
-                $(e.target).removeClass('active');
-            }else{
-                $(e.target).addClass('active');
-            };
-
-            $(tr).each(function(index) {
-                if(index !== 0){
-
-                var n = $(this).find("td").get(work_day);
+            // for (day in schedule){
                 
-                $(n).trigger("click");}
-            });
+            //     if(schedule[day]['selected'] === true){
+                    
+            //         this.selectItem(day);
+            //     }
+            // }
+
+            // for (obj in massiv){
+                
+            // };
+                
+            // };
+
+            // e = event || window.event;
+
+            // var work_day = $(e.target).index(),
+            //     tr = this.$el.find("tr");
+            
+            // if($(e.target).hasClass('active')){
+            //     $(e.target).removeClass('active');
+            // }else{
+            //     $(e.target).addClass('active');
+            // };
+
+            // $(tr).each(function(index) {
+            //     if(index !== 0){
+
+            //     var n = $(this).find("td").get(work_day);
+                
+            //     $(n).trigger("click");}
+            // });
         },
         
     });

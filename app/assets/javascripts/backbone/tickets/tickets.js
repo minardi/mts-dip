@@ -56,10 +56,10 @@
 
       var user_id = attr["user_id"];
 
-      this.url = "/tickets/" + user_id + "/doctor_name.json?";
+      self.url = "/tickets/" + user_id + "/doctor_name.json?";
 
-      console.log(this.url);
-
+      console.log(self.url);
+  self.on("reset", self.render);
       self.currentTickets();
 
      },
@@ -67,7 +67,7 @@
      currentTickets: function() {
       //Проверка даты и времени
       console.log("olololo");
-      //Tickets.fetch();
+      this.fetch();
       //console.log(this.Tickets);
 
      },
