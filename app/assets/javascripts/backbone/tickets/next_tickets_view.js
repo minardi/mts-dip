@@ -2,12 +2,11 @@
     app.NextTicketsView = Backbone.View.extend({
 
         initialize: function() {
-
-            //this.allTickets = new TicketsCollection();
-            this.Tickets = new TicketsCollection();
+            
+            this.Tickets = new app.TicketsCollection();
             
             this.Tickets.on("reset", this.render, this);
-
+            this.Tickets.on("all", function(a) {console.log(a)}, this);
             Backbone.Mediator.sub("user_login", this.Tickets.updateURL);
 
         },

@@ -59,16 +59,14 @@
       self.url = "/tickets/" + user_id + "/doctor_name.json?";
 
       console.log(self.url);
-  self.on("reset", self.render);
       self.currentTickets();
 
      },
 
      currentTickets: function() {
       //Проверка даты и времени
-      console.log("olololo");
+      console.log(this);
       this.fetch();
-      //console.log(this.Tickets);
 
      },
 
