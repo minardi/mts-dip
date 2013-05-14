@@ -48,6 +48,7 @@ header {
   display: block;
   float: left;
   margin: 1px;
+<<<<<<< HEAD
 }
 
 /*.span2{
@@ -57,3 +58,6 @@ header {
 /*#btn_login {
   background: #69ccc9;
 }*/
+=======
+} 
+>>>>>>> 480a6ed6d505733c8ca7e939bf729e82c818655f

@@ -4,20 +4,21 @@
      url: '/tickets', 
      model: window.TicketModel,
      
-       is_there: function(attrs) {
+    is_there: function(attrs) {
        
-           var hesh = {
-	                    doctor_id: attrs["doctor_id"],
-                        data: attrs["data"],
-                        time: attrs["time"] 
-                      },
-           models = this.where(attrs),
-           is_null = false;
+      var hesh = {
+	                 doctor_id: attrs["doctor_id"],
+                   data: attrs["data"],
+                   time: attrs["time"] 
+                 },
+
+      models = this.where(attrs),
+      is_null = false;
 	   
-	       if (models.length > 0) is_null = true;
+	    if (models.length > 0) is_null = true;
            
-           return is_null;       
-     },
+      return is_null;       
+    },
     
   
     fetchByParam: function(parametrs, callback, context) {
@@ -36,10 +37,11 @@
         $.get(url, function(attrs) {
 
 	        $.each(attrs, function(index,attr) { 
-		       if (self.where(attr).length == 0) {
+		       
+           if (self.where(attr).length == 0) {
 		          var model = new TicketModel(attr);
 		          self.add(model);
-                  not_set_attrs[index] = attr;		     
+              not_set_attrs[index] = attr;		     
 		        }		  
 		    });
 
