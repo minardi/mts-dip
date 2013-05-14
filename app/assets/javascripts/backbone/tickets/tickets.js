@@ -4,7 +4,7 @@
      url: '/tickets', 
      model: window.TicketModel,
      initialize: function() {
-       self = this;
+       this.self = this;
 
        //this.updateURL({user_id:1});
       // this.currentTickets();
@@ -56,16 +56,14 @@
 
       var user_id = attr["user_id"];
 
-      self.url = "/tickets/" + user_id + "/doctor_name.json?";
+      this.url = "/tickets/" + user_id + "/doctor_name.json?";
 
-      console.log(self.url);
-      self.currentTickets();
+      this.currentTickets();
 
      },
 
      currentTickets: function() {
-      //Проверка даты и времени
-      console.log(this);
+
       this.fetch();
 
      },
