@@ -4,8 +4,8 @@
 
     routes: {
       ''         : 'index',
-      'home/:id' : 'showHome',
-      'private-schedule/:id' : 'showPrivateSchedule'
+      'home' : 'showHome',
+      'private-schedule' : 'showPrivateSchedule'
     },
 
     index: function() {
@@ -13,18 +13,13 @@
     },
 
     showHome: function(id) {
-      console.log(id);
-      //vent.trigger('home:show', id);
+      console.log('hollo home');
     },
 
     showPrivateSchedule: function(id) {
-      console.log(id);
-      //vent.trigger('home:show', id);
+      console.log('hollo table');
     }
 
   });
-
-  new app.UserRouter();
-  Backbone.history.start();
 
 })(window);

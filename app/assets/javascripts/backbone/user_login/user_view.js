@@ -53,16 +53,16 @@
                     $('<div />', 
                         {
                            text : 'Login Error! Check input items!',
-                           "class" : 'alert alert-error'
+                           "class" : 'span6 alert alert-error'
                         }
                     )
-                .prepend(
-                    $('<button />', 
-                        {
-                            "class" : "close"
-                        }
-                    )
-                )
+                // .prepend(
+                //     $('<button />', 
+                //         {
+                //             "class" : "close"
+                //         }
+                //     )
+                // )
             );
 			}
 		},
