@@ -5,10 +5,14 @@
 		el: '#login_block',
 
 		initialize: function() {
-			
+			//vent.on('home:show', this.show, this);
 			var logUser = new app.UserModel();
 			this.render();
 			
+		},
+
+		show: function(id) {
+			console.log('qwertyuiop'+ id);
 		},
 
 		nav_template: JST["backbone/user_login/nav_template"],
@@ -70,6 +74,5 @@
 		}
 
 	});
-
 		
 })(window);
