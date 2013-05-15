@@ -125,18 +125,17 @@
         
         removeSchedule : function(data) {
             var model = this.collect.where({doctor_id : data.id})[0];
-                if (model != null) { model.set({selected : false}) }
-                
-        },          
-                if (model) {
-                    model.set({selected : false}) 
-                } else {
+                if (model != null) { model.set({selected : false}); }
+                         
+                // if (model) {
+                //     model.set({selected : false}) 
+                else {
                     console.warn('something wrong with schedule remove function')
                 }
             this.hideElem();
         },
 
-        dayRender: function(e) {
+        dayPick: function(e) {
 
             // var massiv = this.collect.where({selected : true});
 
@@ -156,24 +155,24 @@
                 
             // };
 
-            // e = event || window.event;
+            e = event || window.event;
 
-            // var work_day = $(e.target).index(),
-            //     tr = this.$el.find("tr");
+            var work_day = $(e.target).index(),
+                tr = this.$el.find("tr");
             
-            // if($(e.target).hasClass('active')){
-            //     $(e.target).removeClass('active');
-            // }else{
-            //     $(e.target).addClass('active');
-            // };
+            if($(e.target).hasClass('active')){
+                $(e.target).removeClass('active');
+            }else{
+                $(e.target).addClass('active');
+            };
 
-            // $(tr).each(function(index) {
-            //     if(index !== 0){
+            $(tr).each(function(index) {
+                if(index !== 0){
 
-            //     var n = $(this).find("td").get(work_day);
+                var n = $(this).find("td").get(work_day);
                 
-            //     $(n).trigger("click");}
-            // });
+                $(n).trigger("click");}
+            });
         },
         
     });

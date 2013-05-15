@@ -3,6 +3,7 @@
     app.NextTicketView = Backbone.View.extend({
 
         tagName: "ul",
+        className: "next-tickets",
 
         template: JST ["backbone/tickets/next_ticket_template"],
 
