@@ -5,4 +5,5 @@
 //= require backbone/mts
 //= require backbone-mediator
 //= require main
+//= require helpers/config
 

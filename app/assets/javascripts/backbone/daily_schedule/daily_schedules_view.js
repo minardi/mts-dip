@@ -16,13 +16,15 @@
 
 			splitScheduleStr: function(schedule_str) {
 
-				var schedule_array = schedule_str.split(" - ");
+				var schedule_array = schedule_str.split("-");
 
 				return {start: schedule_array[0],
 						end: schedule_array[1]}
 			},
 
 			addDailySchedule: function(attr) {
+
+				console.log(attr["schedule"]);
 
 				var schedule_time = this.splitScheduleStr(attr["schedule"]);
 
