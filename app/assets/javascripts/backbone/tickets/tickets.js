@@ -23,11 +23,31 @@
       fetchByAttr: function(attrs) {
 
          this.fetch({remove : false, update : true, data : attrs});  
+  
+     },
 
-      }
-    
-   
+     updateURL: function(attr) {
+
+      var user_id = attr["id"];
+
+      this.url = "/tickets/" + user_id + "/doctor_name.json?";
+
+      this.currentTickets();
+
+     },
+
+     currentTickets: function() {
+
+      this.fetch();
+
+     },
+
+     comporator: function(TicketModel) {
+      
+      return TicketModel.get('data');
+
+     },
      
-    })
+    });
     
  })(window);  

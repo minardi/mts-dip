@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   end
 
   def index
+
     @users = User.all
 
     respond_to do |format|

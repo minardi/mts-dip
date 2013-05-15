@@ -125,15 +125,36 @@
         
         removeSchedule : function(data) {
             var model = this.collect.where({doctor_id : data.id})[0];
-                if (model) {
-                    model.set({selected : false}) 
-                } else {
+                if (model != null) { model.set({selected : false}); }
+                         
+                // if (model) {
+                //     model.set({selected : false}) 
+                else {
                     console.warn('something wrong with schedule remove function')
                 }
             this.hideElem();
         },
 
         dayPick: function(e) {
+
+            // var massiv = this.collect.where({selected : true});
+
+            //  var schedule = this.model.get('schedule');
+            
+            // for (day in schedule){
+                
+            //     if(schedule[day]['selected'] === true){
+                    
+            //         this.selectItem(day);
+            //     }
+            // }
+
+            // for (obj in massiv){
+                
+            // };
+                
+            // };
+
             e = event || window.event;
 
             var work_day = $(e.target).index(),
