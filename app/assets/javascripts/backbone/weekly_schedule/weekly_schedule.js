@@ -26,7 +26,7 @@ app.WeeklyModel = Backbone.Model.extend({
         
         daySelect : function(day) {
             
-            
+            console.log(day)
         },
         
         scheduleTrigger : function(day) {
