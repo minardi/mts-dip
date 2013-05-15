@@ -7,8 +7,7 @@ class TicketsController < ApplicationController
       @tickets = Ticket.where(:doctor_id => params["doctor_id"], :data => params["data"]);
 
     elsif params["data"] != nil and  params["user_id"] != nil      
-      @tickets = Ticket.where(:user_id => params["user_id"], :data => params["data"]);
-
+      @tickets = Ticket.where(user_id:params["user_id"], data:params["data"]);
     else
       @tickets = Ticket.all
         
