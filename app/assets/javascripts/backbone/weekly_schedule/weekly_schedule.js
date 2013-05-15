@@ -1,6 +1,6 @@
 (function(app) {
 
-WeeklyModel = Backbone.Model.extend({
+app.WeeklyModel = Backbone.Model.extend({
         
         defaults : {
             schedule : {} ,
@@ -24,7 +24,12 @@ WeeklyModel = Backbone.Model.extend({
             this.set({schedule : schedule});
         },
         
-        scheduleTrigger :function(day) {
+        daySelect : function(day) {
+            
+            
+        },
+        
+        scheduleTrigger : function(day) {
             
             var schedule = this.get('schedule');
             
