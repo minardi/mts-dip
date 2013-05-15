@@ -8,7 +8,7 @@
   
     initialize: function() {
        this.WeekTickets = new WeekTicketsCollection; 
-
+       this.WeekTickets.on("add",this.renderTickets,this)
        this.addTickets();       
     },
 
@@ -17,42 +17,29 @@
           search_hash = {
                           user_id: 1,    // здесь нужно будет подставить Юзера
                           //дата в формате "год_месяц_день" 
-                          data: this.model.get("year")+"_"+
-                                this.model.get("month")+"_"+
-                                this.model.get("date")   
+                          data: this.model.get("date")+"-"+
+                                this.model.get("month")+"-"+
+                                this.model.get("year")   
                         };
+ 
 
-
-      this.WeekTickets.fetchByParam(search_hash, this.renderTickets, this);
+      this.WeekTickets.fetch({remove : false, update : true, data : search_hash});
 
     },
 
-    renderTickets: function(attrs, context) {
-          var self = this;
-       
-             if ( context != null ) {
-                self = context;
-             }             
+    renderTickets: function(ticket) {
 
-          $.each(attrs, function(index, attr) {
-
-            var model = new WeekTicketModel(attr),
-                time = model.get("time").split(":"),  
-                // формат userid_год_месяц_дата_часминуты
-                selector_id = "user"+1+"_"+  // Здесь вместо 1 нужно будет вставить юзера
-                              self.model.get("year")+"_"+
-                              self.model.get("month")+"_"+
-                              self.model.get("date")+"_t"+
-                              time[0]+""+time[1];
+                var time = ticket.get("time").split(":"),  
+                    selector_id = "user"+1+"_"+  // Здесь вместо 1 нужно будет вставить юзер
+                                   ticket.get("data")+"_t"+
+                                   time[0]+""+time[1];
 
                 view = new WeekTicketView({
-                                            model:model,
-                                            el: $("#"+selector_id) 
-                                         });
+                                              model:ticket,
+                                              el: $("#"+selector_id) 
+                                          });
 
-                view.render();
-          })  
-        
+                view.render();        
       },
     
     

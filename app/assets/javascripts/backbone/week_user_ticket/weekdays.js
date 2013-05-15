@@ -1,7 +1,7 @@
  (function(app) {
   
     app.WeekDaysCollection = Backbone.Collection.extend({
-     model: window.WeekDayModel
+     model: app.WeekDayModel
     }) 
     
  })(window);  

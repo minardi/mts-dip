@@ -5,8 +5,9 @@
     template: JST["backbone/week_user_ticket/week_days_template"],
   
     initialize: function() {
+      
       this.$el.append(this.template);
-      this.$el = this.$el.find(":first-child").first();
+      this.setElement(this.$el.children("table"));
     
       this.addWeekRows(); 
     },
