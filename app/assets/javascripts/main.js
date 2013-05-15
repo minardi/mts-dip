@@ -9,8 +9,8 @@ $(function () {
       weekdays = new WeekDaysView({el : $('#week_user_tickets')}),  	
 
   	  currentTimelines = new CurrentSchedulesView({el:$("#current_schedules")}),
-      //var vent = _.extend({}, Backbone.Events);
       user = new UserView({el: $("#login_block")});
 
- 
+  new UserRouter();
+  Backbone.history.start();
 });
