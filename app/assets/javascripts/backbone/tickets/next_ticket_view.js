@@ -7,12 +7,10 @@
 
         template: JST ["backbone/tickets/next_ticket_template"],
 
-        initialize:function() {
-
-        },
-
         render: function(model) {
+
          this.$el.append(this.template(this.model.toJSON()));
+         
           return this;
         },
 

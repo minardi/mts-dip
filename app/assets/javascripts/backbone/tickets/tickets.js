@@ -28,7 +28,7 @@
 
      updateURL: function(attr) {
 
-      var user_id = attr["user_id"];
+      var user_id = attr["id"];
 
       this.url = "/tickets/" + user_id + "/doctor_name.json?";
 
@@ -43,6 +43,7 @@
      },
 
      comporator: function(TicketModel) {
+      
       return TicketModel.get('data');
 
      },

@@ -40,7 +40,7 @@
 			
 			if(logUser.get('login')) {
 				console.log(params);
-				Backbone.Mediator.pub('login_user', 
+				Backbone.Mediator.pub('user_login', 
 									                        {
 									                            id : logUser.get('id')
 									                        }

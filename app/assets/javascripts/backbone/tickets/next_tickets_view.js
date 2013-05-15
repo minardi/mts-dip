@@ -7,11 +7,11 @@
             
             this.Tickets.on("reset", this.render, this);
 
-            Backbone.Mediator.sub("user_login", this.test, this);
+            Backbone.Mediator.sub("user_login", this.getCollection, this);
 
         },
 
-        test: function(attr) {
+        getCollection: function(attr) {
 
             this.Tickets.updateURL(attr);
 
