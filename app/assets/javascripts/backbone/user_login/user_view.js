@@ -5,12 +5,15 @@
 		el: '#login_block',
 
 		initialize: function() {
-			
+			//vent.on('home:show', this.show, this);
 			var logUser = new app.UserModel();
 			this.render();
 			
 		},
 
+		show: function(id) {
+			console.log('qwertyuiop'+ id);
+		},
 
 		nav_template: JST["backbone/user_login/nav_template"],
 		
@@ -23,18 +26,6 @@
 
 		user_login: function() {
 
-// <<<<<<< HEAD
-//             var user_email = this.$el.children('input[type=text]').val(),
-//                 user_password = this.$el.children('input[type=password]').val(),
-            
-//                 logUser = new app.UserModel({ email: user_email,
-//                                               password: user_password
-//                                             });
-//             console.log(user_email);
-//             console.log(logUser);
-//         },
-
-// =======
 			var user_email = this.$el.find('input[type=text]').val(),
 					user_password = this.$el.find('input[type=password]').val();
 			
@@ -75,7 +66,6 @@
             );
 			}
 		},
-//>>>>>>> 541a12ece1593954393dcf52724f973af5423825
 
 		render: function() {
 
@@ -84,6 +74,5 @@
 		}
 
 	});
-
 		
 })(window);
