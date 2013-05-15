@@ -64,7 +64,7 @@
         },
         
         publishTrigger : function(day, trigger) {
-                
+
                 if(trigger) {
                     
                     Backbone.Mediator.pub('weekly_selectItem', 
@@ -72,7 +72,7 @@
                             name : this.model.get('doctor_name'),
                             id : this.model.get('doctor_id'),
                             duration : this.model.get('doctor_duration'),
-                            schedule : $(target).text(),
+                            schedule : this.model.get('schedule')[day]['start'] + '-' + this.model.get('schedule')[day]['end'],
                             day : this.model.get('schedule')[day]['data']
                         }
                     );

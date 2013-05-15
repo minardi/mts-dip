@@ -26,19 +26,27 @@ app.WeeklyModel = Backbone.Model.extend({
         
         daySelect : function(day) {
             
-            console.log(day)
+            if(!this.attributes.schedule[day]['selected']){
+
+                this.attributes.schedule[day]['selected'] = true;
+                this.trigger('select:schedule_day', day, this.attributes.schedule[day]['selected']);
+
+            }
         },
         
         scheduleTrigger : function(day) {
             
-            var schedule = this.get('schedule');
+            this.attributes.schedule[day]['selected'] = (this.attributes.schedule[day]['selected'] === true)
+                                                            ? 
+                                                                false 
+                                                            :  
+                                                                true; 
             
-            schedule[day]['selected'] = (schedule[day]['selected'] === true) ? false :  true; 
-            this.set({'schedule' : schedule});
+            this.trigger('select:schedule_day', day, this.attributes.schedule[day]['selected']);
+
+            return this.attributes.schedule[day]['selected'];
             
-            this.trigger('select:schedule_day', day, schedule[day]['selected']);
             
-            return schedule[day]['selected'];
         },
         
         setDate : function(days){
