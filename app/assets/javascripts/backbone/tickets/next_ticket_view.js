@@ -3,7 +3,7 @@
     app.NextTicketView = Backbone.View.extend({
 
         tagName: "ul",
-        className: "drop_menu_block",
+        className: "dropdown-menu drop_menu_block",
 
         template: JST ["backbone/tickets/next_ticket_template"],
 
