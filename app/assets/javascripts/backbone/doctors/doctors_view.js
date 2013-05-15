@@ -27,11 +27,11 @@
       
     },
 
-    addSelDoctors: function(collect) {
+    addSelDoctors: function(doctor) {
   
-      collect.is_render = true;
+      doctor.is_render = true;
 
-      this.addOneDoctor(collect);
+      this.addOneDoctor(doctor);
     },
 
     

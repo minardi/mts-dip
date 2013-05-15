@@ -5,10 +5,14 @@
 		el: '#login_block',
 
 		initialize: function() {
-			
+			//vent.on('home:show', this.show, this);
 			var logUser = new app.UserModel();
 			this.render();
 			
+		},
+
+		show: function(id) {
+			console.log('qwertyuiop'+ id);
 		},
 
 		nav_template: JST["backbone/user_login/nav_template"],
@@ -36,7 +40,7 @@
 			
 			if(logUser.get('login')) {
 				console.log(params);
-				Backbone.Mediator.pub('login_user', 
+				Backbone.Mediator.pub('user_login', 
 									                        {
 									                            id : logUser.get('id')
 									                        }
@@ -49,16 +53,16 @@
                     $('<div />', 
                         {
                            text : 'Login Error! Check input items!',
-                           "class" : 'alert alert-error'
+                           "class" : 'span6 alert alert-error'
                         }
                     )
-                .prepend(
-                    $('<button />', 
-                        {
-                            "class" : "close"
-                        }
-                    )
-                )
+                // .prepend(
+                //     $('<button />', 
+                //         {
+                //             "class" : "close"
+                //         }
+                //     )
+                // )
             );
 			}
 		},
@@ -70,6 +74,5 @@
 		}
 
 	});
-
 		
 })(window);

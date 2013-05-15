@@ -7,8 +7,7 @@ class TicketsController < ApplicationController
       @tickets = Ticket.where(:doctor_id => params["doctor_id"], :data => params["data"]);
 
     elsif params["data"] != nil and  params["user_id"] != nil      
-      @tickets = Ticket.where(:user_id => params["user_id"], :data => params["data"]);
-
+      @tickets = Ticket.where(user_id:params["user_id"], data:params["data"]);
     else
       @tickets = Ticket.all
         
@@ -88,6 +87,22 @@ class TicketsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to tickets_url }
       format.json { head :no_content }
+    end
+  end
+
+  #GET /tickets/1/doctor_name
+  #GET /tickets/1/doctor_name.json
+  def doctor_name
+    @tickets = Ticket.where(:user_id => params[:user_id])
+
+    out = []
+    @tickets.each do |t|
+      info = {:user_id => t.user_id, :doctor_id => t.doctor_id, :doctor_name => t.doctor.name, :data => t.data, :time => t.time}
+      out.push info
+    end
+
+    respond_to do |format|
+      format.json { render json: out}
     end
   end
 end
