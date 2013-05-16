@@ -3,8 +3,8 @@
   app.UserRouter = Backbone.Router.extend({
 
     routes: {
-      ''         : 'index',
-      'home' : 'showHome',
+      ''                 : 'index',
+      'home'             : 'showHome',
       'private-schedule' : 'showPrivateSchedule'
     },
 
@@ -12,11 +12,12 @@
       console.log('hello index');
     },
 
-    showHome: function(id) {
+    showHome: function() {
       console.log('hollo home');
+      checkLogin.render();
     },
 
-    showPrivateSchedule: function(id) {
+    showPrivateSchedule: function() {
       console.log('hollo table');
     }
 
