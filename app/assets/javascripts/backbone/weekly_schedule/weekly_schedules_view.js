@@ -9,7 +9,7 @@
         
         
         events: {
-            "click thead td" : "daySelect",
+            "click thead .weekly-table-day" : "daySelect",
         },
         
         days : {},
@@ -82,7 +82,7 @@
         daySelect: function(event) {
             
             var collection = this.collection.where({selected : true}),
-                target = $(event.target),
+                target = ($(event.target).children().length !== 0) ? $(event.target) : $(event.target).parent(),
                 day = target.attr('id').split('-')[1],
                 id = 0;
                 

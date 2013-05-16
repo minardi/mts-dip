@@ -6,10 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.create(name: "Alex", password: "testqq", email: "q@gmail.com", role: "doctor")
-User.create(name: "Calvin", password: "testaa", email: "a@gmail.com", role: "patient")
-User.create(name: "Justin", password: "testzz", email: "z@gmail.com", role: "doctor")
-User.create(name: "Marry", password: "testww", email: "w@gmail.com", role: "patient")
+User.create(name: "Alex", password: "testqq", email: "q@gmail.com", role: {key: "doctor", doctor_id: 2})
+User.create(name: "Calvin", password: "testaa", email: "a@gmail.com", role: {key: "patient"})
+User.create(name: "Justin", password: "testzz", email: "z@gmail.com", role: {key: "doctor", doctor_id: 3})
+User.create(name: "Marry", password: "testww", email: "w@gmail.com", role: {key: "patient"})
 
 spec = Specialization.create(:name => "Hirurg")
  
