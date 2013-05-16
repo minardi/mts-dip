@@ -6,11 +6,11 @@
 						
 			initialize: function() {
 
-				Backbone.Mediator.sub("user_logined", this.render, this);
+				Backbone.Mediator.sub("user_login", this.render, this);
 
 				this.$el.hide();	
 
-				Backbone.Mediator.pub("user_logined", { id: 1,
+				Backbone.Mediator.pub("user_login", { id: 1,
 													    name: "jenya",
 													    role: "doctor"													      
 												        });	

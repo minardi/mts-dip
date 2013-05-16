@@ -7,11 +7,13 @@
         doctor_id: 0,
         data: "",
         time: "",
-	    user_id: 0,
-	    status: "default"
+	      user_id: 0,
+	      status: "default"
     },
     
-    is_doctor: false
+      is_doctor: false,
+
+	    doctor_name: ""
 
   })
 

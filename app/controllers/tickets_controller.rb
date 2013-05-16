@@ -89,4 +89,20 @@ class TicketsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  #GET /tickets/1/doctor_name
+  #GET /tickets/1/doctor_name.json
+  def doctor_name
+    @tickets = Ticket.where(:user_id => params[:user_id])
+
+    out = []
+    @tickets.each do |t|
+      info = {:user_id => t.user_id, :doctor_id => t.doctor_id, :doctor_name => t.doctor.name, :data => t.data, :time => t.time}
+      out.push info
+    end
+
+    respond_to do |format|
+      format.json { render json: out}
+    end
+  end
 end

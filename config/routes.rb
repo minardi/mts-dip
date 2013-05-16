@@ -19,10 +19,16 @@ MTSDip::Application.routes.draw do
 
   match '/doctors/:specialization_id', to: "doctors#index"
   resources :doctors
+  
+  get 'weekly_schedules' => 'weekly_schedules#index'
     
-  resources :weekly_schedules
-
+  get 'weekly_schedules/:id' => 'weekly_schedules#show'
+  
+  get 'weekly_schedules/:id/doctor' => 'weekly_schedules#searchbydoctor'
+  
   match 'weekly_schedules/:id/getduration' => 'weekly_schedules#getduration'
+
+  match 'tickets/:user_id/doctor_name' => 'tickets#doctor_name'
 
 
 

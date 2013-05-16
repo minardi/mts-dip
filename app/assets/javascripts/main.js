@@ -5,12 +5,14 @@ $(function () {
   	  dayTimelines = new DailySchedulesView({el:$("#daily_schedules")}),
 
       ticketsView = new TicketsView(),
+      nextTickets = new NextTicketsView({el: $("#next-tickets")}),
       weekly = new WeeklyCollectionView({el : $('#weekly-table')}),
       weekdays = new WeekDaysView({el : $('#week_user_tickets')}),  	
 
   	  currentTimelines = new CurrentSchedulesView({el:$("#current_schedules")}),
-      //var vent = _.extend({}, Backbone.Events);
-      user = new UserView({el: $("#login_block")});
+      user = new UserView({el: $("#login_block")}),
 
- 
+      router = new UserRouter();
+      console.log(router);
+  Backbone.history.start();
 });

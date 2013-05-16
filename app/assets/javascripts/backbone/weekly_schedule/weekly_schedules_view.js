@@ -6,71 +6,34 @@
         
         collTemplate :  JST["backbone/weekly_schedule/weekly_schedule_collTemplate"],
         
-        collect: new WeeklyCollection(),
-        
         events: {
-            "click thead td" : "dayPick",
+            "click thead td" : "daySelect",
         },
         
         days : {},
         
         initialize : function(){
+ 
+            this.collection = new app.WeeklyCollection();
             
-            this.collect.on("add", this.addSchedule, this);
-            
-            Backbone.Mediator.sub('doctor_selected', this.addHandler, this);
-            Backbone.Mediator.sub('doctor_unselected', this.removeSchedule, this)
+            this.collection.on('change:selected', this.renderSchedule, this);
             
             this.render();
         },
         
-        addHandler : function(data){
-            var model = [],
-                self = this;
-            
-            this.schedule_data = data;
-            
-            if(this.collect.length > 0){
-                model = this.collect.where({doctor_id : data.id});
-            }else{
-                this.$el.removeClass('hidden') 
-            }
-           
-            if(model.length === 0){
-                this.collect.shiftUrl('search')
-                this.collect.fetch({remove : false, update : true, data : {doctor_id: data.id}});  
-            }else{
-                this.addSchedule(model[0])
-            }
-           
-        },
-        
-        addSchedule : function (model) {
+        renderSchedule : function (model, param){
             
             var view = {};
-                   
-            if(model){
-                
-                model.set({
-                    'doctor_name' : this.schedule_data.name,
-                    'doctor_duration' : this.schedule_data.duration,
-                    'selected' : true
-                    }
-                );
-                
-                model.setDate(this.days);
-                
-                
+            
+            if(param) {
                 view = new WeeklyView({model : model});
                 this.$el.children('table').append(view.render().$el);
-
-                
-            }else{
-                console.warn("this doctor don't have schedule list ");
             }
+            
+            this.isShow ();
         },
         
-        renderDate : function(){
+        renderDate : function() {
             
             var date = new Date(),
                 day = date.getDay(),
@@ -78,30 +41,16 @@
                 i=0,
                 days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
             
-            for(i=0;i<7;i++){
+            for(i=0;i<7;i++) {
                 date.setDate(current_date+(i-day));
-                this.renderDay(date, days[i])
+                            
+                this.collection.days[days[date.getDay(i)]] = this.dateWithZero(date.getDate()) + '-' + 
+                this.dateWithZero((date.getMonth()+1)) + '-' + date.getFullYear();
+                  
             }
             
-        },
-        
-        renderDay : function(date, day) {
-            var elem = this.$el.find('thead tr');
+            return this.collection.days;
             
-            this.days[day] = this.dateWithZero(date.getDate()) + '-' + 
-                this.dateWithZero((date.getMonth()+1)) + '-' + date.getFullYear();
-           
-            elem.append(
-            
-                this.collTemplate(
-                    {
-                        text : '<p>'+day+'</p> ' + this.days[day],
-                        id : day ,
-                        class_name : 'table-day'
-                    }
-                )
-            );
-
         },
         
         dateWithZero : function (val) {
@@ -109,50 +58,34 @@
         },
         
         render : function() {
-            this.$el.append(this.template());
-            this.renderDate();
+            this.$el.append(this.template({schedule : this.renderDate()}));
+            
 
             return this;
         },
         
-        hideElem: function() {
+        isShow: function() {
             
-            if(this.collect.where({selected : true}).length === 0) {
-                this.$el.addClass('hidden')
+            if(this.collection.where({selected : true}).length > 0) {
+                this.$el.removeClass('hidden');
+            } else {
+                this.$el.addClass('hidden');
             }
             
         },
-        
-        removeSchedule : function(data) {
-            var model = this.collect.where({doctor_id : data.id})[0];
-                if (model) {
-                    model.set({selected : false}) 
-                } else {
-                    console.warn('something wrong with schedule remove function')
-                }
-            this.hideElem();
-        },
 
-        dayPick: function(e) {
-            e = event || window.event;
-
-            var work_day = $(e.target).index(),
-                tr = this.$el.find("tr");
+        daySelect: function(event) {
             
-            if($(e.target).hasClass('active')){
-                $(e.target).removeClass('active');
-            }else{
-                $(e.target).addClass('active');
-            };
-
-            $(tr).each(function(index) {
-                if(index !== 0){
-
-                var n = $(this).find("td").get(work_day);
+            var collection = this.collection.where({selected : true}),
+                target = $(event.target),
+                day = target.attr('id').split('-')[1],
+                id = 0;
                 
-                $(n).trigger("click");}
-            });
-        },
+            for (id in collection){
+                collection[id].daySelect(day);
+            }
+
+        }
         
     });
     

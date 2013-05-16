@@ -7,9 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 User.create(name: "Alex", password: "testqq", email: "q@gmail.com", role: "doctor")
-User.create(:name =>  "Calvin", password: "testaa", email: "a@gmail.com", role: "patient")
-User.create(:name =>  "Justin", password: "testzz", email: "z@gmail.com", role: "doctor")
-User.create(:name =>  "Marry", password: "testww", email: "w@gmail.com", role: "patient")
+User.create(name: "Calvin", password: "testaa", email: "a@gmail.com", role: "patient")
+User.create(name: "Justin", password: "testzz", email: "z@gmail.com", role: "doctor")
+User.create(name: "Marry", password: "testww", email: "w@gmail.com", role: "patient")
 
 spec = Specialization.create(:name => "Hirurg")
  
@@ -98,7 +98,7 @@ WeeklySchedule.create(doctor_id: 2,schedule: {
         
         sat: {
             start: '12:00',
-            end: '14    :00'                         
+            end: '14:00'                         
         }
     }
      )
@@ -177,7 +177,7 @@ WeeklySchedule.create(doctor_id: 4,schedule: {
         
         sat: {
             start: '12:00',
-            end: '14    :00'                         
+            end: '14:00'                         
         }
     }
      )
