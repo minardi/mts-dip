@@ -1,5 +1,8 @@
 MTSDip::Application.routes.draw do
 
+  resources :user_statuses
+
+
   match 'users/login' => 'users#login'
   resources :users
   
