@@ -23,6 +23,7 @@
       fetchByAttr: function(attrs) {
 
          this.fetch({remove : false, update : true, data : attrs});  
+         console.log("fetch");
 
       }
     
