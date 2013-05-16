@@ -62,10 +62,6 @@
 
 				if (dd < 10) {
   					dd = '0' + dd;
-  				}
-
-  				if (mm < 10) {
-  					mm = '0' + mm;
   				}	
 					
 				return dd + "." + mm + "." + day_arr[2].slice(2);
@@ -79,6 +75,8 @@
 				cssclass = "timeline",
 				start = this.timeFix(model.get("schedule_start")),
 				end = this.timeFix(model.get("schedule_end"));
+
+				//console.log(start, end);
 
 			switch (duration) {
 				case 15:

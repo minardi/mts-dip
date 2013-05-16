@@ -8,11 +8,12 @@
         
         initialize : function(){
             this.model.on('select:schedule_day', this.activeTrigger, this);
+            this.model.on('select:schedule_day', this.publishTrigger, this);
             this.model.on('change:selected', this.selfRemove, this);   
         },
         
         events : {
-            'click .schedule-item' : 'selectHandler'
+            'click .schedule-item' : 'selectDay'
         },
         
         render : function(){
@@ -49,31 +50,29 @@
         },
         
         activeTrigger : function(day, trigger){
-            elem = this.$el.find('#doc'+ this.model.get('doctor_id') + '-' + day)
-            console.log(     trigger);
+            elem = this.$el.find('#doc'+ this.model.get('doctor_id') + '-' + day);
+            
             (!trigger)? $(elem).removeClass('active') : $(elem).addClass('active');
                    
         },
         
-        selectHandler : function(e){
+        selectDay : function(e){
             
             target = $(e.target);
             
-            this.selectItem(target.attr('id').split('-')[1]);
+            this.model.scheduleTrigger(target.attr('id').split('-')[1]);
         },
         
-        selectItem : function(day) {
-            
-            if(day) {
-                
-                if(this.model.scheduleTrigger(day)) {
+        publishTrigger : function(day, trigger) {
+
+                if(trigger) {
                     
                     Backbone.Mediator.pub('weekly_selectItem', 
                         {
                             name : this.model.get('doctor_name'),
                             id : this.model.get('doctor_id'),
                             duration : this.model.get('doctor_duration'),
-                            schedule : $(target).text(),
+                            schedule : this.model.get('schedule')[day]['start'] + '-' + this.model.get('schedule')[day]['end'],
                             day : this.model.get('schedule')[day]['data']
                         }
                     );
@@ -89,14 +88,10 @@
                     );
                     
                 }
-                
-            }else{
-                console.warn('wrong parametr day in function selectItem');
-            }
-
+        
         },
         
-        unselectedItem : function () {
+        unselectedDays : function () {
             
             var schedule = this.model.get('schedule');
             
@@ -104,7 +99,7 @@
                 
                 if(schedule[day]['selected'] === true){
                     
-                    this.selectItem(day);
+                    this.model.scheduleTrigger(day);
                 }
                 
             }
@@ -115,7 +110,7 @@
             
             if(value === false){
                 
-                this.unselectedItem();
+                this.unselectedDays();
                 this.remove();
                 
             }

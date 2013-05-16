@@ -2,7 +2,20 @@
     <caption ><h4 class="muted">Work time:</h4></caption>
 	<thead>
 		<tr>
-			<td></td>
+            <td>
+                Day/<p>Doctor name</p>  
+            </td>
+            <%for(day in schedule) {%>
+    			
+                <td class="table-day" id="weekly-<%= day %>">
+                    <p>
+                         <%= day %>
+                    </p>
+                    
+                    <%= schedule[day] %>
+                </td>
+            
+            <%}%>
 		</tr>
 	</thead>
 	<tbody>

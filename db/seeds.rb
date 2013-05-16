@@ -98,7 +98,7 @@ WeeklySchedule.create(doctor_id: 2,schedule: {
         
         sat: {
             start: '12:00',
-            end: '14    :00'                         
+            end: '14:00'                         
         }
     }
      )
@@ -177,7 +177,7 @@ WeeklySchedule.create(doctor_id: 4,schedule: {
         
         sat: {
             start: '12:00',
-            end: '14    :00'                         
+            end: '14:00'                         
         }
     }
      )

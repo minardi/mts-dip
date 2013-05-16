@@ -1,6 +1,6 @@
 (function(app) {
 
-WeeklyModel = Backbone.Model.extend({
+app.WeeklyModel = Backbone.Model.extend({
         
         defaults : {
             schedule : {} ,
@@ -24,16 +24,29 @@ WeeklyModel = Backbone.Model.extend({
             this.set({schedule : schedule});
         },
         
-        scheduleTrigger :function(day) {
+        daySelect : function(day) {
             
-            var schedule = this.get('schedule');
+            if(!this.attributes.schedule[day]['selected']){
+
+                this.attributes.schedule[day]['selected'] = true;
+                this.trigger('select:schedule_day', day, this.attributes.schedule[day]['selected']);
+
+            }
+        },
+        
+        scheduleTrigger : function(day) {
             
-            schedule[day]['selected'] = (schedule[day]['selected'] === true) ? false :  true; 
-            this.set({'schedule' : schedule});
+            this.attributes.schedule[day]['selected'] = (this.attributes.schedule[day]['selected'] === true)
+                                                            ? 
+                                                                false 
+                                                            :  
+                                                                true; 
             
-            this.trigger('select:schedule_day', day, schedule[day]['selected']);
+            this.trigger('select:schedule_day', day, this.attributes.schedule[day]['selected']);
+
+            return this.attributes.schedule[day]['selected'];
             
-            return schedule[day]['selected'];
+            
         },
         
         setDate : function(days){
