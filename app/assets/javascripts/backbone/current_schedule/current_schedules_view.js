@@ -6,11 +6,13 @@
 						
 			initialize: function() {
 
-				Backbone.Mediator.sub("user_login", this.render, this);
+				Backbone.Mediator.sub("user_logined", this.render, this);
 
 				this.$el.hide();	
 
-				Backbone.Mediator.pub("user_login", { id: 1,
+				//temporary data
+				//needs changes due to Sveta's 'user_login' event 
+				Backbone.Mediator.pub("user_logined", { id: 1,
 													    name: "jenya",
 													    role: "doctor"													      
 												        });	
@@ -38,7 +40,8 @@
 
 				Backbone.Mediator.pub("timeline_render",{
 				                                          doctor_id: attr["id"],
-			                                              data: attr["day"]				   
+			                                              data: attr["day"],
+			                                              is_doctor: true				   
 				                                        });
 			},
 
