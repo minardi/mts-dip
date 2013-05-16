@@ -6,6 +6,8 @@
         
         collTemplate :  JST["backbone/weekly_schedule/weekly_schedule_collTemplate"],
         
+        
+        
         events: {
             "click thead td" : "daySelect",
         },
@@ -13,8 +15,11 @@
         days : {},
         
         initialize : function(){
- 
+            
             this.collection = new app.WeeklyCollection();
+                        
+            Backbone.Mediator.sub('doctor_selected', this.collection.addHandler, this.collection);
+            Backbone.Mediator.sub('doctor_unselected', this.collection.removeSchedule, this.collection);
             
             this.collection.on('change:selected', this.renderSchedule, this);
             

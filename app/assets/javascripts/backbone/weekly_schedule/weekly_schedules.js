@@ -10,9 +10,6 @@
         
         initialize : function () {
             
-            Backbone.Mediator.sub('doctor_selected', this.addHandler, this);
-            Backbone.Mediator.sub('doctor_unselected', this.removeSchedule, this);
-            
             this.on('add', this.updateModel, this);
             
             
