@@ -48,16 +48,28 @@ header {
   display: block;
   float: left;
   margin: 1px;
-<<<<<<< HEAD
+
 }
 
-/*.span2{
-  background-color: #3366CC;
-}*/
+.default_ticket
+{
+  background-color: green !important;
+}
 
-/*#btn_login {
-  background: #69ccc9;
-}*/
-=======
-} 
->>>>>>> 480a6ed6d505733c8ca7e939bf729e82c818655f
+.missed_ticket
+{
+	background-color: red !important;
+
+}
+
+.visited_ticket 
+{
+	background-color: yellow !important;
+
+}
+
+.canceled_ticket 
+{
+	background-color: #FF6600 !important;
+
+}

@@ -5,14 +5,10 @@
 		el: '#login_block',
 
 		initialize: function() {
-			//vent.on('home:show', this.show, this);
-			var logUser = new app.UserModel();
+			
+			var log_user = new app.UserModel();
 			this.render();
 			
-		},
-
-		show: function(id) {
-			console.log('qwertyuiop'+ id);
 		},
 
 		nav_template: JST["backbone/user_login/nav_template"],
@@ -21,50 +17,44 @@
 
 		events: {
 			
-			"click #btn_login": "user_login" 
+			"click #btn_login": "userLogin",
+			"click #close": "hideError",
+			// "click " 
 		},
 
-		user_login: function() {
+		userLogin: function() {
 
 			var user_email = this.$el.find('input[type=text]').val(),
 					user_password = this.$el.find('input[type=password]').val();
 			
-			logUser = new app.UserModel({ email: user_email,
+			log_user = new app.UserModel({ email: user_email,
 									  								password: user_password
 																	});
-			logUser.on('sync', this.check_login, this);
-			logUser.save();			
+			log_user.on('sync', this.checkLogin, this);
+			log_user.save();			
 		},
 
-		check_login: function(params) {
+		checkLogin: function(params) {
 			
-			if(logUser.get('login')) {
+			if(log_user.get('login')) {
 				console.log(params);
+				
+				app.router.navigate('home', {trigger:true});
+				
 				Backbone.Mediator.pub('user_login', 
 									                        {
-									                            id : logUser.get('id')
+									                            id : log_user.get('id')
 									                        }
                     					);
-				this.$el.html(this.inrole_template({ name: logUser.get('name')}));
+				this.$el.html(this.inrole_template({ name: log_user.get('name')}));
 				return this;
 			} else {
-
-				this.$el.append(
-                    $('<div />', 
-                        {
-                           text : 'Login Error! Check input items!',
-                           "class" : 'span6 alert alert-error'
-                        }
-                    )
-                // .prepend(
-                //     $('<button />', 
-                //         {
-                //             "class" : "close"
-                //         }
-                //     )
-                // )
-            );
+				$("#login_error").removeClass("hidden");
 			}
+		},
+
+		hideError: function() {
+			$("#login_error").hide();
 		},
 
 		render: function() {
