@@ -19,9 +19,9 @@
         removeSchedule : function(data) {
             var model = this.haveModel(data.id);
                 if (model) {
-                    model.set({selected : false}) 
+                    model.set({selected : false}); 
                 } else {
-                    console.warn('something wrong with schedule remove function')
+                    console.warn('something wrong with schedule remove function');
                 }
         },
         
@@ -31,7 +31,7 @@
             this.schedule_data = data;
             
             if(model) {
-                model.set({selected : true}) 
+                model.set({selected : true}); 
             } else {
                 this.getByDoctor(data.id);
             }
@@ -46,7 +46,7 @@
                             doctor_duration : this.schedule_data.duration,
                         }
                     );
-            model.setDate(this.days)
+            model.setDate(this.days);
         },
         
         shiftUrl : function(url, data) {

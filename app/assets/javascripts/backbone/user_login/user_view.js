@@ -3,10 +3,13 @@
 	app.UserView = Backbone.View.extend({
 		
 		el: '#login_block',
+        
+        
 
 		initialize: function() {
 			
 			var log_user = new app.UserModel();
+            this.user = log_user; // for UserEx;
 			this.render();
 			
 		},
@@ -30,6 +33,7 @@
 			log_user = new app.UserModel({ email: user_email,
 									  								password: user_password
 																	});
+            this.user = log_user; // for UserEx;
 			log_user.on('sync', this.checkLogin, this);
 			log_user.save();			
 		},
