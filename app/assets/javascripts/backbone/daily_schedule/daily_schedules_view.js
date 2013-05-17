@@ -24,8 +24,6 @@
 
 			addDailySchedule: function(attr) {
 
-				console.log(attr["schedule"]);
-
 				var schedule_time = this.splitScheduleStr(attr["schedule"]);
 
 			    daily_schedule = new app.DailySchedule( { doctor_id: attr["id"],

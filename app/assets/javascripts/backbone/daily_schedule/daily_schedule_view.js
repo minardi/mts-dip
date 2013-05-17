@@ -71,6 +71,7 @@
 
 			var duration = model.get("duration"),
 				date = new Date(0, 0, 0, 8, 0, 0, 0),
+				date_help = new DateEx(date),
 				amount = 0,
 				cssclass = "timeline",
 				start = this.timeFix(model.get("schedule_start")),
@@ -93,11 +94,11 @@
 					break;
 			}
 
-			width = (((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(2) + "px";
+			width = (((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(3) + "px";
 
 
 			return {duration: duration,
-					date: date,
+					date: date_help,
 					amount: amount,
 					start: start,
 					end: end,
@@ -124,8 +125,7 @@
 			for (var i = 1; i <= timeline_attrs.amount; i++) {
 
 				timeline = document.createElement("span");
-				current_time = timeline_attrs.date.toTimeString();
-				current_time = current_time.slice(0, 5);
+				current_time = timeline_attrs.date.timeViewFormat();
 
 				if ( (current_time >= timeline_attrs.start) && (current_time < timeline_attrs.end) ) {
 				    $(timeline).addClass("worktime");
@@ -139,7 +139,7 @@
 
 				this.$el.children(".timelines").append(timeline);
 
-				timeline_attrs.date.setMinutes(timeline_attrs.date.getMinutes() + timeline_attrs.duration);
+				timeline_attrs.date.date.setMinutes(timeline_attrs.date.date.getMinutes() + timeline_attrs.duration);
 			}
 
       		return this;		

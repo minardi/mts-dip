@@ -44,9 +44,6 @@ app.WeeklyModel = Backbone.Model.extend({
             
             this.trigger('select:schedule_day', day, this.attributes.schedule[day]['selected']);
 
-            return this.attributes.schedule[day]['selected'];
-            
-            
         },
         
         setDate : function(days){

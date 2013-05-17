@@ -6,15 +6,20 @@
         
         collTemplate :  JST["backbone/weekly_schedule/weekly_schedule_collTemplate"],
         
+        
+        
         events: {
-            "click thead td" : "daySelect",
+            "click thead .weekly-table-day" : "daySelect",
         },
         
         days : {},
         
         initialize : function(){
- 
+            
             this.collection = new app.WeeklyCollection();
+                        
+            Backbone.Mediator.sub('doctor_selected', this.collection.addHandler, this.collection);
+            Backbone.Mediator.sub('doctor_unselected', this.collection.removeSchedule, this.collection);
             
             this.collection.on('change:selected', this.renderSchedule, this);
             
@@ -77,7 +82,7 @@
         daySelect: function(event) {
             
             var collection = this.collection.where({selected : true}),
-                target = $(event.target),
+                target = ($(event.target).children().length !== 0) ? $(event.target) : $(event.target).parent(),
                 day = target.attr('id').split('-')[1],
                 id = 0;
                 
