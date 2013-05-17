@@ -6,5 +6,6 @@
 //= require ./tickets/config
 
 //= require ./user_login/config
+//= require ./user_status/config
 
 //= require ./week_user_ticket/config
