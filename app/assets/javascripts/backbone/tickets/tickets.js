@@ -42,10 +42,11 @@
 
      },
 
-     comporator: function(TicketModel) {
-      
-      return TicketModel.get('data');
+     comparator: function(model) {
 
+      var filtr = model.get('data') + model.get('time');
+
+      return filtr;
      },
      
     });
