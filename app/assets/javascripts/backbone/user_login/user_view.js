@@ -17,9 +17,10 @@
 
 		events: {
 			
-			"click #btn_login": "userLogin",
-			"click #close": "hideError",
-			// "click " 
+			"click #btn_login" 				: "userLogin",
+			"click #close" 						: "hideError",
+			"click #private_schedule" : "privateSchedule",
+			"click #exit"							: "userLogout"
 		},
 
 		userLogin: function() {
@@ -28,7 +29,7 @@
 					user_password = this.$el.find('input[type=password]').val();
 			
 			log_user = new app.UserModel({ email: user_email,
-									  								password: user_password
+									  								 password: user_password
 																	});
 			log_user.on('sync', this.checkLogin, this);
 			log_user.save();			
@@ -39,22 +40,40 @@
 			if(log_user.get('login')) {
 				console.log(params);
 				
-				app.router.navigate('home', {trigger:true});
+				
 				
 				Backbone.Mediator.pub('user_login', 
 									                        {
 									                            id : log_user.get('id')
 									                        }
                     					);
+				
 				this.$el.html(this.inrole_template({ name: log_user.get('name')}));
+				app.router.navigate('home');
+
 				return this;
 			} else {
 				$("#login_error").removeClass("hidden");
+				setTimeout(this.hideError, 3000);
 			}
 		},
 
 		hideError: function() {
 			$("#login_error").hide();
+		},
+
+		privateSchedule: function() {
+			$("#private_schedule").addClass("active");
+			app.router.navigate('my-private-schedule', {trigger: true});
+
+		},
+
+		userLogout: function() {
+			$("#exit").addClass("active");
+			log_user.clear();
+			this.$el.html(this.nav_template);
+			console.log(log_user);
+			return this;
 		},
 
 		render: function() {
