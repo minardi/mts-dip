@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130515123727) do
+ActiveRecord::Schema.define(:version => 20130516182805) do
 
   create_table "doctors", :force => true do |t|
     t.integer  "duration"
@@ -36,6 +36,13 @@ ActiveRecord::Schema.define(:version => 20130515123727) do
     t.string   "data"
     t.integer  "user_id"
     t.string   "status"
+  end
+
+  create_table "user_statuses", :force => true do |t|
+    t.integer  "missing_count"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|
