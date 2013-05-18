@@ -15,9 +15,11 @@
     },
 
     showHome: function() {
+
       $('#tab_schedules').addClass("hidden");
       $('#week_user_tickets').addClass("hidden");
       // $('#tab_schedules').addClass("hidden");
+
     },
 
     showPrivateSchedule: function() {
