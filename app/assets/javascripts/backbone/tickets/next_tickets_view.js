@@ -19,7 +19,7 @@
         },
 
         addStickers: function() {
-            var dateex = new DateEx(),
+            var dateex = new app.DateEx(),
                 nowDate = dateex.dateTransFormat(),
                 nowTime = dateex.timeTransFormat().slice(1);
 

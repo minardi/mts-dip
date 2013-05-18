@@ -5,6 +5,7 @@
 			template: JST["backbone/daily_schedule/daily_schedules_template"],
 						
 			initialize: function() {
+
 				this.daily_schedules = new app.DailySchedules();
 
 				Backbone.Mediator.sub("weekly_selectItem", this.addDailySchedule, this);
@@ -24,7 +25,8 @@
 
 			addDailySchedule: function(attr) {
 
-				var schedule_time = this.splitScheduleStr(attr["schedule"]);
+				var schedule_time = this.splitScheduleStr(attr["schedule"]),
+					daily_schedule_view;
 
 			    daily_schedule = new app.DailySchedule( { doctor_id: attr["id"],
 													      doctor_name: attr["name"],
@@ -61,7 +63,8 @@
 				}
 			},
 
-			render: function() {		
+			render: function() {	
+
 				this.$el.html(this.template());
 				return this;
 			}		

@@ -17,14 +17,6 @@
 				var day_arr = day_str.split("-"),
 					dd = day_arr[0],
 					mm = day_arr[1];
-
-				if (dd < 10) {
-  					dd = '0' + dd;
-  				}
-
-  				if (mm < 10) {
-  					mm = '0' + mm;
-  				}	
 					
 				return dd + "." + mm + "." + day_arr[2].slice(2);
 		},

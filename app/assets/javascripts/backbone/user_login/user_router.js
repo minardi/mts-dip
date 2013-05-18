@@ -14,7 +14,7 @@
 
     showHome: function() {
       console.log('hollo home');
-      checkLogin.render();
+      //checkLogin.render();
     },
 
     showPrivateSchedule: function() {

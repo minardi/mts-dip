@@ -4,7 +4,7 @@
 	
 		defaults: {
 			doctor_id: "",
-			doctor_name: "Ivanov",
+			doctor_name: "",
 			duration: 15,
 			day: "",
 			schedule_start: "10:00",
