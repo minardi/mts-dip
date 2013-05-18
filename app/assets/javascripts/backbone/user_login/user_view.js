@@ -6,8 +6,7 @@
 
 		initialize: function() {
 			
-			log_user = new app.UserModel();
-      this.user = log_user; // for UserEx;
+			this.user = new app.UserModel();
 			this.render();
 			
 		},
@@ -29,26 +28,26 @@
 			user_email = this.$el.find('input[type=text]').val(),
 			user_password = this.$el.find('input[type=password]').val();
 			
-			log_user.set({ email: user_email,
+			this.user.set({ email: user_email,
 									   password: user_password
 									});
-      this.user = log_user; // for UserEx;
-			log_user.on('sync', this.checkLogin, this);
-			log_user.save();			
+      //this.user = log_user; // for UserEx;
+			this.user.on('sync', this.checkLogin, this);
+			this.user.save();			
 		},
 
 		checkLogin: function(params) {
 			
-			if(log_user.get('login')) {
+			if(this.user.get('login')) {
 
 				Backbone.Mediator.pub('user_login', 
 									                        {
-									                            id : log_user.get('id'),
-									                            role: log_user.get('role',[0])
+									                            id : this.user.get('id'),
+									                            role: this.user.get('role',[0])
 									                        }
                     					);
 
-				this.$el.html(this.inrole_template({ name: log_user.get('name')}));
+				this.$el.html(this.inrole_template({ name: this.user.get('name')}));
 				app.router.navigate('home', {trigger:true});
 				return this;
 
@@ -71,16 +70,15 @@
 
 		userLogout: function() {
 			$("#exit").addClass("active");
-			log_user.clear();
+			this.user.clear();
 			Backbone.Mediator.pub('user_login', 
 									                        {
-									                            id : log_user.get('id'),
-									                            role: log_user.get('role',[0])
+									                            id : this.user.get('id'),
+									                            role: this.user.get('role',[0])
 									                        }
                     					);
 			this.$el.html(this.nav_template);
 			app.router.navigate('', {trigger:true});
-			console.log(log_user);
 			return this;
 		},
 
