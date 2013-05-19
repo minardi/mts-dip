@@ -38,8 +38,8 @@
     function getUserSchedule() {
         if (this.user.get('role')['key'] === 'patient'){
         
-                
-            
+            this.weekview = new WeekDaysView({el : $('#week_user_tickets')});        
+            console.log(this.weekview)
         }   
     }
     
