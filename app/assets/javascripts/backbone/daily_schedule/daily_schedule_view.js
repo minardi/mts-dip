@@ -71,7 +71,7 @@
 
 			var duration = model.get("duration"),
 				date = new Date(0, 0, 0, 8, 0, 0, 0),
-				date_help = new DateEx(date),
+				date_help = new app.DateEx(date),
 				amount = 0,
 				cssclass = "timeline",
 				start = this.timeFix(model.get("schedule_start")),
@@ -95,7 +95,6 @@
 			}
 
 			width = (((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(3) + "px";
-
 
 			return {duration: duration,
 					date: date_help,

@@ -7,17 +7,14 @@ $(function () {
       ticketsView = new TicketsView(),
       nextTickets = new NextTicketsView({el: $("#next-tickets")}),
       weekly = new WeeklyCollectionView({el : $('#weekly-table')}),
-      
-
+      weekdays = new WeekDaysView({el : $('#week_user_tickets')}),    
       currentTimelines = new CurrentSchedulesView({el:$("#current_schedules")}),
+
       user = new UserView({el: $("#login_block")}),
       userStatus = new UserStatusView();
 
       window.router = new UserRouter();
-      
       window.UserEx.prototype = user;
       window.userEx = new window.UserEx();
-      
-      console.log(router);
   Backbone.history.start();
 });

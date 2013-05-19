@@ -3,22 +3,35 @@
   app.UserRouter = Backbone.Router.extend({
 
     routes: {
-      ''                 : 'index',
-      'home'             : 'showHome',
-      'private-schedule' : 'showPrivateSchedule'
+      ''                    : 'index',
+      'home'                : 'showHome',
+      'my-private-schedule' : 'showPrivateSchedule'
     },
 
     index: function() {
-      console.log('hello index');
+      $('#current_schedules').addClass("hidden");
+      $('#week_user_tickets').addClass("hidden");
+      // $('#tab_schedules').addClass("hidden");
     },
 
     showHome: function() {
-      console.log('hollo home');
-      checkLogin.render();
+
+      $('#tab_schedules').addClass("hidden");
+      $('#week_user_tickets').addClass("hidden");
+      // $('#tab_schedules').addClass("hidden");
+
     },
 
     showPrivateSchedule: function() {
-      console.log('hollo table');
+      $("#home").removeClass("active");
+      $("#private_schedule").addClass("active");
+      $('#left_block').addClass("hidden");
+      $('#weekly-table').addClass("hidden");
+      $('#daily_schedules').addClass("hidden");
+      $('#week_user_tickets').addClass("hidden");
+      $('#current_schedules').removeClass("hidden");
+      $('#week_user_tickets').removeClass("hidden");
+      // $('#tab_schedules').removeClass("hidden"); 
     }
 
   });
