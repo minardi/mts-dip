@@ -17,13 +17,13 @@
     	timelineSelect: function(event) {
     		var element = event.target;
     			parsed_id = this.ticketIdParse(element);
-    			console.log(parsed_id);
 
 			Backbone.Mediator.pub("ticket_added", { doctor_id: parsed_id.doctor_id,
+													user_id: window.userEx.getid(),
 													data: parsed_id.data,
 													time: parsed_id.time,
 											        selector_id: parsed_id.selector_id,
-											        type: "sl_doc" 
+											        type: "sl-doc" 
 											       });	
 		},
 
@@ -38,7 +38,7 @@
     	ticketIdParse: function(element) {
 
     		var ticket_id = $(element).attr("id"),
-				doctor_id = ticket_id.slice(3, ticket_id.indexOf("_")),
+				doctor_id = ticket_id.slice(6, ticket_id.indexOf("_")),
 				data = ticket_id.slice(ticket_id.indexOf("_") + 1, ticket_id.indexOf("t") - 1),
 				time = ticket_id.slice(ticket_id.indexOf("t") + 1);
 
@@ -111,7 +111,7 @@
 
 			time = time.charAt(0) + time.charAt(1) + time.charAt(3) + time.charAt(4);
 
-			$(element).attr("id", "sl_doc" + doctor_id + "_" + day + "_t" + time);
+			$(element).attr("id", "sl-doc" + doctor_id + "_" + day + "_t" + time);
 			$(element).css("width", width);
 			$(element).addClass(cssclass);
 		},
