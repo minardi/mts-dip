@@ -11,6 +11,7 @@
     index: function() {
       $('#current_schedules').addClass("hidden");
       $('#week_user_tickets').addClass("hidden");
+      $('#next-tickets').addClass("hidden");
       // $('#tab_schedules').addClass("hidden");
     },
 
@@ -18,6 +19,7 @@
 
       $('#tab_schedules').addClass("hidden");
       $('#week_user_tickets').addClass("hidden");
+      $('#next-tickets').removeClass("hidden");
       // $('#tab_schedules').addClass("hidden");
 
     },
