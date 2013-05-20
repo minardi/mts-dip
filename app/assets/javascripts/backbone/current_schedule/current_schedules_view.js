@@ -18,7 +18,7 @@
 					schedule_start = schedule_array[0],
 					schedule_end = schedule_array[1];
 
-				var daily_schedule = new app.DailySchedule( { doctor_id: attr["id"],
+				var daily_schedule = new app.DailySchedule( { doctor_id: attr["doctor_id"],
 													      day: attr["day"],
 													      duration: attr["duration"],
 													      schedule_start: schedule_start,
@@ -32,20 +32,20 @@
 				this.$el.find("#current_schedules_content").append(current_schedule_view.render().el);
 
 				Backbone.Mediator.pub("timeline_render",{
-				                                          doctor_id: attr["id"],
+				                                          doctor_id: attr["doctor_id"],
 			                                              data: attr["day"],
-			                                              is_doctor: true				   
+			                                              type: "cw-doc"				   
 				                                        });
 			},
 
-			formatDate: function(date) {
+			/*formatDate: function(date) {
 
 				var dd = date.getDate(),
 					mm = date.getMonth() + 1,
 					yyyy = date.getFullYear();
 
   				return dd + '-' + mm + '-' + yyyy;
-			},
+			},*/
 				
 			render: function() {
 
@@ -77,17 +77,18 @@
 
 					    for(i=0;i<=6;i++) {
 
-						    this.addSchedule({id:  doctor_id,
+						    this.addSchedule({doctor_id:  doctor_id,
 						    					   //name: param["name"],
 						    					   day: dateex.dateTransFormat(),
 						    					   duration: mySchedule.get("doctor_duration"),
 						    					   schedule: daily_array[i]
 						    					  });
 
-						    Backbone.Mediator.pub("timeline_render",{
+						    /*Backbone.Mediator.pub("timeline_render",{
 							                                          doctor_id: doctor_id,
-						                                              data: dateex.dateTransFormat()	   
-							                                        });
+						                                              data: dateex.dateTransFormat(),
+						                                              type: "cw-doc"	   
+							                                        });*/
 
 						    date.setDate(date.getDate() + 1);
 				    	}
