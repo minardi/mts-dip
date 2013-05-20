@@ -4,28 +4,27 @@
 
         initialize: function () {
 
+            this.statusModel = new app.StatusModel();
+
             Backbone.Mediator.sub("user_miss", this.getModels, this);
 
+            this.statusModel.on("sync", this.addMiss, this);
+            //this.statusModel.on("all", function(e){console.log(e);}, this)
         },
 
         getModels: function (attr){
-            this.userModel = new app.UserModel({id:attr["user_id"]});
-            this.statusModel = new app.StatusModel();
 
-            this.userModel.fetch();
-            this.statusModel.setUrl(attr);
-                        this.userModel.on("reset", this.addMiss, this);
+            this.statusModel.resetUrl(attr);
+             
         },
 
         addMiss: function (attr) {
-
+ 
         var miss_count = this.statusModel.get("miss_count");
 
-
-            miss_count = miss_count + 1;
-            this.statusModel.save();
-
-            console.log(miss_count);
+            if (miss_count === 3) {
+                Backbone.Mediator.pub("user_blocked", {user_id: attr["user_id"]} );
+            }
 
         },
     });

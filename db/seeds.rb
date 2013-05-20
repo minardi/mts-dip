@@ -23,6 +23,11 @@ spec = Specialization.create(:name => "Terapevt")
 spec.doctors.create(:name => "Dima", :duration => 30)
 
 spec = Specialization.create(:name => "Okulist")
+
+UserStatus.create(user_id: 1, missing_count: 0)
+UserStatus.create(user_id: 2, missing_count: 0)
+UserStatus.create(user_id: 3, missing_count: 0)
+UserStatus.create(user_id: 4, missing_count: 0)
  
 WeeklySchedule.create(doctor_id: 1,schedule: {
         sun: {
