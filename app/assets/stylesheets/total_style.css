@@ -35,6 +35,22 @@ header {
 	width: 710px;
 }
 
+.navbar .nav > li > p {
+  float: none;
+  padding: 10px 15px 10px;
+  color: #777777;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #ffffff;
+}
+
+.navbar .nav > .active > p,
+.navbar .nav > .active > p:hover,
+.navbar .nav > .active > p:focus {
+  color: #555555;
+  text-decoration: none;
+  background-color: #e5e5e5;
+}
+
 .select_ticket
 {
   background-color: green !important;
@@ -70,6 +86,8 @@ header {
 
 .canceled_ticket 
 {
-	background-color: #FF6600 !important;
+	background-color: white !important;
 
 }
+
+

@@ -1,6 +1,4 @@
-function DateEx(dateobj) {
-
-	this.date = dateobj || new Date();
+(function(app) {
 
 	function addZero(num) {
 
@@ -11,12 +9,12 @@ function DateEx(dateobj) {
 		return num;
 	}
 
-	this.setDate = function(year, month, day, hours, minutes, seconds, ms) {
+	function setDate(year, month, day, hours, minutes, seconds, ms) {
 
 		this.date = new Date(year, month, day, hours, minutes, seconds, ms);
 	}
 
-	this.dateTransFormat = function() {
+	function dateTransFormat() {
 
 		var dd = addZero(this.date.getDate()),
 			mm = addZero(this.date.getMonth() + 1),
@@ -25,7 +23,7 @@ function DateEx(dateobj) {
 		return dd + "-" + mm + "-" + yyyy;
 	}
 
-	this.timeTransFormat = function() {
+	function timeTransFormat() {
 
 		var hh = addZero(this.date.getHours()),
 			mm = addZero(this.date.getMinutes());
@@ -33,7 +31,7 @@ function DateEx(dateobj) {
 		return "t" + hh + mm;
 	}
 
-	this.dateViewFormat = function() {
+	function dateViewFormat() {
 
 		var dd = addZero(this.date.getDate()),
 			mm = addZero(this.date.getMonth() + 1),
@@ -42,7 +40,7 @@ function DateEx(dateobj) {
 		return dd + "." + mm + "." + yyyy % 100;
 	}
 
-	this.timeViewFormat = function() {
+	function timeViewFormat() {
 
 		var hh = addZero(this.date.getHours()),
 			mm = addZero(this.date.getMinutes());
@@ -50,7 +48,7 @@ function DateEx(dateobj) {
 		return hh + ":" + mm;
 	}
 
-	this.idToDate = function(datestr, timestr) {
+	function idToDate(datestr, timestr) {
 
 		//id == doc1_dd-mm-yyyy_thhmm
 
@@ -64,7 +62,7 @@ function DateEx(dateobj) {
 		return set_date;
 	}
 
-	this.getCurrentWeek = function(param) {
+	function getCurrentWeek(param) {
 
 		this.date.setDate(this.date.getDate() - this.date.getDay());
 
@@ -82,11 +80,33 @@ function DateEx(dateobj) {
 
 		for(key in currentWeek) {
 
-			currentWeek[key] = (param["transport"] == true) ? this.dateTranspFormat() : this.dateViewFormat();
+			currentWeek[key] = (param["transport"] == true) ? this.dateTransFormat() : this.dateViewFormat();
 			this.date.setDate(this.date.getDate() + 1);
 		}
 
 		return currentWeek;
 	}
-	
-}
+
+	function DateEx(dateobj) {
+
+		this.date = dateobj || new Date();
+		
+		this.setDate = setDate;
+
+		this.dateTransFormat = dateTransFormat;
+
+		this.timeTransFormat = timeTransFormat;
+
+		this.dateViewFormat = dateViewFormat;
+
+		this.timeViewFormat = timeViewFormat;
+
+		this.idToDate = idToDate;
+
+		this.getCurrentWeek = getCurrentWeek;
+		
+	}
+
+	app.DateEx = DateEx;
+
+})(window)

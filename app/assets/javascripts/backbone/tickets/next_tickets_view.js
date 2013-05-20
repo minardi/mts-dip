@@ -19,24 +19,27 @@
         },
 
         addStickers: function() {
-            var dateex = new DateEx(),
+            var dateex = new app.DateEx(),
                 nowDate = dateex.dateTransFormat(),
                 nowTime = dateex.timeTransFormat().slice(1);
 
             this.Tickets.each(function(model) {
-        
+                    
             ticketDate = model.get("data");
             ticketTime = model.get("time");
 
             if (this.NeedTickets.length < 3){
-                if (nowDate <= ticketDate){
-                    if (nowTime <= ticketTime){
+                if (nowDate < ticketDate){                            
+                        this.NeedTickets.push(model);
+                }
 
+                if (nowDate == ticketDate){
+                    if (nowTime <= ticketTime){
                         this.NeedTickets.push(model);
                     }
                 }
             }
-        }, this);
+            }, this);
 
             this.NeedTickets.each(this.addStick, this);
 

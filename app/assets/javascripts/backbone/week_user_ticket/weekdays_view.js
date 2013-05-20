@@ -15,19 +15,21 @@
     addWeekRows: function() {
       var date = new Date,
           days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],   
-          strDate = "";
+          strDate = "",
+          model,
+          view;
 
       for(var i = 0; i < 7; i++) {
         date.setDate(date.getDate()+(i-date.getDay()));
           
         
-        var model = new WeekDayModel({
+        model = new WeekDayModel({
                                            date: this.pre_nil(date.getDate()),
                                            month: this.pre_nil(date.getMonth()+1),
                                            year:date.getFullYear(),
                                            day:days[date.getDay()],
                                            user_id: 1  // здесь нужно будет подставить Юзера
-                                        }),
+                                });
          
        
         view = new WeekDayView({model:model});

@@ -6,16 +6,10 @@
 						
 			initialize: function() {
 
-				Backbone.Mediator.sub("user_logined", this.render, this);
+				Backbone.Mediator.sub("user_login", this.render, this);
 
 				this.$el.hide();	
 
-				//temporary data
-				//needs changes due to Sveta's 'user_login' event 
-				Backbone.Mediator.pub("user_logined", { id: 1,
-													    name: "jenya",
-													    role: "doctor"													      
-												        });	
 			},
 
 			addSchedule: function(attr) {
@@ -24,8 +18,7 @@
 					schedule_start = schedule_array[0],
 					schedule_end = schedule_array[1];
 
-				var daily_schedule = new app.DailySchedule( { doctor_id: attr["id"],
-													      doctor_name: attr["name"],
+				var daily_schedule = new app.DailySchedule( { doctor_id: attr["doctor_id"],
 													      day: attr["day"],
 													      duration: attr["duration"],
 													      schedule_start: schedule_start,
@@ -39,36 +32,38 @@
 				this.$el.find("#current_schedules_content").append(current_schedule_view.render().el);
 
 				Backbone.Mediator.pub("timeline_render",{
-				                                          doctor_id: attr["id"],
+				                                          doctor_id: attr["doctor_id"],
 			                                              data: attr["day"],
-			                                              is_doctor: true				   
+			                                              type: "cw-doc"				   
 				                                        });
 			},
 
-			formatDate: function(date) {
+			/*formatDate: function(date) {
 
 				var dd = date.getDate(),
 					mm = date.getMonth() + 1,
 					yyyy = date.getFullYear();
 
   				return dd + '-' + mm + '-' + yyyy;
-			},
+			},*/
 				
-			render: function(param) {
+			render: function() {
 
 				this.$el.html(this.template());
+				
+				if (window.userEx.getRole() == "doctor") {
 
-				if (param["role"] == "doctor") {
+					var doctor_id = window.userEx.getDoctorId(),
+						mySchedule = new app.WeeklyModel();
 
-					var mySchedule = new app.WeeklyModel();
-
-					mySchedule.urlRoot =  "/weekly_schedules/" + param["id"] +"/getduration.json";
+					mySchedule.urlRoot =  "/weekly_schedules/" + doctor_id +"/getduration.json";
 					mySchedule.fetch();
 
 					mySchedule.on("change", function () {
 
 						var daily_array = {},
-					    	date = new Date();
+							date = new Date(),
+					    	dateex = new app.DateEx(date);
 
 						date.setDate(date.getDate() - date.getDay());
 
@@ -82,19 +77,25 @@
 
 					    for(i=0;i<=6;i++) {
 
-						    this.addSchedule({id:  param["id"],
-						    					   name: param["name"],
-						    					   day: this.formatDate(date),
+						    this.addSchedule({doctor_id:  doctor_id,
+						    					   //name: param["name"],
+						    					   day: dateex.dateTransFormat(),
 						    					   duration: mySchedule.get("doctor_duration"),
 						    					   schedule: daily_array[i]
 						    					  });
+
+						    /*Backbone.Mediator.pub("timeline_render",{
+							                                          doctor_id: doctor_id,
+						                                              data: dateex.dateTransFormat(),
+						                                              type: "cw-doc"	   
+							                                        });*/
 
 						    date.setDate(date.getDate() + 1);
 				    	}
 
 					}, this);    
-				    
-				}
+
+				};
 			
 				return this;
 			}		

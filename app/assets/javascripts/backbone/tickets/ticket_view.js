@@ -7,14 +7,14 @@
     unselect_class: "worktime",
   
     initialize: function() {
-      this.model.bind('change', this.render, this);
+      this.model.on('change', this.render, this);
       
       this.setEvents();
       
     },
 
     setEvents: function() {
-      if(this.model.is_doctor) {
+      if(this.model.type === "cw-doc") {
         this.events = { 
                         "click" : "changeStatusVisit", 
                         "contextmenu" : "changeStatusMis"
@@ -27,52 +27,48 @@
     changeStatusVisit: function() {
        var current_doctor = 1;
 
-       if (this.model.get("doctor_id") !== current_doctor ) return false;
-
        switch (this.model.get("status")) {
           
          case "visited":
            this.model.set({status:"canceled"})
            this.model.save();
-         break
+           break;
 
          case "canceled": 
            this.model.set({status:"default"})
            this.model.save();
-         break
+           break;
 
          default:
            this.model.set({status:"visited"})
            this.model.save();
        }
  
-       console.log(this.model.get("status"));
-//       this.render();
     },
 
     changeStatusMis: function() {
       var current_doctor = 1;
 
-      if (this.model.get("doctor_id") !== current_doctor ) return false;
-
       switch (this.model.get("status")) {
           
          case "missed":
-           this.model.set({status:"default"})
+           this.model.set({status:"default"});
            this.model.save();
-         break
+           break;
 
          default:
-           this.model.set({status:"missed"})
+           this.model.set({status:"missed"});
            this.model.save();
        }
 
       this.render(); 
 
-      return false
+      return false;
     },    
     
     ticketRemove: function(el) {
+
+      //if (app.userEx.getId() != this.model.get("user_id")) return false;
 
       this.model.destroy();
       
@@ -81,11 +77,12 @@
     },
 
     removeClass: function() {
-      this.$el.removeClass("default_ticket");
-      this.$el.removeClass("missed_ticket");
-      this.$el.removeClass("visited_ticket");
-      this.$el.removeClass("canceled_ticket");
-      this.$el.removeClass("worktime");
+
+      this.$el.removeClass("default_ticket").
+               removeClass("missed_ticket").
+               removeClass("visited_ticket").
+               removeClass("canceled_ticket").
+               removeClass("worktime");
       
     },
 
