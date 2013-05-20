@@ -86,7 +86,8 @@
 
 						    Backbone.Mediator.pub("timeline_render",{
 							                                          doctor_id: doctor_id,
-						                                              data: dateex.dateTransFormat()	   
+						                                              data: dateex.dateTransFormat(),
+						                                              is_doctor: true	   
 							                                        });
 
 						    date.setDate(date.getDate() + 1);

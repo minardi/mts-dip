@@ -5,6 +5,7 @@
     template: JST["backbone/tickets/tickets_template"],
   
     initialize: function() {
+
       this.is_doctor = false; 
 
       this.Tickets = new TicketsCollection();
@@ -34,9 +35,15 @@
           selector_id = "doc"+attrs["doctor_id"]+"_"+
                        attrs["data"]+"_t"+time[0]+""+time[1],
           model,
-          view;             
-          
-      this.is_doctor = attrs["is_doctor"]    
+          view;
+
+      // block create ticket if user not sign in
+      console.log(app.userEx.getRole());
+      if (app.userEx.getRole() != "guest") return false;                
+      console.log("login");    
+      this.is_doctor = attrs["is_doctor"]
+      
+      attrs["user_id"]=app.userEx.getId();
 
      if (this.Tickets.is_there(attrs) === false) {     
   
@@ -44,7 +51,6 @@
 
          model.save();
          this.Tickets.push(model);
-       //  this.addOneTicket(model); 
       
       } 
     },
@@ -60,7 +66,7 @@
       
        
       // ticket.is_doctor = this.is_doctor 
-      ticket.is_doctor = true;
+      ticket.is_doctor = this.is_doctor;
 
       view = new TicketView({
                               model : ticket, 

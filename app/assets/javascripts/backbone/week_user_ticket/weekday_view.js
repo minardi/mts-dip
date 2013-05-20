@@ -9,11 +9,13 @@
     initialize: function() {
        this.WeekTickets = new WeekTicketsCollection; 
        this.WeekTickets.on("add",this.renderTickets,this)
-       this.addTickets();       
+       this.addTickets();
+            
     },
 
     addTickets: function() {
 
+      
           search_hash = {
                           user_id: 1,    // здесь нужно будет подставить Юзера
                           //дата в формате "год_месяц_день" 
