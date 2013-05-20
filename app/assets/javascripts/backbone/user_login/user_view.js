@@ -2,6 +2,7 @@
 
 	app.UserView = Backbone.View.extend({
 		
+		// el - elent-bloc "div", with login fild
 		el: '#login_block',
 
 		initialize: function() {
@@ -11,8 +12,10 @@
 			
 		},
 
+		// template with logins inputs
 		nav_template: JST["backbone/user_login/nav_template"],
 		
+		// template with "user on" 
 		inrole_template: JST["backbone/user_login/user_template"],
 
 		events: {
@@ -39,7 +42,6 @@
 		checkLogin: function(params) {
 			
 			if(this.user.get('login')) {
-
 				Backbone.Mediator.pub('user_login', 
 									                        {
 									                            id : this.user.get('id'),
