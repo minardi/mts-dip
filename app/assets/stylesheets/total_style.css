@@ -4,7 +4,7 @@
 header {
 	width: 600px;
 	height: 155px;
-	background:url(/images/headpic.png) no-repeat;
+	background:url(/images/headpic_red.png) no-repeat;
 	
 }
 
@@ -27,7 +27,7 @@ header {
 }
 
 #list {
-	width: 200px;
+	width: 120px;
 }
 
 #work-time table {

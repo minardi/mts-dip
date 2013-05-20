@@ -12,6 +12,7 @@
       $('#current_schedules').addClass("hidden");
       $('#week_user_tickets').addClass("hidden");
       $('#next-tickets').addClass("hidden");
+      $('#left_block').removeClass("hidden");
       // $('#tab_schedules').addClass("hidden");
     },
 
