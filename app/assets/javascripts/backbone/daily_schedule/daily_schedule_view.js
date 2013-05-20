@@ -22,7 +22,9 @@
 			Backbone.Mediator.pub("ticket_added", { doctor_id: parsed_id.doctor_id,
 													data: parsed_id.data,
 													time: parsed_id.time,
-											        selector_id: parsed_id.selector_id });	
+											        selector_id: parsed_id.selector_id,
+											        type: "sl_doc" 
+											       });	
 		},
 
 		deleteSchedule: function() {
@@ -109,7 +111,7 @@
 
 			time = time.charAt(0) + time.charAt(1) + time.charAt(3) + time.charAt(4);
 
-			$(element).attr("id", "doc" + doctor_id + "_" + day + "_t" + time);
+			$(element).attr("id", "sl_doc" + doctor_id + "_" + day + "_t" + time);
 			$(element).css("width", width);
 			$(element).addClass(cssclass);
 		},

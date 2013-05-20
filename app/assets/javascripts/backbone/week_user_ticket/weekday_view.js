@@ -7,43 +7,23 @@
     
   
     initialize: function() {
-       this.WeekTickets = new WeekTicketsCollection; 
-       this.WeekTickets.on("add",this.renderTickets,this)
-       this.addTickets();
-            
+       this.addTickets();            
     },
 
     addTickets: function() {
 
-      
-          search_hash = {
+          tickets_hash = {
                           user_id: 1,    // здесь нужно будет подставить Юзера
                           //дата в формате "год_месяц_день" 
                           data: this.model.get("date")+"-"+
                                 this.model.get("month")+"-"+
-                                this.model.get("year")   
+                                this.model.get("year"),
+                          type: "cw_user"         
                         };
- 
+  
 
-      this.WeekTickets.fetch({remove : false, update : true, data : search_hash});
-
+          Backbone.Mediator.pub("timeline_render", tickets_hash);  
     },
-
-    renderTickets: function(ticket) {
-
-                var time = ticket.get("time").split(":"),  
-                    selector_id = "user"+1+"_"+  // Здесь вместо 1 нужно будет вставить юзер
-                                   ticket.get("data")+"_t"+
-                                   time[0]+""+time[1];
-
-                view = new WeekTicketView({
-                                              model:ticket,
-                                              el: $("#"+selector_id) 
-                                          });
-
-                view.render();        
-      },
-    
     
     render: function(attr) {
 

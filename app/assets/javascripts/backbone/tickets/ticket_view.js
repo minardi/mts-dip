@@ -14,7 +14,7 @@
     },
 
     setEvents: function() {
-      if(this.model.is_doctor) {
+      if(this.model.type === "cw_doc") {
         this.events = { 
                         "click" : "changeStatusVisit", 
                         "contextmenu" : "changeStatusMis"
@@ -68,7 +68,7 @@
     
     ticketRemove: function(el) {
 
-      if (app.userEx.getId() != this.model.get("user_id")) return false;
+      //if (app.userEx.getId() != this.model.get("user_id")) return false;
 
       this.model.destroy();
       
