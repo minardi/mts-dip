@@ -89,19 +89,30 @@
 
         routHome: function() {
             app.mts.router.navigate('home', {trigger:true});
+
+            $("#home").addClass("active");
+            $("#exit").removeClass("active");
+            $("#private_schedule").removeClass("active");
         },
 
         routPrivateSchedule: function() {
     
             app.mts.router.navigate('my-private-schedule', {trigger:true});
+
+            $("#home").removeClass("active");
+            $("#exit").removeClass("active");
+            $("#private_schedule").addClass("active");
             //return false;
         }, 
 
         userLogout: function() {
-            $("#exit").addClass("active");
-            $("#private_schedule").removeClass("active");
+           
             $("#tab1").show();
             $("#tab2").hide();
+
+            app.mts.weekdays.$el.empty();
+            app.mts.weekdays = null;
+            app.mts.ticketsView = null;
 
             this.user.clear();
             Backbone.Mediator.pub('user_logout', 

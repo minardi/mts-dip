@@ -7,7 +7,6 @@ $(function () {
                 userStatus : null,
                 dayTimelines : null,
                 ticketsView : null,
-                currentTimelines : null,
                 weekdays : null,
                 nextTickets : null,
                 router : new UserRouter()
