@@ -16,6 +16,10 @@ header {
 	margin: 30px 0 20px 0;
 	
 }
+#weekly-table {
+   padding: 10px 20px 10px;
+}
+
 .drop_menu_block {
 	display:block; 
   min-width: 120px;
