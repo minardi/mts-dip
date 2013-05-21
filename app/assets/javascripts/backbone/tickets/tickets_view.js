@@ -6,7 +6,7 @@
   
     initialize: function() {
 
-      this.type_ticket = "sl_doc"; 
+      this.type_ticket = "sl-doc"; 
 
       this.Tickets = new TicketsCollection();
 
@@ -19,6 +19,7 @@
     },
 
     handlerTickets: function(attrs) {
+
        this.type_ticket = attrs["type"]
 
        if( this.Tickets.is_there(attrs) === true) {
@@ -32,12 +33,13 @@
     createTicket: function(attrs) { 
         var  model,
              view;
-      
+            console.log(attrs);
+
       this.type_ticket = attrs["type"];
       // block create ticket if user not sign in
       //console.log(app.userEx.getRole());
      // if (app.userEx.getRole() != "guest") return false;                 
-      attrs["user_id"]=1;
+      //attrs["user_id"]=1;
 
      if (this.Tickets.is_there(attrs) === false) {     
   
@@ -75,13 +77,13 @@
     }, 
     
     createSelector: function(attrs) {
-      console.log(attrs);
       var time,
           type,
           id,
           temp;
 
-      temp = attrs["type"].split("_");
+      temp = attrs["type"].split("-");
+      console.log(temp);
 
       temp[1] === "doc" ? id = attrs["doctor_id"] :
                           id = attrs["user_id"]   ; 

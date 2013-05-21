@@ -46,7 +46,7 @@
 				Backbone.Mediator.pub("timeline_render",{
 				                                          doctor_id: attr["id"],
 			                                              data: attr["day"],
-			                                              type: "sl_doc"	   
+			                                              type: "sl-doc"	   
 				                                        });
 			},
 

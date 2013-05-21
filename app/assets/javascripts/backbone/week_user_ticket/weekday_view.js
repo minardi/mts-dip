@@ -18,7 +18,7 @@
                           data: this.model.get("date")+"-"+
                                 this.model.get("month")+"-"+
                                 this.model.get("year"),
-                          type: "cw_user"         
+                          type: "cw-user"         
                         };
   
 

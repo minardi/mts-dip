@@ -12,7 +12,7 @@
     },
 
     setEvents: function() {
-      if(this.model.type === "cw_doc") {
+      if(this.model.type === "cw-doc") {
         this.events = { 
                         "click" : "changeStatusVisit", 
                         "contextmenu" : "changeStatusMis"

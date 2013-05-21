@@ -21,6 +21,7 @@
       },
 
       fetchByAttr: function(attrs) {
+        console.log(attrs);
 
          this.fetch({remove : false, update : true, data : attrs});  
   

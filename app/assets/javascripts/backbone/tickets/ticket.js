@@ -11,7 +11,7 @@
 	      status: "default"
     },
     
-      type: "sl_doc",
+      type: "sl-doc",
 
 	    doctor_name: ""
 
