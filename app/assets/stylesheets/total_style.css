@@ -4,7 +4,7 @@
 header {
 	width: 600px;
 	height: 155px;
-	background:url(/images/headpic.png) no-repeat;
+	background:url(/images/headpic_red.png) no-repeat;
 	
 }
 
@@ -16,6 +16,10 @@ header {
 	margin: 30px 0 20px 0;
 	
 }
+#weekly-table {
+   padding: 10px 20px 10px;
+}
+
 .drop_menu_block {
 	display:block; 
   min-width: 120px;
@@ -27,7 +31,7 @@ header {
 }
 
 #list {
-	width: 200px;
+	width: 120px;
 }
 
 #work-time table {
