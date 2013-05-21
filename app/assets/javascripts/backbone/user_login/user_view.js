@@ -2,7 +2,7 @@
 
     app.UserView = Backbone.View.extend({
         
-        // el - elent-bloc "div", with login fild
+        // el - elent-bloc "div", with login field
         el: '#login_block',
 
         initialize: function() {
@@ -10,8 +10,9 @@
             this.user = new app.UserModel();
             this.render();
 
-            Backbone.Mediator.sub("user_blocked", this.userBlock, this);
-            
+            Backbone.Mediator.sub("user_blocked", this.getUser, this);
+            //this.user.on("request", this.userBlock, this);
+            this.user.on("all", function(e){console.log(e);}, this);
         },
 
         // template with logins inputs
@@ -29,10 +30,21 @@
             "click #exit"                           : "userLogout"
         },
 
-        userBlock: function(attr) {
-            
-            this.user.set({role:{"key":"blocked"}});
+        getUser: function(attr) {
+            console.log(this.user.url);
+            this.user.url = "users/update.json";
+            console.log(this.user.url);
+            // this.user.save();
+            this.user.fetch({user_id:attr["id"]});
+        },
 
+        userBlock: function() {
+            console.log(this.user);
+            //console.log(this.user.get("id"),attr["user_id"] );
+            //console.log(this.user);
+            // if (this.user.get("id") === attr["user_id"]){console.log("warn");
+            // this.user.set({role:{"key":"blocked"}});
+            // }
         },
 
         userLogin: function() {
@@ -48,12 +60,9 @@
             log_user.save();            
         },
 
-        checkLogin: function(params, attr) {
+        checkLogin: function(params) {
             
             if(this.user.get('login')) {
-
-                console.log(this.user.get("id"), attr["user_id"]);
-                if (this.user.get("id") === attr["user_id"]){console.log("warn");}
 
                 Backbone.Mediator.pub('user_login', 
                                                             {
@@ -73,29 +82,11 @@
             }
         },
 
-                 console.log(this.user.get("role"));
-                }
-                console.log(params);
-                
-                app.router.navigate('home', {trigger:true});
-                
-                Backbone.Mediator.pub('user_login', 
-                                                            {
-                                                                id : log_user.get('id')
-                                                            }
-                                        );
-                this.$el.html(this.inrole_template({ name: log_user.get('name')}));
-                return this;
-            } else {
-                $("#login_error").removeClass("hidden");
-            }
-        },
 
-<<<<<<< HEAD
         hideError: function() {
             $("#login_error").hide();
         },
-=======
+
         routHome: function() {
             app.router.navigate('home', {trigger:true});
         },
@@ -120,9 +111,6 @@
             app.router.navigate('', {trigger:true});
             return this;
         },
-
-        render: function() {
->>>>>>> 864f1de957e07a1d32537b7b84f50a7399d480c0
 
         render: function() {
 
