@@ -3,7 +3,9 @@
   app.TicketView = Backbone.View.extend({
 
     tagName: "span",
-    
+    select_class: "select_ticket",
+    unselect_class: "worktime",
+  
     initialize: function() {
       this.model.on('change', this.render, this);
       
@@ -12,7 +14,7 @@
     },
 
     setEvents: function() {
-      if(this.model.type === "cw-doc") {
+      if(this.model.type === "cw_doc") {
         this.events = { 
                         "click" : "changeStatusVisit", 
                         "contextmenu" : "changeStatusMis"
