@@ -36,12 +36,15 @@
     }
         
     function getUserSchedule() {
+       //console.log('a',this.user.role && this.user.get('role')['key'], this.user.)
         if (this.user.get('role')['key'] === 'patient'){
-        
-            //this.weekview = new WeekDaysView({el : $('#week_user_tickets')});        
-            //console.log(this.weekview)
+            console.log('a')
+            this.weekview = new WeekDaysView({el : $('#week_user_tickets')});        
+            console.log(this.weekview)
         }   
     }
+    
+    
     
     function UserEx () {
         
