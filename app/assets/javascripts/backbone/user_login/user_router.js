@@ -23,13 +23,13 @@
       // if(index_elem) {
       //   return index_elem;
       // } else {
-      app.mts.user = new UserView({el: $("#login_block")});
-      app.mts.specializationList = new SpecsView({el:$("#specializations")});
-      app.mts.doctorsView = new DoctorsView({el:$("#doctors")});
-      app.mts.weekly = new WeeklyCollectionView({el : $('#weekly-table')});
-      app.mts.userStatus = new UserStatusView();
-      app.mts.dayTimelines = new DailySchedulesView({el:$("#daily_schedules")});
-      app.mts.nextTickets = new NextTicketsView({el: $("#next-tickets")});
+      if (app.mts.user == null) app.mts.user = new UserView({el: $("#login_block")});
+      if (app.mts.specializationList == null) app.mts.specializationList = new SpecsView({el:$("#specializations")});
+      if (app.mts.doctorsView == null) app.mts.doctorsView = new DoctorsView({el:$("#doctors")});
+      if (app.mts.weekly == null) app.mts.weekly = new WeeklyCollectionView({el : $('#weekly-table')});
+      if (app.mts.userStatus == null) app.mts.userStatus = new UserStatusView();
+      if (app.mts.dayTimelines == null) app.mts.dayTimelines = new DailySchedulesView({el:$("#daily_schedules")});
+      if (app.mts.ticketsView == null) app.mts.ticketsView = new TicketsView();
 
       app.mts.weekdays = null;
       // }
@@ -43,7 +43,8 @@
       $("#tab2").hide();
 
       if (app.userEx.getRole() !== "guest") {
-        app.mts.ticketsView = new TicketsView();
+        app.mts.nextTickets = new NextTicketsView({el: $("#next-tickets")});
+        
       }
       // if(ticketsView) {
       //   return ticketsView;

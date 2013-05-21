@@ -110,9 +110,12 @@
             $("#tab1").show();
             $("#tab2").hide();
 
-            app.mts.weekdays.$el.empty();
+            
+            if (app.mts.weekdays !== null) app.mts.weekdays.$el.empty();
+
             app.mts.weekdays = null;
-            app.mts.ticketsView = null;
+            app.mts.nextTickets = null;
+
 
             this.user.clear();
             Backbone.Mediator.pub('user_logout', 
