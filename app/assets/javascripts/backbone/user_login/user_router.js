@@ -14,37 +14,31 @@
       // $('#next-tickets').addClass("hidden");
       // $('#left_block').removeClass("hidden");
       // $('#tab_schedules').addClass("hidden");
-      var specializationList,
-          doctorsView,
-          weekly,
-          user,
-          userStatus,
-          dayTimelines,
-          index_elem;
-
+      
       // index_elem = user && userStatus && specializationList && doctorsView && weekly;
       // if(index_elem) {
       //   return index_elem;
       // } else {
-        user = new UserView({el: $("#login_block")});
-        specializationList = new SpecsView({el:$("#specializations")});
-        doctorsView = new DoctorsView({el:$("#doctors")});
-        weekly = new WeeklyCollectionView({el : $('#weekly-table')});
-        userStatus = new UserStatusView();
-        dayTimelines = new DailySchedulesView({el:$("#daily_schedules")});
+      app.mts.user = new UserView({el: $("#login_block")});
+      app.mts.specializationList = new SpecsView({el:$("#specializations")});
+      app.mts.doctorsView = new DoctorsView({el:$("#doctors")});
+      app.mts.weekly = new WeeklyCollectionView({el : $('#weekly-table')});
+      app.mts.userStatus = new UserStatusView();
+      app.mts.dayTimelines = new DailySchedulesView({el:$("#daily_schedules")});
+      app.mts.nextTickets = new NextTicketsView({el: $("#next-tickets")});
       // }
-      window.UserEx.prototype = user;
-      window.userEx = new window.UserEx();
+      app.UserEx.prototype = app.mts.user;
+      app.userEx = new app.UserEx();
     },
 
     showHome: function() {
 
-      var ticketsView;
-
+      
       // if(ticketsView) {
       //   return ticketsView;
       // } else {
-        ticketsView = new TicketsView();
+      app.mts.ticketsView = new TicketsView();
+
 
       // }
       // $('#tab_schedules').addClass("hidden");
@@ -55,17 +49,14 @@
     },
 
     showPrivateSchedule: function() {
-      var currentTimelines,
-          weekdays,
-          prsch_elem;
-
+      
       // prsch_elem = currentTimelines && weekdays;
 
       // if(prsch_elem) {
       //   return prsch_elem;
       // } else {
-        weekdays = new WeekDaysView({el : $('#week_user_tickets')});    
-        currentTimelines = new CurrentSchedulesView({el:$("#current_schedules")});
+      app.mts.weekdays = new WeekDaysView({el : $('#week_user_tickets')});    
+      app.mts.currentTimelines = new CurrentSchedulesView({el:$("#current_schedules")});
       // }
 
       // $("#home").removeClass("active");

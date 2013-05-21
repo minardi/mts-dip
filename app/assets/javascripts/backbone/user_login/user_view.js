@@ -88,12 +88,12 @@
         },
 
         routHome: function() {
-            app.router.navigate('home', {trigger:true});
+            app.mts.router.navigate('home', {trigger:true});
         },
 
         routPrivateSchedule: function() {
     
-            app.router.navigate('my-private-schedule', {trigger:true});
+            app.mts.router.navigate('my-private-schedule', {trigger:true});
             //return false;
         }, 
 
@@ -108,7 +108,7 @@
                                                             }
                                         );
             this.$el.html(this.nav_template);
-            app.router.navigate('', {trigger:true});
+            app.mts.router.navigate('', {trigger:true});
             return this;
         },
 
