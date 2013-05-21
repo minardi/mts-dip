@@ -61,7 +61,7 @@
 
 			time = time.charAt(0) + time.charAt(1) + time.charAt(3) + time.charAt(4);
 
-			$(element).attr("id", "doc" + doctor_id + "_" + day + "_t" + time);
+			$(element).attr("id", "cw-" + "doc" + doctor_id + "_" + day + "_t" + time);
 			$(element).css("width", width);
 			$(element).addClass(cssclass);
 		},

@@ -5,7 +5,8 @@
     template: JST["backbone/tickets/tickets_template"],
   
     initialize: function() {
-      this.is_doctor = false; 
+
+      this.type_ticket = "sl-doc"; 
 
       this.Tickets = new TicketsCollection();
 
@@ -18,7 +19,8 @@
     },
 
     handlerTickets: function(attrs) {
-       this.is_doctor = attrs["is_doctor"]
+
+       this.type_ticket = attrs["type"]
 
        if( this.Tickets.is_there(attrs) === true) {
           this.addAllTickets();    
@@ -28,15 +30,16 @@
 
     },
 
-    createTicket: function(attrs) {
+    createTicket: function(attrs) { 
+        var  model,
+             view;
+            console.log(attrs);
 
-     var  time = attrs["time"].split(":"),
-          selector_id = "doc"+attrs["doctor_id"]+"_"+
-                       attrs["data"]+"_t"+time[0]+""+time[1],
-          model,
-          view;             
-          
-      this.is_doctor = attrs["is_doctor"]    
+      this.type_ticket = attrs["type"];
+      // block create ticket if user not sign in
+      //console.log(app.userEx.getRole());
+     // if (app.userEx.getRole() != "guest") return false;                 
+      //attrs["user_id"]=1;
 
      if (this.Tickets.is_there(attrs) === false) {     
   
@@ -44,7 +47,6 @@
 
          model.save();
          this.Tickets.push(model);
-       //  this.addOneTicket(model); 
       
       } 
     },
@@ -52,15 +54,16 @@
     
     
     addOneTicket: function(ticket) {
-
-      var  time = ticket.get("time").split(":"),
-           selector_id = "doc"+ticket.get("doctor_id")+"_"+
-                         ticket.get("data")+"_t"+time[0]+""+time[1],
-            view;               
+      var view,
+          hesh = ticket.attributes,
+          selector_id;  
       
-       
-      // ticket.is_doctor = this.is_doctor 
-      ticket.is_doctor = true;
+      hesh["type"] = this.type_ticket;            
+      selector_id = this.createSelector(hesh);
+      
+      console.log("selector_id",selector_id);
+
+      ticket.type = this.type_ticket;
 
       view = new TicketView({
                               model : ticket, 
@@ -73,6 +76,33 @@
       this.Tickets.each(this.addOneTicket,this);
     }, 
     
+    createSelector: function(attrs) {
+      var time,
+          type,
+          id,
+          temp;
+
+      temp = attrs["type"].split("-");
+      console.log(temp);
+
+      temp[1] === "doc" ? id = attrs["doctor_id"] :
+                          id = attrs["user_id"]   ; 
+       
+
+      type = attrs["type"];
+
+      temp = attrs["time"].split(":");
+
+      time = "t" + temp[0] + "" + temp[1];
+      
+      return type +
+             id +
+             "_" + 
+             attrs["data"] + 
+             "_"+
+             time;
+
+    },
     
     render: function() {     
       this.$el.html(this.template());
