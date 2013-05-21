@@ -100,6 +100,9 @@
         userLogout: function() {
             $("#exit").addClass("active");
             $("#private_schedule").removeClass("active");
+            $("#tab1").show();
+            $("#tab2").hide();
+
             this.user.clear();
             Backbone.Mediator.pub('user_logout', 
                                                             {

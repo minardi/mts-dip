@@ -9,6 +9,10 @@
     },
 
     index: function() {
+
+      $("#tab1").show();
+      $("#tab2").hide();
+
       // $('#current_schedules').addClass("hidden");
       // $('#week_user_tickets').addClass("hidden");
       // $('#next-tickets').addClass("hidden");
@@ -33,6 +37,9 @@
 
     showHome: function() {
 
+      $("#tab1").show();
+      $("#tab2").hide();
+
       
       // if(ticketsView) {
       //   return ticketsView;
@@ -49,14 +56,19 @@
     },
 
     showPrivateSchedule: function() {
+
+      $("#tab2").show();
+      $("#tab1").hide();
       
       // prsch_elem = currentTimelines && weekdays;
 
       // if(prsch_elem) {
       //   return prsch_elem;
       // } else {
-      app.mts.weekdays = new WeekDaysView({el : $('#week_user_tickets')});    
-      app.mts.currentTimelines = new CurrentSchedulesView({el:$("#current_schedules")});
+
+      app.mts.weekdays = (app.userEx.getRole() == "doctor") ? 
+        new CurrentSchedulesView({el:$("#current_schedules")}) :
+        new WeekDaysView({el : $('#week_user_tickets')});
       // }
 
       // $("#home").removeClass("active");

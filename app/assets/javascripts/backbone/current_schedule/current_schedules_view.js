@@ -8,7 +8,7 @@
 
 				Backbone.Mediator.sub("user_login", this.render, this);
 
-				this.$el.hide();	
+				//this.$el.hide();	
 
 			},
 
@@ -37,15 +37,6 @@
 			                                              type: "cw-doc"				   
 				                                        });
 			},
-
-			/*formatDate: function(date) {
-
-				var dd = date.getDate(),
-					mm = date.getMonth() + 1,
-					yyyy = date.getFullYear();
-
-  				return dd + '-' + mm + '-' + yyyy;
-			},*/
 				
 			render: function() {
 
@@ -83,12 +74,6 @@
 						    					   duration: mySchedule.get("doctor_duration"),
 						    					   schedule: daily_array[i]
 						    					  });
-
-						    /*Backbone.Mediator.pub("timeline_render",{
-							                                          doctor_id: doctor_id,
-						                                              data: dateex.dateTransFormat(),
-						                                              type: "cw-doc"	   
-							                                        });*/
 
 						    date.setDate(date.getDate() + 1);
 				    	}
