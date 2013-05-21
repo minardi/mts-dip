@@ -3,9 +3,7 @@
   app.TicketView = Backbone.View.extend({
 
     tagName: "span",
-    select_class: "select_ticket",
-    unselect_class: "worktime",
-  
+    
     initialize: function() {
       this.model.on('change', this.render, this);
       
