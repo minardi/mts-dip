@@ -39,12 +39,12 @@
 
     showHome: function() {
 
-      var ticketsView;
+      //var ticketsView;
 
       // if(ticketsView) {
       //   return ticketsView;
       // } else {
-        ticketsView = new TicketsView();
+      //  ticketsView = new TicketsView();
 
       // }
       // $('#tab_schedules').addClass("hidden");

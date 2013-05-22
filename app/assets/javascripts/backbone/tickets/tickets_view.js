@@ -19,7 +19,7 @@
     },
 
     handlerTickets: function(attrs) {
-
+      
        this.type_ticket = attrs["type"]
 
        if( this.Tickets.is_there(attrs) === true) {
@@ -32,17 +32,13 @@
 
     createTicket: function(attrs) { 
         var  model,
-             view;
-            console.log(attrs);
+             view; 
+            console.log("create :",attrs);
 
       this.type_ticket = attrs["type"];
-      // block create ticket if user not sign in
-      //console.log(app.userEx.getRole());
-     // if (app.userEx.getRole() != "guest") return false;                 
-      //attrs["user_id"]=1;
-
+       
      if (this.Tickets.is_there(attrs) === false) {     
-  
+         attrs["user_id"] = 1;
          model = new TicketModel(attrs);
 
          model.save();
@@ -55,13 +51,12 @@
     
     addOneTicket: function(ticket) {
       var view,
-          hesh = ticket.attributes,
+          hash = ticket.attributes,
           selector_id;  
       
-      hesh["type"] = this.type_ticket;            
-      selector_id = this.createSelector(hesh);
+      hash["type"] = this.type_ticket;            
+      selector_id = this.createSelector(hash);
       
-      console.log("selector_id",selector_id);
 
       ticket.type = this.type_ticket;
 
@@ -83,7 +78,6 @@
           temp;
 
       temp = attrs["type"].split("-");
-      console.log(temp);
 
       temp[1] === "doc" ? id = attrs["doctor_id"] :
                           id = attrs["user_id"]   ; 

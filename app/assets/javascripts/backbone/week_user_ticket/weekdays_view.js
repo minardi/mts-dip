@@ -17,9 +17,10 @@
           days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],   
           strDate = "",
           model,
-          view;
+          view,
+          i;
 
-      for(var i = 0; i < 7; i++) {
+      for( i = 0; i < 7; i++) {
         date.setDate(date.getDate()+(i-date.getDay()));
           
         

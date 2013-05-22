@@ -5,7 +5,8 @@ $(function () {
    // var   dayTimelines = new DailySchedulesView({el:$("#daily_schedules")}),
 
    //   ticketsView = new TicketsView(),
-   var   nextTickets = new NextTicketsView({el: $("#next-tickets")});
+   var   nextTickets = new NextTicketsView({el: $("#next-tickets")}),
+         ticketsView = new TicketsView();
       // weekly = new WeeklyCollectionView({el : $('#weekly-table')}),
       // weekdays = new WeekDaysView({el : $('#week_user_tickets')}),    
       // currentTimelines = new CurrentSchedulesView({el:$("#current_schedules")});
