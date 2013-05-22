@@ -31,6 +31,8 @@
       app.mts.nextTickets != null ? app.mts.nextTickets : 
                                     app.mts.nextTickets = new NextTicketsView({el: $("#next-tickets")});
       
+      app.mts.ticketsView == null ? app.mts.ticketsView = new TicketsView() : app.mts.ticketsView;
+
       app.mts.weekdays = null;
 
       app.UserEx.prototype = app.mts.user;
@@ -38,6 +40,18 @@
     },
 
     showHome: function() {
+      //var ticketsView;
+
+      // if(ticketsView) {
+      //   return ticketsView;
+      // } else {
+      //  ticketsView = new TicketsView();
+
+      // }
+      // $('#tab_schedules').addClass("hidden");
+      // $('#week_user_tickets').addClass("hidden");
+      // $('#next-tickets').removeClass("hidden");
+      // $('#tab_schedules').addClass("hidden");
 
       $('#tab2').addClass("hidden");
       app.mts.ticketsView == null ? app.mts.ticketsView = new TicketsView() : app.mts.ticketsView;

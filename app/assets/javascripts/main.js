@@ -1,17 +1,19 @@
-$(function () { 
-  
-  window.mts = {  specializationList : null,
-                  doctorsView : null,
-                  weekly : null,
-                  user : null,
-                  userStatus : null,
-                  dayTimelines : null,
-                  ticketsView : null,
-                  currentTimelines : null,
-                  weekdays : null,
-                  nextTickets : null,
-                  router : new UserRouter()
-                };
+var mts = {   
+              specializationList : null,
+              doctorsView : null,
+              weekly : null,
+              user : null,
+              userStatus : null,
+              dayTimelines : null,
+              ticketsView : null,
+              currentTimelines : null,
+              weekdays : null,
+              nextTickets : null,
+              router : null
+          };
 
-  Backbone.history.start({pushState: true});
+$(function () { 
+   mts.router = new Router();
+   Backbone.history.start({pushState: true});
+
 });

@@ -13,7 +13,7 @@
     addTickets: function() {
 
           tickets_hash = {
-                          user_id: 1,    // здесь нужно будет подставить Юзера
+                          user_id: app.userEx.getId(),    // здесь нужно будет подставить Юзера
                           //дата в формате "год_месяц_день" 
                           data: this.model.get("date")+"-"+
                                 this.model.get("month")+"-"+

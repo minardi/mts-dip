@@ -6,25 +6,20 @@
 
             this.statusModel = new app.StatusModel();
 
-            Backbone.Mediator.sub("user_miss", this.getModels, this);
+            Backbone.Mediator.sub("user_miss", this.addMiss, this);
+            Backbone.Mediator.sub("remove_user_miss", this.removeMiss, this);
 
-            this.statusModel.on("sync", this.addMiss, this);
-            //this.statusModel.on("all", function(e){console.log(e);}, this)
         },
 
-        getModels: function (attr){
+        addMiss: function (attr){
 
-            this.statusModel.resetUrl(attr);
+            this.statusModel.addMissUrl(attr);
              
         },
 
-        addMiss: function (attr) {
+        removeMiss: function (attr) {
  
-        var miss_count = this.statusModel.get("miss_count");
-
-            if (miss_count === 3) {
-                Backbone.Mediator.pub("user_blocked", {user_id: attr["user_id"]} );
-            }
+            this.statusModel.removeMissUrl(attr);
 
         },
     });
