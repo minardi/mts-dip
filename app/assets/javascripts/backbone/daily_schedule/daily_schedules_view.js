@@ -51,6 +51,7 @@
 																		day: attr["day"] });
 			
 			daily_schedule_to_remove[0].set("visible", false);
+
 			this.daily_schedules.remove(daily_schedule_to_remove);
 
 			if (this.daily_schedules.length == 0) {
