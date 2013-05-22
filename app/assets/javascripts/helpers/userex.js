@@ -48,7 +48,7 @@
     
     function UserEx () {
         
-        Backbone.Mediator.sub('user_login', getUserSchedule, this);
+        //Backbone.Mediator.sub('user_login', getUserSchedule, this);
         
         this.getRole = getRole;
         this.getId = getId;
