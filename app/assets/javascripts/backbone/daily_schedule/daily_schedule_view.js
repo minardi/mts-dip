@@ -16,14 +16,14 @@
 
     	timelineSelect: function(event) {
     		var element = event.target;
-    			parsed_id = this.ticketIdParse(element);
+    				parsed_id = this.ticketIdParse(element);
 
 			Backbone.Mediator.pub("ticket_added", { doctor_id: parsed_id.doctor_id,
 													user_id: window.userEx.getid(),
 													data: parsed_id.data,
 													time: parsed_id.time,
-											        selector_id: parsed_id.selector_id,
-											        type: "sl-doc" 
+											        	selector_id: parsed_id.selector_id,
+											        	type: "sl-doc" 
 											       });	
 		},
 
