@@ -31,6 +31,8 @@
       app.mts.nextTickets != null ? app.mts.nextTickets : 
                                     app.mts.nextTickets = new NextTicketsView({el: $("#next-tickets")});
       
+      app.mts.ticketsView == null ? app.mts.ticketsView = new TicketsView() : app.mts.ticketsView;
+
       app.mts.weekdays = null;
 
       app.UserEx.prototype = app.mts.user;
