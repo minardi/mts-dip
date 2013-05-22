@@ -41,7 +41,7 @@
         },
 
         checkLogin: function() {
-            
+            //add check user role before login and show message of block
             if (this.user.get('role') == 'blocked') {
 
                 $("#blocked_user").removeClass("hidden");
@@ -69,7 +69,7 @@
         }
         },
 
-
+        //add hide message of block
         hideError: function() {
             $("#login_error").hide();
             $("#blocked_user").hide();
