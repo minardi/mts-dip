@@ -6,10 +6,6 @@
 						
 			initialize: function() {
 
-				//Backbone.Mediator.sub("user_login", this.render, this);
-
-				//this.$el.hide();	
-
 				this.render();
 
 			},
@@ -33,11 +29,9 @@
 				current_schedule_view = new app.CurrentScheduleView( {model: daily_schedule} );
 				this.$el.find("#current_schedules_content").append(current_schedule_view.render().el);
 
-				Backbone.Mediator.pub("timeline_render",{
-				                                          doctor_id: app.userEx.getDoctorId(),
+				Backbone.Mediator.pub("timeline_render",{ doctor_id: app.userEx.getDoctorId(),
 			                                              data: attr["day"],
-			                                              type: "cw-doc"				   
-				                                        });
+			                                              type: "cw-doc" });
 			},
 				
 			render: function() {
@@ -52,7 +46,7 @@
 					doctor_id = app.userEx.getDoctorId();
 					mySchedule = new app.WeeklyModel();
 
-					mySchedule.urlRoot =  "/weekly_schedules/" + doctor_id +"/getduration.json";
+					mySchedule.urlRoot = "/weekly_schedules/" + doctor_id +"/getduration.json";
 					mySchedule.fetch();
 
 					mySchedule.on("change", function () {
