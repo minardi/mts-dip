@@ -14,11 +14,11 @@
 
 		formateDayStr: function(day_str) {	
 
-				var day_arr = day_str.split("-"),
-					dd = day_arr[0],
-					mm = day_arr[1];
-					
-				return dd + "." + mm + "." + day_arr[2].slice(2);
+			var day_arr = day_str.split("-"),
+				dd = day_arr[0],
+				mm = day_arr[1];
+				
+			return dd + "." + mm + "." + day_arr[2].slice(2);
 		},
 
 		getTimelineAttrs: function(model) {
@@ -67,14 +67,15 @@
 
 		render: function() {
 
+			var i,
+				current_time,
+				timeline,
+				timeline_attrs = this.getTimelineAttrs(this.model);
+
 			this.$el.html(this.template({ doctor_name: this.model.get("doctor_name"), 
 										  day: this.formateDayStr(this.model.get("day")) }));
 
-			timeline_attrs = this.getTimelineAttrs(this.model);
-						console.log(timeline_attrs);
-
-
-			for (var i = 1; i <= timeline_attrs.amount; i++) {
+			for (i = 1; i <= timeline_attrs.amount; i++) {
 
 				timeline = document.createElement("span");
 				current_time = timeline_attrs.date.toTimeString();
@@ -86,7 +87,8 @@
 				
 				this.setTimelineAttrs(timeline, 
 									  this.model.get("doctor_id"),
-									  this.model.get("day"), current_time,
+									  this.model.get("day"), 
+									  current_time,
 									  timeline_attrs.width, 
 									  timeline_attrs.cssclass);
 
