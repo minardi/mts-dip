@@ -43,7 +43,9 @@
         checkLogin: function() {
             
             if (this.user.get('role') == 'blocked') {
+
                 $("#blocked_user").removeClass("hidden");
+                
                 setTimeout(this.hideError, 3000);
             } else {
             if(this.user.get('login')) {
