@@ -15,6 +15,8 @@
   
       Backbone.Mediator.sub('ticket_added', this.createTicket,this);      
       Backbone.Mediator.sub('timeline_render', this.handlerTickets,this);
+      
+      Backbone.Mediator.sub('user_login', this.getUserSchedule, this)
 
     },
 
@@ -98,6 +100,24 @@
     render: function() {     
       this.$el.html(this.template());
       return this;
+    },
+    
+    //sorry :), in future we may use handler, who may getting schedule by custom date;
+    
+    getUserSchedule : function (user_data) {
+        
+        var date = new app.DateEx(),
+            week_schedule = date.getCurrentWeek({transport : true});
+        
+        for(day in week_schedule) {
+            
+            this.Tickets.fetchByAttr({
+                user_id : user_data['id'],
+                data : week_schedule[day]
+                
+            });
+            
+        }
     }
     
   });
