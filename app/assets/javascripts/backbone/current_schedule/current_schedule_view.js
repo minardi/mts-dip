@@ -47,7 +47,6 @@
 
 			width = (((parseInt($("#current_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(2) + "px";
 
-
 			return {duration: duration,
 					date: date,
 					amount: amount,
@@ -72,6 +71,8 @@
 										  day: this.formateDayStr(this.model.get("day")) }));
 
 			timeline_attrs = this.getTimelineAttrs(this.model);
+						console.log(timeline_attrs);
+
 
 			for (var i = 1; i <= timeline_attrs.amount; i++) {
 

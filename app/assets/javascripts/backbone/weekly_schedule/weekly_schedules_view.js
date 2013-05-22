@@ -26,11 +26,11 @@
             this.render();
         },
         
-        renderSchedule : function (model, param){
+        renderSchedule : function (model, selected){
             
             var view = {};
             
-            if(param) {
+            if(selected === true) {
                 view = new WeeklyView({model : model});
                 this.$el.children('table').append(view.render().$el);
             }
@@ -40,26 +40,13 @@
         
         renderDate : function() {
             
-            var date = new Date(),
-                day = date.getDay(),
-                current_date = date.getDate(),
-                i=0,
-                days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+            var date = new app.DateEx(),
+                schedule = date.getCurrentWeek({transport : true})
+                ;
+            this.collection.days = schedule;
             
-            for(i=0;i<7;i++) {
-                date.setDate(current_date+(i-day));
-                            
-                this.collection.days[days[date.getDay(i)]] = this.dateWithZero(date.getDate()) + '-' + 
-                this.dateWithZero((date.getMonth()+1)) + '-' + date.getFullYear();
-                  
-            }
+            return schedule;
             
-            return this.collection.days;
-            
-        },
-        
-        dateWithZero : function (val) {
-            return (val <= 9) ? '0' + val : val;
         },
         
         render : function() {

@@ -35,8 +35,9 @@ MTSDip::Application.routes.draw do
 
   match 'user_statuses/:id/addmiss' => 'user_statuses#addmiss'
 
-    match 'user_statuses/:id/removemiss' => 'user_statuses#removemiss'
+  match 'user_statuses/:id/removemiss' => 'user_statuses#removemiss'
 
+  match '/:roots' => 'main#home'  
 
 
   # The priority is based upon order of creation:

@@ -64,7 +64,7 @@
         
         haveModel : function (id){
 
-            if(id.constructor === Number){ 
+            if(id.constructor.name === 'Number'){ 
                 return (this.where({doctor_id : id}).length === 0) ? false : this.where({doctor_id : id})[0];
             } else {
                 console.warn('parametr id is not a Number');
