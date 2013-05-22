@@ -1,5 +1,5 @@
 $(function () { 
-
+  
   window.mts = {  specializationList : null,
                   doctorsView : null,
                   weekly : null,

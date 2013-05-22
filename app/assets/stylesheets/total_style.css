@@ -39,13 +39,10 @@ header {
 	width: 710px;
 }
 
-#tab2_center {
+#tab2 {
   float: none; /* Обтекание по правому краю */
   margin-top: 20%;
-  margin-left: 5%;
-
-
-
+  margin-left: 2%;
 }
 
 .navbar .nav > li > p {

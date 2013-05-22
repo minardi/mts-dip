@@ -6,9 +6,11 @@
 						
 			initialize: function() {
 
-				Backbone.Mediator.sub("user_login", this.render, this);
+				//Backbone.Mediator.sub("user_login", this.render, this);
 
-				this.$el.hide();	
+				//this.$el.hide();	
+
+				this.render();
 
 			},
 
@@ -16,9 +18,9 @@
 
 				var schedule_array = attr["schedule"].split(" - "),
 					schedule_start = schedule_array[0],
-					schedule_end = schedule_array[1];
-
-				var daily_schedule = new app.DailySchedule( { doctor_id: attr["doctor_id"],
+					schedule_end = schedule_array[1],
+					current_schedule_view,
+					daily_schedule = new app.DailySchedule( { doctor_id: attr["doctor_id"],
 													      day: attr["day"],
 													      duration: attr["duration"],
 													      schedule_start: schedule_start,
@@ -37,24 +39,18 @@
 			                                              type: "cw-doc"				   
 				                                        });
 			},
-
-			/*formatDate: function(date) {
-
-				var dd = date.getDate(),
-					mm = date.getMonth() + 1,
-					yyyy = date.getFullYear();
-
-  				return dd + '-' + mm + '-' + yyyy;
-			},*/
 				
 			render: function() {
 
+				var doctor_id,
+					mySchedule;
+
 				this.$el.html(this.template());
 				
-				if (window.userEx.getRole() == "doctor") {
+				if (app.userEx.getRole() == "doctor") {
 
-					var doctor_id = window.userEx.getDoctorId(),
-						mySchedule = new app.WeeklyModel();
+					doctor_id = app.userEx.getDoctorId();
+					mySchedule = new app.WeeklyModel();
 
 					mySchedule.urlRoot =  "/weekly_schedules/" + doctor_id +"/getduration.json";
 					mySchedule.fetch();
@@ -78,17 +74,10 @@
 					    for(i=0;i<=6;i++) {
 
 						    this.addSchedule({doctor_id:  doctor_id,
-						    					   //name: param["name"],
-						    					   day: dateex.dateTransFormat(),
-						    					   duration: mySchedule.get("doctor_duration"),
-						    					   schedule: daily_array[i]
-						    					  });
-
-						    /*Backbone.Mediator.pub("timeline_render",{
-							                                          doctor_id: doctor_id,
-						                                              data: dateex.dateTransFormat(),
-						                                              type: "cw-doc"	   
-							                                        });*/
+						    				  day: dateex.dateTransFormat(),
+						    				  duration: mySchedule.get("doctor_duration"),
+						    				   schedule: daily_array[i]
+						    				 });
 
 						    date.setDate(date.getDate() + 1);
 				    	}

@@ -65,11 +65,11 @@
             if(this.user.get('login')) {
 
                 Backbone.Mediator.pub('user_login', 
-                                                            {
-                                                                id : this.user.get('id'),
-                                                                role: this.user.get('role',[0])
-                                                            }
-                                        );
+                                                {
+                                                    id : this.user.get('id'),
+                                                    role: this.user.get('role',[0])
+                                                }
+                                     );
 
                 this.$el.html(this.inrole_template({ name: this.user.get('name')}));
                 this.routHome();
@@ -90,6 +90,7 @@
         routHome: function() {
             app.mts.router.navigate('home', {trigger:true});
             this.navTab("#home", "#private_schedule");
+
         },
 
         routPrivateSchedule: function() {
@@ -100,8 +101,13 @@
         }, 
 
         userLogout: function() {
+
             $("#tab1").removeClass("hidden");
+            $("#tab2").addClass("hidden");
+            $("#next-tickets").addClass("hidden");
             this.user.clear();
+            // mts.nextTickets = new app.NextTicketsView({model : model});
+            // app.mts.nextTickets.clear();
             Backbone.Mediator.pub('user_logout', 
                                                 {
                                                     id : this.user.get('id'),
@@ -109,6 +115,7 @@
                                                 }
                                  );
             this.$el.html(this.nav_template);
+            
             app.mts.router.navigate('');
             return this;
         },
