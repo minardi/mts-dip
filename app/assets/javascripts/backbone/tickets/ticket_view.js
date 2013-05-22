@@ -2,22 +2,30 @@
 
   app.TicketView = Backbone.View.extend({
 
+
+    events: {
+       "contextmenu":"render"
+    },
+
     tagName: "span",
     select_class: "select_ticket",
     unselect_class: "worktime",
-  
+
+   
+
     initialize: function() {
       this.model.on('change', this.render, this);
       
       //this.setEvents();
-      this.setEventsWithRight();
-
+     //this.setEventsWithRight();
+      console.log("events", this.events);
+      console.log(" el", this);
       Backbone.Mediator.sub('user_login', this.setEventsWithRight, this);
       
     }, 
 
     setEventsWithRight: function() {
-      console.log("login_ticket", this);
+      
       
       //if(this.model.type === "cw-doc") {
        // this.events = { 
@@ -25,9 +33,13 @@
        //                 "contextmenu" : "changeStatusMis"
        //               } 
       //} else {
-        this.render();
-        this.events = { "dblclick" : "ticketRemove" }
-       // this.$el.on("dblclick", this.ticketRemove, this);
+      
+        //this.events["dblclick"] =  "ticketRemove" ;
+        console.log("login_ticket events", this.events);
+        console.log("login_ticket el", this);
+        //this.render();
+        this.$el.on("dblclick", this.ticketRemove, this);
+
       //} 
     },
 
@@ -73,7 +85,7 @@
       return false;
     },    
     
-    ticketRemove: function(el) {
+    ticketRemove: function() {
 
       console.log("remove"); 
       this.model.destroy();
