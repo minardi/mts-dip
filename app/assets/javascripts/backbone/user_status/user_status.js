@@ -6,14 +6,17 @@
           
     defaults : {
         miss_count: 0,
-        user_id: 0,
+        //user_id: 0,
     },
 
-    setUrl: function(attr) {
+    resetUrl: function(attr) {
+      
       var user_id = attr["user_id"];
-          this.url = '/user_statuses/'+ user_id +'.json';
-          this.fetch();
-          console.log(url);
+
+         this.url = '/user_statuses/'+ user_id +'.json';
+
+         this.fetch();
+
         },
   });
  

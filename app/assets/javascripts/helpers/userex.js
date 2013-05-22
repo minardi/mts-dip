@@ -51,7 +51,7 @@
         Backbone.Mediator.sub('user_login', getUserSchedule, this);
         
         this.getRole = getRole;
-        this.getid = getId;
+        this.getId = getId;
         this.getDoctorId = getDoctorId;
         
     }

@@ -64,7 +64,7 @@
         },
         
         publishTrigger : function(day, trigger) {
-                console.log(this)
+            
                 if(trigger) {
                     
                     Backbone.Mediator.pub('weekly_selectItem', 
@@ -107,16 +107,14 @@
         },
         
         selfRemove : function (obj, value) {
-            var value = null;
+            
             if(value === false){
                 
                 this.unselectedDays();
                 this.remove();
                 
-                for(value in this){
-                    delete this.value
-                }
-                //this.model.off();
+                this.model.off('select:schedule_day');
+                this.model.off('change:selected');
                 
             }
             

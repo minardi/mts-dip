@@ -80,4 +80,14 @@ class UserStatusesController < ApplicationController
       format.json { head :no_content }
     end
   end
+# AddMiss /user_statuses/1/addmiss
+  def addmiss
+    @user_status = UserStatus.find(params[:id])
+    @user_status.missing_count += 1
+    @user_status.save
+
+    respond_to do |format|
+      format.json { render json: @user_status}
+    end
+  end
 end
