@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :role
   serialize :role
   has_many :tickets 
+  belongs_to :user_status
 
   # before_save { |user| user.email = email.downcase }
   # before_save :create_remember_token

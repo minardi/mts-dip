@@ -23,16 +23,27 @@ class UsersController < ApplicationController
 
   def login
     @user = User.find_by_email_and_password(params[:email], params[:password])
+    
     # @user_password = User.find_by_password(params[:password])
     # if @user_email && @user_password
     if @user
+      @user_status = UserStatus.find(@user.id)
       # @user = User.find_by_id(params[:id])
+      if @user_status.status == "blocked"
+        @login_user = {"id"=>@user.id,
+                     "name"=>@user.name,
+                     "email"=>@user.email,
+                     "role"=> "blocked",
+                     "login"=>false
+                    }
+      else
       @login_user = {"id"=>@user.id,
                      "name"=>@user.name,
                      "email"=>@user.email,
                      "role"=>@user.role,
                      "login"=>true
                     }
+                  end
     else
       flash[:error] = 'Invalid email/password combination' # Not quite right!
     end
