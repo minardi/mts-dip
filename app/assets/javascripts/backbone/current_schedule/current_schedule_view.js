@@ -6,9 +6,10 @@
 			
 		template: JST["backbone/current_schedule/current_schedule_template"],
 
+
 		timeFix: function(time) {
 
-			(time.length == 4) ? (time = "0" + time) : time = time;
+			time = (time.length == 4) ? "0" + time :  time;
 			return time;
 		},
 
