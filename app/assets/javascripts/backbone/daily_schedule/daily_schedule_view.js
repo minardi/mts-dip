@@ -112,8 +112,6 @@
 				timeline,
 				timeline_attrs = this.getTimelineAttrs(this.model);
 
-			console.log(timeline_attrs);
-
 			this.$el.html(this.template({ doctor_name: this.model.get("doctor_name"), 
 										  day: timeline_attrs.date.dateViewFormat() }));
 
