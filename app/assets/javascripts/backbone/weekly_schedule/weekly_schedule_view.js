@@ -4,7 +4,7 @@
         
         tagName : 'tr',
         
-        collTemplate :  JST["backbone/weekly_schedule/weekly_schedule_collTemplate"],
+        template :  JST["backbone/weekly_schedule/weekly_schedule_template"],
         
         initialize : function(){
             this.model.on('select:schedule_day', this.activeTrigger, this);
@@ -20,31 +20,7 @@
             
             var schedule =  this.model.get('schedule');
  
-            this.$el.append(
-            
-                this.collTemplate(
-                        {
-                            text : this.model.get('doctor_name'),
-                            id : 'doc'+ this.model.get('doctor_id') + '-name',
-                            class_name : "schedule-name"
-                        }
-                    )
-            );
-            
-            for(i in schedule){
-                
-                this.$el.append(
-                
-                    this.collTemplate(
-                        {
-                            text : schedule[i].start + ' - ' + schedule[i].end,
-                            id : 'doc'+ this.model.get('doctor_id') + '-' + i,
-                            class_name : "schedule-item"
-                        }
-                    )
-                );
-                            
-           }
+            this.$el.append(this.template(this.model.toJSON()));
             
             return this;
         },
@@ -52,7 +28,7 @@
         activeTrigger : function(day, trigger){
             elem = this.$el.find('#doc'+ this.model.get('doctor_id') + '-' + day);
             
-            (!trigger)? $(elem).removeClass('active') : $(elem).addClass('active');
+            (!trigger) ? $(elem).removeClass('active') : $(elem).addClass('active');
                    
         },
         
@@ -106,9 +82,9 @@
             
         },
         
-        selfRemove : function (obj, value) {
+        selfRemove : function (obj, selected) {
             
-            if(value === false){
+            if(selected === false){
                 
                 this.unselectedDays();
                 this.remove();
