@@ -1,4 +1,18 @@
 $(function () { 
+  
+  window.mts = {  specializationList : null,
+                  doctorsView : null,
+                  weekly : null,
+                  user : null,
+                  userStatus : null,
+                  dayTimelines : null,
+                  ticketsView : null,
+                  currentTimelines : null,
+                  weekdays : null,
+                  nextTickets : null,
+                  router : new UserRouter()
+                };
+
 
   // var specializationList = new SpecsView({el:$("#specializations")}),
     // var  doctorsView = new DoctorsView({el:$("#doctors")}),
@@ -17,5 +31,6 @@ $(function () {
       window.router = new UserRouter();
       // window.UserEx.prototype = user;
       // window.userEx = new window.UserEx();
-  Backbone.history.start();
+   Backbone.history.start({pushState: true});
+
 });

@@ -15,13 +15,13 @@
         models = this.where(attrs),
         is_null = false;
 	   
-	      if (models.length > 0) is_null = true;
-           
+	      if (models.length > 0 && this.cloneValid(attrs)) is_null = true;
+          
+          ; 
         return is_null;       
       },
 
       fetchByAttr: function(attrs) {
-        console.log(attrs);
 
          this.fetch({remove : false, update : true, data : attrs});  
   
@@ -49,6 +49,11 @@
 
       return filtr;
      },
+     
+     cloneValid : function (attrs){
+        
+        return true;
+     }
      
     });
     

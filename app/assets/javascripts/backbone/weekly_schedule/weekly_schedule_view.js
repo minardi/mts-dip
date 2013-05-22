@@ -64,7 +64,7 @@
         },
         
         publishTrigger : function(day, trigger) {
-
+            
                 if(trigger) {
                     
                     Backbone.Mediator.pub('weekly_selectItem', 
@@ -112,6 +112,9 @@
                 
                 this.unselectedDays();
                 this.remove();
+                
+                this.model.off('select:schedule_day');
+                this.model.off('change:selected');
                 
             }
             
