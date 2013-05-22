@@ -34,7 +34,7 @@
 				this.$el.find("#current_schedules_content").append(current_schedule_view.render().el);
 
 				Backbone.Mediator.pub("timeline_render",{
-				                                          doctor_id: attr["doctor_id"],
+				                                          doctor_id: app.userEx.getDoctorId(),
 			                                              data: attr["day"],
 			                                              type: "cw-doc"				   
 				                                        });

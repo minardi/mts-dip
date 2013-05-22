@@ -19,7 +19,7 @@
     			parsed_id = this.ticketIdParse(element);
 
 			Backbone.Mediator.pub("ticket_added", { doctor_id: parsed_id.doctor_id,
-													user_id: window.userEx.getid(),
+													user_id: window.userEx.getId(),
 													data: parsed_id.data,
 													time: parsed_id.time,
 											        selector_id: parsed_id.selector_id,

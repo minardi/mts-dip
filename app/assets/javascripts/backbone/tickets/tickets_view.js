@@ -19,8 +19,7 @@
     },
 
     handlerTickets: function(attrs) {
-      
-       this.type_ticket = attrs["type"]
+       this.type_ticket = attrs["type"];
 
        if( this.Tickets.is_there(attrs) === true) {
           this.addAllTickets();    
@@ -33,12 +32,11 @@
     createTicket: function(attrs) { 
         var  model,
              view; 
-            console.log("create :",attrs);
 
       this.type_ticket = attrs["type"];
        
      if (this.Tickets.is_there(attrs) === false) {     
-         attrs["user_id"] = 1;
+         attrs["user_id"] = app.userEx.getId();
          model = new TicketModel(attrs);
 
          model.save();
@@ -56,7 +54,6 @@
       
       hash["type"] = this.type_ticket;            
       selector_id = this.createSelector(hash);
-      
 
       ticket.type = this.type_ticket;
 
@@ -95,7 +92,7 @@
              attrs["data"] + 
              "_"+
              time;
-
+ 
     },
     
     render: function() {     

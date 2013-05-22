@@ -10,7 +10,7 @@
       this.model.on('change', this.render, this);
       
       //this.setEvents();
-      //this.setEventsWithRight();
+      this.setEventsWithRight();
 
       Backbone.Mediator.sub('user_login', this.setEventsWithRight, this);
       

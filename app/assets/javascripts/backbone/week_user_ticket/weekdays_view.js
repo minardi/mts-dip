@@ -29,8 +29,9 @@
                                            month: this.pre_nil(date.getMonth()+1),
                                            year:date.getFullYear(),
                                            day:days[date.getDay()],
-                                           user_id: 1  // здесь нужно будет подставить Юзера
+                                           user_id: app.userEx.getId()  // здесь нужно будет подставить Юзера
                                 });
+        
          
        
         view = new WeekDayView({model:model});
