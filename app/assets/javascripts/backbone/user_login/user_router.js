@@ -9,65 +9,43 @@
     },
 
     index: function() {
-      // $('#current_schedules').addClass("hidden");
-      // $('#week_user_tickets').addClass("hidden");
-      // $('#next-tickets').addClass("hidden");
-      // $('#left_block').removeClass("hidden");
-      // $('#tab_schedules').addClass("hidden");
-      
-      // index_elem = user && userStatus && specializationList && doctorsView && weekly;
-      // if(index_elem) {
-      //   return index_elem;
-      // } else {
-      app.mts.user = new UserView({el: $("#login_block")});
-      app.mts.specializationList = new SpecsView({el:$("#specializations")});
-      app.mts.doctorsView = new DoctorsView({el:$("#doctors")});
-      app.mts.weekly = new WeeklyCollectionView({el : $('#weekly-table')});
-      app.mts.userStatus = new UserStatusView();
-      app.mts.dayTimelines = new DailySchedulesView({el:$("#daily_schedules")});
-      app.mts.nextTickets = new NextTicketsView({el: $("#next-tickets")});
-      // }
+
+      app.mts.user != null ? app.mts.user :
+                             app.mts.user = new UserView({el: $("#login_block")});
+      app.mts.specializationList != null ? app.mts.specializationList : 
+                                           app.mts.specializationList  = new SpecsView({el:$("#specializations")});
+      app.mts.doctorsView != null ? app.mts.doctorsView :
+                                    app.mts.doctorsView = new DoctorsView({el:$("#doctors")});
+      app.mts.weekly != null ? app.mts.weekly :
+                               app.mts.weekly = new WeeklyCollectionView({el : $('#weekly-table')});
+      app.mts.userStatus != null ? app.mts.userStatus : 
+                                   app.mts.userStatus = new UserStatusView();
+      app.mts.dayTimelines != null ? app.mts.dayTimelines :   
+                                     app.mts.dayTimelines = new DailySchedulesView({el:$("#daily_schedules")});
+      app.mts.nextTickets != null ? app.mts.nextTickets : 
+                                    app.mts.nextTickets = new NextTicketsView({el: $("#next-tickets")});
+
       app.UserEx.prototype = app.mts.user;
       app.userEx = new app.UserEx();
     },
 
     showHome: function() {
 
-      
-      // if(ticketsView) {
-      //   return ticketsView;
-      // } else {
-      app.mts.ticketsView = new TicketsView();
-
-
-      // }
-      // $('#tab_schedules').addClass("hidden");
-      // $('#week_user_tickets').addClass("hidden");
-      // $('#next-tickets').removeClass("hidden");
-      // $('#tab_schedules').addClass("hidden");
+      $('#tab2').addClass("hidden");
+      app.mts.ticketsView == null ? app.mts.ticketsView = new TicketsView() : app.mts.ticketsView;
+      $('#tab1').removeClass("hidden");
 
     },
 
     showPrivateSchedule: function() {
-      
-      // prsch_elem = currentTimelines && weekdays;
 
-      // if(prsch_elem) {
-      //   return prsch_elem;
-      // } else {
-      app.mts.weekdays = new WeekDaysView({el : $('#week_user_tickets')});    
-      app.mts.currentTimelines = new CurrentSchedulesView({el:$("#current_schedules")});
-      // }
+      $('#tab1').addClass("hidden");
+      $('#tab2').removeClass("hidden");
+      app.mts.weekdays != null ? app.mts.weekdays : 
+                                   app.mts.weekdays = new WeekDaysView({el : $('#week_user_tickets')});    
+      app.mts.currentTimelines != null ?  app.mts.currentTimelines :
+                                          app.mts.currentTimelines= new CurrentSchedulesView({el:$("#current_schedules")});
 
-      // $("#home").removeClass("active");
-      // $("#private_schedule").addClass("active");
-      // $('#left_block').addClass("hidden");
-      // $('#weekly-table').addClass("hidden");
-      // $('#daily_schedules').addClass("hidden");
-      // $('#week_user_tickets').addClass("hidden");
-      // $('#current_schedules').removeClass("hidden");
-      // $('#week_user_tickets').removeClass("hidden");
-      // $('#tab_schedules').removeClass("hidden"); 
     }
 
   });
