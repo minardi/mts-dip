@@ -12,8 +12,6 @@
     initialize: function() {
       this.model.on("change", this.render, this);
 
-      console.log("doctors", this);
-
       if (this.model.is_select) { 
         this.$el.addClass("selected_doctor");
       }   

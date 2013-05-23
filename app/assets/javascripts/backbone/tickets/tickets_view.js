@@ -16,6 +16,8 @@
       Backbone.Mediator.sub('ticket_added', this.createTicket,this);      
       Backbone.Mediator.sub('timeline_render', this.handlerTickets,this);
 
+      Backbone.Mediator.sub('user_login', console.log("ticket"), this);
+
     },
 
     handlerTickets: function(attrs) {
@@ -62,6 +64,13 @@
                               el: $("#"+selector_id),    
                             });
       view.render();
+
+      if (this.Tickets.is_set_event) {
+       view.setEventsWithRight(); 
+      
+       console.log(this.Tickets.is_set_event)
+     }
+      
     },
 
     addAllTickets: function() {

@@ -21,7 +21,7 @@
 
     fetchDoctors: function(attr) {
       
-       this.AllDoctors.setDoctors(attr["id"]);
+       this.AllDoctors.setRenderDoctors(attr["id"]);
        
        this.addAllDoctors(); 
       
@@ -54,11 +54,11 @@
       this.AllDoctors.each(this.addOneDoctor, this)
     }, 
     
-    addOneDoctor: function(m) {      
+    addOneDoctor: function(doctor) {      
       var view;
 
-        if (m.is_render === true) {           
-           view = new DoctorView({model:m});
+        if (doctor.is_render === true) {           
+           view = new DoctorView({model:doctor});
            this.ElShow(); 
            
            this.$el.append(view.render().el); 

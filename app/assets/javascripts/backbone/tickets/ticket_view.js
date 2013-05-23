@@ -15,32 +15,28 @@
 
     initialize: function() {
       this.model.on('change', this.render, this);
-      
-      //this.setEvents();
-     //this.setEventsWithRight();
-      console.log("events", this.events);
-      console.log(" el", this);
+
       Backbone.Mediator.sub('user_login', this.setEventsWithRight, this);
       
     }, 
 
     setEventsWithRight: function() {
       
-      
-      //if(this.model.type === "cw-doc") {
-       // this.events = { 
-       //                 "click" : "changeStatusVisit", 
-       //                 "contextmenu" : "changeStatusMis"
-       //               } 
-      //} else {
-      
-        //this.events["dblclick"] =  "ticketRemove" ;
-        console.log("login_ticket events", this.events);
-        console.log("login_ticket el", this);
-        //this.render();
-        this.$el.on("dblclick", this.ticketRemove, this);
 
-      //} 
+      
+       if (this.model.type === "cw-doc") {
+          this.events = { 
+                         "click" : "changeStatusVisit", 
+                         "contextmenu" : "changeStatusMis"
+                       } 
+         } else {
+
+          this.events = { 
+                         "dblclick" : "ticketRemove"
+                        }
+        } 
+        
+        this.delegateEvents();
     },
 
     changeStatusVisit: function() {
@@ -87,7 +83,7 @@
     
     ticketRemove: function() {
 
-      console.log("remove"); 
+      console.log("remove",self); 
       this.model.destroy();
       
       this.removeClass();
@@ -112,6 +108,7 @@
 
       this.removeClass();
       this.addClass();
+
     }
 
   });

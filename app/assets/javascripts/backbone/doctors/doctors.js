@@ -9,7 +9,7 @@
      	return this.where(attrs).length;
      },
 
-     setDoctors: function(spec_id) {
+     setRenderDoctors: function(spec_id) {
     
          if (this.lengthByAttr({ specialization_id:spec_id }) === 0) {
          
