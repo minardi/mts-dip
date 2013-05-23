@@ -12,7 +12,7 @@
 
     	initialize: function() {
 
-    		this.model.on("change", this.deleteSchedule, this);
+    		this.model.on("change :visible", this.deleteSchedule, this);
 
     	},
 
@@ -34,11 +34,8 @@
 		},
 
 		deleteSchedule: function() {
-
-			if (this.model.get("visible") == false) {
 				delete this.model;
 				this.remove();
-			}
 		},
 
     	ticketIdParse: function(element) {
@@ -58,32 +55,20 @@
 
 		timeFix: function(time) {
 
-			(time.length == 4) ? (time = "0" + time) : time = time;
+			time = (time.length == 4) ? "0" + time : time;
 			return time;
-		},
-
-		formateDayStr: function(day_str) {	
-
-			var day_arr = day_str.split("-"),
-				dd = day_arr[0],
-				mm = day_arr[1];
-
-			if (dd < 10) {
-				dd = '0' + dd;
-			}	
-				
-			return dd + "." + mm + "." + day_arr[2].slice(2);
 		},
 
 		getTimelineAttrs: function(model) {
 
 			var duration = model.get("duration"),
-				date = new Date(0, 0, 0, 8, 0, 0, 0),
-				date_help = new app.DateEx(date),
+				date = new app.DateEx(),
 				amount = 0,
 				cssclass = "timeline",
 				start = this.timeFix(model.get("schedule_start")),
 				end = this.timeFix(model.get("schedule_end"));
+
+				date.idToDate(model.get("day"), "t0800");
 
 			switch (duration) {
 				case 15:
@@ -103,7 +88,7 @@
 			width = (((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(3) + "px";
 
 			return { duration: duration,
-					 date: date_help,
+					 date: date,
 					 amount: amount,
 					 start: start,
 					 end: end,
@@ -128,7 +113,7 @@
 				timeline_attrs = this.getTimelineAttrs(this.model);
 
 			this.$el.html(this.template({ doctor_name: this.model.get("doctor_name"), 
-										  day: this.formateDayStr(this.model.get("day")) }));
+										  day: timeline_attrs.date.dateViewFormat() }));
 
 			for (i = 1; i <= timeline_attrs.amount; i++) {
 
@@ -141,7 +126,8 @@
 				
 				this.setTimelineAttrs(timeline, 
 									  this.model.get("doctor_id"),
-									  this.model.get("day"), current_time,
+									  this.model.get("day"), 
+									  current_time,
 									  timeline_attrs.width, 
 									  timeline_attrs.cssclass);
 

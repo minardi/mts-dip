@@ -53,13 +53,14 @@
 		//id == doc1_dd-mm-yyyy_thhmm
 
 		var day = datestr.slice(0, 2),
-			month = datestr.slice(3, 5),
-			year = datestr.slice(5),
+			month = datestr.slice(3, 5) - 1,
+			year = datestr.slice(6),
 			hours = timestr.slice(1, 3),
-			minutes = timestr.slice(3),
-			set_date = new Date(year, month, day, hours, minutes, 0, 0);
+			minutes = timestr.slice(3);
 
-		return set_date;
+			this.date = new Date(year, month, day, hours, minutes, 0, 0);
+
+		return this.date;
 	}
 
 	function getCurrentWeek(param) {

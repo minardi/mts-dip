@@ -41,9 +41,8 @@
         renderDate : function() {
             
             var date = new app.DateEx(),
-                schedule = date.getCurrentWeek({transport : true})
-                ;
-            this.collection.days = schedule;
+                schedule = date.getCurrentWeek({transport : false});
+            this.collection.days = date.getCurrentWeek({transport : true});
             
             return schedule;
             
