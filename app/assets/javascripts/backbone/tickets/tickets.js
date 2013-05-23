@@ -3,6 +3,8 @@
     app.TicketsCollection = Backbone.Collection.extend({
       url: '/tickets', 
       model: app.TicketModel,
+
+      is_set_event: false,
      
       is_there: function(attrs) {
        

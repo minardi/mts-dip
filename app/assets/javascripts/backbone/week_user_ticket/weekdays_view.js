@@ -14,8 +14,7 @@
  
     addWeekRows: function() {
       var date = new Date,
-          days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],   
-          strDate = "",
+          days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],  
           model,
           view,
           i;
@@ -29,7 +28,7 @@
                                            month: this.pre_nil(date.getMonth()+1),
                                            year:date.getFullYear(),
                                            day:days[date.getDay()],
-                                           user_id: app.userEx.getId()  // здесь нужно будет подставить Юзера
+                                           user_id: app.userEx.getId()
                                 });
         
          

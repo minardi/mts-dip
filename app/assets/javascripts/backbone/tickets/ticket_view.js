@@ -2,33 +2,46 @@
 
   app.TicketView = Backbone.View.extend({
 
+
+    events: {
+       "contextmenu":"render"
+    },
+
     tagName: "span",
     select_class: "select_ticket",
     unselect_class: "worktime",
-  
+
+   
+
     initialize: function() {
       this.model.on('change', this.render, this);
-      
-      //this.setEvents();
-      this.setEventsWithRight();
 
       Backbone.Mediator.sub('user_login', this.setEventsWithRight, this);
       
+      Backbone.Mediator.sub('user_logout', this.unsetEventsWithRight, this);
     }, 
 
+    unsetEventsWithRight: function() {
+      this.undelegateEvents();
+    },
+
     setEventsWithRight: function() {
-      console.log("login_ticket", this);
       
-      //if(this.model.type === "cw-doc") {
-       // this.events = { 
-       //                 "click" : "changeStatusVisit", 
-       //                 "contextmenu" : "changeStatusMis"
-       //               } 
-      //} else {
-        this.render();
-        this.events = { "dblclick" : "ticketRemove" }
-       // this.$el.on("dblclick", this.ticketRemove, this);
-      //} 
+
+      
+       if (this.model.type === "cw-doc") {
+          this.events = { 
+                         "click" : "changeStatusVisit", 
+                         "contextmenu" : "changeStatusMis"
+                       } 
+         } else {
+
+          this.events = { 
+                         "dblclick" : "ticketRemove"
+                        }
+        } 
+        
+        this.delegateEvents();
     },
 
     changeStatusVisit: function() {
@@ -73,9 +86,9 @@
       return false;
     },    
     
-    ticketRemove: function(el) {
+    ticketRemove: function() {
 
-      console.log("remove"); 
+      console.log("remove",self); 
       this.model.destroy();
       
       this.removeClass();
@@ -100,6 +113,7 @@
 
       this.removeClass();
       this.addClass();
+
     }
 
   });

@@ -28,7 +28,7 @@
         },
 
         userLogin: function() {
-
+            console.log("val");
             var user_email = this.$el.find('input[type=text]').val(),
                 user_password = this.$el.find('input[type=password]').val();
             
