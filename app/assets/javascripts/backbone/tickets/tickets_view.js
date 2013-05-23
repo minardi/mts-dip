@@ -10,16 +10,26 @@
 
       this.Tickets = new TicketsCollection();
 
-      this.Tickets.on("reset", this.addAllTickets,this)
-      this.Tickets.on("add", this.addOneTicket,this)      
+      this.Tickets.on("reset", this.addAllTickets, this);
+      this.Tickets.on("add", this.addOneTicket, this);      
   
-      Backbone.Mediator.sub('ticket_added', this.createTicket,this);      
-      Backbone.Mediator.sub('timeline_render', this.handlerTickets,this);
-      
-      Backbone.Mediator.sub('user_login', this.getUserSchedule, this)
+      Backbone.Mediator.sub('ticket_added', this.createTicket, this);      
+      Backbone.Mediator.sub('timeline_render', this.handlerTickets, this);
 
-      Backbone.Mediator.sub('user_login', console.log("ticket"), this);
+      Backbone.Mediator.sub('user_login', this.getUserSchedule, this);
 
+      Backbone.Mediator.sub('user_login', this.enableEvents, this);
+
+      Backbone.Mediator.sub('user_logout', this.disableEvents, this);
+
+    },
+
+    enableEvents: function() {
+      this.Tickets.is_set_event = true;
+    },
+
+    disableEvents: function() {
+      this.Tickets.is_set_event = false;
     },
 
     handlerTickets: function(attrs) {

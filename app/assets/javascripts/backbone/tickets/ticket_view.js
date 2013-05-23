@@ -18,7 +18,12 @@
 
       Backbone.Mediator.sub('user_login', this.setEventsWithRight, this);
       
+      Backbone.Mediator.sub('user_logout', this.unsetEventsWithRight, this);
     }, 
+
+    unsetEventsWithRight: function() {
+      this.undelegateEvents();
+    },
 
     setEventsWithRight: function() {
       
