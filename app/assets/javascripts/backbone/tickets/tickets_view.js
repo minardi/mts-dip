@@ -34,16 +34,19 @@
     createTicket: function(attrs) { 
         var  model,
              view; 
-
+    
       this.type_ticket = attrs["type"];
        
      if (this.Tickets.is_there(attrs) === false) {     
-         attrs["user_id"] = app.userEx.getId();
-         model = new TicketModel(attrs);
 
-         model.save();
-         this.Tickets.push(model);
-      
+         if(this.Tickets.cloneValid(attrs)) {
+             
+             attrs["user_id"] = app.userEx.getId();
+             model = new TicketModel(attrs);
+    
+             model.save();
+             this.Tickets.push(model);
+         }
       } 
     },
     

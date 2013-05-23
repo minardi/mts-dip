@@ -15,9 +15,9 @@
         models = this.where(attrs),
         is_null = false;
 	   
-	      if (models.length > 0 && this.cloneValid(attrs)) is_null = true;
+	      if (models.length > 0) is_null = true;
           
-          ; 
+
         return is_null;       
       },
 
@@ -52,7 +52,24 @@
      
      cloneValid : function (attrs){
         
-        return true;
+        var tickets = this.where({user_id : attrs.user_id, data : attrs.data}),
+            num = 0,
+            result = true;
+            
+        for (num in tickets){
+            
+            if(parseInt(tickets[num].get('doctor_id')) !== parseInt(attrs.doctor_id)) {
+                
+                if(tickets[num].get('time') === attrs['time']){
+                    console.error('you already have tickets on this time!');
+                    Backbone.Mediator.pub('error', 'you already have ticket on this time, check your schedule!');
+                    result = false
+                }
+            }
+            
+        }
+
+        return result;
      }
      
     });
