@@ -74,11 +74,13 @@
          case "missed":
            this.model.set({status:"default"});
            this.model.save();
+           Backbone.Mediator.pub('remove_user_miss', this.model.get('user_id'));
            break;
 
          default:
            this.model.set({status:"missed"});
            this.model.save();
+           Backbone.Mediator.pub('user_miss', this.model.get('user_id'));
        }
 
       this.render(); 

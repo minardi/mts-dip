@@ -72,26 +72,6 @@
       this.routObjects('user_status');
       this.routObjects('tickets_view');
 
-      // mts.user != null ? mts.user :
-      //                    mts.user = new app.UserView({el: $("#login_block")});
-      
-      // mts.specializationList != null ? mts.specializationList : 
-      //                                  mts.specializationList  = new app.SpecsView({el:$("#specializations")});
-      
-      // mts.doctorsView != null ? mts.doctorsView :
-      //                           mts.doctorsView = new app.DoctorsView({el:$("#doctors")});
-      
-      // mts.weekly != null ? mts.weekly :
-      //                      mts.weekly = new app.WeeklyCollectionView({el : $('#weekly-table')});
-      
-      // mts.userStatus != null ? mts.userStatus : 
-      //                          mts.userStatus = new app.UserStatusView();
-      
-      // mts.dayTimelines != null ? mts.dayTimelines :   
-      //                            mts.dayTimelines = new app.DailySchedulesView({el:$("#daily_schedules")});
-  
-      // mts.ticketsView != null ? mts.ticketsView : mts.ticketsView = new app.TicketsView();
-
       mts.weekdays = null;
 
       app.UserEx.prototype = mts.user;
@@ -110,8 +90,6 @@
       this.routObjects('day_time_lines');
       this.routObjects('next_tickets');
     
-      // mts.nextTickets != null ? mts.nextTickets : 
-      //                           mts.nextTickets = new app.NextTicketsView({el: $("#next-tickets")});
     },
 
     showPrivateSchedule: function() {
@@ -121,11 +99,18 @@
 
       this.routObjects('user');
 
-      if (mts.weekdays == null) {
-        mts.weekdays = (app.userEx.getRole() == "doctor") ? 
+        mts.weekdays = (app.userEx.getRole() === "doctor") ? 
           new CurrentSchedulesView({el:$("#current_schedules")}) :
           new WeekDaysView({el : $('#week_user_tickets')});
-      }
+          
+        (app.userEx.getRole() === "doctor") ? 
+          $('#week_user_tickets').addClass("hidden") :
+          $('#current_schedules').addClass("hidden");
+          
+         (app.userEx.getRole() !== "doctor") ? 
+          $('#week_user_tickets').removeClass("hidden") :
+          $('#current_schedules').removeClass("hidden"); 
+
     }
 
   });

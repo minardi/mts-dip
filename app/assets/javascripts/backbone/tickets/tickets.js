@@ -1,4 +1,4 @@
- (function(app) {
+(function(app) {
   
     app.TicketsCollection = Backbone.Collection.extend({
       url: '/tickets', 

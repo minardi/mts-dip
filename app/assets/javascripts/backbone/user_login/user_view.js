@@ -28,7 +28,7 @@
         },
 
         userLogin: function() {
-            console.log("val");
+
             var user_email = this.$el.find('input[type=text]').val(),
                 user_password = this.$el.find('input[type=password]').val();
             
@@ -50,7 +50,7 @@
             } else {
                 // check: user come in or not
                 if(this.user.get('login')) {    
-
+                    this.routHome();
                     Backbone.Mediator.pub('user_login', 
                                                     {
                                                         id : this.user.get('id'),
@@ -59,7 +59,7 @@
                                          );
 
                     this.$el.html(this.inrole_template({ name: this.user.get('name')}));
-                    this.routHome();
+
                     return this;
 
                 } else {
