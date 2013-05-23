@@ -34,10 +34,17 @@ spec = Specialization.create(:name => "Okulist")
 spec.doctors.create(:name => "Steve", :duration => 15)
 spec.doctors.create(:name => "Peter", :duration => 30)
 
-UserStatus.create(user_id: 1, missing_count: 0)
-UserStatus.create(user_id: 2, missing_count: 0)
-UserStatus.create(user_id: 3, missing_count: 0)
-UserStatus.create(user_id: 4, missing_count: 0)
+UserStatus.create(user_id: 1, missing_count: 0, status: "active")
+UserStatus.create(user_id: 2, missing_count: 0, status: "active")
+UserStatus.create(user_id: 3, missing_count: 0, status: "active")
+UserStatus.create(user_id: 4, missing_count: 0, status: "active")
+UserStatus.create(user_id: 5, missing_count: 0, status: "active")
+UserStatus.create(user_id: 6, missing_count: 0, status: "active")
+UserStatus.create(user_id: 7, missing_count: 0, status: "active")
+UserStatus.create(user_id: 8, missing_count: 0, status: "active")
+UserStatus.create(user_id: 9, missing_count: 0, status: "active")
+UserStatus.create(user_id: 10, missing_count: 0, status: "active")
+UserStatus.create(user_id: 11, missing_count: 0, status: "active")
  
 WeeklySchedule.create(doctor_id: 1,schedule: {
         sun: {

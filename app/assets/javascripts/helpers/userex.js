@@ -1,8 +1,7 @@
-(function(app) {
-    
+(function(app, mts) {
+
     function getRole() {
         var role = this.user.get('role')['key'];
-        
         if (!role) {
             console.warn('something with hash role in userEx');
         }
@@ -34,21 +33,8 @@
        
         return id;
     }
-        
-    function getUserSchedule() {
-       //console.log('a',this.user.role && this.user.get('role')['key'], this.user.)
-        if (this.user.get('role')['key'] === 'patient'){
-            console.log('a')
-            this.weekview = new WeekDaysView({el : $('#week_user_tickets')});        
-            console.log(this.weekview)
-        }   
-    }
-    
-    
     
     function UserEx () {
-        
-        //Backbone.Mediator.sub('user_login', getUserSchedule, this);
         
         this.getRole = getRole;
         this.getId = getId;
@@ -58,4 +44,4 @@
     
     app.UserEx = UserEx;
          
-}(window))
+}(window, window.mts))

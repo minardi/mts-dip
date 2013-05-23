@@ -11,28 +11,31 @@
     	},
 
     	initialize: function() {
-    		this.model.on("change", this.deleteSchedule, this);
+
+    		this.model.on("change :visible", this.deleteSchedule, this);
+
     	},
 
     	timelineSelect: function(event) {
+
     		var element = event.target;
     			parsed_id = this.ticketIdParse(element);
 
-			Backbone.Mediator.pub("ticket_added", { doctor_id: parsed_id.doctor_id,
-													user_id: window.userEx.getId(),
-													data: parsed_id.data,
-													time: parsed_id.time,
-											        selector_id: parsed_id.selector_id,
-											        type: "sl-doc" 
-											       });	
+    		if (app.userEx.getRole() != "guest") {
+
+    			Backbone.Mediator.pub("ticket_added", { doctor_id: parsed_id.doctor_id,
+														user_id: window.userEx.getId(),
+														data: parsed_id.data,
+														time: parsed_id.time,
+												        selector_id: parsed_id.selector_id,
+												        type: "sl-doc" });	
+    		}
+			
 		},
 
 		deleteSchedule: function() {
-
-			if (this.model.get("visible") == false) {
 				delete this.model;
 				this.remove();
-			}
 		},
 
     	ticketIdParse: function(element) {
@@ -44,42 +47,28 @@
 
 			time = time.charAt(0) + time.charAt(1) + ":" + time.charAt(2) + time.charAt(3);
 	
-			return {doctor_id: doctor_id,
-					data:  data,
-					time: time,
-			        selector_id: ticket_id}
+			return { doctor_id: doctor_id,
+					 data:  data,
+					 time: time,
+			         selector_id: ticket_id }
     	},
 
 		timeFix: function(time) {
 
-			(time.length == 4) ? (time = "0" + time) : time = time;
+			time = (time.length == 4) ? "0" + time : time;
 			return time;
-		},
-
-		formateDayStr: function(day_str) {	
-
-				var day_arr = day_str.split("-"),
-					dd = day_arr[0],
-					mm = day_arr[1];
-
-				if (dd < 10) {
-  					dd = '0' + dd;
-  				}	
-					
-				return dd + "." + mm + "." + day_arr[2].slice(2);
 		},
 
 		getTimelineAttrs: function(model) {
 
 			var duration = model.get("duration"),
-				date = new Date(0, 0, 0, 8, 0, 0, 0),
-				date_help = new app.DateEx(date),
+				date = new app.DateEx(),
 				amount = 0,
 				cssclass = "timeline",
 				start = this.timeFix(model.get("schedule_start")),
 				end = this.timeFix(model.get("schedule_end"));
 
-				//console.log(start, end);
+				date.idToDate(model.get("day"), "t0800");
 
 			switch (duration) {
 				case 15:
@@ -98,13 +87,13 @@
 
 			width = (((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(3) + "px";
 
-			return {duration: duration,
-					date: date_help,
-					amount: amount,
-					start: start,
-					end: end,
-					cssclass: cssclass,
-					width: width}
+			return { duration: duration,
+					 date: date,
+					 amount: amount,
+					 start: start,
+					 end: end,
+					 cssclass: cssclass,
+					 width: width }
 		},
 
 		setTimelineAttrs: function(element, doctor_id, day, time, width, cssclass) {
@@ -118,12 +107,15 @@
 
 		render: function() {
 
+			var i,
+				current_time,
+				timeline,
+				timeline_attrs = this.getTimelineAttrs(this.model);
+
 			this.$el.html(this.template({ doctor_name: this.model.get("doctor_name"), 
-										  day: this.formateDayStr(this.model.get("day")) }));
+										  day: timeline_attrs.date.dateViewFormat() }));
 
-			timeline_attrs = this.getTimelineAttrs(this.model);
-
-			for (var i = 1; i <= timeline_attrs.amount; i++) {
+			for (i = 1; i <= timeline_attrs.amount; i++) {
 
 				timeline = document.createElement("span");
 				current_time = timeline_attrs.date.timeViewFormat();
@@ -134,7 +126,8 @@
 				
 				this.setTimelineAttrs(timeline, 
 									  this.model.get("doctor_id"),
-									  this.model.get("day"), current_time,
+									  this.model.get("day"), 
+									  current_time,
 									  timeline_attrs.width, 
 									  timeline_attrs.cssclass);
 

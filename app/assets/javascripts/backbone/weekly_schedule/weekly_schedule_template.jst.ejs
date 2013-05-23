@@ -1,0 +1,10 @@
+<td class="schedule-name" id="doc<%= doctor_id %>-name">
+    <%= doctor_name %>    
+</td>
+
+<%for(day in schedule) {%>
+    <td class="schedule-item" id="doc<%= doctor_id %>-<%= day %>">      
+        <%= schedule[day]['start'] %> - <%= schedule[day]['end'] %>
+    </td>
+            
+<%}%>

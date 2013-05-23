@@ -84,8 +84,29 @@ class UserStatusesController < ApplicationController
   def addmiss
     @user_status = UserStatus.find(params[:id])
     @user_status.missing_count += 1
-    @user_status.save
+    
 
+    if @user_status.missing_count <= 3
+      @user_status.status = "active"
+    else
+      @user_status.status = "blocked"
+    end
+    @user_status.save
+    respond_to do |format|
+      format.json { render json: @user_status}
+    end
+  end
+# RemoveMiss /user_statuses/1/removemiss
+def removemiss
+    @user_status = UserStatus.find(params[:id])
+    @user_status.missing_count -= 1
+
+    if @user_status.missing_count <= 3
+      @user_status.status = "active"
+    else
+      @user_status.status = "blocked"
+    end
+    @user_status.save
     respond_to do |format|
       format.json { render json: @user_status}
     end

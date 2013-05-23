@@ -20,6 +20,14 @@ header {
    padding: 10px 20px 10px;
 }
 
+#weekly-table .weekly-table-day{
+    text-align:center;
+}
+
+#weekly-table .weekly-table-day .day-name{
+    text-transform: capitalize;
+}
+
 .drop_menu_block {
 	display:block; 
   min-width: 140px;

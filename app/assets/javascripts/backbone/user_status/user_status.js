@@ -6,18 +6,26 @@
           
     defaults : {
         miss_count: 0,
-        //user_id: 0,
+        status: "",
     },
 
-    resetUrl: function(attr) {
+    addMissUrl: function(attr) {
       
       var user_id = attr["user_id"];
 
-         this.url = '/user_statuses/'+ user_id +'.json';
+         this.url = '/user_statuses/'+ user_id +'/addmiss.json';
 
          this.fetch();
 
         },
+
+    removeMissUrl: function(attr) {
+      var user_id = attr["user_id"];
+
+         this.url = '/user_statuses/'+ user_id +'/removemiss.json';
+
+         this.fetch();
+    }
   });
  
  })(window);

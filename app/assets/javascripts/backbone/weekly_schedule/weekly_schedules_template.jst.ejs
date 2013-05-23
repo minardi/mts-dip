@@ -3,16 +3,18 @@
 	<thead>
 		<tr>
             <td>
-                Day/<p>Doctor name</p>  
+                Days / Doctor name  
             </td>
             <%for(day in schedule) {%>
     			
                 <td class="weekly-table-day" id="weekly-<%= day %>">
-                    <p>
+                    <p class="day-name">
                          <%= day %>
                     </p>
                     
-                    <%= schedule[day] %>
+                    <p class="day-date">
+                        <%= schedule[day] %>
+                    </p>
                 </td>
             
             <%}%>

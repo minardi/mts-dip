@@ -10,9 +10,6 @@
             this.user = new app.UserModel();
             this.render();
 
-            Backbone.Mediator.sub("user_blocked", this.getUser, this);
-            //this.user.on("request", this.userBlock, this);
-            this.user.on("all", function(e){console.log(e);}, this);
         },
 
         // template with logins inputs
@@ -30,23 +27,6 @@
             "click #exit"             : "userLogout"
         },
 
-        getUser: function(attr) {
-            console.log(this.user.url);
-            this.user.url = "users/update.json";
-            console.log(this.user.url);
-            // this.user.save();
-            this.user.fetch({user_id:attr["id"]});
-        },
-
-        userBlock: function() {
-            console.log(this.user);
-            //console.log(this.user.get("id"),attr["user_id"] );
-            //console.log(this.user);
-            // if (this.user.get("id") === attr["user_id"]){console.log("warn");
-            // this.user.set({role:{"key":"blocked"}});
-            // }
-        },
-
         userLogin: function() {
 
             var user_email = this.$el.find('input[type=text]').val(),
@@ -61,7 +41,13 @@
         },
 
         checkLogin: function() {
-            
+            //add check user role before login and show message of block
+            if (this.user.get('role') == 'blocked') {
+
+                $("#blocked_user").removeClass("hidden");
+                
+                setTimeout(this.hideError, 3000);
+            } else {
             if(this.user.get('login')) {
 
                 Backbone.Mediator.pub('user_login', 
@@ -80,11 +66,13 @@
                 $("#login_error").removeClass("hidden");
                 setTimeout(this.hideError, 3000);
             }
+        }
         },
 
-
+        //add hide message of block
         hideError: function() {
             $("#login_error").hide();
+            $("#blocked_user").hide();
         },
 
         routHome: function() {
