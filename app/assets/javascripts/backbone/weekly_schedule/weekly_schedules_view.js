@@ -42,8 +42,10 @@
             
             var date = new app.DateEx(),
                 schedule = date.getCurrentWeek({transport : false});
-            this.collection.days = date.getCurrentWeek({transport : true});
             
+            date = new app.DateEx();
+            this.collection.days = date.getCurrentWeek({transport : true});
+
             return schedule;
             
         },

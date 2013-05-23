@@ -59,14 +59,14 @@
 			minutes = timestr.slice(3);
 
 			this.date = new Date(year, month, day, hours, minutes, 0, 0);
-
+            
 		return this.date;
 	}
 
 	function getCurrentWeek(param) {
 
-		this.date.setDate(this.date.getDate() - this.date.getDay());
-
+		
+        
 		var key,
 			currentWeek = {
 
@@ -77,12 +77,16 @@
 			"thu": 0,
 			"fri": 0,
 			"sat": 0,
-		};
+            };
+            
+            
+        this.date.setDate(this.date.getDate() - this.date.getDay());
+        
 
 		for(key in currentWeek) {
-
+            
 			currentWeek[key] = (param["transport"] == true) ? this.dateTransFormat() : this.dateViewFormat();
-			this.date.setDate(this.date.getDate() + 1);
+            this.date.setDate(this.date.getDate() + 1);
 		}
 
 		return currentWeek;

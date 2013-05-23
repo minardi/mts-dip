@@ -69,7 +69,7 @@
 				end = this.timeFix(model.get("schedule_end"));
 
 				date.idToDate(model.get("day"), "t0800");
-
+                console.log(date.idToDate(model.get("day"), "t0800"))
 			switch (duration) {
 				case 15:
 					amount = 36;
