@@ -15,7 +15,7 @@
         // template with logins inputs
         nav_template: JST["backbone/user_login/nav_template"],
         
-        // template with "user on" 
+        // template with user navigator 
         inrole_template: JST["backbone/user_login/user_template"],
 
         events: {
@@ -30,14 +30,14 @@
         userLogin: function() {
 
             var user_email = this.$el.find('input[type=text]').val(),
-                    user_password = this.$el.find('input[type=password]').val();
+                user_password = this.$el.find('input[type=password]').val();
             
-            log_user = new app.UserModel({ email: user_email,
-                                                                    password: user_password
-                                                                    });
-            this.user = log_user; // for UserEx;
-            log_user.on('sync', this.checkLogin, this);
-            log_user.save();            
+            this.user = new app.UserModel({ email: user_email,
+                                           password: user_password
+                                        });
+ 
+            this.user.on('sync', this.checkLogin, this);
+            this.user.save();            
         },
 
         checkLogin: function() {
@@ -45,28 +45,29 @@
             if (this.user.get('role') == 'blocked') {
 
                 $("#blocked_user").removeClass("hidden");
-                
                 setTimeout(this.hideError, 3000);
-            } else {
-            if(this.user.get('login')) {
-
-                Backbone.Mediator.pub('user_login', 
-                                                {
-                                                    id : this.user.get('id'),
-                                                    role: this.user.get('role',[0])
-                                                }
-                                     );
-
-                this.$el.html(this.inrole_template({ name: this.user.get('name')}));
-                this.routHome();
-                return this;
 
             } else {
+                // check: user come in or not
+                if(this.user.get('login')) {    
+
+                    Backbone.Mediator.pub('user_login', 
+                                                    {
+                                                        id : this.user.get('id'),
+                                                        role: this.user.get('role',[0])
+                                                    }
+                                         );
+
+                    this.$el.html(this.inrole_template({ name: this.user.get('name')}));
+                    this.routHome();
+                    return this;
+
+                } else {
                 
-                $("#login_error").removeClass("hidden");
-                setTimeout(this.hideError, 3000);
+                    $("#login_error").removeClass("hidden");
+                    setTimeout(this.hideError, 3000);
+                }
             }
-        }
         },
 
         //add hide message of block
@@ -93,17 +94,16 @@
             $("#tab1").removeClass("hidden");
             $("#tab2").addClass("hidden");
             $("#next-tickets").addClass("hidden");
+            
             this.user.clear();
-            // mts.nextTickets = new app.NextTicketsView({model : model});
-            // app.mts.nextTickets.clear();
+
             Backbone.Mediator.pub('user_logout', 
                                                 {
                                                     id : this.user.get('id'),
                                                     role: this.user.get('role',[0])
                                                 }
                                  );
-            this.$el.html(this.nav_template);
-            
+            this.$el.html(this.nav_template); 
             app.mts.router.navigate('');
             return this;
         },

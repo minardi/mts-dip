@@ -30,21 +30,20 @@ class UsersController < ApplicationController
 
         if @user_status.status == "blocked"
 
-          @login_user = {"id"=>@user.id,
-                       "name"=>@user.name,
-                       "email"=>@user.email,
-                       "role"=> "blocked",
-                       "login"=>false
-                      }
-
+          @login_user = { "id"=>@user.id,
+                          "name"=>@user.name,
+                          "email"=>@user.email,
+                          "role"=> "blocked",
+                          "login"=>false
+                        }
         else
 
-      @login_user = {"id"=>@user.id,
-                     "name"=>@user.name,
-                     "email"=>@user.email,
-                     "role"=>@user.role,
-                     "login"=>true
-                    }
+          @login_user = { "id"=>@user.id,
+                          "name"=>@user.name,
+                          "email"=>@user.email,
+                          "role"=>@user.role,
+                          "login"=>true
+                        }
 
         end
     else
