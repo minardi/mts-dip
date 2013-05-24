@@ -2,7 +2,7 @@
 .timelines div {
 	/*display: block;*/
 	float: left;
-	height: 40px;
+	/*height: 40px;*/
 	margin-right: 1px;
 	background-color: lightblue; 
 }
