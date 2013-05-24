@@ -111,6 +111,7 @@
 			$(element).attr("id", "sl-doc" + doctor_id + "_" + day + "_t" + time);
 			$(element).css("width", width);
 			$(element).css("height", "40px");
+			$(element).css("float", "left");
 			$(element).addClass(cssclass);
 		},
 

@@ -1,10 +1,7 @@
 /*do not delete this!*/
 .timelines div {
-	/*display: block;*/
-	float: left;
-	/*height: 40px;*/
 	margin-right: 1px;
-	background-color: lightblue; 
+	background-color: #ADD8E6; 
 }
 
 #daily_schedules thead td, #current_schedules thead td {
