@@ -61,6 +61,7 @@
 			$(element).css("width", width);
 			$(element).css("height", "40px");
 			$(element).css("float", "left");
+			$(element).css("margin-right", "1px");
 			$(element).addClass(cssclass);
 		},
 
