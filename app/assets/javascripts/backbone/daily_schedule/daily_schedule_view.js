@@ -64,28 +64,36 @@
 			var duration = model.get("duration"),
 				date = new app.DateEx(),
 				amount = 0,
+				tr_width,
 				cssclass = "timeline",
 				start = this.timeFix(model.get("schedule_start")),
 				end = this.timeFix(model.get("schedule_end"));
+
 
 				date.idToDate(model.get("day"), "t0800");
                 console.log(date.idToDate(model.get("day"), "t0800"))
 			switch (duration) {
 				case 15:
 					amount = 36;
+					width = "2.73%";
 					break;
 				case 30:
 					amount = 18;
+					width = "5.41%";
 					break;
 				case 45:
 					amount = 12;
+					width = "8.33%";
 					break;
 				case 60:
 					amount = 9;
+					width = "11.11%";
 					break;
 			}
 
-			width = (((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(3) + "px";
+			tr_width = parseInt($("#daily_schedules").css("width")) * 0.9 - 2;
+			width = ((((tr_width - amount) / +amount)) * 100) / tr_width  + "%";
+			//width = (((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(3) + "px";
 
 			return { duration: duration,
 					 date: date,
@@ -117,7 +125,7 @@
 
 			for (i = 1; i <= timeline_attrs.amount; i++) {
 
-				timeline = document.createElement("span");
+				timeline = document.createElement("div");
 				current_time = timeline_attrs.date.timeViewFormat();
 
 				if ( (current_time >= timeline_attrs.start) && (current_time < timeline_attrs.end) ) {

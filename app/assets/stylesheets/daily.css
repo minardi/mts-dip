@@ -1,8 +1,9 @@
 /*do not delete this!*/
-.timelines span {
-	display: inline-block;
+.timelines div {
+	/*display: block;*/
+	float: left;
 	height: 40px;
-	border-right: 1px solid white;
+	margin-right: 1px;
 	background-color: lightblue; 
 }
 
