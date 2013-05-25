@@ -113,6 +113,7 @@
 			$(element).css("height", "40px");
 			$(element).css("float", "left");
 			$(element).css("margin-right", "1px");
+			$(element).css("background-color", "lightblue");
 			$(element).addClass(cssclass);
 		},
 
