@@ -1,7 +1,7 @@
 /*do not delete this!*/
 .timelines div {
 	margin-right: 1px;
-	background-color: rgb(173, 216, 230); 
+	background-color: lightblue; 
 }
 
 #daily_schedules thead td, #current_schedules thead td {
