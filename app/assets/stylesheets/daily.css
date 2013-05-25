@@ -1,6 +1,7 @@
 /*do not delete this!*/
 .timelines div {
-	background-color: #add8e6; 
+	margin-right: 1px;
+	background-color: #add8e6 !important; 
 }
 
 #daily_schedules thead td, #current_schedules thead td {
@@ -15,3 +16,4 @@
 
 .timelines .worktime {
 	background-color: blue;
+}

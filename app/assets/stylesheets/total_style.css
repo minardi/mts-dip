@@ -29,13 +29,13 @@ header {
 }
 
 .drop_menu_block {
-	display:block; 
+	display: block; 
   min-width: 140px;
 	position: static;
 }
 
 #list_item {
-	background: 5adfd9;	
+	background: #5adfd9;	
 }
 
 #list {
