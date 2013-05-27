@@ -59,9 +59,6 @@
 
 			$(element).attr("id", "cw-" + "doc" + doctor_id + "_" + day + "_t" + time);
 			$(element).css("width", width);
-			//$(element).css("height", "40px");
-			//$(element).css("float", "left");
-			//$(element).css("margin-right", "1px");
 			$(element).addClass(cssclass);
 		},
 
