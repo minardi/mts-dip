@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(:version => 20130521124735) do
   end
 
   create_table "tickets", :force => true do |t|
-    t.string   "date_time"
     t.integer  "doctor_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
