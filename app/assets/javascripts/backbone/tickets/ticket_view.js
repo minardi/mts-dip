@@ -28,8 +28,9 @@
     },
 
     setEventsWithRight: function() {    
-      
-       if (this.model.type == "cw-doc") {
+       
+       if ((this.model.type == "cw-doc") && (this.isDateLarge())) {
+         
           this.events = { 
                          "click" : "changeStatusVisit", 
                          "contextmenu" : "changeStatusMis"
@@ -112,6 +113,31 @@
 
     addClass: function() {
       this.$el.addClass(this.model.get("status")+"_ticket");   
+    },
+    
+    isDateLarge: function() {
+     var date = new Date,
+         date_s,
+         time_s;
+
+      date_s = this.addNil(date.getDate())+"-"+
+               this.addNil( date.getMonth())+"-"+ 
+               date.getFullYear();
+
+      time_s =  this.addNil(date.getHours())+":"+
+                this.addNil(date.getMinutes());
+
+     
+     // console.log(date_s + time_s, "  ", this.model.get("data") + this.model.get("time"));
+      return (date_s + time_s) > (this.model.get("data") + this.model.get("time")) ? true : false; 
+      
+
+    },
+
+    addNil: function(a) {
+
+     if (a < 10) return "0"+a;  
+     return a;
     },
 
     render: function() {
