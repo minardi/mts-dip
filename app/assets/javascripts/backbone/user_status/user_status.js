@@ -11,7 +11,7 @@
 
     addMissUrl: function(attr) {
       
-      var user_id = attr["user_id"];
+      var user_id = attr;
 
          this.url = '/user_statuses/'+ user_id +'/addmiss.json';
 
@@ -20,7 +20,7 @@
         },
 
     removeMissUrl: function(attr) {
-      var user_id = attr["user_id"];
+      var user_id = attr;
 
          this.url = '/user_statuses/'+ user_id +'/removemiss.json';
 

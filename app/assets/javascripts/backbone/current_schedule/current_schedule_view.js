@@ -18,6 +18,7 @@
 			var duration = model.get("duration"),
 				date = new app.DateEx(),
 				amount = 0,
+				tr_width,
 				cssclass = "timeline",
 				start = this.timeFix(model.get("schedule_start")),
 				end = this.timeFix(model.get("schedule_end"));
@@ -39,7 +40,9 @@
 					break;
 			}
 
-			width = (((parseInt($("#current_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(2) + "px";
+			tr_width = parseInt($("#current_schedules").css("width")) * 0.9 - 2;
+			width = ((((tr_width - amount) / +amount)) * 100) / tr_width  + "%";
+			//width = (((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(3) + "px";
 
 			return {duration: duration,
 					date: date,
@@ -71,7 +74,7 @@
 
 			for (i = 1; i <= timeline_attrs.amount; i++) {
 
-				timeline = document.createElement("span");
+				timeline = document.createElement("div");
 				current_time = timeline_attrs.date.timeViewFormat();
 
 				if ( (current_time >= timeline_attrs.start) && (current_time < timeline_attrs.end) ) {

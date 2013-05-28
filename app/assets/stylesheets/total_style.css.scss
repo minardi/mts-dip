@@ -29,13 +29,13 @@ header {
 }
 
 .drop_menu_block {
-	display:block; 
+	display: block; 
   min-width: 140px;
 	position: static;
 }
 
 #list_item {
-	background: 5adfd9;	
+	background: #5adfd9;	
 }
 
 #list {
@@ -110,6 +110,67 @@ header {
 {
 	background-color: white !important;
 
+}
+
+
+/*do not delete this!*/
+.timeline {
+	height: 40px;
+	float: left;
+	margin-right: 1px;
+	background-color: lightblue; 
+}
+
+#daily_schedules thead td, #current_schedules thead td {
+	width: 10%;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#daily_schedules tbody td, #current_schedules tbody td {
+	padding: 0px;
+}
+
+.timelines .worktime {
+	background-color: #0000ff;
+}
+
+ .doctors
+ {
+   list-style: none;
+ }
+
+ .doctors li
+ {
+   padding: 5px;
+ }
+ .doctors li:hover 
+ {
+   background-color: #5ce0da; 
+ }
+ 
+ .selected_doctor
+ {
+   background-color: #55cac5; 
+ }
+ 
+ 
+ /* fix floating bug in spec list */
+#specializations .dropdown-menu{
+float:none;
+} 
+ 
+ #specializations li {
+ list-style: none;
+   padding: 5px;
+ }
+
+#specializations li:hover, .active:hover {
+   background-color: #5ce0da; 
+}
+
+.selected_spec, .active{
+	background-color: #55cac5; 
 }
 
 
