@@ -73,7 +73,7 @@
 				console.log(start, end);
 
 				date.idToDate(model.get("day"), "t0800");
-                //console.log(date.idToDate(model.get("day"), "t0800"))
+
 			switch (duration) {
 				case 15:
 					amount = 36;
@@ -116,7 +116,6 @@
 			}
 
 			this.$el.children(":last-child").append(timeline);
-
 		},
 
 		render: function() {

@@ -59,7 +59,6 @@
 
 			var timeline = document.createElement("div"),
 				time = t_attrs.date.timeTransFormat().slice(1);
-				console.log(time);
 
 			$(timeline).attr("id", "cw-doc" + doctor_id + "_" + t_attrs.date.dateTransFormat() + "_t" + time);
 			$(timeline).css("width", width).addClass(t_attrs.cssclass);
@@ -69,7 +68,6 @@
 			}
 
 			this.$el.children(":last-child").append(timeline);
-
 		},
 
 		render: function() {
