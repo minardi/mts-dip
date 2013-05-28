@@ -40,8 +40,11 @@
 
 				this.$el.show();
 
-				current_schedule_view = new app.CurrentScheduleView( {model: daily_schedule} );
-				//current_schedule_view.setElement(element) 
+				current_schedule_view = new app.DailyScheduleView( {model: daily_schedule} );
+				current_schedule_view.template = JST["backbone/current_schedule/current_schedule_template"];
+				current_schedule_view.ticketType = "cw-doc";
+				//VIEW REUSED! verify events on current and daily schedules
+
 				this.$el.find("#current_schedules_content").append(current_schedule_view.render().el);
 
 				Backbone.Mediator.pub("timeline_render",{ doctor_id: app.userEx.getDoctorId(),

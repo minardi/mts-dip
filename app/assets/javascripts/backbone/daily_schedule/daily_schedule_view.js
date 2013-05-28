@@ -10,6 +10,8 @@
       		"click .worktime" : "timelineSelect",	
     	},
 
+    	ticketType: "sl-doc",
+
     	initialize: function() {
 
     		this.model.on("change :visible", this.deleteSchedule, this);
@@ -70,7 +72,6 @@
 				cssclass = "timeline",
 				start = this.timeFix(model.get("schedule_start")),
 				end = this.timeFix(model.get("schedule_end"));
-				console.log(start, end);
 
 				date.idToDate(model.get("day"), "t0800");
 
@@ -89,7 +90,11 @@
 					break;
 			}
 
-			tr_width = parseInt($("#daily_schedules").css("width")) * 0.9 - 2;
+			tr_width = (this.ticketType === "sl-doc") ?
+				parseInt($("#daily_schedules").css("width")) * 0.9 - 2 :
+				parseInt($("#current_schedules").css("width")) * 0.9 - 2;
+
+
 			width = (((((tr_width - amount) / +amount)) * 100) / tr_width).toFixed(5) + "%";
 			//width = (((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(3) + "px";
 
@@ -106,9 +111,8 @@
 
 			var timeline = document.createElement("div"),
 				time = t_attrs.date.timeTransFormat().slice(1);
-				console.log(time);
 
-			$(timeline).attr("id", "sl-doc" + doctor_id + "_" + t_attrs.date.dateTransFormat() + "_t" + time);
+			$(timeline).attr("id", this.ticketType + doctor_id + "_" + t_attrs.date.dateTransFormat() + "_t" + time);
 			$(timeline).css("width", width).addClass(t_attrs.cssclass);
 
 			if ( (time >= t_attrs.start) && (time < t_attrs.end) ) {
