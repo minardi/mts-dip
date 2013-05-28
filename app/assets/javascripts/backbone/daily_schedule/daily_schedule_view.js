@@ -56,6 +56,8 @@
 		timeFix: function(time) {
 
 			time = (time.length == 4) ? "0" + time : time;
+			time = time.charAt(0) + time.charAt(1) + time.charAt(3) + time.charAt(4);
+
 			return time;
 		},
 
@@ -68,31 +70,27 @@
 				cssclass = "timeline",
 				start = this.timeFix(model.get("schedule_start")),
 				end = this.timeFix(model.get("schedule_end"));
-
+				console.log(start, end);
 
 				date.idToDate(model.get("day"), "t0800");
-                console.log(date.idToDate(model.get("day"), "t0800"))
+                //console.log(date.idToDate(model.get("day"), "t0800"))
 			switch (duration) {
 				case 15:
 					amount = 36;
-					width = "2.73%";
 					break;
 				case 30:
 					amount = 18;
-					width = "5.41%";
 					break;
 				case 45:
 					amount = 12;
-					width = "8.33%";
 					break;
 				case 60:
 					amount = 9;
-					width = "11.11%";
 					break;
 			}
 
 			tr_width = parseInt($("#daily_schedules").css("width")) * 0.9 - 2;
-			width = ((((tr_width - amount) / +amount)) * 100) / tr_width  + "%";
+			width = (((((tr_width - amount) / +amount)) * 100) / tr_width).toFixed(5) + "%";
 			//width = (((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(3) + "px";
 
 			return { duration: duration,
@@ -104,13 +102,21 @@
 					 width: width }
 		},
 
-		setTimelineAttrs: function(element, doctor_id, day, time, width, cssclass) {
+		setTimeline: function(doctor_id, t_attrs) {
 
-			time = time.charAt(0) + time.charAt(1) + time.charAt(3) + time.charAt(4);
+			var timeline = document.createElement("div"),
+				time = t_attrs.date.timeTransFormat().slice(1);
+				console.log(time);
 
-			$(element).attr("id", "sl-doc" + doctor_id + "_" + day + "_t" + time);
-			$(element).css("width", width);
-			$(element).addClass(cssclass);
+			$(timeline).attr("id", "sl-doc" + doctor_id + "_" + t_attrs.date.dateTransFormat() + "_t" + time);
+			$(timeline).css("width", width).addClass(t_attrs.cssclass);
+
+			if ( (time >= t_attrs.start) && (time < t_attrs.end) ) {
+				    $(timeline).addClass("worktime");
+			}
+
+			this.$el.children(":last-child").append(timeline);
+
 		},
 
 		render: function() {
@@ -118,30 +124,15 @@
 			var i,
 				current_time,
 				timeline,
-				timeline_attrs = this.getTimelineAttrs(this.model);
+				t_attrs = this.getTimelineAttrs(this.model);
 
 			this.$el.html(this.template({ doctor_name: this.model.get("doctor_name"), 
-										  day: timeline_attrs.date.dateViewFormat() }));
+										  day: t_attrs.date.dateViewFormat() }));
 
-			for (i = 1; i <= timeline_attrs.amount; i++) {
-
-				timeline = document.createElement("div");
-				current_time = timeline_attrs.date.timeViewFormat();
-
-				if ( (current_time >= timeline_attrs.start) && (current_time < timeline_attrs.end) ) {
-				    $(timeline).addClass("worktime");
-				};
+			for (i = 1; i <= t_attrs.amount; i++) {
 				
-				this.setTimelineAttrs(timeline, 
-									  this.model.get("doctor_id"),
-									  this.model.get("day"), 
-									  current_time,
-									  timeline_attrs.width, 
-									  timeline_attrs.cssclass);
-
-				this.$el.children(".timelines").append(timeline);
-
-				timeline_attrs.date.date.setMinutes(timeline_attrs.date.date.getMinutes() + timeline_attrs.duration);
+				this.setTimeline(this.model.get("doctor_id"), t_attrs);
+				t_attrs.date.date.setMinutes(t_attrs.date.date.getMinutes() + t_attrs.duration);
 			}
 
       		return this;		
