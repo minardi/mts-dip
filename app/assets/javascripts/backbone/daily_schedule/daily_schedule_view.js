@@ -21,7 +21,7 @@
     	timelineSelect: function(event) {
 
     		var element = event.target;
-    				parsed_id = this.ticketIdParse(element);
+    			parsed_id = this.ticketIdParse(element);
 
     		if (app.userEx.getRole() != "guest") {
 
@@ -36,8 +36,8 @@
 		},
 
 		deleteSchedule: function() {
-				delete this.model;
-				this.remove();
+			delete this.model;
+			this.remove();
 		},
 
     	ticketIdParse: function(element) {
@@ -67,33 +67,17 @@
 
 			var duration = model.get("duration"),
 				date = new app.DateEx(),
-				amount = 0,
+				amount = 540 / duration,
 				tr_width,
 				cssclass = "timeline",
 				start = this.timeFix(model.get("schedule_start")),
 				end = this.timeFix(model.get("schedule_end"));
 
-				date.idToDate(model.get("day"), "t0800");
-
-			switch (duration) {
-				case 15:
-					amount = 36;
-					break;
-				case 30:
-					amount = 18;
-					break;
-				case 45:
-					amount = 12;
-					break;
-				case 60:
-					amount = 9;
-					break;
-			}
+			date.idToDate(model.get("day"), "t0800");
 
 			tr_width = (this.ticketType === "sl-doc") ?
 				parseInt($("#daily_schedules").css("width")) * 0.9 - 2 :
 				parseInt($("#current_schedules").css("width")) * 0.9 - 2;
-
 
 			width = (((((tr_width - amount) / +amount)) * 100) / tr_width).toFixed(5) + "%";
 			//width = (((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(3) + "px";
