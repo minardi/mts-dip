@@ -33,7 +33,7 @@
                 user_password = this.$el.find('input[type=password]').val();
             
             this.user = new app.UserModel({ email: user_email,
-                                           password: user_password
+                                            password: user_password
                                         });
  
             this.user.on('sync', this.checkLogin, this);
