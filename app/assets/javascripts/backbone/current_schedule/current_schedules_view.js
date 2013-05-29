@@ -6,8 +6,15 @@
 						
 			initialize: function() {
 
-				this.render();
+				var doctor_id,
+					mySchedule;
 
+					doctor_id = app.userEx.getDoctorId();
+					mySchedule = new app.WeeklyModel();
+
+					mySchedule.getCurrent(doctor_id);
+					mySchedule.fetch();
+					mySchedule.on("sync", this.render, this);
 			},
 
 			addSchedule: function(attr) {
@@ -16,70 +23,43 @@
 					schedule_start = schedule_array[0],
 					schedule_end = schedule_array[1],
 					current_schedule_view,
-					daily_schedule = new app.DailySchedule( { doctor_id: attr["doctor_id"],
+					daily_schedule = new app.DailySchedule({ doctor_id: attr["doctor_id"],
 													      day: attr["day"],
 													      duration: attr["duration"],
 													      schedule_start: schedule_start,
 													      schedule_end: schedule_end,
-													      visible: true
-												      } );
+													      visible: true });
 
-				this.$el.show();
+				current_schedule_view = new app.DailyScheduleView( {model: daily_schedule} );
+				current_schedule_view.template = JST["backbone/current_schedule/current_schedule_template"];
+				current_schedule_view.ticketType = "cw-doc";
+				//VIEW REUSED! verify events on current and daily schedules
 
-				current_schedule_view = new app.CurrentScheduleView( {model: daily_schedule} );
-				this.$el.find("#current_schedules_content").append(current_schedule_view.render().el);
+				this.$el.find("tbody").append(current_schedule_view.render().el);
 
 				Backbone.Mediator.pub("timeline_render",{ doctor_id: app.userEx.getDoctorId(),
 			                                              data: attr["day"],
 			                                              type: "cw-doc" });
 			},
 				
-			render: function() {
+			render: function(model) {
 
-				var doctor_id,
-					mySchedule;
+				var day_time = model.get("schedule"),
+					dateex = new app.DateEx();
 
 				this.$el.html(this.template());
-				
-				if (app.userEx.getRole() == "doctor") {
+				dateex.date.setDate(dateex.date.getDate() - dateex.date.getDay());
 
-					doctor_id = app.userEx.getDoctorId();
-					mySchedule = new app.WeeklyModel();
+				for(key in day_time) {
 
-					mySchedule.urlRoot = "/weekly_schedules/" + doctor_id +"/getduration.json";
-					mySchedule.fetch();
+				    this.addSchedule({ doctor_id: model.get("doctor_id"),
+				    				   day: dateex.dateTransFormat(),
+				    				   duration: model.get("doctor_duration"),
+				    				   schedule: day_time[key]["start"] + " - " + day_time[key]["end"] });
 
-					mySchedule.on("change", function () {
-
-						var daily_array = {},
-							date = new Date(),
-					    	dateex = new app.DateEx(date);
-
-						date.setDate(date.getDate() - date.getDay());
-
-						daily_array[0] = mySchedule.attributes.schedule.sun.start + " - " + mySchedule.attributes.schedule.sun.end;
-					    daily_array[1] = mySchedule.attributes.schedule.mon.start + " - " + mySchedule.attributes.schedule.mon.end;
-					    daily_array[2] = mySchedule.attributes.schedule.tue.start + " - " + mySchedule.attributes.schedule.tue.end;
-					    daily_array[3] = mySchedule.attributes.schedule.wed.start + " - " + mySchedule.attributes.schedule.wed.end;
-					    daily_array[4] = mySchedule.attributes.schedule.thu.start + " - " + mySchedule.attributes.schedule.thu.end;
-					    daily_array[5] = mySchedule.attributes.schedule.fri.start + " - " + mySchedule.attributes.schedule.fri.end;
-					    daily_array[6] = mySchedule.attributes.schedule.sat.start + " - " + mySchedule.attributes.schedule.sat.end;
-
-					    for(i=0;i<=6;i++) {
-
-						    this.addSchedule({doctor_id:  doctor_id,
-						    				  day: dateex.dateTransFormat(),
-						    				  duration: mySchedule.get("doctor_duration"),
-						    				   schedule: daily_array[i]
-						    				 });
-
-						    date.setDate(date.getDate() + 1);
-				    	}
-
-					}, this);    
-
-				};
-			
+				    dateex.date.setDate(dateex.date.getDate() + 1);
+		    	}
+	
 				return this;
 			}		
 	});	
