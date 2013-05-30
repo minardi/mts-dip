@@ -79,17 +79,30 @@
 
       this.tabNavigator('tab2');
 
-        mts.weekdays = (app.userEx.getRole() === "doctor") ? 
-          new CurrentSchedulesView({el:$("#current_schedules")}) :
-          new WeekDaysView({el : $('#week_user_tickets')});
+ 
+
+        if (mts.weekdays instanceof CurrentSchedulesView) {
           
-        (app.userEx.getRole() === "doctor") ? 
-          $('#week_user_tickets').addClass("hidden") :
+        }
+
+        if (app.userEx.getRole() === "doctor") {
+
+          mts.weekdays = (mts.weekdays instanceof CurrentSchedulesView) ?
+            mts.weekdays : 
+            new CurrentSchedulesView({el:$("#current_schedules")});
+
+          $('#week_user_tickets').addClass("hidden");
+          $('#current_schedules').removeClass("hidden");
+
+        } else {
+
+          mts.weekdays = (mts.weekdays instanceof WeekDaysView) ?
+            mts.weekdays : 
+            new WeekDaysView({el : $('#week_user_tickets')});
+
+          $('#week_user_tickets').removeClass("hidden");
           $('#current_schedules').addClass("hidden");
-          
-         (app.userEx.getRole() !== "doctor") ? 
-          $('#week_user_tickets').removeClass("hidden") :
-          $('#current_schedules').removeClass("hidden"); 
+        }
 
     }
 

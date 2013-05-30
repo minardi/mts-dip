@@ -41,6 +41,12 @@
 			                                              data: attr["day"],
 			                                              type: "cw-doc" });
 			},
+
+			refresh: function() {
+				this.remove();
+				console.log(this);
+
+			},
 				
 			render: function(model) {
 
