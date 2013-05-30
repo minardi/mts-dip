@@ -54,7 +54,7 @@
 
         render:function() {
 
-            this.$el.html("");
+            this.$el.html('<h4 class="muted">My tickets</h4>');
             this.addStickers();
             return this;
 
