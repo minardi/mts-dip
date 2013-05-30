@@ -77,32 +77,28 @@
       $('#tab1').addClass("hidden");
       $('#tab2').removeClass("hidden");
 
-      this.tabNavigator('tab2');
+      this.tabNavigator('tab2'); 
 
- 
+      if (app.userEx.getRole() === "doctor") {
 
         if (mts.weekdays instanceof CurrentSchedulesView) {
-          
-        }
-
-        if (app.userEx.getRole() === "doctor") {
-
-          mts.weekdays = (mts.weekdays instanceof CurrentSchedulesView) ?
-            mts.weekdays : 
-            new CurrentSchedulesView({el:$("#current_schedules")});
-
-          $('#week_user_tickets').addClass("hidden");
-          $('#current_schedules').removeClass("hidden");
-
+          mts.weekdays.refresh();  
         } else {
-
-          mts.weekdays = (mts.weekdays instanceof WeekDaysView) ?
-            mts.weekdays : 
-            new WeekDaysView({el : $('#week_user_tickets')});
-
-          $('#week_user_tickets').removeClass("hidden");
-          $('#current_schedules').addClass("hidden");
+          mts.weekdays = new CurrentSchedulesView({el:$("#current_schedules")});
         }
+
+        $('#week_user_tickets').addClass("hidden");
+        $('#current_schedules').removeClass("hidden");
+
+      } else {
+        //add same refresh as doctor does) 
+        mts.weekdays = (mts.weekdays instanceof WeekDaysView) ?
+          mts.weekdays : 
+          new WeekDaysView({el : $('#week_user_tickets')});
+
+        $('#week_user_tickets').removeClass("hidden");
+        $('#current_schedules').addClass("hidden");
+      }
 
     }
 

@@ -6,15 +6,18 @@
 						
 			initialize: function() {
 
-				var doctor_id,
-					mySchedule;
+				var doctor_id = app.userEx.getDoctorId();
 
-					doctor_id = app.userEx.getDoctorId();
-					mySchedule = new app.WeeklyModel();
+				this.fetchSchedule(doctor_id);				
+			},
 
-					mySchedule.getCurrent(doctor_id);
-					mySchedule.fetch();
-					mySchedule.on("sync", this.render, this);
+			fetchSchedule: function(doctor_id) {
+
+				var mySchedule = new app.WeeklyModel();
+
+				mySchedule.getCurrent(doctor_id);
+				mySchedule.fetch();
+				mySchedule.on("sync", this.render, this);
 			},
 
 			addSchedule: function(attr) {
@@ -43,9 +46,9 @@
 			},
 
 			refresh: function() {
-				this.remove();
-				console.log(this);
-
+				//this.remove();
+				this.fetchSchedule(app.userEx.getDoctorId());	
+				console.log("refresh!");
 			},
 				
 			render: function(model) {
