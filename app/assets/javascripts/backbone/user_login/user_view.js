@@ -6,7 +6,7 @@
         el: '#login_block',
 
         initialize: function() {
-            
+    
             this.user = new app.UserModel();
             this.render();
 
@@ -19,12 +19,19 @@
         inrole_template: JST["backbone/user_login/user_template"],
 
         events: {
-            
+
+            "keydown"                 : "checkEnter", 
             "click #btn_login"        : "userLogin",
             "click #close"            : "hideError",
             "click #home"             : "routHome",
             "click #private_schedule" : "routPrivateSchedule",
             "click #exit"             : "userLogout"
+        },
+
+        checkEnter: function(e) {
+            if(e.keyCode === 13) {
+                this.userLogin();
+            }
         },
 
         userLogin: function() {
