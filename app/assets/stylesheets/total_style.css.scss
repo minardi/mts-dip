@@ -1,11 +1,20 @@
 #under-head {
 	margin-top: 2%;
 }
-header {
-	width: 600px;
-	height: 155px;
-	background:url(/images/headpicc.png) no-repeat;
-	
+
+.header {
+    overflow:hidden;
+    margin:0;
+}
+
+.header .logo{
+	width: 394px;
+	height: 152px;
+    float:left;    
+}
+
+.header .header-nav{
+    float:right;
 }
 
 #DocTable {
@@ -16,16 +25,31 @@ header {
 	margin: 30px 0 20px 0;
 	
 }
-#weekly-table {
+.weekly-table {
    padding: 10px 20px 10px;
 }
+.weekly-table .weekly-table-head{
 
-#weekly-table .weekly-table-day{
+}    
+.weekly-table .weekly-table-day{
     text-align:center;
+    background-color:#55cac5;
 }
 
-#weekly-table .weekly-table-day .day-name{
+.weekly-table .weekly-table-day:hover{
+    background-color:#5ce0da;
+}
+
+.weekly-table .weekly-table-day .day-name{
     text-transform: capitalize;
+}
+
+.weekly-table .schedule-name{
+    background-color:#55cac5;
+}
+
+.weekly-table .schedule-name:hover{
+    background-color:#55cac5;
 }
 
 .drop_menu_block {
