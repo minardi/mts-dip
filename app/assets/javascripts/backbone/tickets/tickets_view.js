@@ -33,7 +33,9 @@
     },
 
     handlerTickets: function(attrs) {
+       
        this.type_ticket = attrs["type"];
+
 
        if( this.Tickets.is_there(attrs) === true) {
           this.addAllTickets();    
@@ -83,7 +85,6 @@
       if (this.Tickets.is_set_event) {
        view.setEventsWithRight(); 
       
-       console.log(this.Tickets.is_set_event)
      }
       
     },

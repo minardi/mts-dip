@@ -24,7 +24,10 @@
       },
 
       fetchByAttr: function(attrs) {
+         
+         delete attrs["type"];
 
+         console.log("fetch", attrs)
          this.fetch({remove : false, update : true, data : attrs});  
   
      },
