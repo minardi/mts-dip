@@ -43,7 +43,7 @@
             mts.ticketsView = mts.ticketsView || 
                                    new app.TicketsView();    
              
-            mts.weekdays = null;
+         //   mts.weekdays = null;
 
         },
        
@@ -97,8 +97,8 @@
             
         this.createUser();
             
-        if (app.userEx.getRole() === "doctor") {
-
+        if (app.userEx.getRole() == "doctor") {
+             console.log(mts.weekdays);
             if (mts.weekdays instanceof CurrentSchedulesView) {
                   mts.weekdays.refresh();  
                 } else {
@@ -108,11 +108,12 @@
                 $('#week_user_tickets').addClass("hidden");
                 $('#current_schedules').removeClass("hidden");
 
-        } else {
+        } else if ((app.userEx.getRole() == "patient")) {
             //add same refresh as doctor does) 
-            mts.weekdays = (mts.weekdays instanceof WeekDaysView) ?
-              mts.weekdays : 
-              new WeekDaysView({el : $('#week_user_tickets')});
+          
+            if (mts.weekdays instanceof WeekDaysView) mts.weekdays.remove();
+
+              mts.weekdays = new WeekDaysView({el : $('#week_user_tickets')});
     
             $('#week_user_tickets').removeClass("hidden");
             $('#current_schedules').addClass("hidden");

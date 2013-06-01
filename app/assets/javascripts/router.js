@@ -4,7 +4,7 @@
 
     routes: {
       ''                    : 'index',
-      'home'                : 'showHome',
+      'home'                : 'index',
       'my-private-schedule' : 'showPrivateSchedule'
     },
     

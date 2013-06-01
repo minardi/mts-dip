@@ -21,9 +21,8 @@
                           type: "cw-user"         
                         };
   
-
+          console.log("timeline_render", tickets_hash);
           Backbone.Mediator.pub("timeline_render", tickets_hash); 
-          console.log(tickets_hash);
     },                           
     
     render: function(attr) {

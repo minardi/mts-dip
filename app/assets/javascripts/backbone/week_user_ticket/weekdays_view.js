@@ -9,7 +9,7 @@
       this.$el.append(this.template);
       this.setElement(this.$el.children("table"));
     
-      this.addWeekRows(); 
+      this.addWeekRows();
     },
  
     addWeekRows: function() {
@@ -31,7 +31,7 @@
                                            user_id: app.userEx.getId()
                                 });
         
-         
+        
        
         view = new WeekDayView({model:model});
 

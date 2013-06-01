@@ -22,25 +22,28 @@
     }, 
 
     unsetEventsWithRight: function() {
-      this.undelegateEvents();
+      this.model.type = "sl-doc";
+      this.events = {};
+      this.delegateEvents();
     },
 
-    setEventsWithRight: function() {
-      
-      
+    setEventsWithRight: function() {    
       
        if (this.model.type == "cw-doc") {
           this.events = { 
                          "click" : "changeStatusVisit", 
                          "contextmenu" : "changeStatusMis"
                        } 
-         } else {
+         } else if ( 
+                      (this.model.get("status") == "default") &&
+                      (this.model.get("user_id") == userEx.getId())
+                   )    
 
-          this.events = { 
-                         "dblclick" : "ticketRemove"                         
-                        }
-          console.log("navesil sob");              
-        } 
+         {
+             this.events = { 
+                          "dblclick" : "ticketRemove"                         
+                         }              
+         } 
         
         this.delegateEvents();
     },
