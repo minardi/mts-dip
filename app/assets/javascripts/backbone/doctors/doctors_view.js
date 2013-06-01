@@ -68,10 +68,12 @@
    
     ElShow: function() {
       this.$el.removeClass("hidden");
+      $(".doc_list_h").removeClass("hidden"); 
     },
 
     ElHide: function() {
        this.$el.addClass("hidden");
+       $(".doc_list_h").addClass("hidden");
     },
 
     render: function() {     

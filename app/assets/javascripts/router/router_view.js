@@ -1,32 +1,139 @@
-(function(app) {
+(function(app, mts) {
     
-    app.RoutView = Backbone.View.extend({
+    app.RouterView = Backbone.View.extend({
         
-       initalize : function (){
+        initialize : function (){
         
-       this.$el = $(body); 
+        },
         
+        tab2Template : JST["router/tab2_template"],
         
-       },
+        tab1Template : JST["router/tab1_template"],
+        
+        createUser : function() {
+            
+            mts.user = mts.user || new app.UserView({el: $("#login_block")});
+            
+            app.UserEx.prototype = mts.user;
+            app.userEx = new app.UserEx();
+                
+        },
+               
+        handlerIndex : function(){
+
+            this.renderIndex();
+            
+            this.createUser();
+            
+            mts.specializationList = mts.specializationList || 
+                                        new app.SpecsView({el:$("#specializations")});
+                       
+            mts.doctorsView = mts.doctorsView ||
+                                        new app.DoctorsView({el:$("#doctors")});
+            
+            mts.weekly = mts.weekly ||
+                            new app.WeeklyCollectionView({el : $('#weekly-table')});
+            
+            mts.userStatus = mts.userStatus || 
+                                 new app.UserStatusView();
+            
+            mts.dayTimelines = mts.dayTimelines ||   
+                                      new app.DailySchedulesView({el:$("#daily_schedules")});
+            
+            mts.ticketsView = mts.ticketsView || 
+                                   new app.TicketsView();    
+             
+            mts.weekdays = null;
+
+        },
        
-       
-       handlerIndex (){
+        renderIndex : function(){
+            
+            this.$el.children('.action-block').addClass('hidden');
         
-         = new 
-         = new
-        renderIndex();
+            if(this.$el.children('#tab1').length === 0){
+                this.$el.append(this.tab1Template());
+            } else {
+                this.$el.children('#tab1').removeClass('hidden');
+            }
+        },
         
-       },
-       
-       renderIndex (){
+        handlerShowHome : function(){
+            
+            this.renderShowHome();
+            
+            this.createUser();
+            
+            mts.specializationList = mts.specializationList || 
+                                            new app.SpecsView({el:$("#specializations")});
+                   
+            mts.doctorsView = mts.doctorsView ||
+                                   new app.DoctorsView({el:$("#doctors")});
+            
+            mts.weekly = mts.weekly ||
+                        new app.WeeklyCollectionView({el : $('#weekly-table')});
+            
+            mts.dayTimelines = mts.dayTimelines ||   
+                                      new app.DailySchedulesView({el:$("#daily_schedules")});
+            mts.nextTickets = mts.nextTickets || 
+                                   new app.NextTicketsView({el: $("#next-tickets")});       
+    
+        },
         
+        renderShowHome : function() {
+            
+            this.$el.children('.action-block').addClass('hidden');
         
+            if(this.$el.children('#tab1').length === 0){
+                this.$el.append(this.tab1Template());
+            } else {
+                this.$el.children('#tab1').removeClass('hidden');
+            }
+        },
         
-       },
-       
+        handlerShowPrivateSchedule : function() {
         
+        this.renderShowPrivateSchedule();
+            
+        this.createUser();
+            
+        if (app.userEx.getRole() === "doctor") {
+
+            if (mts.weekdays instanceof CurrentSchedulesView) {
+                  mts.weekdays.refresh();  
+                } else {
+                  mts.weekdays = new CurrentSchedulesView({el:$("#current_schedules")});
+                }
+    
+                $('#week_user_tickets').addClass("hidden");
+                $('#current_schedules').removeClass("hidden");
+
+        } else {
+            //add same refresh as doctor does) 
+            mts.weekdays = (mts.weekdays instanceof WeekDaysView) ?
+              mts.weekdays : 
+              new WeekDaysView({el : $('#week_user_tickets')});
+    
+            $('#week_user_tickets').removeClass("hidden");
+            $('#current_schedules').addClass("hidden");
+          }
+            
+        },
+        
+        renderShowPrivateSchedule : function() {
+            
+            this.$el.children('.action-block').addClass('hidden');
+        
+            if(this.$el.children('#tab2').length === 0){
+                this.$el.append(this.tab2Template());
+            } else {
+                this.$el.children('#tab2').removeClass('hidden');
+            }
+
+
+        },
         
         
     });
     
-}(window)
+}(window, window.mts))

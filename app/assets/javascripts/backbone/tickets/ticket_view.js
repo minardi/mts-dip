@@ -27,9 +27,9 @@
 
     setEventsWithRight: function() {
       
-
       
-       if (this.model.type === "cw-doc") {
+      
+       if (this.model.type == "cw-doc") {
           this.events = { 
                          "click" : "changeStatusVisit", 
                          "contextmenu" : "changeStatusMis"
@@ -37,8 +37,9 @@
          } else {
 
           this.events = { 
-                         "dblclick" : "ticketRemove"
+                         "dblclick" : "ticketRemove"                         
                         }
+          console.log("navesil sob");              
         } 
         
         this.delegateEvents();
@@ -90,7 +91,6 @@
     
     ticketRemove: function() {
 
-      console.log("remove",self); 
       this.model.destroy();
       
       this.removeClass();

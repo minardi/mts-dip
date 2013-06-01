@@ -1,12 +1,9 @@
-(function(app, mts) {
+var UserEx = (function(app, mts) {
 
     function getRole() {
-        var role = this.user.get('role')['key'];
-        if (!role) {
-            console.warn('something with hash role in userEx');
-        }
-        
-        return role;
+        var role = this.user.get('role');
+
+        return ('key' in role) ? role['key'] : false;
     }
      
     function getDoctorId() {
@@ -15,8 +12,6 @@
         
         if (this.user.get('role')['key'] === 'doctor') {        
             doctor_id = this.user.get('role')['doctor_id'];
-        } else {
-            console.warn('not a doctor');
         }
         
         return doctor_id;
@@ -27,21 +22,30 @@
        
         if (this.user.get('role')['key'] !== 'guest') {
             id = this.user.get('id');
-        } else {
-            console.warn('user is not enrolled');
         }
        
         return id;
     }
     
-    function UserEx () {
+    return function () {
+        
+        var instance = this;
+        
+        app.UserEx = function() {
+            console.log("I've been already created!");
+            return instance;
+        }
+        
+        app.UserEx.prototype = this; 
+        instance = new app.UserEx; 
+        instance.constructor = app.UserEx; 
         
         this.getRole = getRole;
         this.getId = getId;
         this.getDoctorId = getDoctorId;
         
-    }
-    
-    app.UserEx = UserEx;
-         
-}(window, window.mts))
+        instance = this;
+        
+   }
+        
+}(window, window.mts));

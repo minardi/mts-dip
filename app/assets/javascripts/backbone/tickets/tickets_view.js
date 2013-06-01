@@ -16,7 +16,7 @@
       Backbone.Mediator.sub('ticket_added', this.createTicket, this);      
       Backbone.Mediator.sub('timeline_render', this.handlerTickets, this);
 
-      Backbone.Mediator.sub('user_login', this.getUserSchedule, this);
+   //   Backbone.Mediator.sub('user_login', this.getUserSchedule, this);
 
       Backbone.Mediator.sub('user_login', this.enableEvents, this);
 
@@ -36,7 +36,7 @@
        
        this.type_ticket = attrs["type"];
 
-
+      
        if( this.Tickets.is_there(attrs) === true) {
           this.addAllTickets();    
        } else {
