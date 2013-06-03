@@ -198,3 +198,8 @@ float:none;
 }
 
 
+
+#specializations li:hover, .doctors li:hover, .timelines .worktime, .weekly-table .schedule-item {
+  cursor: pointer;
+}
+
