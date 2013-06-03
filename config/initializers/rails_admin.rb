@@ -31,14 +31,14 @@ RailsAdmin.config do |config|
 
   #  ==> Included models
   # Add all excluded models here:
-  # config.excluded_models = [Doctor, Specialization, Ticket, User, UserStatus, WeeklySchedule]
+  config.excluded_models = [UserStatus]
 
   # Add models here if you want to go 'whitelist mode':
   # config.included_models = [Doctor, Specialization, Ticket, User, UserStatus, WeeklySchedule]
 
   # Application wide tried label methods for models' instances
   # config.label_methods << :description # Default is [:name, :title]
-
+   
   #  ==> Global models configuration
   # config.models do
   #   # Configuration here will affect all included models in all scopes, handle with care!
