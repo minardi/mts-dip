@@ -127,8 +127,6 @@
       time_s =  this.addNil(date.getHours())+":"+
                 this.addNil(date.getMinutes());
 
-     
-     // console.log(date_s + time_s, "  ", this.model.get("data") + this.model.get("time"));
       return (date_s + time_s) > (this.model.get("data") + this.model.get("time")) ? true : false; 
       
 
@@ -141,10 +139,8 @@
     },
 
     render: function() {
-
       this.removeClass();
       this.addClass();
-
     }
 
   });

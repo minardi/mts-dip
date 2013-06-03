@@ -7,7 +7,7 @@
     
   
     initialize: function() {
-       this.addTickets();            
+                  
     },
 
     addTickets: function() {
@@ -20,8 +20,7 @@
                                 this.model.get("year"),
                           type: "cw-user"         
                         };
-  
-          console.log("timeline_render", tickets_hash);
+              
           Backbone.Mediator.pub("timeline_render", tickets_hash); 
     },                           
     
