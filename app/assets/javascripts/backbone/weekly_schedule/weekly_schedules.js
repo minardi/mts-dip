@@ -33,19 +33,6 @@
            
         },
         
-        shiftUrl : function(url, data) {
-            
-            switch (url){
-                case 'search' :
-                    this.url = '/weekly_schedules/' + data['id'] + '/doctor.json';
-                    break;
-                
-                default : 
-                    this.url = '/weekly_schedules';  
-            }
-     
-        },
-        
         haveModel : function (id){
 
             if(id.constructor.name === 'Number'){ 

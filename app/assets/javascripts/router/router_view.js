@@ -15,7 +15,7 @@
             mts.user_view = mts.user_view || new app.UserView({el: $("#login_block")});
             
             app.UserEx.prototype = mts.user_view;
-            mts.userEx = new app.UserEx();
+            app.userEx = new app.UserEx();
                 
         },
                
