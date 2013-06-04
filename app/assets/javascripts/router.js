@@ -32,6 +32,8 @@
       $('#tab1').addClass('hidden');
       $('#tab2').addClass('hidden');
       $('#tab3').removeClass('hidden');
+
+      mts.administration = new app.AdminNavigationView({el:$("#admin_navigation")});
     }
 
   });

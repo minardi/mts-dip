@@ -194,16 +194,16 @@
  
  
  /* fix floating bug in spec list */
-#specializations .dropdown-menu{
+#specializations .dropdown-menu, #admin_navigation .dropdown-menu{
 float:none;
 } 
  
- #specializations li {
+ #specializations li, #admin_navigation li {
  list-style: none;
    padding: 5px;
  }
 
-#specializations li:hover, .active:hover {
+#specializations li:hover, #admin_navigation li:hover, .active:hover {
    background-color: #5ce0da; 
 }
 
@@ -213,7 +213,7 @@ float:none;
 
 
 
-#specializations li:hover, .doctors li:hover, .timelines .worktime, .weekly-table .schedule-item {
+#specializations li:hover, #admin_navigation li:hover, .doctors li:hover, .timelines .worktime, .weekly-table .schedule-item {
   cursor: pointer;
 }
 
