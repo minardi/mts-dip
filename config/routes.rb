@@ -31,8 +31,6 @@ MTSDip::Application.routes.draw do
     
   get 'weekly_schedules/:id' => 'weekly_schedules#show'
   
-  get 'weekly_schedules/:id/doctor' => 'weekly_schedules#searchbydoctor'
-  
   match 'weekly_schedules/:id/getduration' => 'weekly_schedules#getduration'
 
   match 'tickets/:user_id/doctor_name' => 'tickets#doctor_name'

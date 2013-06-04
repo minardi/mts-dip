@@ -25,32 +25,46 @@
 	margin: 30px 0 20px 0;
 	
 }
+
 .weekly-table {
    padding: 10px 20px 10px;
-}
-.weekly-table .weekly-table-head{
+   
+   .weekly-table-day{
+        text-align:center;
+        font-weight:bolder;
+    }
+    
+    .weekly-table-head{
 
-}    
-.weekly-table .weekly-table-day{
-    text-align:center;
-    background-color:#55cac5;
-}
-
-.weekly-table .weekly-table-day:hover{
-    background-color:#5ce0da;
-}
-
-.weekly-table .weekly-table-day .day-name{
-    text-transform: capitalize;
-}
-
-.weekly-table .schedule-name{
-    background-color:#55cac5;
-}
-
-.weekly-table .schedule-name:hover{
-    background-color:#55cac5;
-}
+    }
+    
+    .weekly-table-day:hover{
+        cursor:pointer;
+    }
+    
+    .weekly-table-day .day-name{
+        text-transform: capitalize;
+    }
+    
+    .schedule-name{
+        text-align:center;
+        vertical-align:middle;
+        font-weight:bolder;
+        font-style:oblique;
+    }
+    
+    .schedule-name:hover{
+        cursor:default;
+    }
+    
+    .schedule-item{
+    
+    }
+    
+    .schedule-item.active{
+      
+    }
+} 
 
 .drop_menu_block {
 	display: block; 

@@ -56,7 +56,7 @@
             
             model.on('sync', this.addModel, this);
             model.on('error', function(model, request){
-                                        this.throwError(request.statusText, 'error');
+                                        this.throwError('server is unavailable please try again later', 'error');
                                     }, this
             );
                                 
