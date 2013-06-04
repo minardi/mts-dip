@@ -1,12 +1,21 @@
+<!-- helpers --!>
+   <%
+      var pre_nil = function(a) {
+         if (a < 10) return "0"+a;
+         return a;
+      }
+   %>
+
+
     <td><%= day %>, <%= date %>-<%= month %>-<%= year %></td>
 
     <%for(var i=0;i<9;i++) {%>
        
        <td class = "time_row"> 
-	     <span id = "cw-user<%=user_id%>_<%=date%>-<%=month%>-<%=year%>_t<%=8+i%>00"> </span>
-		 <span id = "cw-user<%=user_id%>_<%=date%>-<%=month%>-<%=year%>_t<%=8+i%>15"> </span>
-		 <span id = "cw-user<%=user_id%>_<%=date%>-<%=month%>-<%=year%>_t<%=8+i%>30"> </span>
-		 <span id = "cw-user<%=user_id%>_<%=date%>-<%=month%>-<%=year%>_t<%=8+i%>45"> </span>
+	     <span id = "cw-user<%=user_id%>_<%=date%>-<%=month%>-<%=year%>_t<%=pre_nil(8+i)%>00"> </span>
+		 <span id = "cw-user<%=user_id%>_<%=date%>-<%=month%>-<%=year%>_t<%=pre_nil(8+i)%>15"> </span>
+		 <span id = "cw-user<%=user_id%>_<%=date%>-<%=month%>-<%=year%>_t<%=pre_nil(8+i)%>30"> </span>
+		 <span id = "cw-user<%=user_id%>_<%=date%>-<%=month%>-<%=year%>_t<%=pre_nil(8+i)%>45"> </span>
 	   </td>
 
     <%}%>

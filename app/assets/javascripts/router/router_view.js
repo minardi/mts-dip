@@ -98,27 +98,39 @@
         this.createUser();
             
         if (app.userEx.getRole() == "doctor") {
-             console.log(mts.weekdays);
-            if (mts.weekdays instanceof CurrentSchedulesView) {
-                  mts.weekdays.refresh();  
+
+            if (mts.weekDaysDoctor instanceof CurrentSchedulesView) {
+                  mts.weekDaysDoctor.refresh();  
                 } else {
-                  mts.weekdays = new CurrentSchedulesView({el:$("#current_schedules")});
+                  mts.weekDaysDoctor = new CurrentSchedulesView({el:$("#current_schedules")});
                 }
     
-                $('#week_user_tickets').addClass("hidden");
                 $('#current_schedules').removeClass("hidden");
+                $('#week_user_tickets').removeClass("hidden");
 
-        } else if ((app.userEx.getRole() == "patient")) {
-            //add same refresh as doctor does) 
-          
-            if (mts.weekdays instanceof WeekDaysView) mts.weekdays.remove();
+        } 
 
-              mts.weekdays = new WeekDaysView({el : $('#week_user_tickets')});
-    
+
+        if (app.userEx.getRole() == "patient") {
+            $('#current_schedules').addClass("hidden");            
             $('#week_user_tickets').removeClass("hidden");
-            $('#current_schedules').addClass("hidden");
           }
-            
+
+        
+        if (app.userEx.getRole() != "guest") {
+
+          if (mts.weekDaysUser instanceof WeekDaysView) {              
+              mts.weekDaysUser.refresh()              
+             
+           } else {                
+               mts.weekDaysUser = new WeekDaysView({el : $('#week_user_tickets')});     
+           }   
+
+        } else if (app.userEx.getRole() == "guest") {
+            $('#current_schedules').addClass("hidden");            
+            $('#week_user_tickets').addClass("hidden");
+        }
+
         },
         
         renderShowPrivateSchedule : function() {

@@ -15,10 +15,10 @@
   
       Backbone.Mediator.sub('ticket_added', this.createTicket, this);      
       Backbone.Mediator.sub('timeline_render', this.handlerTickets, this);
-
+         
    
       
-   //   Backbone.Mediator.sub('user_login', this.getUserSchedule, this);
+      Backbone.Mediator.sub('user_login', this.getUserSchedule, this);
 
       Backbone.Mediator.sub('user_login', this.enableEvents, this);
 
@@ -35,14 +35,16 @@
     },
 
     handlerTickets: function(attrs) {
-       
+
+
        this.type_ticket = attrs["type"];
       
        if( this.Tickets.is_there(attrs) === true) {
-          this.addAllTickets();    
+          this.addAllTickets();  
+ 
        } else {
           this.Tickets.fetchByAttr(attrs);
-       }
+       };
 
     },
 
@@ -68,10 +70,13 @@
     
     
     addOneTicket: function(ticket) {
+      
       var view,
           hash = ticket.attributes,
           selector_id;  
       
+      
+
       hash["type"] = this.type_ticket;            
       selector_id = this.createSelector(hash);
 
