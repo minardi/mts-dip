@@ -8,11 +8,7 @@
         
         days : {},
         
-        initialize : function () {
-            
-            this.on('add', this.updateModel, this);
-            
-            
+        initialize : function () {            
 
         },
         
@@ -28,25 +24,13 @@
         addHandler : function(data) {
             
             var model = this.haveModel(data.id);
-            this.schedule_data = data;
             
             if(model) {
                 model.set({selected : true}); 
             } else {
-                this.getByDoctor(data.id);
+                this.getModel(data);
             }
            
-        },
-        
-        updateModel : function (model){
-            model.set(
-                        {
-                            selected : true,
-                            doctor_name : this.schedule_data.name,
-                            doctor_duration : this.schedule_data.duration,
-                        }
-                    );
-            model.setDate(this.days);
         },
         
         shiftUrl : function(url, data) {
@@ -71,11 +55,51 @@
             }
         },
         
-        getByDoctor : function(id) {
+        getModel : function(data) {
             
-            this.shiftUrl('search', {id : id});
-            this.fetch({remove : false, update : true});
-            this.shiftUrl();
+            var model =  new this.model({
+                                            id : data.id,
+                                            doctor_name : data.name,
+                                            doctor_duration : data.duration,
+                                            selected : false 
+                                        }
+            );
+            
+            this.add(model);
+            
+            model.on('sync', this.addModel, this);
+            model.on('error', function(model, request){
+                                        this.throwError(request.statusText, 'error');
+                                    }, this
+            );
+                                
+            model.fetch();
+
+        },
+        
+        addModel : function(model) {
+            model.off('sync');
+            model.off('error');
+            
+            model.setDate(this.days);
+            
+            model.set({
+                selected : true
+            })
+        },
+        
+        throwError : function (text, type){
+            type = type || 'error';
+            
+            Backbone.Mediator.pub(
+                type,    
+                {
+                    el : this.$el, 
+                    message : (text) ? text : 'internal error '
+                }
+            );
+            
+            console.warn(text, type);
             
         }
         

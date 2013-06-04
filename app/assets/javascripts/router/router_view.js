@@ -12,10 +12,10 @@
         
         createUser : function() {
             
-            mts.user = mts.user || new app.UserView({el: $("#login_block")});
+            mts.user_view = mts.user_view || new app.UserView({el: $("#login_block")});
             
-            app.UserEx.prototype = mts.user;
-            app.userEx = new app.UserEx();
+            app.UserEx.prototype = mts.user_view;
+            mts.userEx = new app.UserEx();
                 
         },
                

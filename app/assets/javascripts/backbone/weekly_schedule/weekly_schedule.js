@@ -9,6 +9,8 @@ app.WeeklyModel = Backbone.Model.extend({
             doctor_duration : 0 ,
         },
         
+        urlRoot : '/weekly_schedules',
+        
         selected : false,
         
         initialize : function() {
@@ -56,11 +58,6 @@ app.WeeklyModel = Backbone.Model.extend({
             
             this.set({schedule : schedule});
             
-        },
-
-        getCurrent : function(doctor_id) {
-
-            this.urlRoot = "/weekly_schedules/" + doctor_id +"/getduration.json";
         }
         
  });
