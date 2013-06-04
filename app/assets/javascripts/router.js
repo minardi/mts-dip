@@ -5,7 +5,8 @@
     routes: {
       ''                    : 'index',
       'home'                : 'index',
-      'my-private-schedule' : 'showPrivateSchedule'
+      'my-private-schedule' : 'showPrivateSchedule',
+      'admin'               : 'showAdminPanel'
     },
     
     initialize : function() {
@@ -25,6 +26,12 @@
     showPrivateSchedule: function() {
         
         this.view.handlerShowPrivateSchedule();
+    },
+
+    showAdminPanel: function() {
+      $('#tab1').addClass('hidden');
+      $('#tab2').addClass('hidden');
+      $('#tab3').removeClass('hidden');
     }
 
   });
