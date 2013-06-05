@@ -21,9 +21,12 @@ MTSDip::Application.routes.draw do
 
 
   get "main/home"
+
+  match "home/:arg" => "main#home"  
+
   root :to => 'main#home'
 
-  match '/doctors/:specialization_id', to: "doctors#index"
+  match '/doctors/:specialization_id' => "doctors#index"
   resources :doctors
   
   get 'weekly_schedules' => 'weekly_schedules#index'
