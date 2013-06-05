@@ -29,13 +29,18 @@
 .weekly-table {
    padding: 10px 20px 10px;
    
-   .weekly-table-day{
+    .weekly-top-info{
+        text-align:center;
+        vertical-align:middle;
+    }
+    .weekly-table-day{
         text-align:center;
         font-weight:bolder;
+        vertical-align:middle;
     }
     
     .weekly-table-head{
-
+        text-align:center;
     }
     
     .weekly-table-day:hover{

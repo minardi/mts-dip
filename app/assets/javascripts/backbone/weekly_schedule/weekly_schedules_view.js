@@ -22,8 +22,13 @@
             Backbone.Mediator.sub('doctor_unselected', this.collection.removeSchedule, this.collection);
             
             this.collection.on('change:selected', this.renderSchedule, this);
+            this.collection.on('select:schedule_day', this.isFullOfCell, this)
             
             this.render();
+        },
+        
+        isFullOfCell : function(day, selected) {
+             
         },
         
         renderSchedule : function (model, selected){
