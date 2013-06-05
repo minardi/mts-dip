@@ -150,8 +150,6 @@
 
 }
 
-
-/*do not delete this!*/
 .timeline {
 	height: 40px;
 	float: left;
@@ -217,3 +215,20 @@ float:none;
   cursor: pointer;
 }
 
+#admin_dashboard table thead {
+  font-weight: bold;
+}
+
+#admin_panel {
+  padding-top: 10px;
+}
+
+.admin_actions {
+  text-align: right;
+  width: 60px;
+}
+
+.admin_actions img {
+  width: 18px;
+  height: 18px;
+}
