@@ -10,3 +10,8 @@
 //= require ./user_status/config
 
 //= require ./week_user_ticket/config
+
+//= require ./history_home/config
+
+//= require ./admin/config
+

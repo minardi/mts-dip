@@ -1,5 +1,8 @@
 MTSDip::Application.routes.draw do
 
+  # devise_for :admins
+
+
   resources :user_statuses
 
 
@@ -18,16 +21,17 @@ MTSDip::Application.routes.draw do
 
 
   get "main/home"
+
+  match "home/:arg" => "main#home"  
+
   root :to => 'main#home'
 
-  match '/doctors/:specialization_id', to: "doctors#index"
+  match '/doctors/:specialization_id' => "doctors#index"
   resources :doctors
   
   get 'weekly_schedules' => 'weekly_schedules#index'
     
   get 'weekly_schedules/:id' => 'weekly_schedules#show'
-  
-  get 'weekly_schedules/:id/doctor' => 'weekly_schedules#searchbydoctor'
   
   match 'weekly_schedules/:id/getduration' => 'weekly_schedules#getduration'
 

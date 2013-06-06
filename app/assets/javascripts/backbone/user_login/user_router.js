@@ -4,7 +4,7 @@
 
     routes: {
       ''                    : 'index',
-      'home'                : 'showHome',
+      'home'                : 'index',
       'my-private-schedule' : 'showPrivateSchedule'
     },
 
@@ -70,11 +70,12 @@
       // app.mts.currentTimelines != null ?  app.mts.currentTimelines :
       //                                     app.mts.currentTimelines= new CurrentSchedulesView({el:$("#current_schedules")});
 
-      if (app.mts.weekdays == null) {
+      //if (app.mts.weekdays == null) {
         app.mts.weekdays = (app.userEx.getRole() == "doctor") ? 
           new CurrentSchedulesView({el:$("#current_schedules")}) :
           new WeekDaysView({el : $('#week_user_tickets')});
-      }
+          console.log("hi");
+     // }
     }
 
   });

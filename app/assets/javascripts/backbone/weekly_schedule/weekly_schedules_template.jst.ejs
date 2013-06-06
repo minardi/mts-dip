@@ -1,13 +1,13 @@
 <table class="table table-bordered table-condensed"> 
     <caption ><h4 class="muted">Work time:</h4></caption>
-	<thead>
+	<thead class="weekly-table-head">
 		<tr>
             <td>
                 Days / Doctor name  
             </td>
             <%for(day in schedule) {%>
     			
-                <td class="weekly-table-day" id="weekly-<%= day %>">
+                <td class="weekly-table-day text-info" id="weekly-<%= day %>">
                     <p class="day-name">
                          <%= day %>
                     </p>

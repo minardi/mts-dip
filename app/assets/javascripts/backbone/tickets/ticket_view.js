@@ -22,24 +22,29 @@
     }, 
 
     unsetEventsWithRight: function() {
-      this.undelegateEvents();
+      this.model.type = "sl-doc";
+      this.events = {};
+      this.delegateEvents();
     },
 
-    setEventsWithRight: function() {
-      
-
-      
-       if (this.model.type === "cw-doc") {
+    setEventsWithRight: function() {    
+       
+       if ((this.model.type == "cw-doc") && (this.isDateLarge())) {
+         
           this.events = { 
                          "click" : "changeStatusVisit", 
                          "contextmenu" : "changeStatusMis"
                        } 
-         } else {
+         } else if ( 
+                      (this.model.get("status") == "default") &&
+                      (this.model.get("user_id") == userEx.getId())
+                   )    
 
-          this.events = { 
-                         "dblclick" : "ticketRemove"
-                        }
-        } 
+         {
+             this.events = { 
+                          "dblclick" : "ticketRemove"                         
+                         }              
+         } 
         
         this.delegateEvents();
     },
@@ -90,7 +95,6 @@
     
     ticketRemove: function() {
 
-      console.log("remove",self); 
       this.model.destroy();
       
       this.removeClass();
@@ -110,12 +114,33 @@
     addClass: function() {
       this.$el.addClass(this.model.get("status")+"_ticket");   
     },
+    
+    isDateLarge: function() {
+     var date = new Date,
+         date_s,
+         time_s;
+
+      date_s = this.addNil(date.getDate())+"-"+
+               this.addNil( date.getMonth())+"-"+ 
+               date.getFullYear();
+
+      time_s =  this.addNil(date.getHours())+":"+
+                this.addNil(date.getMinutes());
+
+      return (date_s + time_s) > (this.model.get("data") + this.model.get("time")) ? true : false; 
+      
+
+    },
+
+    addNil: function(a) {
+
+     if (a < 10) return "0"+a;  
+     return a;
+    },
 
     render: function() {
-
       this.removeClass();
       this.addClass();
-
     }
 
   });

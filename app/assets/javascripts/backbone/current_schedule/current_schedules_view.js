@@ -6,15 +6,18 @@
 						
 			initialize: function() {
 
-				var doctor_id,
-					mySchedule;
+				var doctor_id = app.userEx.getDoctorId();
 
-					doctor_id = app.userEx.getDoctorId();
-					mySchedule = new app.WeeklyModel();
+				this.fetchSchedule(doctor_id);				
+			},
 
-					mySchedule.getCurrent(doctor_id);
-					mySchedule.fetch();
-					mySchedule.on("sync", this.render, this);
+			fetchSchedule: function(doctor_id) {
+
+				var mySchedule = new app.WeeklyModel();
+
+				mySchedule.getCurrent(doctor_id);
+				mySchedule.fetch();
+				mySchedule.on("sync", this.render, this);
 			},
 
 			addSchedule: function(attr) {
@@ -30,9 +33,8 @@
 													      schedule_end: schedule_end,
 													      visible: true });
 
-				current_schedule_view = new app.DailyScheduleView( {model: daily_schedule} );
+				current_schedule_view = new app.DailyScheduleView( {model: daily_schedule, ticketType: "cw-doc"} );
 				current_schedule_view.template = JST["backbone/current_schedule/current_schedule_template"];
-				current_schedule_view.ticketType = "cw-doc";
 				//VIEW REUSED! verify events on current and daily schedules
 
 				this.$el.find("tbody").append(current_schedule_view.render().el);
@@ -40,6 +42,12 @@
 				Backbone.Mediator.pub("timeline_render",{ doctor_id: app.userEx.getDoctorId(),
 			                                              data: attr["day"],
 			                                              type: "cw-doc" });
+			},
+
+			refresh: function() {
+				//this.remove();
+				this.fetchSchedule(app.userEx.getDoctorId());	
+				console.log("refresh!");
 			},
 				
 			render: function(model) {

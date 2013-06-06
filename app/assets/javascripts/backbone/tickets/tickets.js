@@ -8,11 +8,7 @@
      
       is_there: function(attrs) {
        
-        var hesh = {
-	                   doctor_id: attrs["doctor_id"],
-                     data: attrs["data"],
-                     time: attrs["time"] 
-                   },
+        delete attrs["type"]
 
         models = this.where(attrs),
         is_null = false;
@@ -24,7 +20,9 @@
       },
 
       fetchByAttr: function(attrs) {
-
+         
+         delete attrs["type"];
+         
          this.fetch({remove : false, update : true, data : attrs});  
   
      },

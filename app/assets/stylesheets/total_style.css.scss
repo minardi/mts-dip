@@ -1,11 +1,20 @@
 #under-head {
 	margin-top: 2%;
 }
-header {
-	width: 600px;
-	height: 155px;
-	background:url(/images/headpicc.png) no-repeat;
-	
+
+.header {
+    overflow:hidden;
+    margin:0;
+}
+
+.header .logo{
+	width: 394px;
+	height: 152px;
+    float:left;    
+}
+
+.header .header-nav{
+    float:right;
 }
 
 #DocTable {
@@ -16,17 +25,46 @@ header {
 	margin: 30px 0 20px 0;
 	
 }
-#weekly-table {
+
+.weekly-table {
    padding: 10px 20px 10px;
-}
+   
+   .weekly-table-day{
+        text-align:center;
+        font-weight:bolder;
+    }
+    
+    .weekly-table-head{
 
-#weekly-table .weekly-table-day{
-    text-align:center;
-}
-
-#weekly-table .weekly-table-day .day-name{
-    text-transform: capitalize;
-}
+    }
+    
+    .weekly-table-day:hover{
+        cursor:pointer;
+    }
+    
+    .weekly-table-day .day-name{
+        text-transform: capitalize;
+    }
+    
+    .schedule-name{
+        text-align:center;
+        vertical-align:middle;
+        font-weight:bolder;
+        font-style:oblique;
+    }
+    
+    .schedule-name:hover{
+        cursor:default;
+    }
+    
+    .schedule-item{
+    
+    }
+    
+    .schedule-item.active{
+      
+    }
+} 
 
 .drop_menu_block {
 	display: block; 
@@ -47,11 +85,11 @@ header {
 	width: 710px;
 }
 
-#tab2 {
-  float: none; /* Обтекание по правому краю */
+/*#tab2 {
+  float: none;  Обтекание по правому краю 
   margin-top: 20%;
   margin-left: 2%;
-}
+}*/
 
 .navbar .nav > li > p {
   float: none;
@@ -112,8 +150,6 @@ header {
 
 }
 
-
-/*do not delete this!*/
 .timeline {
 	height: 40px;
 	float: left;
@@ -156,16 +192,16 @@ header {
  
  
  /* fix floating bug in spec list */
-#specializations .dropdown-menu{
+#specializations .dropdown-menu, #admin_navigation .dropdown-menu{
 float:none;
 } 
  
- #specializations li {
+ #specializations li, #admin_navigation li {
  list-style: none;
    padding: 5px;
  }
 
-#specializations li:hover, .active:hover {
+#specializations li:hover, #admin_navigation li:hover, .active:hover {
    background-color: #5ce0da; 
 }
 
@@ -174,3 +210,25 @@ float:none;
 }
 
 
+
+#specializations li:hover, #admin_navigation li:hover, .doctors li:hover, .timelines .worktime, .weekly-table .schedule-item {
+  cursor: pointer;
+}
+
+#admin_dashboard table thead {
+  font-weight: bold;
+}
+
+#admin_panel {
+  padding-top: 10px;
+}
+
+.admin_actions {
+  text-align: right;
+  width: 60px;
+}
+
+.admin_actions img {
+  width: 18px;
+  height: 18px;
+}

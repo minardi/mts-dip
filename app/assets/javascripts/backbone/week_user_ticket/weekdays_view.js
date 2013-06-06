@@ -4,22 +4,21 @@
 
     template: JST["backbone/week_user_ticket/week_days_template"],
   
-    initialize: function() {
-      
+    initialize: function() {       
       this.$el.append(this.template);
       this.setElement(this.$el.children("table"));
-    
-      this.addWeekRows(); 
+      this.weekDays = new WeekDaysCollection();
+      this.addWeekRows();
     },
  
     addWeekRows: function() {
       var date = new Date,
           days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],  
           model,
-          view,
-          i;
-
-      for( i = 0; i < 7; i++) {
+          view;
+      
+      _.each(days,function(wd,i){
+         
         date.setDate(date.getDate()+(i-date.getDay()));
           
         
@@ -31,14 +30,30 @@
                                            user_id: app.userEx.getId()
                                 });
         
-         
+        this.weekDays.add(model); 
        
         view = new WeekDayView({model:model});
 
         this.$el.append(view.render().el);
 
-      }
+        view.addTickets();
+       
 
+      },this);
+      
+        
+
+      
+
+    },
+    
+    refresh: function() {
+      this.weekDays.reset();
+      $('#week_user_tickets').html("");
+      $('#week_user_tickets').append(this.template);
+      this.setElement($('#week_user_tickets').children("table"));
+      
+      this.addWeekRows();
     },
 
     pre_nil: function (data) {

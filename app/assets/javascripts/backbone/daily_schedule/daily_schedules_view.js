@@ -36,7 +36,7 @@
 			this.daily_schedules.add(daily_schedule);
 			this.$el.show();
 
-			daily_schedule_view = new app.DailyScheduleView( {model: daily_schedule} );
+			daily_schedule_view = new app.DailyScheduleView( {model: daily_schedule, ticketType: "sl-doc"} );
 
 			this.$el.find("#daily_schedules_content").append(daily_schedule_view.render().el);
 			

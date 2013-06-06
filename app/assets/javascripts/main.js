@@ -7,7 +7,8 @@ var mts = {
               dayTimelines : null,
               ticketsView : null,
               currentTimelines : null,
-              weekdays : null,
+              weekDaysUser : null,
+              weekDaysDoctor : null,
               nextTickets : null,
               errorProvider : null,
               router : null
