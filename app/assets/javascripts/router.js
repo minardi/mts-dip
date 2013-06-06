@@ -7,7 +7,9 @@
       'home'                : 'index',
       'home/'               : 'index',
       'home/:sel_id'        : 'selSpecFromUrl',
-      'my-private-schedule' : 'showPrivateSchedule'
+      'my-private-schedule' : 'showPrivateSchedule',
+      'admin'               : 'showAdminPanel'
+
     },
     
     initialize : function() {
@@ -29,9 +31,18 @@
         this.view.handlerShowPrivateSchedule();
     },
 
+<<<<<<< HEAD
     selSpecFromUrl: function(sel_id) {
       this.view.handlerIndex();
       mts.historyHome.selSpec(sel_id);
+=======
+    showAdminPanel: function() {
+      $('#tab1').addClass('hidden');
+      $('#tab2').addClass('hidden');
+      $('#tab3').removeClass('hidden');
+
+      mts.administration = new app.AdminNavigationView({el:$("#admin_navigation")});
+>>>>>>> de02eb6505ed735d6080c42d71096a0a5952014a
     }
 
 

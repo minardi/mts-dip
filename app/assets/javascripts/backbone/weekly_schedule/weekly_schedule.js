@@ -9,6 +9,8 @@ app.WeeklyModel = Backbone.Model.extend({
             doctor_duration : 0 ,
         },
         
+        urlRoot : '/weekly_schedules',
+        
         selected : false,
         
         initialize : function() {

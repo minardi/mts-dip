@@ -5,6 +5,12 @@ var UserEx = (function(app, mts) {
 
         return ('key' in role) ? role['key'] : false;
     }
+    
+    function isLogin() {
+        
+        return (this.user.get('role') !== 'guest') ? true : false;
+        
+    }
      
     function getDoctorId() {
         
@@ -43,6 +49,7 @@ var UserEx = (function(app, mts) {
         this.getRole = getRole;
         this.getId = getId;
         this.getDoctorId = getDoctorId;
+        this.isLogin = isLogin; 
         
         instance = this;
         

@@ -1,7 +1,6 @@
 MTSDip::Application.routes.draw do
 
-  devise_for :admins
-  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+  # devise_for :admins
 
 
   resources :user_statuses
@@ -33,8 +32,6 @@ MTSDip::Application.routes.draw do
   get 'weekly_schedules' => 'weekly_schedules#index'
     
   get 'weekly_schedules/:id' => 'weekly_schedules#show'
-  
-  get 'weekly_schedules/:id/doctor' => 'weekly_schedules#searchbydoctor'
   
   match 'weekly_schedules/:id/getduration' => 'weekly_schedules#getduration'
 

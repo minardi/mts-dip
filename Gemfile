@@ -38,7 +38,7 @@ gem 'rails-backbone', '0.9.0'
 gem 'jquery-rails'
 
 gem 'devise'
-gem 'rails_admin'
+# gem 'rails_admin'
 
 
 # To use ActiveModel has_secure_password
