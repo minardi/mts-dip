@@ -11,7 +11,6 @@
 		},
 
 		itemSelect: function() {
-
    			var current_dashboard_view = new app.AdminDashboardView({board_type:this.model.get("name").toLowerCase(),
    																	 el:$("#admin_dashboard")});
 

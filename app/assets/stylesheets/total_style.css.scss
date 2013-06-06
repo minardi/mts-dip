@@ -220,6 +220,10 @@ float:none;
   cursor: pointer;
 }
 
+#admin_dashboard {
+  position: relative;
+}
+
 #admin_dashboard table thead {
   font-weight: bold;
 }
@@ -233,7 +237,16 @@ float:none;
   width: 60px;
 }
 
-.admin_actions img {
+.admin_actions img, img.admin_item_new {
   width: 18px;
   height: 18px;
+}
+
+#admin_create {
+  position: absolute;
+  left: 160px;
+  top: -20%;
+  margin: 0;
+
+  width: 300px;
 }

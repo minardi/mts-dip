@@ -7,4 +7,5 @@
 //= require ./admin_dashboard
 //= require ./admin_dashboard_item_view
 //= require ./admin_dashboard_view
+//= require ./admin_create_view
 
