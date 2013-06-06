@@ -55,11 +55,10 @@
 		},
 
 		deleteItem: function() {
-			console.log("item delete method");
 			if (confirm("Удалить элемент?") === true) {
-				//destroy!
 				this.$el.children().css("background-color", "#f08080");
 				this.$el.hide(600);
+				this.model.destroy();
 			}  
 		},
 

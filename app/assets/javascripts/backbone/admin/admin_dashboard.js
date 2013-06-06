@@ -5,7 +5,7 @@
   		model: app.AdminDashItem,
 
   		setUrl: function(type) {
-  			this.url = "/" + type + ".json";
+  			this.url = "/" + type;
   		}
 
 	});

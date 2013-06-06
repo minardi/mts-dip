@@ -70,6 +70,7 @@
 		render: function() {
 			this.$el.html(this.template());
 			this.collection.each(this.addItem, this);
+            //console.log(this.collection);
 				
 			return this;
 		}			
