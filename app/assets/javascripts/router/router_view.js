@@ -24,7 +24,7 @@
             this.renderIndex();
             
             this.createUser();
-            
+        
             mts.specializationList = mts.specializationList || 
                                         new app.SpecsView({el:$("#specializations")});
                        
@@ -42,6 +42,9 @@
             
             mts.ticketsView = mts.ticketsView || 
                                    new app.TicketsView();    
+
+             mts.historyHome = mts.historyHome || 
+                                        new app.HistoryView({model: new HistoryHomeModel()});                       
              
          //   mts.weekdays = null;
 

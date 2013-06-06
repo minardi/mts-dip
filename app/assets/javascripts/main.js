@@ -10,7 +10,8 @@ var mts = {
               weekDaysUser : null,
               weekDaysDoctor : null,
               nextTickets : null,
-              router : null
+              router : null,
+              historyHome: null
           };
 
 $(function () { 

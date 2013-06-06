@@ -5,6 +5,8 @@
     routes: {
       ''                    : 'index',
       'home'                : 'index',
+      'home/'               : 'index',
+      'home/:sel_id'        : 'selSpecFromUrl',
       'my-private-schedule' : 'showPrivateSchedule'
     },
     
@@ -25,7 +27,14 @@
     showPrivateSchedule: function() {
         
         this.view.handlerShowPrivateSchedule();
+    },
+
+    selSpecFromUrl: function(sel_id) {
+      this.view.handlerIndex();
+      mts.historyHome.selSpec(sel_id);
     }
+
+
 
   });
 
