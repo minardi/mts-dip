@@ -9,6 +9,7 @@ var mts = {
               currentTimelines : null,
               weekdays : null,
               nextTickets : null,
+              errorProvider : null,
               router : null
           };
 

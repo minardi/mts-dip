@@ -30,7 +30,8 @@
                                                   new app.DailySchedulesView({el:$("#daily_schedules")});
                        
                        mts.ticketsView = mts.ticketsView || 
-                                               new app.TicketsView();                                                       
+                                               new app.TicketsView(); 
+                       mts.provide = mts.errorProvider || new app.errorProvider();                                                      
         break;
 
         case 'tab1' :  mts.user = mts.user || new app.UserView({el: $("#login_block")});

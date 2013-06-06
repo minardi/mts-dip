@@ -4,6 +4,7 @@
 //= require ./daily_schedule/config
 //= require ./current_schedule/config
 //= require ./tickets/config
+//= require ./provider/config
 
 //= require ./user_login/config
 //= require ./user_status/config

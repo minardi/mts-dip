@@ -1,0 +1,74 @@
+.errorMessage
+{
+    position: absolute;
+    width: auto;
+    color: #FFFFFF;
+    background-color: #ff0000;
+    padding:10px;
+    height:auto;
+    border-radius:7px;   
+}
+
+.warningMessage
+{
+    position: absolute;
+    width: auto;
+    color: #000000;
+    background-color: #FACC2E;
+    padding:10px;
+    height:auto;
+    border-radius:7px;   
+}
+
+#message {
+    position: relative;
+    z-index: 200;
+    width: 350px;
+    height: 200px;
+    border: 2px solid #900;
+    text-align: center;
+    background-color: #ff0000;
+    font-weight: bold;
+    margin: -100px auto 0;
+    top:50%;
+    color: white;
+    vertical-align: middle;
+}
+#background {
+    position: fixed;
+    z-index: 150;
+    left: 0px;
+    top:0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+#background .error-message {
+    text-align: left;
+    color: white;
+}
+
+#background .error_type {
+    color: white;
+}
+
+#close_errors {
+    margin: 5px;
+    width: 14px;
+    height: 14px;
+    float: right;
+    background:  url(/images/close.png);
+}
+
+#close {
+    margin: 5px;
+    width: 14px;
+    height: 14px;
+    float: right;
+    background:  url(/images/close1.png);
+}
+
+.alert {
+    position: absolute;
+    padding-top: 0px;
+}
