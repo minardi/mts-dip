@@ -11,6 +11,12 @@
 			"mouseout": "displayActions"
 		},
 
+		specs_tpl: JST["backbone/admin/templates/admin_specs_item_template"],
+        doctors_tpl: JST["backbone/admin/templates/admin_doctors_item_template"],
+        schedule_tpl: JST["backbone/admin/templates/admin_schedules_item_template"],
+        tickets_tpl: JST["backbone/admin/templates/admin_tickets_item_template"],
+        users_tpl: JST["backbone/admin/templates/admin_users_item_template"],
+
 		initialize: function() {
 
 			this.setTemplate();
@@ -21,19 +27,19 @@
 
 			switch (this.options.board_type) {
 				case "specializations":
-					this.template = JST["backbone/admin/templates/admin_specs_item_template"];
+					this.template = this.specs_tpl;
 					break;
 				case "doctors":
-					this.template = JST["backbone/admin/templates/admin_doctors_item_template"];
+					this.template = this.doctors_tpl;
 					break;
 				case "users":
-					this.template = JST["backbone/admin/templates/admin_users_item_template"];
+					this.template = this.users_tpl
 					break;
 				case "schedule":
-					this.template = JST["backbone/admin/templates/admin_schedules_item_template"];
+					this.template = this.schedule_tpl;
 					break;
 				case "tickets":
-					this.template = JST["backbone/admin/templates/admin_tickets_item_template"];
+					this.template = this.tickets_tpl;
 					break;
 			}
 		},

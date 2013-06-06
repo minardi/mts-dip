@@ -1,6 +1,12 @@
 (function(app) {
 
 	app.AdminDashboardView = Backbone.View.extend({
+
+        specs_tpl: JST["backbone/admin/templates/admin_specializations_template"],
+        doctors_tpl: JST["backbone/admin/templates/admin_doctors_template"],
+        schedule_tpl: JST["backbone/admin/templates/admin_schedules_template"],
+        tickets_tpl: JST["backbone/admin/templates/admin_tickets_template"],
+        users_tpl: JST["backbone/admin/templates/admin_users_template"],
 			
   		initialize: function() {
 
@@ -26,31 +32,31 @@
 
   		specsMode: function() {
 
-  			this.template = JST["backbone/admin/templates/admin_specializations_template"];
+  			this.template = this.specs_tpl;
   			this.collection.setUrl("specializations");
   		},
 
   		doctorsMode: function() {
 
-  			this.template = JST["backbone/admin/templates/admin_doctors_template"];
+  			this.template = this.doctors_tpl;
   			this.collection.setUrl("doctors");
   		},
 
   		scheduleMode: function() {
 
-  			this.template = JST["backbone/admin/templates/admin_schedules_template"];
+  			this.template = this.schedule_tpl;
   			this.collection.setUrl("weekly_schedules");
   		},
 
   		ticketsMode: function() {
 
-  			this.template = JST["backbone/admin/templates/admin_tickets_template"];
+  			this.template = this.tickets_tpl;
   			this.collection.setUrl("tickets");
   		},
 
   		usersMode: function() {
 
-  			this.template = JST["backbone/admin/templates/admin_users_template"];
+  			this.template = this.users_tpl;
   			this.collection.setUrl("users");
   		},
 		
