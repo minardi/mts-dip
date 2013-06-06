@@ -10,6 +10,7 @@ var mts = {
               weekDaysUser : null,
               weekDaysDoctor : null,
               nextTickets : null,
+              errorProvider : null,
               router : null
           };
 

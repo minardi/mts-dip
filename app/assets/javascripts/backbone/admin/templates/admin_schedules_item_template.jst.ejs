@@ -1,0 +1,20 @@
+<td>
+  <%= doctor_id %>
+</td>
+<td>
+	<small>
+		<ul>
+			<li><%= schedule["sun"]["start"] %> - <%= schedule["sun"]["end"] %></li>
+			<li><%= schedule["mon"]["start"] %> - <%= schedule["mon"]["end"] %></li>
+			<li><%= schedule["tue"]["start"] %> - <%= schedule["tue"]["end"] %></li>
+			<li><%= schedule["wed"]["start"] %> - <%= schedule["wed"]["end"] %></li>
+			<li><%= schedule["thu"]["start"] %> - <%= schedule["thu"]["end"] %></li>
+			<li><%= schedule["fri"]["start"] %> - <%= schedule["fri"]["end"] %></li>
+			<li><%= schedule["sat"]["start"] %> - <%= schedule["sat"]["end"] %></li>
+		</ul>
+	</small>
+</td>
+<td class="admin_actions">
+  <img class="admin_item_edit hidden" src="/images/edit.png">
+  <img class="admin_item_delete hidden" src="/images/remove.png">
+</td>
