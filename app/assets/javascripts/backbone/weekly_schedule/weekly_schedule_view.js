@@ -17,8 +17,6 @@
         },
         
         render : function(){
-            
-            var schedule =  this.model.get('schedule');
  
             this.$el.append(this.template(this.model.toJSON()));
             
@@ -36,7 +34,7 @@
             
             target = $(e.target);
             
-            this.model.scheduleTrigger(target.attr('id').split('-')[1]);
+            this.model.dayTrigger(target.attr('id').split('-')[1]);
         },
         
         publishTrigger : function(day, trigger) {
@@ -75,7 +73,7 @@
                 
                 if(schedule[day]['selected'] === true){
                     
-                    this.model.scheduleTrigger(day);
+                    this.model.dayTrigger(day);
                 }
                 
             }

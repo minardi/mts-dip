@@ -8,7 +8,7 @@ var UserEx = (function(app, mts) {
     
     function isLogin() {
         
-        return (this.user.get('role') !== 'guest') ? true : false;
+        return (this.user.get('role')['key'] !== 'guest') ? true : false;
         
     }
      

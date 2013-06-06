@@ -64,11 +64,19 @@
 
         },
         
+        activeDoctors : function() {
+            
+             var collection = this.where({selected : true});
+             
+             return collection;
+            
+        },
+        
         addModel : function(model) {
             model.off('sync');
             model.off('error');
             
-            model.setDate(this.days);
+            model.scheduleStart(this.days);
             
             model.set({
                 selected : true

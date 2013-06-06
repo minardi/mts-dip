@@ -15,48 +15,56 @@ app.WeeklyModel = Backbone.Model.extend({
         
         initialize : function() {
             
-            var schedule = this.get('schedule');
-            
-            for (day in schedule){
-                
-                schedule[day]['selected'] = false;
-                
-            }
-            
-            this.set({schedule : schedule});
+
         },
         
-        daySelect : function(day) {
+        isDaySelect : function(day) {
             
-            if(!this.attributes.schedule[day]['selected']){
-
-                this.attributes.schedule[day]['selected'] = true;
-                this.trigger('select:schedule_day', day, this.attributes.schedule[day]['selected']);
+            if(this.isDay(day) === false){
+                
+                this.dayTrigger(day);
 
             }
+        },
+        
+        isDay : function(day){
+            console.log((day)  ? false : true, this.attributes.schedule[day]['selected'] )
+            return (day) ? this.attributes.schedule[day]['selected'] : undefined; 
+        },
+        
+        dayTrigger : function(day, selected){
+            
+            if(day){
+                this.attributes.schedule[day]['selected'] = (selected === true || selected === false) 
+                        ? 
+                            selected 
+                        : 
+                            ((this.isDay(day) === true) ? false : true);
+                            
+                this.trigger('select:schedule_day', day, this.isDay(day));              
+            } else {
+                console.error('bad day value in weekly model');
+            }
+            
+            
         },
         
         scheduleTrigger : function(day) {
             
-            this.attributes.schedule[day]['selected'] = (this.attributes.schedule[day]['selected'] === true)
-                                                            ? 
-                                                                false 
-                                                            :  
-                                                                true; 
+            this.dayTrigger(day); 
             
             this.trigger('select:schedule_day', day, this.attributes.schedule[day]['selected']);
 
         },
         
-        setDate : function(days){
+        scheduleStart : function(days){
             
-            var schedule = this.get('schedule');
-            
-            for(day in schedule){
-                schedule[day]['data'] = days[day];
+            for(day in this.attributes.schedule){
+                this.attributes.schedule[day]['data'] = days[day];
+                this.dayTrigger(day, false);
             }
             
-            this.set({schedule : schedule});
+            console.log(this.attributes.schedule);
             
         },
 

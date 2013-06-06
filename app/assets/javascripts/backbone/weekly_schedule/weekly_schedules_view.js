@@ -9,7 +9,7 @@
         
         
         events: {
-            "click thead .weekly-table-day" : "daySelect",
+            "click thead .weekly-table-day" : "daysSelect",
         },
         
         days : {},
@@ -28,7 +28,7 @@
         },
         
         isFullOfCell : function(day, selected) {
-             
+             console.log(day, selected);
         },
         
         renderSchedule : function (model, selected){
@@ -71,16 +71,18 @@
             }
             
         },
+        
+        
 
-        daySelect: function(event) {
+        daysSelect: function(event) {
             
-            var collection = this.collection.where({selected : true}),
+            var collection = this.collection.activeDoctors(),
                 target = ($(event.target).children().length !== 0) ? $(event.target) : $(event.target).parent(),
                 day = target.attr('id').split('-')[1],
                 id = 0;
-                
+
             for (id in collection){
-                collection[id].daySelect(day);
+                collection[id].isDaySelect(day);
             }
 
         }
