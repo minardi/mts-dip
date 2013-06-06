@@ -65,26 +65,13 @@
         
         },
         
-        unselectedDays : function () {
-            
-            var schedule = this.model.get('schedule');
-            
-            for (day in schedule){
-                
-                if(schedule[day]['selected'] === true){
-                    
-                    this.model.dayTrigger(day);
-                }
-                
-            }
-            
-        },
+
         
         selfRemove : function (obj, selected) {
             
             if(selected === false){
                 
-                this.unselectedDays();
+                this.model.unselectedDays();
                 this.remove();
                 
                 this.model.off('select:schedule_day');

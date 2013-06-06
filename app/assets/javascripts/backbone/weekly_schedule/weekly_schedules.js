@@ -55,9 +55,7 @@
             this.add(model);
             
             model.on('sync', this.addModel, this);
-            model.on('error', function(model, request){
-                                        this.throwError('server is unavailable please try again later', 'fatal_error');
-                                    }, this
+            model.on('error', this.errorHandler , this
             );
                                 
             model.fetch();
@@ -82,20 +80,12 @@
                 selected : true
             })
         },
-        
-        throwError : function (text, type){
-            type = type || 'error';
+
+        errorHandler : function(model, request){
+
+            this.trigger('weekly_error', {text : 'server is unavailable please try again later', type : 'error'});
             
-            Backbone.Mediator.pub(
-                type,    
-                {
-                    el : this.$el, 
-                    message : (text) ? text : 'internal error '
-                }
-            );
-            
-            console.warn(text, type);
-            
+            this.remove(model);
         }
         
     });

@@ -18,9 +18,9 @@ app.WeeklyModel = Backbone.Model.extend({
 
         },
         
-        isDaySelect : function(day) {
+        selectDayByRule : function(day, selected) {
             
-            if(this.isDay(day) === false){
+            if(this.isDay(day) === selected){
                 
                 this.dayTrigger(day);
 
@@ -28,7 +28,7 @@ app.WeeklyModel = Backbone.Model.extend({
         },
         
         isDay : function(day){
-            console.log((day)  ? false : true, this.attributes.schedule[day]['selected'] )
+
             return (day) ? this.attributes.schedule[day]['selected'] : undefined; 
         },
         
@@ -48,13 +48,15 @@ app.WeeklyModel = Backbone.Model.extend({
             
             
         },
-        
-        scheduleTrigger : function(day) {
-            
-            this.dayTrigger(day); 
-            
-            this.trigger('select:schedule_day', day, this.attributes.schedule[day]['selected']);
 
+        unselectedDays : function () {
+            
+            for (day in this.attributes.schedule){
+                
+                this.selectDayByRule(day, true);
+                
+            }
+            
         },
         
         scheduleStart : function(days){
@@ -63,9 +65,7 @@ app.WeeklyModel = Backbone.Model.extend({
                 this.attributes.schedule[day]['data'] = days[day];
                 this.dayTrigger(day, false);
             }
-            
-            console.log(this.attributes.schedule);
-            
+                
         },
 
         getCurrent : function(doctor_id) {
