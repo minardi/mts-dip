@@ -11,8 +11,8 @@
 		},
 
 		itemSelect: function() {
-   			var current_dashboard_view = new app.AdminDashboardView({board_type:this.model.get("name").toLowerCase(),
-   																	 el:$("#admin_dashboard")});
+			if (mts.current_dashboard_view) mts.current_dashboard_view.remove();
+   			mts.current_dashboard_view = new app.AdminDashboardView({board_type:this.model.get("name").toLowerCase()});
 
 		},
 

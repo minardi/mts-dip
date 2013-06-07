@@ -2,9 +2,7 @@
 
 	app.AdminCreateView = Backbone.View.extend({
 
-		className: "modal",
-
-		id: "admin_create",
+		className: "modal admin_create",
 
 		events: {
 			"click .btn-danger" : "cancelCreation",
@@ -15,7 +13,7 @@
 		specs_tpl: JST["backbone/admin/templates/admin_create_spec_template"],
         doctors_tpl: JST["backbone/admin/templates/admin_create_doctor_template"],
         schedule_tpl: JST["backbone/admin/templates/admin_create_schedule_template"],
-        tickets_tpl: JST["backbone/admin/templates/admin_create_ticket_template"], //necessary??
+        tickets_tpl: JST["backbone/admin/templates/admin_create_ticket_template"],
         users_tpl: JST["backbone/admin/templates/admin_create_user_template"],
 
 		initialize: function() {
@@ -38,20 +36,19 @@
 				case "schedule":
 					this.template = this.schedule_tpl;
 					break;
-				case "tickets":
-					this.template = this.tickets_tpl;
-					break;
 			}
 		},
 
 		cancelCreation: function() {
 			//this.model = null;
 			this.remove();
-			//bug!
+
 		},
 
 		performCreation: function() {
 			console.log("wheee!");
+			//collect values
+			//this.model.save();
 
 		},
 
