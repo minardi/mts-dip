@@ -9,9 +9,11 @@
 		events: {
 			"click": "itemSelect"
 		},
+		current_dashboard_view : null,
 
 		itemSelect: function() {
-   			var current_dashboard_view = new app.AdminDashboardView({board_type:this.model.get("name").toLowerCase(),
+			this.current_dashboard_view ? this.current_dashboard_view.remove() : null;
+   			this.current_dashboard_view = new app.AdminDashboardView({board_type:this.model.get("name").toLowerCase(),
    																	 el:$("#admin_dashboard")});
 
 		},

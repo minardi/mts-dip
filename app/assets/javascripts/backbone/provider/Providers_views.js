@@ -10,9 +10,9 @@
 
         initialize: function() {
             Backbone.Mediator.sub("error", this.error, this);
-            Backbone.Mediator.sub("fatal_error", this.fatal_error, this);
+            Backbone.Mediator.sub("fatal_error", this.fatalError, this);
             Backbone.Mediator.sub("warning", this.warning, this);
-            Backbone.Mediator.sub("hint", this.showHint, this);
+            Backbone.Mediator.sub("hint", this.initHint, this);
         },
 
         events: {
@@ -25,7 +25,7 @@
             $(errorEl).append(this.$el);
         },
 
-        fatal_error: function(attr) {
+        fatalError: function(attr) {
             var errorEl = $("#under-head");
             this.$el.html(this.fatal_template({error_type:"Fatal ERROR!", message:attr["message"]}));
             $(errorEl).append(this.$el);
@@ -41,29 +41,49 @@
             this.$el.html("");
         },
 
-        showHint: function(attr) {
+        showHint: function(attrs) {
+            // console.log(attrs, this);
+            // var hintEl = attrs["el"];
+
+            // this.$el.html(this.hint_template({message: attrs["message"]}));
+            // $(hintEl).append(this.$el);
+                      
+        },
+
+        initHint: function(attr) {
             var hintEl = attr["el"],
+                self = this,
                 timer;
 
-            $(hintEl).on("mouseover", function() {
+            this.$el.addClass("hide_hint");
+            this.$el.html(this.hint_template({message: attr["message"]}));
+             $(hintEl).append(this.$el);
 
-                timer = setTimeout(
-                    (function(self) {    
-                    return function(self) {
+                $(hintEl).on("mouseover", function() {
 
-                            $(self.el).html(self.hint_template({message: attr["message"]}));
-                            $(hintEl).append(self.$el);
-                        } 
-                    }(this)), 1500);
+                    self.$el.animate({
+                        display: "toggle"
+                    }, 1500);
 
-            });
+                });
+            // $(hintEl).on("mouseover", function() {
+            //     var attrs = attr,
+            //         me = self;
+            // timer = setTimeout((
+            //             function (attrs, self){
+            //                 console.log(attrs, self)
+            //                 return function() {self.showHint.call( attrs, self)}
+            //             } (attrs, me)
+            //         ), 1500);
+ 
+            // });
 
             $(hintEl).on("mouseout", this.hideHint);
+
         },
 
         hideHint: function() {
-            this.$el.html("");
-            clearTimeout(timer);
+            
         },
 
     });
