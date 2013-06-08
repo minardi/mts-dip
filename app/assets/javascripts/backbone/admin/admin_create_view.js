@@ -18,30 +18,46 @@
 
 		initialize: function() {
 
-			this.setTemplate();
-		},
-
-		setTemplate: function() {
-
 			switch (this.options.board_type) {
 				case "specializations":
-					this.template = this.specs_tpl;
-					this.creation_method = this.createSpec;
+					this.specsMode();
 					break;
 				case "doctors":
-					this.template = this.doctors_tpl;
-					this.creation_method = this.createDoctor;
-					var spec_list = new app.SpecsCollection();
-					spec_list.on("reset", function(list) {list.each(this.addSpectoSelect)}, this);
+					this.doctorsMode();
 					break;
 				case "users":
-					this.template = this.users_tpl
+					this.usersMode();
 					break;
 				case "schedule":
-					this.template = this.schedule_tpl;
+					this.scheduleMode();
 					break;
 			}
+
+			this.model.on("sync", function() {mts.current_board.collection.fetch()});
+			//this.model.on("destroy", function() {mts.current_board.collection.remove(this.model)}, this);
+			//this.model.on("sync", mts.current_board.render, mts.current_board);
 		},
+
+		specsMode: function() {
+			this.template = this.specs_tpl;
+			this.creation_method = this.createSpec;
+  		},
+
+  		doctorsMode: function() {
+  			var spec_list = new app.SpecsCollection();
+
+  			spec_list.on("reset", function(list) {list.each(this.addSpectoSelect)}, this);
+			this.template = this.doctors_tpl;
+			this.creation_method = this.createDoctor;			
+  		},
+
+  		scheduleMode: function() {
+  			this.template = this.schedule_tpl;
+  		},
+
+  		usersMode: function() {
+  			this.template = this.users_tpl;
+  		},
 
 		cancelCreation: function() {
 			//this.model = null;
@@ -59,7 +75,7 @@
 		addSpectoSelect: function(model) {
 			var option = document.createElement("option");
 
-			$(option).text(model.get("name")).attr("value", model.get("name"));
+			$(option).text(model.get("name")).attr("value", model.get("id"));
 			$("#spec_select_list").append(option);
 			console.log("added spec");
 		},
@@ -70,7 +86,7 @@
 
 		createDoctor: function() {
 			this.model.set("name", $("#doctor_name").val());
-			this.model.set("duration", $("[name='dur']").val());
+			this.model.set("duration", $("[name='dur']:checked").val());
 			this.model.set("specialization_id", $("spec_select_list").val());
 		},
 

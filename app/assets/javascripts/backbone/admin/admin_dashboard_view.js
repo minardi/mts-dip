@@ -36,8 +36,10 @@
   					break;
   			}
 
- 			  this.collection.fetch();
+ 			this.collection.fetch();
   			this.collection.on("reset", this.render, this);
+            //this.collection.on("add", this.render, this);
+            //this.collection.on("remove", this.render, this);
   		},
 
   		specsMode: function() {
@@ -82,17 +84,17 @@
 			this.$el.append(item_view.render().el);
 		},
 
-    createItem: function() {
-      console.log(this);
-      var  create_view = new app.AdminCreateView({model: new this.creation_model(),
+        createItem: function() {
+            var  create_view = new app.AdminCreateView({model: new this.creation_model(),
                                                 board_type: this.options.board_type});
       
-      this.$el.prepend(create_view.render().el);
+            this.$el.prepend(create_view.render().el);
 
-    },
+        },
 		
 		render: function() {
-      $("#admin_panel").append(this.el);
+            console.log("board render");
+            $("#admin_panel").html(this.el);
 			this.$el.html(this.template());
 			this.collection.each(this.addItem, this);
 				
