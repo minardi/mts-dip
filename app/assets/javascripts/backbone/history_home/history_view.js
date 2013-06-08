@@ -33,21 +33,23 @@
 
     selSpec: function(sel_id) {
       var model =  this.model;
-
+       
        model.spec_ids = sel_id.split(":");
           
       
       _.each(model.spec_ids,function(spec_id) {
-
+          
           Backbone.Mediator.pub("spec_selected",{ 
                                                   id: spec_id,
                                                   history_silent: true
                                                 });
       
-         
+          
           Backbone.Mediator.pub("check_spec",{
                                                id:spec_id
                                              });
+          console.log("check");
+
       },this)
 
     },
@@ -58,7 +60,7 @@
       
         this.createUrl(); 
         this.navUrl();
-        console.log(this.model.spec_ids);
+        //console.log(this.model.spec_ids);
     },
 
     addSpec: function(attrs) {

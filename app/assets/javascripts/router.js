@@ -34,6 +34,7 @@
 
     selSpecFromUrl: function(sel_id) {
       this.view.handlerIndex();
+
       mts.historyHome.selSpec(sel_id);
     },
 
