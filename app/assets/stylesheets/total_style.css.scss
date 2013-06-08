@@ -29,13 +29,18 @@
 .weekly-table {
    padding: 10px 20px 10px;
    
-   .weekly-table-day{
+    .weekly-top-info{
+        text-align:center;
+        vertical-align:middle;
+    }
+    .weekly-table-day{
         text-align:center;
         font-weight:bolder;
+        vertical-align:middle;
     }
     
     .weekly-table-head{
-
+        text-align:center;
     }
     
     .weekly-table-day:hover{
@@ -85,11 +90,11 @@
 	width: 710px;
 }
 
-#tab2 {
-  float: none; /* Обтекание по правому краю */
+/*#tab2 {
+  float: none;  Обтекание по правому краю 
   margin-top: 20%;
   margin-left: 2%;
-}
+}*/
 
 .navbar .nav > li > p {
   float: none;
@@ -150,8 +155,6 @@
 
 }
 
-
-/*do not delete this!*/
 .timeline {
 	height: 40px;
 	float: left;
@@ -217,3 +220,33 @@ float:none;
   cursor: pointer;
 }
 
+#admin_dashboard {
+  position: relative;
+}
+
+#admin_dashboard table thead {
+  font-weight: bold;
+}
+
+#admin_panel {
+  padding-top: 10px;
+}
+
+.admin_actions {
+  text-align: right;
+  width: 60px;
+}
+
+.admin_actions img, img.admin_item_new {
+  width: 18px;
+  height: 18px;
+}
+
+#admin_create {
+  position: absolute;
+  left: 160px;
+  top: -20%;
+  margin: 0;
+
+  width: 300px;
+}

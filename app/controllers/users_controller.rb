@@ -83,6 +83,21 @@ class UsersController < ApplicationController
     end
   end
 
+  # DELETE /doctors/1
+  # DELETE /doctors/1.json
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+
+    #@doc = Doctor.find(params[:id])
+    #@user.destroy
+
+    respond_to do |format|
+      format.html #{ redirect_to doctors_url }
+      format.json { head :no_content }
+    end
+  end
+
    private
 
     def correct_user

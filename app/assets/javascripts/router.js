@@ -4,12 +4,12 @@
 
     routes: {
       ''                    : 'index',
+
       'home'                : 'index',
       'home/'               : 'index',
       'home/:sel_id'        : 'selSpecFromUrl',
       'my-private-schedule' : 'showPrivateSchedule',
       'admin'               : 'showAdminPanel'
-
     },
     
     initialize : function() {
@@ -43,7 +43,9 @@
       $('#tab2').addClass('hidden');
       $('#tab3').removeClass('hidden');
 
-      mts.administration = new app.AdminNavigationView({el:$("#admin_navigation")});
+      mts.administration = (mts.administration) ? 
+        mts.administration : 
+        new app.AdminNavigationView({el:$("#admin_navigation")});
     }
 
 

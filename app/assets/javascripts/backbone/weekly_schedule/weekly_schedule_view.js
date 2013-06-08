@@ -17,8 +17,6 @@
         },
         
         render : function(){
-            
-            var schedule =  this.model.get('schedule');
  
             this.$el.append(this.template(this.model.toJSON()));
             
@@ -36,7 +34,7 @@
             
             target = $(e.target);
             
-            this.model.scheduleTrigger(target.attr('id').split('-')[1]);
+            this.model.dayTrigger(target.attr('id').split('-')[1]);
         },
         
         publishTrigger : function(day, trigger) {
@@ -67,26 +65,13 @@
         
         },
         
-        unselectedDays : function () {
-            
-            var schedule = this.model.get('schedule');
-            
-            for (day in schedule){
-                
-                if(schedule[day]['selected'] === true){
-                    
-                    this.model.scheduleTrigger(day);
-                }
-                
-            }
-            
-        },
+
         
         selfRemove : function (obj, selected) {
             
             if(selected === false){
                 
-                this.unselectedDays();
+                this.model.unselectedDays();
                 this.remove();
                 
                 this.model.off('select:schedule_day');

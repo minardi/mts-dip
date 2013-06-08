@@ -6,13 +6,20 @@
 
 		events: {
 			"click .admin_item_edit": "editItem",
-			"click .admin_item_delete": "deleteItem"
+			"click .admin_item_delete": "deleteItem",
+			"mouseover": "displayActions",
+			"mouseout": "displayActions"
 		},
+
+		specs_tpl: JST["backbone/admin/templates/admin_specs_item_template"],
+        doctors_tpl: JST["backbone/admin/templates/admin_doctors_item_template"],
+        schedule_tpl: JST["backbone/admin/templates/admin_schedules_item_template"],
+        tickets_tpl: JST["backbone/admin/templates/admin_tickets_item_template"],
+        users_tpl: JST["backbone/admin/templates/admin_users_item_template"],
 
 		initialize: function() {
 
 			this.setTemplate();
-			
 			this.model.on("change", this.render, this);
 		},
 
@@ -20,33 +27,42 @@
 
 			switch (this.options.board_type) {
 				case "specializations":
-					this.template = JST["backbone/admin/admin_specializations_item_template"];
+					this.template = this.specs_tpl;
 					break;
 				case "doctors":
-					this.template = JST["backbone/admin/admin_doctors_item_template"];
+					this.template = this.doctors_tpl;
 					break;
 				case "users":
-					this.template = JST["backbone/admin/admin_users_item_template"];
+					this.template = this.users_tpl
 					break;
 				case "schedule":
-					this.template = JST["backbone/admin/admin_schedules_item_template"];
+					this.template = this.schedule_tpl;
 					break;
 				case "tickets":
-					this.template = JST["backbone/admin/admin_tickets_item_template"];
+					this.template = this.tickets_tpl;
 					break;
 			}
 		},
 
-		editItem: function() {
+		displayActions: function() {
+			this.$el.find(".admin_item_edit").toggleClass("hidden");
+			this.$el.find(".admin_item_delete").toggleClass("hidden");
    
+		},
+
+		editItem: function() {
+			console.log("item edit method");
 		},
 
 		deleteItem: function() {
-   
+			if (confirm("Удалить элемент?") === true) {
+				this.$el.children().css("background-color", "#f08080");
+				this.$el.hide(600);
+				this.model.destroy();
+			}  
 		},
 
 		render: function() {
-			
 			this.$el.html(this.template(this.model.toJSON()));
 	        return this; 
 	    }

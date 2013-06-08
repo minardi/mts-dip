@@ -1,53 +1,93 @@
 (function(app) {
 
 	app.AdminDashboardView = Backbone.View.extend({
+
+        events: {
+            "click .admin_item_new" : "createItem"
+        },
+
+        specs_tpl: JST["backbone/admin/templates/admin_specializations_template"],
+        doctors_tpl: JST["backbone/admin/templates/admin_doctors_template"],
+        schedule_tpl: JST["backbone/admin/templates/admin_schedules_template"],
+        tickets_tpl: JST["backbone/admin/templates/admin_tickets_template"],
+        users_tpl: JST["backbone/admin/templates/admin_users_template"],
 			
   		initialize: function() {
 
-  			this.setTemplate();
-
   			this.collection = new app.AdminDashboard();
-  			this.collection.setUrl(this.options.board_type);
- 			this.collection.fetch();
- 			//this.render();
- 			console.log(this.collection);
-  			this.collection.on("reset", this.render, this);
 
+  			switch (this.options.board_type) {
+
+  				case "specializations": this.specsMode();
+  					break;
+  				case "doctors": this.doctorsMode();
+  					break;
+  				case "schedule": this.scheduleMode();
+  					break;
+  				case "tickets": this.ticketsMode();
+  					break;
+  				case "users": this.usersMode();
+  					break;
+  			}
+
+ 			this.collection.fetch();
+  			this.collection.on("reset", this.render, this);
   		},
 
-  		setTemplate: function() {
+  		specsMode: function() {
 
-			switch (this.options.board_type) {
-				case "specializations":
-					this.template = JST["backbone/admin/admin_specializations_template"];
-					break;
-				case "doctors":
-					this.template = JST["backbone/admin/admin_doctors_template"];
-					break;
-				case "users":
-					this.template = JST["backbone/admin/admin_users_template"];
-					break;
-				case "schedule":
-					this.template = JST["backbone/admin/admin_schedules_template"];
-					break;
-				case "tickets":
-					this.template = JST["backbone/admin/admin_tickets_template"];
-					break;
-			}
+  			this.template = this.specs_tpl;
+  			this.collection.setUrl("specializations");
+            this.creation_model = app.SpecModel;
+  		},
 
-		},
+  		doctorsMode: function() {
 
+  			this.template = this.doctors_tpl;
+  			this.collection.setUrl("doctors");
+            this.creation_model = app.DoctorModel;
+  		},
+
+  		scheduleMode: function() {
+
+  			this.template = this.schedule_tpl;
+  			this.collection.setUrl("weekly_schedules");
+            this.creation_model = app.WeeklyModel;
+  		},
+
+  		ticketsMode: function() {
+
+  			this.template = this.tickets_tpl;
+  			this.collection.setUrl("tickets");
+            this.creation_model = app.TicketModel;
+  		},
+
+  		usersMode: function() {
+
+  			this.template = this.users_tpl;
+  			this.collection.setUrl("users");
+            this.creation_model = app.UserModel;
+  		},
 		
 		addItem: function(model) {
 
 			var item_view = new app.AdminDashItemView({model: model,
 													   board_type: this.options.board_type});
 
-			this.$el.children("#dashboard_content").append(item_view.render().el);					
+			this.$el.children(0).append(item_view.render().el);
 		},
+
+        createItem: function() {
+            var create_model = new this.creation_model(),
+                create_view = new app.AdminCreateView({model: create_model,
+                                                      board_type: this.options.board_type});
+
+            //console.log(create_model.toJSON());
+            this.$el.prepend(create_view.render().el);
+
+        },
 		
 		render: function() {
-			console.log("i am render method");
 			this.$el.html(this.template());
 			this.collection.each(this.addItem, this);
 				

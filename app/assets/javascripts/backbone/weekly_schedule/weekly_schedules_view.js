@@ -9,7 +9,7 @@
         
         
         events: {
-            "click thead .weekly-table-day" : "daySelect",
+            "click thead .weekly-table-day" : "daysSelect",
         },
         
         days : {},
@@ -22,8 +22,14 @@
             Backbone.Mediator.sub('doctor_unselected', this.collection.removeSchedule, this.collection);
             
             this.collection.on('change:selected', this.renderSchedule, this);
+            this.collection.on('select:schedule_day', this.isFullOfCell, this);
+            this.collection.on('weekly_error', this.throwError, this);
             
             this.render();
+        },
+        
+        isFullOfCell : function(day, selected) {
+             //console.log(day, selected);
         },
         
         renderSchedule : function (model, selected){
@@ -59,25 +65,44 @@
         
         isShow: function() {
             
-            if(this.collection.where({selected : true}).length > 0) {
+            var collection = this.collection.activeDoctors();
+
+            if(collection.length > 0) {
                 this.$el.removeClass('hidden');
             } else {
                 this.$el.addClass('hidden');
             }
             
         },
+        
+        
 
-        daySelect: function(event) {
+        daysSelect: function(event) {
             
-            var collection = this.collection.where({selected : true}),
+            var collection = this.collection.activeDoctors(),
                 target = ($(event.target).children().length !== 0) ? $(event.target) : $(event.target).parent(),
                 day = target.attr('id').split('-')[1],
                 id = 0;
-                
+
             for (id in collection){
-                collection[id].daySelect(day);
+                collection[id].selectDayByRule(day, false);
             }
 
+        },
+        
+        throwError : function (data){
+            data.type = data.type || 'error';
+            
+            Backbone.Mediator.pub(
+                data.type,    
+                {
+                    el : this.$el, 
+                    message : (data.text) ? data.text : 'internal error '
+                }
+            );
+            
+            console.warn(data.text, data.type);
+            
         }
         
     });

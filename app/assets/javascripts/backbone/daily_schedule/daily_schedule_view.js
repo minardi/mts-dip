@@ -10,8 +10,6 @@
       		"click .worktime" : "timelineSelect",	
     	},
 
-    	ticketType: "sl-doc",
-
     	initialize: function() {
 
     		this.model.on("change :visible", this.deleteSchedule, this);
@@ -75,7 +73,7 @@
 
 			date.idToDate(model.get("day"), "t0800");
 
-			tr_width = (this.ticketType === "sl-doc") ?
+			tr_width = (this.options.ticketType === "sl-doc") ?
 				parseInt($("#daily_schedules").css("width")) * 0.9 - 2 :
 				parseInt($("#current_schedules").css("width")) * 0.9 - 2;
 
@@ -96,7 +94,7 @@
 			var timeline = document.createElement("div"),
 				time = t_attrs.date.timeTransFormat().slice(1);
 
-			$(timeline).attr("id", this.ticketType + doctor_id + "_" + t_attrs.date.dateTransFormat() + "_t" + time);
+			$(timeline).attr("id", this.options.ticketType + doctor_id + "_" + t_attrs.date.dateTransFormat() + "_t" + time);
 			$(timeline).css("width", width).addClass(t_attrs.cssclass);
 
 			if ( (time >= t_attrs.start) && (time < t_attrs.end) ) {

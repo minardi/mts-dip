@@ -33,9 +33,8 @@
 													      schedule_end: schedule_end,
 													      visible: true });
 
-				current_schedule_view = new app.DailyScheduleView( {model: daily_schedule} );
+				current_schedule_view = new app.DailyScheduleView( {model: daily_schedule, ticketType: "cw-doc"} );
 				current_schedule_view.template = JST["backbone/current_schedule/current_schedule_template"];
-				current_schedule_view.ticketType = "cw-doc";
 				//VIEW REUSED! verify events on current and daily schedules
 
 				this.$el.find("tbody").append(current_schedule_view.render().el);

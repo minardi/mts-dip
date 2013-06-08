@@ -55,39 +55,37 @@
             this.add(model);
             
             model.on('sync', this.addModel, this);
-            model.on('error', function(model, request){
-                                        this.throwError('server is unavailable please try again later', 'error');
-                                    }, this
+            model.on('error', this.errorHandler , this
             );
                                 
             model.fetch();
 
         },
         
+        activeDoctors : function() {
+            
+             var collection = this.where({selected : true});
+             
+             return collection;
+            
+        },
+        
         addModel : function(model) {
             model.off('sync');
             model.off('error');
             
-            model.setDate(this.days);
+            model.scheduleStart(this.days);
             
             model.set({
                 selected : true
             })
         },
-        
-        throwError : function (text, type){
-            type = type || 'error';
+
+        errorHandler : function(model, request){
+
+            this.trigger('weekly_error', {text : 'server is unavailable please try again later', type : 'error'});
             
-            Backbone.Mediator.pub(
-                type,    
-                {
-                    el : this.$el, 
-                    message : (text) ? text : 'internal error '
-                }
-            );
-            
-            console.warn(text, type);
-            
+            this.remove(model);
         }
         
     });

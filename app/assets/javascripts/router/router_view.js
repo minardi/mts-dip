@@ -1,11 +1,7 @@
 (function(app, mts) {
     
     app.RouterView = Backbone.View.extend({
-        
-        initialize : function (){
-        
-        },
-        
+
         tab2Template : JST["router/tab2_template"],
         
         tab1Template : JST["router/tab1_template"],
@@ -16,6 +12,7 @@
             
             app.UserEx.prototype = mts.user_view;
             app.userEx = new app.UserEx();
+            mts.errorProvider = new app.errorProvider();
                 
         },
                
@@ -47,6 +44,7 @@
                //                         new app.HistoryView({model: new HistoryHomeModel()});                       
              
          //   mts.weekdays = null;
+
 
         },
        
