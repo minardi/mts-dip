@@ -2,7 +2,11 @@
 
 	app.AdminDashboardView = Backbone.View.extend({
 
+        tagName: "table",
+
         id: "admin_dashboard",
+
+        className: "table table-hover table-striped table-condensed",
 
         events: {
             "click .admin_item_new" : "createItem"
@@ -75,7 +79,7 @@
 
 			var item_view = new app.AdminDashItemView({model: model, board_type: this.options.board_type});
 
-			this.$el.children(0).append(item_view.render().el);
+			this.$el.append(item_view.render().el);
 		},
 
     createItem: function() {
