@@ -250,3 +250,23 @@ float:none;
 
   width: 300px;
 }
+
+
+.nav_week
+{
+  position: relative;
+  text-align: center;
+  margin: 10px 0px 70px;
+}
+
+.nav_week div
+{
+  cursor: pointer;
+  float: left;
+  width: 100px;
+  padding: 2px;
+  background: #55cac5;
+  margin-left: 15px;
+  border-radius: 16px;  
+  
+}

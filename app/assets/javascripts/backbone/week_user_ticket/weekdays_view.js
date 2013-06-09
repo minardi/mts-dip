@@ -3,30 +3,41 @@
   app.WeekDaysView = Backbone.View.extend({
 
     template: JST["backbone/week_user_ticket/week_days_template"],
+
+    events: {
+      "click #user_week_next" : "nextWeek",
+      "click #user_week_prev" : "prevWeek"
+    },
+
   
-    initialize: function() {       
-      this.$el.append(this.template);
-      this.setElement(this.$el.children("table"));
+    initialize: function() {    
+
+      this.$el.append(this.template);  
+
       this.weekDays = new WeekDaysCollection();
+
+      this.date = new DateEx();
+
+
       this.addWeekRows();
     },
  
     addWeekRows: function() {
-      var date = new Date,
-          days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],  
+      
+      var week = this.date.getCurrentWeek({"transport":true}),
+          parse_date,   
           model,
           view;
       
-      _.each(days,function(wd,i){
-         
-        date.setDate(date.getDate()+(i-date.getDay()));
-          
+      _.each(week,function(date,day){
+
+        parse_date = date.split("-");
         
         model = new WeekDayModel({
-                                           date: this.pre_nil(date.getDate()),
-                                           month: this.pre_nil(date.getMonth()+1),
-                                           year:date.getFullYear(),
-                                           day:days[date.getDay()],
+                                           date  :  parse_date[0],
+                                           month : parse_date[1],
+                                           year  :  parse_date[2],
+                                           day   :   day,
                                            user_id: app.userEx.getId()
                                 });
         
@@ -34,40 +45,38 @@
        
         view = new WeekDayView({model:model});
 
-        this.$el.append(view.render().el);
+        this.$el.children("table").append(view.render().el);
 
         view.addTickets();
        
 
       },this);
-      
-        
-
-      
 
     },
     
     refresh: function() {
+
       this.weekDays.reset();
+      
       $('#week_user_tickets').html("");
       $('#week_user_tickets').append(this.template);
-      this.setElement($('#week_user_tickets').children("table"));
-      
+     
       this.addWeekRows();
     },
 
-    pre_nil: function (data) {
-      
-      if (data < 10) {
-         data = "0" + data;
-      }    
-      
-      return data; 
+    nextWeek: function() {
+
+      this.date.nextWeek();
+      this.refresh();
     },
 
+    prevWeek: function() {
+      this.date.prevWeek();
+      this.refresh();
+    },
 
     render: function() {     
-      this.$el.html(this.template());
+      this.$el.children("table").html(this.template());
       return this;
     }
     

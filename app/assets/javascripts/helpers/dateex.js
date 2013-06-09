@@ -77,9 +77,11 @@
 			"thu": 0,
 			"fri": 0,
 			"sat": 0,
+
             };
             
-            
+        
+        
         this.date.setDate(this.date.getDate() - this.date.getDay());
         
 
@@ -88,8 +90,28 @@
 			currentWeek[key] = (param["transport"] == true) ? this.dateTransFormat() : this.dateViewFormat();
             this.date.setDate(this.date.getDate() + 1);
 		}
+    
+          
 
 		return currentWeek;
+	}
+
+	function nextWeek() {
+        
+        var k = 6 - this.date.getDay();
+
+		this.date.setDate(this.date.getDate()+k);
+
+
+	}
+
+	function prevWeek() {
+
+        var k =  this.date.getDay()+2;
+
+		this.date.setDate(this.date.getDate()-8);
+
+		
 	}
 
 	function DateEx(dateobj) {
@@ -109,6 +131,10 @@
 		this.idToDate = idToDate;
 
 		this.getCurrentWeek = getCurrentWeek;
+
+		this.nextWeek = nextWeek;
+
+		this.prevWeek = prevWeek;
 		
 	}
 
