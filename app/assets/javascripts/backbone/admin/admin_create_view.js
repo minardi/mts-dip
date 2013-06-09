@@ -57,6 +57,8 @@
 
   		usersMode: function() {
   			this.template = this.users_tpl;
+  			this.creation_method = this.createUser;
+  			this.model.setUrl();
   		},
 
 		cancelCreation: function() {
@@ -66,10 +68,8 @@
 		},
 
 		performCreation: function() {
-			console.log("wheee!");
 			this.creation_method();
-			this.model.save();
-			this.remove();
+			//this.remove();
 		},
 
 		addSpectoSelect: function(model) {
@@ -82,12 +82,37 @@
 
 		createSpec: function() {
 			this.model.set("name", $("#spec_name").val());
+			this.model.save();
+			this.remove();
 		},
 
 		createDoctor: function() {
 			this.model.set("name", $("#doctor_name").val());
 			this.model.set("duration", $("[name='dur']:checked").val());
 			this.model.set("specialization_id", $("spec_select_list").val());
+			this.model.save();
+			this.remove();
+		},
+
+		createUser: function() {
+			var role = $("[name='role']:checked").val();
+
+			this.model.set({name: $("#user_name").val(), 
+							email: $("#user_email").val(),
+							password: $("#user_password").val(),
+							role: {key: role} });
+
+			console.log(this.model.toJSON());
+
+			this.model.save();
+			//doesn't saving. I think, pronblem will be solved after adding devise
+
+			if (role === "Doctor") {
+				this.model = new app.DoctorModel();
+				this.doctorsMode();
+				this.render();
+				console.log(this.model.toJSON());
+			}
 		},
 
 		render: function() {

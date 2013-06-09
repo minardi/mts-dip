@@ -13,7 +13,12 @@
                }
     },
 
-    url : 'users/login.json'
+    url : 'users/login.json',
+
+    setUrl: function() {
+      this.url = "/users";
+    }
+
   });
  
  })(window);
