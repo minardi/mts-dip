@@ -8,7 +8,9 @@
     },
 
     is_select: false,
-    is_render: false
+    is_render: false,
+
+    urlRoot: "/doctors"
 
   });
 

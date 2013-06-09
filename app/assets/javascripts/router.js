@@ -46,6 +46,7 @@
       mts.administration = (mts.administration) ? 
         mts.administration : 
         new app.AdminNavigationView({el:$("#admin_navigation")});
+
     }
 
 
