@@ -33,8 +33,8 @@
 					break;
 			}
 
-			this.model.on("sync", function() {mts.current_board.collection.fetch()});
-			//this.model.on("destroy", function() {mts.current_board.collection.remove(this.model)}, this);
+			this.model.on("sync", function() {mts.current_board.collection.add(this.model)}, this);
+			this.model.on("destroy", function() {mts.current_board.collection.remove(this.model)}, this);
 			//this.model.on("sync", mts.current_board.render, mts.current_board);
 		},
 
@@ -87,9 +87,10 @@
 		},
 
 		createDoctor: function() {
-			this.model.set("name", $("#doctor_name").val());
-			this.model.set("duration", $("[name='dur']:checked").val());
-			this.model.set("specialization_id", $("spec_select_list").val());
+			this.model.set({name: $("#doctor_name").val(),
+						    duration: $("[name='dur']:checked").val(),
+						    specialization_id: $("spec_select_list").val()});
+
 			this.model.save();
 			this.remove();
 		},
@@ -112,7 +113,10 @@
 				this.doctorsMode();
 				this.render();
 				console.log(this.model.toJSON());
+			} else {
+				this.remove();
 			}
+			//check, will doctor model (tr) be added to users board or not 
 		},
 
 		render: function() {

@@ -21,6 +21,7 @@
 
 			this.setTemplate();
 			this.model.on("change", this.render, this);
+			this.model.on("destroy", this.hideEl, this);
 		},
 
 		setTemplate: function() {
@@ -55,11 +56,14 @@
 		},
 
 		deleteItem: function() {
-			if (confirm("Удалить элемент?") === true) {
-				this.$el.children().css("background-color", "#f08080");
-				this.$el.hide(600);
+			if (confirm("Do you really want to delete this?") === true) {
 				this.model.destroy();
 			}  
+		},
+
+		hideEl: function() {
+			this.$el.children().css("background-color", "#f08080");
+			this.$el.hide(600);
 		},
 
 		render: function() {

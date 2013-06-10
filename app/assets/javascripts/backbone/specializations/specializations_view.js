@@ -7,6 +7,7 @@
   		initialize: function() {
 
   			this.specs = new SpecsCollection();
+  			this.specs.fetch();
   			this.specs.on("reset", this.render, this);
 
   			Backbone.Mediator.sub("check_spec",this.checkSpec,this);
