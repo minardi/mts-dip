@@ -276,3 +276,15 @@ float:none;
   background: #5ce0da;
 }
 
+
+#new_schedule{
+  width: 250px;
+
+  tr td {
+    font-size: 10pt;
+    
+    input {
+      width: 40px;
+    }
+  }  
+}

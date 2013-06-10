@@ -46,13 +46,19 @@
   		doctorsMode: function() {
   			var spec_list = new app.SpecsCollection();
 
-  			spec_list.on("reset", function(list) {list.each(this.addSpectoSelect)}, this);
+  			spec_list.fetch();
+  			spec_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
 			this.template = this.doctors_tpl;
 			this.creation_method = this.createDoctor;			
   		},
 
   		scheduleMode: function() {
+  			var doc_list = new app.DoctorsCollection();
+
+  			doc_list.fetch();
+  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
   			this.template = this.schedule_tpl;
+  			this.creation_method = this.createSchedule;
   		},
 
   		usersMode: function() {
@@ -72,12 +78,12 @@
 			//this.remove();
 		},
 
-		addSpectoSelect: function(model) {
+		addToSelect: function(model) {
 			var option = document.createElement("option");
 
 			$(option).text(model.get("name")).attr("value", model.get("id"));
-			$("#spec_select_list").append(option);
-			console.log("added spec");
+			$("#select_list").append(option);
+			console.log("item added to select");
 		},
 
 		createSpec: function() {
@@ -89,8 +95,24 @@
 		createDoctor: function() {
 			this.model.set({name: $("#doctor_name").val(),
 						    duration: $("[name='dur']:checked").val(),
-						    specialization_id: $("spec_select_list").val()});
+						    specialization_id: $("#select_list").val()});
 
+			this.model.save();
+			this.remove();
+		},
+
+		createSchedule: function() {
+			var schedule = {
+					sun: {}, mon: {}, tue: {}, wed: {}, thu: {}, fri: {}, sat: {}
+				};
+
+			_.each(schedule, function(i, day, week) {
+				week[day]["start"] = $("#" + day + "-start").val(); 
+				week[day]["end"] = $("#" + day + "-end").val();
+			});
+
+			this.model.set({schedule: schedule,
+							doctor_id: $("#select_list").val()});
 			this.model.save();
 			this.remove();
 		},
@@ -106,7 +128,7 @@
 			console.log(this.model.toJSON());
 
 			this.model.save();
-			//doesn't saving. I think, pronblem will be solved after adding devise
+			//doesn't saving. I think, problem will be solved after adding devise
 
 			if (role === "Doctor") {
 				this.model = new app.DoctorModel();
@@ -116,7 +138,7 @@
 			} else {
 				this.remove();
 			}
-			//check, will doctor model (tr) be added to users board or not 
+			//check, will DOCTOR model (tr) be added to USERS board or not 
 		},
 
 		render: function() {
