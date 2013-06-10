@@ -113,7 +113,7 @@
 
 
         if (app.userEx.getRole() == "patient") {
-            $('#current_schedules').addClass("hidden");            
+            $('#current_schedules').addClass("hidden");
             $('#week_user_tickets').removeClass("hidden");
           }
 

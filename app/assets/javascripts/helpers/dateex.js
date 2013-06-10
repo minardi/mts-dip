@@ -65,8 +65,6 @@
 
 	function getCurrentWeek(param) {
 
-		
-        
 		var key,
 			currentWeek = {
 
@@ -79,8 +77,6 @@
 			"sat": 0,
 
             };
-            
-        
         
         this.date.setDate(this.date.getDate() - this.date.getDay());
         
@@ -90,15 +86,15 @@
 			currentWeek[key] = (param["transport"] == true) ? this.dateTransFormat() : this.dateViewFormat();
             this.date.setDate(this.date.getDate() + 1);
 		}
-    
-          
+
+         this.date.setDate(this.date.getDate() - 1);
 
 		return currentWeek;
 	}
 
 	function nextWeek() {
         
-        var k = 6 - this.date.getDay();
+        var k = 7 - this.date.getDay();
 
 		this.date.setDate(this.date.getDate()+k);
 

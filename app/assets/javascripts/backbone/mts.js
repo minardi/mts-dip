@@ -13,5 +13,7 @@
 
 //= require ./history_home/config
 
+//= require ./navigate_week/config
+
 //= require ./admin/config
 

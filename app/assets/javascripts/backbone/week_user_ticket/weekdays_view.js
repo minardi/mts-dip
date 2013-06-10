@@ -4,22 +4,22 @@
 
     template: JST["backbone/week_user_ticket/week_days_template"],
 
-    events: {
-      "click #user_week_next" : "nextWeek",
-      "click #user_week_prev" : "prevWeek"
-    },
 
   
-    initialize: function() {    
-
+    initialize: function() {   
+      
       this.$el.append(this.template);  
 
       this.weekDays = new WeekDaysCollection();
 
       this.date = new DateEx();
 
-
       this.addWeekRows();
+
+      this.navigate = new NavigateWeek(this.date,this);
+      
+      this.$el.parent().append(this.navigate.el);
+      
     },
  
     addWeekRows: function() {
@@ -58,22 +58,12 @@
 
       this.weekDays.reset();
       
-      $('#week_user_tickets').html("");
-      $('#week_user_tickets').append(this.template);
-     
+      this.$el.html("");
+      this.$el.append(this.template);
+
       this.addWeekRows();
     },
 
-    nextWeek: function() {
-
-      this.date.nextWeek();
-      this.refresh();
-    },
-
-    prevWeek: function() {
-      this.date.prevWeek();
-      this.refresh();
-    },
 
     render: function() {     
       this.$el.children("table").html(this.template());
