@@ -34,8 +34,14 @@
 			}
 
 			this.model.on("sync", function() {mts.current_board.collection.add(this.model)}, this);
-			this.model.on("destroy", function() {mts.current_board.collection.remove(this.model)}, this);
+			this.model.once("destroy", function() {mts.current_board.collection.remove(this.model)}, this);
 			//this.model.on("sync", mts.current_board.render, mts.current_board);
+
+			this.model.on("error", this.modelError, this);
+		},
+
+		modelError: function(model, error) {
+			Backbone.Mediator.pub("error", {el: this.el, message: error}); 
 		},
 
 		specsMode: function() {
@@ -64,7 +70,6 @@
   		usersMode: function() {
   			this.template = this.users_tpl;
   			this.creation_method = this.createUser;
-  			this.model.setUrl();
   		},
 
 		cancelCreation: function() {
@@ -89,7 +94,7 @@
 		createSpec: function() {
 			this.model.set("name", $("#spec_name").val());
 			this.model.save();
-			this.remove();
+			if (this.model.isValid) this.remove();
 		},
 
 		createDoctor: function() {
@@ -98,7 +103,7 @@
 						    specialization_id: $("#select_list").val()});
 
 			this.model.save();
-			this.remove();
+			if (this.model.isValid) this.remove();
 		},
 
 		createSchedule: function() {
@@ -114,7 +119,7 @@
 			this.model.set({schedule: schedule,
 							doctor_id: $("#select_list").val()});
 			this.model.save();
-			this.remove();
+			if (this.model.isValid) this.remove();
 		},
 
 		createUser: function() {
@@ -136,7 +141,7 @@
 				this.render();
 				console.log(this.model.toJSON());
 			} else {
-				this.remove();
+				if (this.model.isValid) this.remove();
 			}
 			//check, will DOCTOR model (tr) be added to USERS board or not 
 		},
