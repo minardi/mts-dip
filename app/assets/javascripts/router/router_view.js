@@ -5,6 +5,8 @@
         tab2Template : JST["router/tab2_template"],
         
         tab1Template : JST["router/tab1_template"],
+
+        tab3Template : JST["router/tab3_template"],
         
         createUser : function() {
             
@@ -146,6 +148,28 @@
 
 
         },
+
+        hadlerShowAdminPanel : function() {
+
+            this.renderShowAdminPanel();
+
+            mts.administration = (mts.administration) 
+                ? 
+                    mts.administration 
+                : 
+                    new app.AdminNavigationView({el : $("#admin_navigation")});
+        },
+
+        renderShowAdminPanel : function(){
+
+            this.$el.children('.action-block').addClass('hidden');
+        
+            if(this.$el.children('#tab3').length === 0){
+                this.$el.append(this.tab3Template());
+            } else {
+                this.$el.children('#tab3').removeClass('hidden');
+            }
+        }
         
         
     });
