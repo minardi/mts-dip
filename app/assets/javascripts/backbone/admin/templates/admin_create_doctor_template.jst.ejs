@@ -1,15 +1,16 @@
 <div class="modal-header">
-    <h5 class="muted">New doctor</h5>
+    <h5 class="muted">Enter values:</h5>
 </div>
 <div class="modal-body">
-    <p><input id="doctor_name" type="text" size="15" placeholder="Name"></p>
-    <select id="spec_select_list" name="doctor_spec">
-        <option disabled>Select a spec</option>
+    <span>Doctor name:</span>
+    <p><input id="doctor_name" type="text" size="15" value="<%= name%>"></p>
+    <span>Specialization</span>
+    <select id="select_list" name="doctor_spec">
     </select>
 
     	<h6 class="muted">choose duration</h6>
     <p>
-	    <input name="dur" type="radio" value="15"> 15
+	    <input name="dur" type="radio" checked="checked" value="15"> 15
 	    <input name="dur" type="radio" value="30"> 30
 	    <input name="dur" type="radio" value="45"> 45
 	    <input name="dur" type="radio" value="60"> 60

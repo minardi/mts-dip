@@ -33,19 +33,14 @@
 
 
     selSpecFromUrl: function(sel_id) {
-      this.view.handlerIndex();
+        this.view.handlerIndex();
 
-      mts.historyHome.selSpec(sel_id);
+        mts.historyHome.selSpec(sel_id);
     },
 
     showAdminPanel: function() {
-      $('#tab1').addClass('hidden');
-      $('#tab2').addClass('hidden');
-      $('#tab3').removeClass('hidden');
-
-      mts.administration = (mts.administration) ? 
-        mts.administration : 
-        new app.AdminNavigationView({el:$("#admin_navigation")});
+    
+        this.view.hadlerShowAdminPanel();
 
     }
 

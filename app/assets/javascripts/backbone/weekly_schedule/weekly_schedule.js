@@ -3,20 +3,16 @@
 app.WeeklyModel = Backbone.Model.extend({
         
         defaults : {
-            schedule : {} ,
-            doctor_id : 0 ,
-            doctor_name : '' ,
-            doctor_duration : 0 ,
+            schedule : {},
+            doctor_id : 1,
+            doctor_name : '',
+            selected : false,
+            doctor_duration : 0
         },
         
         urlRoot : '/weekly_schedules',
         
-        selected : false,
-        
-        initialize : function() {
-            
 
-        },
         
         selectDayByRule : function(day, selected) {
             
@@ -31,7 +27,21 @@ app.WeeklyModel = Backbone.Model.extend({
 
             return (day) ? this.attributes.schedule[day]['selected'] : undefined; 
         },
-        
+
+        setSelected : function(trigger){
+
+            if(trigger === true || trigger === false){
+                this.set({selected : trigger});
+            } else {
+                this.set({selected : (this.attributes.selected) ? false : true});
+            }
+            
+        },
+
+        isSelected : function() {
+            return this.attributes.selected;
+        },
+         
         dayTrigger : function(day, selected){
             
             if(day){
@@ -75,7 +85,7 @@ app.WeeklyModel = Backbone.Model.extend({
 
         validate: function(attrs) {
 
-            if (attrs.doctor_id === 0) return "Please set doctor id";
+            if ((typeof attrs.doctor_id) === "number") return "Please set doctor id";
         }
         
  });

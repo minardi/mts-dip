@@ -52,7 +52,9 @@
 		},
 
 		editItem: function() {
-			console.log("item edit method");
+			var edit_view = new app.AdminCreateView({model: this.model,
+                                                     board_type: this.options.board_type});
+            $("#admin_panel").prepend(edit_view.render().el);
 		},
 
 		deleteItem: function() {
