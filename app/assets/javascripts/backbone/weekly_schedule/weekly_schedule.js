@@ -71,6 +71,11 @@ app.WeeklyModel = Backbone.Model.extend({
         getCurrent : function(doctor_id) {
 
             this.urlRoot = "/weekly_schedules/" + doctor_id +"/getduration.json";
+        },
+
+        validate: function(attrs) {
+
+            if (attrs.doctor_id === 0) return "Please set doctor id";
         }
         
  });

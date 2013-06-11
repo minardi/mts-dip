@@ -4,8 +4,13 @@
  
 		is_selected: false,
 
-		urlRoot: "/specializations"
-		
+		urlRoot: "/specializations",
+
+		validate: function(attrs) {
+   			if (!attrs.name) {
+      			return "Spec must have a name";
+    		}
+		}
 	});
 
 })(window);
