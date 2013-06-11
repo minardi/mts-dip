@@ -38,6 +38,10 @@
       return this.date.getCurrentWeek({"transport":true});
     },
 
+    getWeekDotte: function() {
+      return this.date.getCurrentWeek({"transport":false});
+    },    
+
     render: function() {
 
        this.$el.addClass("nav_week");

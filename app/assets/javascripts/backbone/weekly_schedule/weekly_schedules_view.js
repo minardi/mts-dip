@@ -27,6 +27,10 @@
             this.collection.on('change:selected', this.handlerRenderSchedule, this);
             this.collection.on('select:schedule_day', this.isFullOfCell, this);
             this.collection.on('weekly_error', this.throwError, this);
+
+             this.navigate = new app.NavigateWeek(this.refresh,this);
+
+             this.$el.parent().append(this.navigate.el);
             
             this.render();
         },
@@ -79,11 +83,10 @@
         
         renderDate : function() {
             
-            var date = new app.DateEx(),
-                schedule = date.getCurrentWeek({transport : false});
-            
-            date = new app.DateEx();
-            this.collection.days = date.getCurrentWeek({transport : true});
+            var schedule = this.navigate.getWeekDotte();
+
+
+            this.collection.days = this.navigate.getWeek();
 
             return schedule;
             
@@ -97,7 +100,7 @@
         },
         
         isShow: function() {
-            
+            console.log("hi"); 
             var collection = this.collection.activeDoctors();
 
             if(collection.length > 0) {

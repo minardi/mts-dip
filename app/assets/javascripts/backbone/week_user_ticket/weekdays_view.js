@@ -10,10 +10,10 @@
       
       this.$el.append(this.template);  
 
-      this.weekDays = new WeekDaysCollection();
+      this.weekDays = new app.WeekDaysCollection();
 
 
-      this.navigate = new NavigateWeek(this.refresh,this);
+      this.navigate = new app.NavigateWeek(this.refresh,this);
 
       this.addWeekRows();
       
@@ -31,7 +31,7 @@
 
         parse_date = date.split("-");
         
-        model = new WeekDayModel({
+        model = new app.WeekDayModel({
                                            date  :  parse_date[0],
                                            month : parse_date[1],
                                            year  :  parse_date[2],
@@ -41,7 +41,7 @@
         
         this.weekDays.add(model); 
        
-        view = new WeekDayView({model:model});
+        view = new app.WeekDayView({model:model});
 
         this.$el.children("table").append(view.render().el);
 

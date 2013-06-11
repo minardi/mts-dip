@@ -10,7 +10,7 @@
     is_select: false,
     is_render: false,
 
-    urlRoot: "/doctors",
+    urlRoot: "/doctors" ,
 
     validate: function(attrs) {
 
