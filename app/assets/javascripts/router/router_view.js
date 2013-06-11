@@ -40,7 +40,7 @@
                                    new app.TicketsView();    
 
              
-             //mts.historyHome = mts.historyHome || 
+            // mts.historyHome = mts.historyHome || 
                //                         new app.HistoryView({model: new HistoryHomeModel()});                       
              
          //   mts.weekdays = null;
@@ -106,15 +106,15 @@
                   mts.weekDaysDoctor = new CurrentSchedulesView({el:$("#current_schedules")});
                 }
     
-                $('#current_schedules').removeClass("hidden");
-                $('#week_user_tickets').removeClass("hidden");
+                $('#block_schedules').removeClass("hidden");
+                $('#block_user_tickets').removeClass("hidden");
 
         } 
 
 
         if (app.userEx.getRole() == "patient") {
-            $('#current_schedules').addClass("hidden");
-            $('#week_user_tickets').removeClass("hidden");
+            $('#block_schedules').addClass("hidden");
+            $('#block_user_tickets').removeClass("hidden");
           }
 
         
@@ -124,12 +124,12 @@
               mts.weekDaysUser.refresh()              
              
            } else {                
-               mts.weekDaysUser = new WeekDaysView({el : $('#week_user_tickets')});     
+               mts.weekDaysUser = new WeekDaysView({el : $('#block_user_tickets')});     
            }   
 
         } else if (app.userEx.getRole() == "guest") {
-            $('#current_schedules').addClass("hidden");            
-            $('#week_user_tickets').addClass("hidden");
+            $('#block_schedules').addClass("hidden");            
+            $('#block_user_tickets').addClass("hidden");
         }
 
         },

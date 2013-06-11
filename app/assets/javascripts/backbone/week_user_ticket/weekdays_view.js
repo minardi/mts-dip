@@ -12,19 +12,17 @@
 
       this.weekDays = new WeekDaysCollection();
 
-      this.date = new DateEx();
+
+      this.navigate = new NavigateWeek(this.refresh,this);
 
       this.addWeekRows();
-
-      this.navigate = new NavigateWeek(this.date,this);
       
       this.$el.parent().append(this.navigate.el);
       
     },
  
     addWeekRows: function() {
-      
-      var week = this.date.getCurrentWeek({"transport":true}),
+      var week = this.navigate.getWeek(),
           parse_date,   
           model,
           view;

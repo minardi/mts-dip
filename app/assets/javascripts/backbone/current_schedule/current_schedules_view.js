@@ -10,11 +10,10 @@
 
 				this.fetchSchedule(doctor_id);	
 
-				  this.date = new app.DateEx();
-
-				  this.navigate = new NavigateWeek(this.date,this);
+				 
+				  this.navigate = new NavigateWeek(this.refresh,this);
       
-                  this.$el.parent().prepend(this.navigate.el);
+                  this.$el.parent().append(this.navigate.el);
 
 
 			},
@@ -61,7 +60,7 @@
 			render: function(model) {
 
 				var day_time = model.get("schedule"),
-				    week = this.date.getCurrentWeek({transport:true})
+				    week = this.navigate.getWeek();
 					
 
 				this.$el.html(this.template());

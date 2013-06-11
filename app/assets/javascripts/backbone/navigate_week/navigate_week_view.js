@@ -10,9 +10,12 @@
       "click #user_week_prev" : "prevWeek"
     },
 
-    initialize: function(date,nav_view) {
-      this.nav_view = nav_view;
-      this.date = date; 
+    initialize: function(callback,context) {
+    
+      this.context = context; 
+      this.callback = callback;
+
+      this.date = new DateEx(); 
       this.render(); 
 
     },
@@ -20,14 +23,19 @@
     nextWeek: function() {
 
       this.date.nextWeek();
-      this.nav_view.refresh();
+      this.callback.call(this.context);
 
     },
 
     prevWeek: function() {
       
       this.date.prevWeek();
-      this.nav_view.refresh();
+      this.callback.call(this.context);
+    
+    },
+
+    getWeek: function() {
+      return this.date.getCurrentWeek({"transport":true});
     },
 
     render: function() {

@@ -19,6 +19,7 @@
       Backbone.Mediator.sub('user_login', this.setEventsWithRight, this);
       
       Backbone.Mediator.sub('user_logout', this.unsetEventsWithRight, this);
+
     }, 
 
     unsetEventsWithRight: function() {
@@ -137,6 +138,7 @@
      if (a < 10) return "0"+a;  
      return a;
     },
+
 
     render: function() {
       this.removeClass();
