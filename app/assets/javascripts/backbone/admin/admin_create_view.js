@@ -33,15 +33,18 @@
 					break;
 			}
 
-			this.model.on("sync", function() {mts.current_board.collection.add(this.model)}, this);
-			this.model.once("destroy", function() {mts.current_board.collection.remove(this.model)}, this);
-			//this.model.on("sync", mts.current_board.render, mts.current_board);
+			this.model.on("save", function() {mts.current_board.collection.add(this.model)}, this);
+			this.model.on("destroy", function() {mts.current_board.collection.remove(this.model)}, this);
 
-			this.model.on("error", this.modelError, this);
+			this.model.once("error", /*this.modelError*/  function(model, error) {console.log(error)}, this);
 		},
 
 		modelError: function(model, error) {
 			Backbone.Mediator.pub("error", {el: this.el, message: error}); 
+		},
+
+		modelSave: function(model) {
+			model.trigger("save");
 		},
 
 		specsMode: function() {
@@ -93,8 +96,8 @@
 
 		createSpec: function() {
 			this.model.set("name", $("#spec_name").val());
-			this.model.save();
-			if (this.model.isValid) this.remove();
+			this.model.save({}, {success: this.modelSave});
+			this.remove();
 		},
 
 		createDoctor: function() {
@@ -102,7 +105,7 @@
 						    duration: $("[name='dur']:checked").val(),
 						    specialization_id: $("#select_list").val()});
 
-			this.model.save();
+			this.model.save({}, {success: this.modelSave});
 			if (this.model.isValid) this.remove();
 		},
 
@@ -116,9 +119,10 @@
 				week[day]["end"] = $("#" + day + "-end").val();
 			});
 
-			this.model.set({schedule: schedule,
-							doctor_id: $("#select_list").val()});
-			this.model.save();
+			this.model.set({schedule: schedule, doctor_id: $("#select_list").val()});
+			this.model.save({}, {success: this.modelSave});
+			//doesn't saving. Pavel's tricks??
+
 			if (this.model.isValid) this.remove();
 		},
 
@@ -132,7 +136,7 @@
 
 			console.log(this.model.toJSON());
 
-			this.model.save();
+			this.model.save({}, {success: this.modelSave});
 			//doesn't saving. I think, problem will be solved after adding devise
 
 			if (role === "Doctor") {

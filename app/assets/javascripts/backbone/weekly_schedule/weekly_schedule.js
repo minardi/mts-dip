@@ -85,7 +85,7 @@ app.WeeklyModel = Backbone.Model.extend({
 
         validate: function(attrs) {
 
-            if (attrs.doctor_id === 0) return "Please set doctor id";
+            if ((typeof attrs.doctor_id) === "number") return "Please set doctor id";
         }
         
  });
