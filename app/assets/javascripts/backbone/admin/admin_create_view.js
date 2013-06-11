@@ -31,12 +31,22 @@
 				case "schedule":
 					this.scheduleMode();
 					break;
+				case "tickets":
+					this.ticketsMode();
+					break;
 			}
 
-			this.model.on("save", function() {mts.current_board.collection.add(this.model)}, this);
-			this.model.on("destroy", function() {mts.current_board.collection.remove(this.model)}, this);
+			this.model.on("save", function() { 
+					this.remove(); 
+			}, this);
 
-			this.model.once("error", /*this.modelError*/  function(model, error) {console.log(error)}, this);
+			this.model.on("destroy", function() {
+				mts.current_board.collection.remove(this.model); this.remove();
+			}, this);
+
+			this.model.once("error", /*this.modelError*/  function(model, error) {
+					console.log("An error was occured:", error);
+			}, this);
 		},
 
 		modelError: function(model, error) {
@@ -44,6 +54,7 @@
 		},
 
 		modelSave: function(model) {
+			mts.current_board.collection.add(model);
 			model.trigger("save");
 		},
 
@@ -55,24 +66,30 @@
   		doctorsMode: function() {
   			var spec_list = new app.SpecsCollection();
 
+  			this.template = this.doctors_tpl;
   			spec_list.fetch();
   			spec_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
-			this.template = this.doctors_tpl;
-			this.creation_method = this.createDoctor;			
+			this.creation_method = this.createDoctor;	
+			console.log(this.model);		
   		},
 
   		scheduleMode: function() {
   			var doc_list = new app.DoctorsCollection();
-
+			
+			this.template = this.schedule_tpl;
   			doc_list.fetch();
-  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
-  			this.template = this.schedule_tpl;
+  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);	
   			this.creation_method = this.createSchedule;
   		},
 
   		usersMode: function() {
   			this.template = this.users_tpl;
   			this.creation_method = this.createUser;
+  		},
+
+  		ticketsMode: function() {
+  			this.template = this.tickets_tpl;
+  			this.creation_method = this.createTicket;
   		},
 
 		cancelCreation: function() {
@@ -83,7 +100,6 @@
 
 		performCreation: function() {
 			this.creation_method();
-			//this.remove();
 		},
 
 		addToSelect: function(model) {
@@ -91,13 +107,12 @@
 
 			$(option).text(model.get("name")).attr("value", model.get("id"));
 			$("#select_list").append(option);
-			console.log("item added to select");
+
 		},
 
 		createSpec: function() {
 			this.model.set("name", $("#spec_name").val());
 			this.model.save({}, {success: this.modelSave});
-			this.remove();
 		},
 
 		createDoctor: function() {
@@ -106,7 +121,6 @@
 						    specialization_id: $("#select_list").val()});
 
 			this.model.save({}, {success: this.modelSave});
-			if (this.model.isValid) this.remove();
 		},
 
 		createSchedule: function() {
@@ -121,9 +135,7 @@
 
 			this.model.set({schedule: schedule, doctor_id: $("#select_list").val()});
 			this.model.save({}, {success: this.modelSave});
-			//doesn't saving. Pavel's tricks??
-
-			if (this.model.isValid) this.remove();
+			//doesn't saving. Pavel's tricks?? //Yep!
 		},
 
 		createUser: function() {
@@ -134,7 +146,7 @@
 							password: $("#user_password").val(),
 							role: {key: role} });
 
-			console.log(this.model.toJSON());
+			console.log(this.model);
 
 			this.model.save({}, {success: this.modelSave});
 			//doesn't saving. I think, problem will be solved after adding devise
@@ -143,16 +155,22 @@
 				this.model = new app.DoctorModel();
 				this.doctorsMode();
 				this.render();
-				console.log(this.model.toJSON());
+				console.log(this.model);
 			} else {
 				if (this.model.isValid) this.remove();
 			}
 			//check, will DOCTOR model (tr) be added to USERS board or not 
 		},
 
+		createTicket: function() {
+			//trololo
+			//i need two selects here (for users and doctors)
+		},
+
 		render: function() {
 
-			this.$el.html(this.template());
+			this.$el.html(this.template(this.model.toJSON()));
+			console.log(this.model.toJSON());
 	        return this; 
 	    }
 
