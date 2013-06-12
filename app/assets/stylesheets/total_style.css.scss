@@ -288,7 +288,7 @@ float:none;
     font-size: 10pt;
     
     input {
-      
+      width: 35px;
     }
   }  
 }
@@ -299,4 +299,8 @@ float:none;
 
 #ticket_year {
   width: 40px;
+}
+
+#blocktext {
+  color: red;
 }

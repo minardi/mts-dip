@@ -37,7 +37,12 @@
 			}
 
 			this.model.on("save", function() { 
+				// if (this.model.get("role") === {key:})
 					this.remove(); 
+			}, this);
+
+			this.model.on("save", function() {
+				if (this.model instanceof app.DoctorModel) this.userForDoctor();
 			}, this);
 
 			this.model.on("destroy", function() {
@@ -56,6 +61,15 @@
 		modelSave: function(model) {
 			mts.current_board.collection.add(model, {merge:true});
 			model.trigger("save");
+		},
+
+		userForDoctor: function() {
+			var new_user = new app.UserModel({role: {key: "doctor", doctor_id: this.model.get("id")},
+						  					  name: this.model.get("name")});
+				new_user.switchUrl();
+				new_user.save();
+			
+			console.log(new_user);
 		},
 
 		specsMode: function() {
@@ -86,6 +100,7 @@
   		},
 
   		usersMode: function() {
+  			console.log(this.model instanceof app.UserModel);
   			this.template = this.users_tpl;
   			this.creation_method = this.createUser;
   		},
@@ -160,19 +175,17 @@
 							password: $("#user_password").val(),
 							role: {key: role} });
 
-			console.log(this.model);
-
 			this.model.save({}, {success: this.modelSave});
 			//doesn't saving. I think, problem will be solved after adding devise
 
-			if (role === "Doctor") {
-				this.model = new app.DoctorModel();
-				this.doctorsMode();
-				this.render();
-				console.log(this.model);
-			} else {
-				if (this.model.isValid) this.remove();
-			}
+			// if (role === "doctor") {
+			// 	this.model = new app.DoctorModel();
+			// 	this.doctorsMode();
+			// 	this.render();
+			// 	console.log(this.model);
+			// } else {
+			// 	if (this.model.isValid) this.remove();
+			// }
 			//check, will DOCTOR model (tr) be added to USERS board or not 
 		},
 
