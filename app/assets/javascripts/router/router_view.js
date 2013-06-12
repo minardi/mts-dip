@@ -152,6 +152,8 @@
         hadlerShowAdminPanel : function() {
 
             this.renderShowAdminPanel();
+            //temporary
+            mts.errorProvider = new app.errorProvider();
 
             mts.administration = (mts.administration) 
                 ? 

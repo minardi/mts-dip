@@ -49,13 +49,13 @@
 				mts.current_board.collection.remove(this.model); this.remove();
 			}, this);
 
-			this.model.once("error", /*this.modelError*/  function(model, error) {
+			this.model.once("error", this.modelError  /*function(model, error) {
 					console.log("An error was occured:", error);
-			}, this);
+			}*/, this);
 		},
 
 		modelError: function(model, error) {
-			Backbone.Mediator.pub("error", {el: this.el, message: error}); 
+			Backbone.Mediator.pub("error", {el: $(".modal-body"), message: error}); 
 		},
 
 		modelSave: function(model) {
