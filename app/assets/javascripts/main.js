@@ -11,6 +11,7 @@ var mts = {
               weekDaysDoctor : null,
               nextTickets : null,
               errorProvider : null,
+              hintProvider : null,
               router : null
           };
 

@@ -13,6 +13,7 @@
             app.UserEx.prototype = mts.user_view;
             app.userEx = new app.UserEx();
             mts.errorProvider = new app.errorProvider();
+            mts.hintProvider = new app.hintProvider();
                 
         },
                
@@ -55,7 +56,7 @@
         },
         
         handlerShowHome : function(){
-            
+            console.log("create nextTickets", mts.nextTickets);
             this.renderShowHome();
             
             this.createUser();
@@ -71,9 +72,11 @@
             
             mts.dayTimelines = mts.dayTimelines ||   
                                       new app.DailySchedulesView({el:$("#daily_schedules")});
+                                      
             mts.nextTickets = mts.nextTickets || 
-                                   new app.NextTicketsView({el: $("#next-tickets")});       
-    
+                                   new app.NextTicketsView({el: $("#next-tickets")}); 
+
+        
         },
         
         renderShowHome : function() {

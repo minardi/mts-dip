@@ -17,12 +17,12 @@
     },
 
     index: function() {
-        
+        console.log("console.log");
         this.view.handlerIndex();
      },
 
     showHome: function() {
-
+      console.log("console.log");
         this.view.handlerShowHome();
     },
 
