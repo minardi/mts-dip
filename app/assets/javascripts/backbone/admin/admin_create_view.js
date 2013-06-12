@@ -54,7 +54,7 @@
 		},
 
 		modelSave: function(model) {
-			mts.current_board.collection.add(model);
+			mts.current_board.collection.add(model, {merge:true});
 			model.trigger("save");
 		},
 
@@ -67,20 +67,22 @@
   			var spec_list = new app.SpecsCollection();
 
   			this.template = this.doctors_tpl;
+
   			spec_list.fetch();
   			spec_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+
 			this.creation_method = this.createDoctor;	
-			console.log(this.model);		
   		},
 
   		scheduleMode: function() {
   			var doc_list = new app.DoctorsCollection();
 
 			this.template = this.schedule_tpl;
+
   			doc_list.fetch();
-  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);	
+  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+
   			this.creation_method = this.createSchedule;
-  			console.log(this.model.toJSON());
   		},
 
   		usersMode: function() {
@@ -89,7 +91,16 @@
   		},
 
   		ticketsMode: function() {
-  			this.template = this.tickets_tpl;
+  			var doc_list = new app.DoctorsCollection(),
+  				user_list = new app.UsersCollection();
+  
+  			this.template = this.tickets_tpl;	
+
+  			user_list.fetch();
+  			doc_list.fetch();
+  			user_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+
   			this.creation_method = this.createTicket;
   		},
 
@@ -104,10 +115,12 @@
 		},
 
 		addToSelect: function(model) {
-			var option = document.createElement("option");
+			var option = document.createElement("option"),
+				select = (model instanceof app.UserModel) ? $("#user_select_list") : $("#select_list");
 
 			$(option).text(model.get("name")).attr("value", model.get("id"));
-			$("#select_list").append(option);
+
+			$(select).append(option);
 
 		},
 
@@ -136,7 +149,7 @@
 
 			this.model.set({schedule: schedule, doctor_id: $("#select_list").val()});
 			this.model.save({}, {success: this.modelSave});
-			//doesn't saving. Pavel's tricks?? //Yep!
+			//fix moment with weekly_schedule id/doctor_id
 		},
 
 		createUser: function() {
@@ -164,14 +177,24 @@
 		},
 
 		createTicket: function() {
-			//trololo
-			//i need two selects here (for users and doctors)
+			var status = $("[name='ticket_status']:checked").val();
+
+			this.model.set({doctor_id: +$("#select_list").val(),
+							user_id: +$("#user_select_list").val(),
+							status: status,
+							data: $("#ticket_day").val() + "-" + 
+								  $("#ticket_month").val() + "-" + 
+								  $("#ticket_year").val(),
+							time: $("#ticket_hours").val() + ":" + 
+								  $("#ticket_minutes").val() });
+
+			console.log(this.model.toJSON());
+			this.model.save({}, {success: this.modelSave});
 		},
 
 		render: function() {
 
 			this.$el.html(this.template(this.model.toJSON()));
-			console.log(this.model.toJSON());
 	        return this; 
 	    }
 

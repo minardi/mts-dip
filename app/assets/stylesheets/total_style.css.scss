@@ -277,6 +277,10 @@ float:none;
 }
 
 
+.modal-body select {
+  width: 120px;
+}
+
 #new_schedule{
   width: 250px;
 
@@ -284,7 +288,15 @@ float:none;
     font-size: 10pt;
     
     input {
-      width: 40px;
+      
     }
   }  
+}
+
+#ticket_day, #ticket_month, #ticket_hours, #ticket_minutes {
+  width: 15px;
+}
+
+#ticket_year {
+  width: 40px;
 }
