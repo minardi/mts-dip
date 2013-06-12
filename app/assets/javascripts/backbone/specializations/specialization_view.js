@@ -9,6 +9,21 @@
 		events: {
 			"click": "specSelect"
 		},
+		
+		initialize: function() {
+		  console.log('spec initialize')          
+          Backbone.Mediator.sub("check_spec",this.checkSpec,this)
+		},
+
+
+
+  		checkSpec: function(attr) {
+  		   if (this.model.get("id") != attr["id"]) return ;
+           console.log("specializations");  
+           this.$el.addClass("selected_spec");		   
+  		   this.model.is_selected = true;
+ 
+  		},
 
 		specSelect: function() {
    

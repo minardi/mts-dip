@@ -5,9 +5,6 @@
   		model: app.SpecModel,
 		url: '/specializations.json',
 
-  		initialize: function() {
-  		 	this.fetch();	
- 		}
 	});
 
 })(window);

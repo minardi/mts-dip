@@ -8,7 +8,14 @@
 
 				var doctor_id = app.userEx.getDoctorId();
 
-				this.fetchSchedule(doctor_id);				
+				this.fetchSchedule(doctor_id);	
+
+				 
+				  this.navigate = new NavigateWeek(this.refresh,this);
+      
+                  this.$el.parent().append(this.navigate.el);
+
+
 			},
 
 			fetchSchedule: function(doctor_id) {
@@ -53,20 +60,18 @@
 			render: function(model) {
 
 				var day_time = model.get("schedule"),
-					dateex = new app.DateEx();
+				    week = this.navigate.getWeek();
+					
 
 				this.$el.html(this.template());
-				dateex.date.setDate(dateex.date.getDate() - dateex.date.getDay());
+				
+                 _.each(week,function(date,day){
 
-				for(key in day_time) {
-
-				    this.addSchedule({ doctor_id: model.get("doctor_id"),
-				    				   day: dateex.dateTransFormat(),
-				    				   duration: model.get("doctor_duration"),
-				    				   schedule: day_time[key]["start"] + " - " + day_time[key]["end"] });
-
-				    dateex.date.setDate(dateex.date.getDate() + 1);
-		    	}
+                        this.addSchedule({ doctor_id: model.get("doctor_id"),
+				    	day: date,
+				    	duration: model.get("doctor_duration"),
+				     	schedule: day_time[day]["start"] + " - " + day_time[day]["end"] });
+                 },this)
 	
 				return this;
 			}		

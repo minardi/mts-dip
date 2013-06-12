@@ -12,9 +12,9 @@
 		current_dashboard_view : null,
 
 		itemSelect: function() {
-			this.current_dashboard_view ? this.current_dashboard_view.remove() : null;
-   			this.current_dashboard_view = new app.AdminDashboardView({board_type:this.model.get("name").toLowerCase(),
-   																	 el:$("#admin_dashboard")});
+
+			if (mts.current_board) mts.current_board.remove();
+   			mts.current_board = new app.AdminDashboardView({board_type:this.model.get("name").toLowerCase()});
 
 		},
 

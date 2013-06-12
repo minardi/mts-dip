@@ -242,11 +242,49 @@ float:none;
   height: 18px;
 }
 
-#admin_create {
-  position: absolute;
-  left: 160px;
-  top: -20%;
-  margin: 0;
+.admin_create {
+  position: realtive;
+
+  /*top: -20%;*/
+  margin: 0 auto;
 
   width: 300px;
+}
+
+
+.nav_week
+{
+  position: relative;
+  text-align: center;
+  margin: 10px 0px 70px;
+}
+
+.nav_week div
+{
+  cursor: pointer;
+  float: left;
+  width: 100px;
+  padding: 2px;
+  background: #55cac5;
+  margin-left: 15px;
+  border-radius: 16px;  
+  
+}
+
+.nav_week div:hover
+{
+  background: #5ce0da;
+}
+
+
+#new_schedule{
+  width: 250px;
+
+  tr td {
+    font-size: 10pt;
+    
+    input {
+      width: 40px;
+    }
+  }  
 }

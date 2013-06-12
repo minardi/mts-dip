@@ -15,18 +15,18 @@
         removeSchedule : function(data) {
             var model = this.haveModel(data.id);
                 if (model) {
-                    model.set({selected : false}); 
+                    model.setSelected(false); 
                 } else {
                     console.warn('something wrong with schedule remove function');
                 }
         },
         
         addHandler : function(data) {
-            
+
             var model = this.haveModel(data.id);
             
             if(model) {
-                model.set({selected : true}); 
+                model.setSelected(true); 
             } else {
                 this.getModel(data);
             }
@@ -43,15 +43,14 @@
         },
         
         getModel : function(data) {
-            
+
             var model =  new this.model({
                                             id : data.id,
                                             doctor_name : data.name,
                                             doctor_duration : data.duration,
-                                            selected : false 
                                         }
             );
-            
+
             this.add(model);
             
             model.on('sync', this.addModel, this);
@@ -76,9 +75,7 @@
             
             model.scheduleStart(this.days);
             
-            model.set({
-                selected : true
-            })
+            model.setSelected(true);
         },
 
         errorHandler : function(model, request){

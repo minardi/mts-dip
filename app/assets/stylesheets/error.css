@@ -78,4 +78,6 @@
     opacity: 0;
     border-radius: 7px;
     position: absolute;
+    z-index: 99999;
 }
+

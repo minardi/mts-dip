@@ -8,7 +8,16 @@
     },
 
     is_select: false,
-    is_render: false
+    is_render: false,
+
+    urlRoot: "/doctors" ,
+
+    validate: function(attrs) {
+
+      if (!attrs.name) {
+          return "Doctor must have a name";
+      }
+    }
 
   });
 

@@ -5,6 +5,8 @@
         tab2Template : JST["router/tab2_template"],
         
         tab1Template : JST["router/tab1_template"],
+
+        tab3Template : JST["router/tab3_template"],
         
         createUser : function() {
             
@@ -22,7 +24,6 @@
             this.renderIndex();
             
             this.createUser();
-        
             mts.specializationList = mts.specializationList || 
                                         new app.SpecsView({el:$("#specializations")});
                        
@@ -41,6 +42,13 @@
             mts.ticketsView = mts.ticketsView || 
                                    new app.TicketsView();    
 
+            mts.nextTickets = mts.nextTickets || 
+                                   new app.NextTicketsView({el: $("#next-tickets")}); 
+            // mts.historyHome = mts.historyHome || 
+               //                         new app.HistoryView({model: new HistoryHomeModel()});                       
+             
+         //   mts.weekdays = null;
+
 
         },
        
@@ -56,7 +64,7 @@
         },
         
         handlerShowHome : function(){
-            console.log("create nextTickets", mts.nextTickets);
+
             this.renderShowHome();
             
             this.createUser();
@@ -72,11 +80,7 @@
             
             mts.dayTimelines = mts.dayTimelines ||   
                                       new app.DailySchedulesView({el:$("#daily_schedules")});
-                                      
-            mts.nextTickets = mts.nextTickets || 
-                                   new app.NextTicketsView({el: $("#next-tickets")}); 
-
-        
+ 
         },
         
         renderShowHome : function() {
@@ -104,15 +108,15 @@
                   mts.weekDaysDoctor = new CurrentSchedulesView({el:$("#current_schedules")});
                 }
     
-                $('#current_schedules').removeClass("hidden");
-                $('#week_user_tickets').removeClass("hidden");
+                $('#block_schedules').removeClass("hidden");
+                $('#block_user_tickets').removeClass("hidden");
 
         } 
 
 
         if (app.userEx.getRole() == "patient") {
-            $('#current_schedules').addClass("hidden");            
-            $('#week_user_tickets').removeClass("hidden");
+            $('#block_schedules').addClass("hidden");
+            $('#block_user_tickets').removeClass("hidden");
           }
 
         
@@ -122,12 +126,12 @@
               mts.weekDaysUser.refresh()              
              
            } else {                
-               mts.weekDaysUser = new WeekDaysView({el : $('#week_user_tickets')});     
+               mts.weekDaysUser = new WeekDaysView({el : $('#block_user_tickets')});     
            }   
 
         } else if (app.userEx.getRole() == "guest") {
-            $('#current_schedules').addClass("hidden");            
-            $('#week_user_tickets').addClass("hidden");
+            $('#block_schedules').addClass("hidden");            
+            $('#block_user_tickets').addClass("hidden");
         }
 
         },
@@ -144,6 +148,28 @@
 
 
         },
+
+        hadlerShowAdminPanel : function() {
+
+            this.renderShowAdminPanel();
+
+            mts.administration = (mts.administration) 
+                ? 
+                    mts.administration 
+                : 
+                    new app.AdminNavigationView({el : $("#admin_navigation")});
+        },
+
+        renderShowAdminPanel : function(){
+
+            this.$el.children('.action-block').addClass('hidden');
+        
+            if(this.$el.children('#tab3').length === 0){
+                this.$el.append(this.tab3Template());
+            } else {
+                this.$el.children('#tab3').removeClass('hidden');
+            }
+        }
         
         
     });

@@ -7,16 +7,13 @@
   		initialize: function() {
 
   			this.specs = new SpecsCollection();
+  			this.specs.fetch();
   			this.specs.on("reset", this.render, this);
-  			Backbone.Mediator.sub("check_spec",this.checkSpec,this)
+
+  			Backbone.Mediator.sub("check_spec",this.checkSpec,this);
   		},
 
-  		checkSpec: function(attr) {
-  		   var model = this.specs.where({"id":attr["id"]});
-  		   //model.model.is_selected = true;
-           //console.log(this.specs);
-           console.log(this.specs); 
-  		},
+  		
 		
 		addSpec: function(model) {
 
