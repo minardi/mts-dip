@@ -6,7 +6,8 @@
     background-color: #ff0000;
     padding:10px;
     height:auto;
-    border-radius:7px;   
+    border-radius:7px;  
+    z-index: 99999; 
 }
 
 .warningMessage
@@ -17,7 +18,8 @@
     background-color: #FACC2E;
     padding:10px;
     height:auto;
-    border-radius:7px;   
+    border-radius:7px; 
+    z-index: 99999;  
 }
 
 #message {
