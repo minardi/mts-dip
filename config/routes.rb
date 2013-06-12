@@ -13,6 +13,8 @@ MTSDip::Application.routes.draw do
 
   resources :specializations
 
+  resources :weekly_schedules
+
   # resources :sessions, only: [:new, :create, :destroy]
 
   # match '/signup',  to: 'users#new'
@@ -29,9 +31,9 @@ MTSDip::Application.routes.draw do
   # match '/doctors/:specialization_id' => "doctors#index"
   resources :doctors
   
-  get 'weekly_schedules' => 'weekly_schedules#index'
+  # get 'weekly_schedules' => 'weekly_schedules#index'
     
-  get 'weekly_schedules/:id' => 'weekly_schedules#show'
+  # get 'weekly_schedules/:id' => 'weekly_schedules#show'
   
   match 'weekly_schedules/:id/getduration' => 'weekly_schedules#getduration'
 

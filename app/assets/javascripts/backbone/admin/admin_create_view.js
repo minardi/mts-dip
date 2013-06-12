@@ -75,11 +75,12 @@
 
   		scheduleMode: function() {
   			var doc_list = new app.DoctorsCollection();
-			
+
 			this.template = this.schedule_tpl;
   			doc_list.fetch();
   			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);	
   			this.creation_method = this.createSchedule;
+  			console.log(this.model.toJSON());
   		},
 
   		usersMode: function() {
