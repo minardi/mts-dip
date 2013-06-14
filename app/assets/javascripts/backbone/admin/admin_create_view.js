@@ -41,20 +41,19 @@
 					this.remove(); 
 			}, this);
 
-			this.model.on("save", function() {
+			/*this.model.on("save", function() {
 				if (this.model instanceof app.DoctorModel) this.userForDoctor();
-			}, this);
+			}, this);*/
 
 			this.model.on("destroy", function() {
 				mts.current_board.collection.remove(this.model); this.remove();
 			}, this);
 
-			this.model.once("error", this.modelError  /*function(model, error) {
-					console.log("An error was occured:", error);
-			}*/, this);
+			this.model.on("error", this.modelError, this);
 		},
 
 		modelError: function(model, error) {
+			console.log(error);
 			Backbone.Mediator.pub("error", {el: $(".modal-body"), message: error}); 
 		},
 
@@ -63,13 +62,19 @@
 			model.trigger("save");
 		},
 
-		userForDoctor: function() {
-			var new_user = new app.UserModel({role: {key: "doctor", doctor_id: this.model.get("id")},
-						  					  name: this.model.get("name")});
-				new_user.switchUrl();
-				new_user.save();
-			
-			console.log(new_user);
+		userForDoctor: function(model) {
+			var doc_user = new app.UserModel();
+
+			doc_user.set({name: model.get("name"), 
+						  email: $("#user_email").val(),
+						  password: $("#user_password").val(),
+						  role: {key: "doctor",
+								 doctor_id: model.get("id")} });
+
+			console.log(model.get("id"), doc_user);
+			doc_user.switchUrl();
+			doc_user.save();
+
 		},
 
 		specsMode: function() {
@@ -100,7 +105,7 @@
   		},
 
   		usersMode: function() {
-  			console.log(this.model instanceof app.UserModel);
+  			//console.log(this.model instanceof app.UserModel);
   			this.template = this.users_tpl;
   			this.creation_method = this.createUser;
   		},
@@ -145,11 +150,28 @@
 		},
 
 		createDoctor: function() {
-			this.model.set({name: $("#doctor_name").val(),
-						    duration: $("[name='dur']:checked").val(),
-						    specialization_id: $("#select_list").val()});
+			var name = $("#doctor_name").val(),
+				duration = $("[name='dur']:checked").val(),
+				specialization_id = $("#select_list").val(),
+				email = $("#user_email").val(),
+				password = $("#user_password").val(),
+				doc_user;
 
-			this.model.save({}, {success: this.modelSave});
+			this.model.set({name: name,
+						    duration: duration,
+						    specialization_id: specialization_id});
+
+			//this.model.on("save", , this);
+			this.model.save({}, {success: this.userForDoctor});
+
+
+
+			if ((email != "") && (password != "")) {
+
+				
+
+			} 
+
 		},
 
 		createSchedule: function() {
@@ -175,6 +197,7 @@
 							password: $("#user_password").val(),
 							role: {key: role} });
 
+			this.model.switchUrl();
 			this.model.save({}, {success: this.modelSave});
 			//doesn't saving. I think, problem will be solved after adding devise
 

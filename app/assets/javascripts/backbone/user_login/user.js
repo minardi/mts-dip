@@ -3,10 +3,10 @@
   app.UserModel = Backbone.Model.extend({
           
     defaults : {
-        id : 0,
-        email : 'x@xxxxx.xxx',
-        password : '12345',
-        name : 'Newuser',
+        //id : 0,
+        email : '',
+        password : '',
+        name : '',
         login : false,
         role : {
                  key: 'guest'
@@ -15,12 +15,8 @@
 
     url : 'users/login.json',
 
-    //validate: function(attrs) {
-
-    urlRoot : '/users',
-
     switchUrl: function() {
-      this.url = this.urlRoot;
+      this.url = "/users";
     }
     //,
 
