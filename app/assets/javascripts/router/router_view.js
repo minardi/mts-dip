@@ -15,6 +15,7 @@
             app.UserEx.prototype = mts.user_view;
             app.userEx = new app.UserEx();
             mts.errorProvider = new app.errorProvider();
+            mts.hintProvider = new app.hintProvider();
                 
         },
                
@@ -41,7 +42,8 @@
             mts.ticketsView = mts.ticketsView || 
                                    new app.TicketsView();    
 
-             
+            mts.nextTickets = mts.nextTickets || 
+                                   new app.NextTicketsView({el: $("#next-tickets")}); 
             // mts.historyHome = mts.historyHome || 
                //                         new app.HistoryView({model: new HistoryHomeModel()});                       
              
@@ -62,7 +64,7 @@
         },
         
         handlerShowHome : function(){
-            
+
             this.renderShowHome();
             
             this.createUser();
@@ -78,9 +80,7 @@
             
             mts.dayTimelines = mts.dayTimelines ||   
                                       new app.DailySchedulesView({el:$("#daily_schedules")});
-            mts.nextTickets = mts.nextTickets || 
-                                   new app.NextTicketsView({el: $("#next-tickets")});       
-    
+ 
         },
         
         renderShowHome : function() {
@@ -152,6 +152,8 @@
         hadlerShowAdminPanel : function() {
 
             this.renderShowAdminPanel();
+            //temporary
+            mts.errorProvider = new app.errorProvider();
 
             mts.administration = (mts.administration) 
                 ? 

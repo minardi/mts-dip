@@ -1,6 +1,6 @@
 (function(app) {
 
-	app.AdminDashboardView = Backbone.View.extend({
+  app.AdminDashboardView = Backbone.View.extend({
 
         tagName: "table",
 
@@ -17,55 +17,58 @@
         schedule_tpl: JST["backbone/admin/templates/admin_schedules_template"],
         tickets_tpl: JST["backbone/admin/templates/admin_tickets_template"],
         users_tpl: JST["backbone/admin/templates/admin_users_template"],
-			
-  		initialize: function() {
+      
+      initialize: function() {
 
   			switch (this.options.board_type) {
 
-  				case "specializations": this.specsMode();
-  					break;
-  				case "doctors": this.doctorsMode();
-  					break;
-  				case "schedule": this.scheduleMode();
-  					break;
-  				case "tickets": this.ticketsMode();
-  					break;
-  				case "users": this.usersMode();
-  					break;
-  			}
+          case "specializations": this.specsMode();
+            break;
+          case "doctors": this.doctorsMode();
+            break;
+          case "schedule": this.scheduleMode();
+            break;
+          case "tickets": this.ticketsMode();
+            break;
+          case "users": this.usersMode();
+            break;
+        }
+
 
  			this.collection.fetch();
   			this.collection.on("reset", this.render, this);
             this.collection.on("add", this.addItem, this);
   		},
 
-  		specsMode: function() {
+
+      specsMode: function() {
 
   			this.template = this.specs_tpl;
             this.collection = new app.SpecsCollection();
 
   		},
 
-  		doctorsMode: function() {
+      doctorsMode: function() {
 
   			this.template = this.doctors_tpl;
             this.collection = new app.DoctorsCollection();
 
   		},
 
-  		scheduleMode: function() {
+
+      scheduleMode: function() {
 
   			this.template = this.schedule_tpl;
             this.collection = new app.WeeklyCollection();
   		},
 
-  		ticketsMode: function() {
+      ticketsMode: function() {
 
   			this.template = this.tickets_tpl;
             this.collection = new app.TicketsCollection();
   		},
 
-  		usersMode: function() {
+      usersMode: function() {
 
   			this.template = this.users_tpl;
             this.collection = new app.UsersCollection();

@@ -22,7 +22,6 @@
 
             "keydown"                 : "checkEnter", 
             "click #btn_login"        : "userLogin",
-            "click #close"            : "hideError",
             "click #home"             : "routHome",
             "click #private_schedule" : "routPrivateSchedule",
             "click #exit"             : "userLogout"
@@ -51,8 +50,7 @@
             //add check user role before login and show message of block
             if (this.user.get('role') == 'blocked') {
 
-                $("#blocked_user").removeClass("hidden");
-                setTimeout(this.hideError, 3000);
+                Backbone.Mediator.pub("error", {el:$('#btn_login'), message:"Your account was BLOCKED! You have more than three missed reception!"});
 
             } else {
                 // check: user come in or not
@@ -71,16 +69,9 @@
 
                 } else {
                 
-                    $("#login_error").removeClass("hidden");
-                    setTimeout(this.hideError, 3000);
+                    Backbone.Mediator.pub("error", {el:$('#btn_login'), message:"Login Error!</strong>Check input items!"});
                 }
             }
-        },
-
-        //add hide message of block
-        hideError: function() {
-            $("#login_error").hide();
-            $("#blocked_user").hide();
         },
 
         routHome: function() {
@@ -102,8 +93,8 @@
             $("#tab2").addClass("hidden");
             $("#next-tickets").addClass("hidden");
             
-            this.user.clear();
-
+            //this.user.clear();
+            this.user = new app.UserModel();
             Backbone.Mediator.pub('user_logout', 
                                                 {
                                                     id : this.user.get('id'),

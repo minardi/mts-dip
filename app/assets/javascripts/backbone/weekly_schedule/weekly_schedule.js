@@ -3,7 +3,36 @@
 app.WeeklyModel = Backbone.Model.extend({
         
         defaults : {
-            schedule : {},
+            schedule : {
+                sun : {
+                    start: "8:00",
+                    end: "17:00"
+                },
+                mon : {
+                    start: "8:00",
+                    end: "17:00"
+                },
+                tue : {
+                    start: "8:00",
+                    end: "17:00"
+                },
+                wed : {
+                    start: "8:00",
+                    end: "17:00"
+                },
+                thu : {
+                    start: "8:00",
+                    end: "17:00"
+                },
+                fri : {
+                    start: "8:00",
+                    end: "17:00"
+                },
+                sat : {
+                    start: "8:00",
+                    end: "17:00"
+                }
+            },
             doctor_id : 1,
             doctor_name : '',
             selected : false,
