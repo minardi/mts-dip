@@ -4,10 +4,7 @@
 
     routes: {
       ''                    : 'index',
-
-      'home'                : 'index',
-      'home/'               : 'index',
-      'home/:sel_id'        : 'selSpecFromUrl',
+      'home'                : 'showHome',
       'my-private-schedule' : 'showPrivateSchedule',
       'admin'               : 'showAdminPanel'
     },
@@ -17,25 +14,16 @@
     },
 
     index: function() {
-        
         this.view.handlerIndex();
      },
 
     showHome: function() {
-
         this.view.handlerShowHome();
     },
 
     showPrivateSchedule: function() {
         
         this.view.handlerShowPrivateSchedule();
-    },
-
-
-    selSpecFromUrl: function(sel_id) {
-        this.view.handlerIndex();
-
-        mts.historyHome.selSpec(sel_id);
     },
 
     showAdminPanel: function() {

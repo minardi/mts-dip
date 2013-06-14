@@ -37,25 +37,39 @@
 			}
 
 			this.model.on("save", function() { 
+				// if (this.model.get("role") === {key:})
 					this.remove(); 
+			}, this);
+
+			this.model.on("save", function() {
+				if (this.model instanceof app.DoctorModel) this.userForDoctor();
 			}, this);
 
 			this.model.on("destroy", function() {
 				mts.current_board.collection.remove(this.model); this.remove();
 			}, this);
 
-			this.model.once("error", /*this.modelError*/  function(model, error) {
+			this.model.once("error", this.modelError  /*function(model, error) {
 					console.log("An error was occured:", error);
-			}, this);
+			}*/, this);
 		},
 
 		modelError: function(model, error) {
-			Backbone.Mediator.pub("error", {el: this.el, message: error}); 
+			Backbone.Mediator.pub("error", {el: $(".modal-body"), message: error}); 
 		},
 
 		modelSave: function(model) {
-			mts.current_board.collection.add(model);
+			mts.current_board.collection.add(model, {merge:true});
 			model.trigger("save");
+		},
+
+		userForDoctor: function() {
+			var new_user = new app.UserModel({role: {key: "doctor", doctor_id: this.model.get("id")},
+						  					  name: this.model.get("name")});
+				new_user.switchUrl();
+				new_user.save();
+			
+			console.log(new_user);
 		},
 
 		specsMode: function() {
@@ -67,28 +81,41 @@
   			var spec_list = new app.SpecsCollection();
 
   			this.template = this.doctors_tpl;
+
   			spec_list.fetch();
   			spec_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+
 			this.creation_method = this.createDoctor;	
-			console.log(this.model);		
   		},
 
   		scheduleMode: function() {
   			var doc_list = new app.DoctorsCollection();
-			
+
 			this.template = this.schedule_tpl;
+
   			doc_list.fetch();
-  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);	
+  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+
   			this.creation_method = this.createSchedule;
   		},
 
   		usersMode: function() {
+  			console.log(this.model instanceof app.UserModel);
   			this.template = this.users_tpl;
   			this.creation_method = this.createUser;
   		},
 
   		ticketsMode: function() {
-  			this.template = this.tickets_tpl;
+  			var doc_list = new app.DoctorsCollection(),
+  				user_list = new app.UsersCollection();
+  
+  			this.template = this.tickets_tpl;	
+
+  			user_list.fetch();
+  			doc_list.fetch();
+  			user_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+
   			this.creation_method = this.createTicket;
   		},
 
@@ -103,10 +130,12 @@
 		},
 
 		addToSelect: function(model) {
-			var option = document.createElement("option");
+			var option = document.createElement("option"),
+				select = (model instanceof app.UserModel) ? $("#user_select_list") : $("#select_list");
 
 			$(option).text(model.get("name")).attr("value", model.get("id"));
-			$("#select_list").append(option);
+
+			$(select).append(option);
 
 		},
 
@@ -135,7 +164,7 @@
 
 			this.model.set({schedule: schedule, doctor_id: $("#select_list").val()});
 			this.model.save({}, {success: this.modelSave});
-			//doesn't saving. Pavel's tricks?? //Yep!
+			//fix moment with weekly_schedule id/doctor_id
 		},
 
 		createUser: function() {
@@ -146,31 +175,39 @@
 							password: $("#user_password").val(),
 							role: {key: role} });
 
-			console.log(this.model);
-
 			this.model.save({}, {success: this.modelSave});
 			//doesn't saving. I think, problem will be solved after adding devise
 
-			if (role === "Doctor") {
-				this.model = new app.DoctorModel();
-				this.doctorsMode();
-				this.render();
-				console.log(this.model);
-			} else {
-				if (this.model.isValid) this.remove();
-			}
+			// if (role === "doctor") {
+			// 	this.model = new app.DoctorModel();
+			// 	this.doctorsMode();
+			// 	this.render();
+			// 	console.log(this.model);
+			// } else {
+			// 	if (this.model.isValid) this.remove();
+			// }
 			//check, will DOCTOR model (tr) be added to USERS board or not 
 		},
 
 		createTicket: function() {
-			//trololo
-			//i need two selects here (for users and doctors)
+			var status = $("[name='ticket_status']:checked").val();
+
+			this.model.set({doctor_id: +$("#select_list").val(),
+							user_id: +$("#user_select_list").val(),
+							status: status,
+							data: $("#ticket_day").val() + "-" + 
+								  $("#ticket_month").val() + "-" + 
+								  $("#ticket_year").val(),
+							time: $("#ticket_hours").val() + ":" + 
+								  $("#ticket_minutes").val() });
+
+			console.log(this.model.toJSON());
+			this.model.save({}, {success: this.modelSave});
 		},
 
 		render: function() {
 
 			this.$el.html(this.template(this.model.toJSON()));
-			console.log(this.model.toJSON());
 	        return this; 
 	    }
 

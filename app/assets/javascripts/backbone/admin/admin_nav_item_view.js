@@ -9,8 +9,10 @@
 		events: {
 			"click": "itemSelect"
 		},
+		current_dashboard_view : null,
 
 		itemSelect: function() {
+
 			if (mts.current_board) mts.current_board.remove();
    			mts.current_board = new app.AdminDashboardView({board_type:this.model.get("name").toLowerCase()});
 

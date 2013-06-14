@@ -32,7 +32,6 @@
       var user_id = attr["id"];
 
       this.url = "/tickets/" + user_id + "/doctor_name.json?";
-
       this.currentTickets();
 
      },

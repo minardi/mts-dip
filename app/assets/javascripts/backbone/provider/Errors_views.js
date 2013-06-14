@@ -6,13 +6,12 @@
 
         template: JST["backbone/provider/error_template"],
         fatal_template: JST["backbone/provider/fatal_error_template"],
-        hint_template: JST["backbone/provider/hint_template"],
+        
 
         initialize: function() {
             Backbone.Mediator.sub("error", this.error, this);
-            Backbone.Mediator.sub("fatal_error", this.fatal_error, this);
+            Backbone.Mediator.sub("fatal_error", this.fatalError, this);
             Backbone.Mediator.sub("warning", this.warning, this);
-            Backbone.Mediator.sub("hint", this.showHint, this);
         },
 
         events: {
@@ -25,7 +24,7 @@
             $(errorEl).append(this.$el);
         },
 
-        fatal_error: function(attr) {
+        fatalError: function(attr) {
             var errorEl = $("#under-head");
             this.$el.html(this.fatal_template({error_type:"Fatal ERROR!", message:attr["message"]}));
             $(errorEl).append(this.$el);
@@ -39,31 +38,6 @@
 
         kill: function(event) {
             this.$el.html("");
-        },
-
-        showHint: function(attr) {
-            var hintEl = attr["el"],
-                timer;
-
-            $(hintEl).on("mouseover", function() {
-
-                timer = setTimeout(
-                    (function(self) {    
-                    return function(self) {
-
-                            $(self.el).html(self.hint_template({message: attr["message"]}));
-                            $(hintEl).append(self.$el);
-                        } 
-                    }(this)), 1500);
-
-            });
-
-            $(hintEl).on("mouseout", this.hideHint);
-        },
-
-        hideHint: function() {
-            this.$el.html("");
-            clearTimeout(timer);
         },
 
     });
