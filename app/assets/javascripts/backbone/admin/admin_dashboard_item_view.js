@@ -59,6 +59,8 @@
 
 		deleteItem: function() {
 			if (confirm("Do you really want to delete this?") === true) {
+				if (this.model instanceof app.UserModel) this.model.switchUrl();
+
 				this.model.destroy();
 			}  
 		},
