@@ -11,6 +11,18 @@ group :development do
   gem 'sqlite3'
 end
 
+group :test do
+  gem 'sqlite3'	
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+  gem 'shoulda-matchers'
+  gem 'capybara'
+  gem 'capybara-email'
+  gem 'simplecov', :require => false, :group => :test 
+  gem 'launchy'
+end	
+
 group :production do
   gem 'pg'
 end
