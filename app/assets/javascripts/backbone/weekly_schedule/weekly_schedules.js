@@ -7,11 +7,9 @@
         url : "/weekly_schedules",
         
         days : {},
-        
-        initialize : function () {            
 
-        },
-        
+        active_doctors : [],
+
         removeSchedule : function(data) {
             var model = this.haveModel(data.id);
                 if (model) {
@@ -63,9 +61,9 @@
         
         activeDoctors : function() {
             
-             var collection = this.where({selected : true});
+            var collection = this.where({selected : true});
              
-             return collection;
+            return collection;
             
         },
         

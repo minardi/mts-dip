@@ -68,8 +68,6 @@
 
         
         selfRemove : function (obj, selected) {
-            
-            console.log('as');
 
             if(selected === false){
                 

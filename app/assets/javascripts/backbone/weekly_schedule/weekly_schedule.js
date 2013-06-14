@@ -3,7 +3,49 @@
 app.WeeklyModel = Backbone.Model.extend({
         
         defaults : {
-            schedule : {},
+            schedule : {
+                'sun' : {
+                    'start' : "8-00",
+                    'end' : "17-00",
+                    'date' : "01.01.2000"
+                },
+
+                'mod' : {
+                    'start' : "8-00",
+                    'end' : "17-00",
+                    'date' : "01.01.2000"
+                },
+
+                'tue' : {
+                    'start' : "8-00",
+                    'end' : "17-00",
+                    'date' : "01.01.2000"
+                },
+
+                'wed' : {
+                    'start' : "8-00",
+                    'end' : "17-00",
+                    'date' : "01.01.2000"
+                },
+
+                'thu' : {
+                    'start' : "8-00",
+                    'end' : "17-00",
+                    'date' : "01.01.2000"
+                },
+
+                'fri' : {
+                    'start' : "8-00",
+                    'end' : "17-00",
+                    'date' : "01.01.2000"
+                },
+                
+                'sat' : {
+                    'start' : "8-00",
+                    'end' : "17-00",
+                    'date' : "01.01.2000"                   
+                }
+            },
             doctor_id : 1,
             doctor_name : '',
             selected : false,
@@ -11,9 +53,7 @@ app.WeeklyModel = Backbone.Model.extend({
         },
         
         urlRoot : '/weekly_schedules',
-        
 
-        
         selectDayByRule : function(day, selected) {
             
             if(this.isDay(day) === selected){
@@ -47,7 +87,7 @@ app.WeeklyModel = Backbone.Model.extend({
             if(day){
                 this.attributes.schedule[day]['selected'] = (selected === true || selected === false) 
                         ? 
-                            selected 
+                            selected
                         : 
                             ((this.isDay(day) === true) ? false : true);
                             
