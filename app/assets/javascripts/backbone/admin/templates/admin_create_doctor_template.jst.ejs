@@ -15,7 +15,7 @@
 	    <input name="dur" type="radio" <%= (duration == 45) ? "checked='checked'" : "" %> value="45"> 45
 	    <input name="dur" type="radio" <%= (duration == 60) ? "checked='checked'" : "" %> value="60"> 60
     </p>
-    <% if (specialization_id == null) {  %>
+    <% if (specialization_id === null) {  %>
     <div id="doc_user_values">
         <h6 class="muted">User values:</h6>
         <span>E-mail:</span>

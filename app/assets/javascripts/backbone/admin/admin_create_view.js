@@ -38,13 +38,8 @@
 			}
 
 			this.model.on("save", function() { 
-				// if (this.model.get("role") === {key:})
-					this.remove(); 
+				this.remove(); 
 			}, this);
-
-			/*this.model.on("save", function() {
-				if (this.model instanceof app.DoctorModel) this.userForDoctor();
-			}, this);*/
 
 			this.model.on("destroy", function() {
 				mts.current_board.collection.remove(this.model); this.remove();
@@ -66,6 +61,8 @@
 		userForDoctor: function(model) {
 			var doc_user = new app.UserModel();
 
+			mts.current_board.collection.add(model, {merge:true});
+
 			doc_user.set({name: model.get("name"), 
 						  email: $("#user_email").val(),
 						  password: $("#user_password").val(),
@@ -74,7 +71,7 @@
 
 			doc_user.switchUrl();
 			doc_user.save();
-
+			model.trigger("save");
 		},
 
 		toggleDocList: function(event) {
@@ -99,10 +96,6 @@
 
   			spec_list.fetch();
   			spec_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
-
-  			console.log(this.model.isNew());
-
-  			//$("#doc_user_values").addClass("hidden");
 
 			this.creation_method = this.createDoctor;	
   		},
@@ -160,7 +153,7 @@
 			$(option).text(model.get("name")).attr("value", model.get("id"));
 			$(select).append(option);
 
-			//for spec list
+			//for spec list. refactor it!
 			if (this.model.get("specialization_id") === model.get("id")) {
 				$(option).attr("selected", "selected");
 			}
@@ -175,11 +168,10 @@
 
 			this.model.set({name: $("#doctor_name").val(),
 						    duration: $("[name='dur']:checked").val(),
-						    specialization_id: specialization_id});
-
-			if ((email != "") && (password != "")) {
-				this.model.save({}, {success: this.userForDoctor});
-				this.remove();
+						    specialization_id: $("#select_list").val()});
+							
+			if (this.model.isNew()) {
+				this.model.save({}, {success: this.userForDoctor});	
 			} else {
 				this.model.save({}, {success: this.modelSave});
 			}
@@ -214,7 +206,7 @@
   									   doctor_id: $("#select_list").val()} });
   			}
 
-			this.model.switchUrl();//i need another url
+			this.model.switchUrl();//i need another url for deleting users
 			this.model.save({}, {success: this.modelSave});
 
 		},
