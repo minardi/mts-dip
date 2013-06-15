@@ -6,7 +6,8 @@
 
 		events: {
 			"click .btn-danger" : "cancelCreation",
-			"click .btn-success" : "performCreation"
+			"click .btn-success" : "performCreation",
+			"click [name='role']" : "toggleDocList",
 
 		},
 
@@ -71,9 +72,18 @@
 						  role: {key: "doctor",
 								 doctor_id: model.get("id")} });
 
-			console.log(model.get("id"), doc_user);
 			doc_user.switchUrl();
 			doc_user.save();
+
+		},
+
+		toggleDocList: function(event) {
+
+			if ($(event.target).val() === "doctor") {
+				$("#app_doc").removeClass("hidden");
+			} else {
+				$("#app_doc").addClass("hidden");
+			}
 
 		},
 
@@ -105,8 +115,15 @@
   		},
 
   		usersMode: function() {
-  			//console.log(this.model instanceof app.UserModel);
+  			var doc_list = new app.DoctorsCollection();
+
   			this.template = this.users_tpl;
+
+  			doc_list.fetch();
+  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+
+  			
+
   			this.creation_method = this.createUser;
   		},
 
@@ -150,27 +167,17 @@
 		},
 
 		createDoctor: function() {
-			var name = $("#doctor_name").val(),
-				duration = $("[name='dur']:checked").val(),
-				specialization_id = $("#select_list").val(),
-				email = $("#user_email").val(),
-				password = $("#user_password").val(),
-				doc_user;
 
-			this.model.set({name: name,
-						    duration: duration,
+			this.model.set({name: $("#doctor_name").val(),
+						    duration: $("[name='dur']:checked").val(),
 						    specialization_id: specialization_id});
 
-			//this.model.on("save", , this);
-			this.model.save({}, {success: this.userForDoctor});
-
-
-
 			if ((email != "") && (password != "")) {
-
-				
-
-			} 
+				this.model.save({}, {success: this.userForDoctor});
+				this.remove();
+			} else {
+				this.model.save({}, {success: this.modelSave});
+			}
 
 		},
 
@@ -197,19 +204,16 @@
 							password: $("#user_password").val(),
 							role: {key: role} });
 
+			if (role === "doctor") {
+  				this.model.set({role: {key: role, 
+  									   doctor_id: $("#select_list").val()} });
+  			}
+
+  			console.log(this.model.toJSON());
+
 			this.model.switchUrl();
 			this.model.save({}, {success: this.modelSave});
-			//doesn't saving. I think, problem will be solved after adding devise
 
-			// if (role === "doctor") {
-			// 	this.model = new app.DoctorModel();
-			// 	this.doctorsMode();
-			// 	this.render();
-			// 	console.log(this.model);
-			// } else {
-			// 	if (this.model.isValid) this.remove();
-			// }
-			//check, will DOCTOR model (tr) be added to USERS board or not 
 		},
 
 		createTicket: function() {
