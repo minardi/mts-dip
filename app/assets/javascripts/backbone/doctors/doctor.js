@@ -2,8 +2,8 @@
   
   app.DoctorModel = Backbone.Model.extend({
     defaults:{
-        name: "",
-        duration: 0,
+        name: "doctor name",
+        duration: 15,
 		    specialization_id: null
     },
 

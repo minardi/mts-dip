@@ -98,7 +98,11 @@
   			this.template = this.doctors_tpl;
 
   			spec_list.fetch();
-  			spec_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+  			spec_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
+
+  			console.log(this.model.isNew());
+
+  			//$("#doc_user_values").addClass("hidden");
 
 			this.creation_method = this.createDoctor;	
   		},
@@ -109,7 +113,7 @@
 			this.template = this.schedule_tpl;
 
   			doc_list.fetch();
-  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+  			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
 
   			this.creation_method = this.createSchedule;
   		},
@@ -120,9 +124,7 @@
   			this.template = this.users_tpl;
 
   			doc_list.fetch();
-  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
-
-  			
+  			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
 
   			this.creation_method = this.createUser;
   		},
@@ -135,8 +137,8 @@
 
   			user_list.fetch();
   			doc_list.fetch();
-  			user_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
-  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+  			user_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
+  			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
 
   			this.creation_method = this.createTicket;
   		},
@@ -156,9 +158,12 @@
 				select = (model instanceof app.UserModel) ? $("#user_select_list") : $("#select_list");
 
 			$(option).text(model.get("name")).attr("value", model.get("id"));
-
 			$(select).append(option);
 
+			//for spec list
+			if (this.model.get("specialization_id") === model.get("id")) {
+				$(option).attr("selected", "selected");
+			}
 		},
 
 		createSpec: function() {
@@ -209,9 +214,7 @@
   									   doctor_id: $("#select_list").val()} });
   			}
 
-  			console.log(this.model.toJSON());
-
-			this.model.switchUrl();
+			this.model.switchUrl();//i need another url
 			this.model.save({}, {success: this.modelSave});
 
 		},
