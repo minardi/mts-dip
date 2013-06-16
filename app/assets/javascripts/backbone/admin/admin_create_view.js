@@ -7,7 +7,7 @@
 		events: {
 			"click .btn-danger" : "cancelCreation",
 			"click .btn-success" : "performCreation",
-			"click [name='role']" : "toggleDocList",
+			"change [name='role']" : "toggleDocList",
 
 		},
 
@@ -76,7 +76,7 @@
 
 		toggleDocList: function(event) {
 
-			if ($(event.target).val() === "doctor") {
+			if ( $(event.target).val() === "doctor") {
 				$("#app_doc").removeClass("hidden");
 			} else {
 				$("#app_doc").addClass("hidden");
@@ -157,6 +157,27 @@
 			if (this.model.get("specialization_id") === model.get("id")) {
 				$(option).attr("selected", "selected");
 			}
+
+			if (this.model instanceof app.UserModel) {
+
+				//for doctor list in user view.
+				if ((this.model.get("role"))["doctor_id"] === model.get("id")) {
+					$(option).attr("selected", "selected");
+				}
+			}
+
+			if (this.model instanceof app.TicketModel) {
+
+				//for doc list in ticket view
+				if (this.model.get("doctor_id") === model.get("id")) {
+					$(option).attr("selected", "selected");
+				}
+
+				//for user list in ticket view
+				if (this.model.get("user_id") === model.get("id")) {
+					$(option).attr("selected", "selected");
+				}
+			}
 		},
 
 		createSpec: function() {
@@ -228,7 +249,6 @@
 		},
 
 		render: function() {
-
 			this.$el.html(this.template(this.model.toJSON()));
 	        return this; 
 	    }
