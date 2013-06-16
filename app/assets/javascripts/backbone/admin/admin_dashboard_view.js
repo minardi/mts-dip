@@ -14,7 +14,7 @@
 
         specs_tpl: JST["backbone/admin/templates/admin_specializations_template"],
         doctors_tpl: JST["backbone/admin/templates/admin_doctors_template"],
-        schedule_tpl: JST["backbone/admin/templates/admin_schedules_template"],
+        schedule_tpl: JST["backbone/admin/templates/admin_schedules_template_new"],
         tickets_tpl: JST["backbone/admin/templates/admin_tickets_template"],
         users_tpl: JST["backbone/admin/templates/admin_users_template"],
       
@@ -59,7 +59,7 @@
       scheduleMode: function() {
 
   			this.template = this.schedule_tpl;
-            this.collection = new app.WeeklyCollection();
+            this.collection = new app.DoctorsCollection();
   		},
 
       ticketsMode: function() {

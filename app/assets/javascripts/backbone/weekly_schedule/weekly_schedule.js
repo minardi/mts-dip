@@ -10,7 +10,7 @@ app.WeeklyModel = Backbone.Model.extend({
                     'date' : "01.01.2000"
                 },
 
-                'mod' : {
+                'mon' : {
                     'start' : "8-00",
                     'end' : "17-00",
                     'date' : "01.01.2000"

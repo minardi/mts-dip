@@ -13,7 +13,7 @@
 
 		specs_tpl: JST["backbone/admin/templates/admin_specs_item_template"],
         doctors_tpl: JST["backbone/admin/templates/admin_doctors_item_template"],
-        schedule_tpl: JST["backbone/admin/templates/admin_schedules_item_template"],
+        schedule_tpl: JST["backbone/admin/templates/admin_schedules_item_template_new"],
         tickets_tpl: JST["backbone/admin/templates/admin_tickets_item_template"],
         users_tpl: JST["backbone/admin/templates/admin_users_item_template"],
 
