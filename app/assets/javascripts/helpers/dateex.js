@@ -14,13 +14,17 @@
 		this.date = new Date(year, month, day, hours, minutes, seconds, ms);
 	}
 
-	function dateTransFormat() {
+	function dateTransFormat(compare_flag) {
 
 		var dd = addZero(this.date.getDate()),
 			mm = addZero(this.date.getMonth() + 1),
 			yyyy = addZero(this.date.getFullYear());
 
-		return dd + "-" + mm + "-" + yyyy;
+		datestr = (compare_flag) ? 
+			yyyy + "-" + mm + "-" +dd :
+			dd + "-" + mm + "-" + yyyy;
+
+		return datestr;
 	}
 
 	function timeTransFormat() {
