@@ -17,17 +17,29 @@
                     <span class="caret"></span>
                 </p>
                     
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <ul class="dropdown-menu dropdown-menu-action" role="menu" aria-labelledby="dLabel">
                     <% if(permition.my_schedule) { %>
-                        <li class="" id="private-schedule"> My private schedule</li>
+                        <li class="" id="private-schedule">
+                            <span class="nav-action-item"> 
+                                My private schedule
+                            </span>
+                        </li>
                     <% } %>
 
                     <% if(permition.doctor_schedule) { %>
-                        <li id="doctor-schedule"> My work scheedule</li>
+                        <li id="doctor-schedule"> 
+                            <span class="nav-action-item"> 
+                                My work scheedule
+                            </span>
+                        </li>
                     <% } %>
 
                     <% if(permition.admin_panel) { %>
-                        <li id="admin-panel"> Admin Panel</li>
+                        <li id="admin-panel">
+                            <span class="nav-action-item"> 
+                                Admin Panel
+                            </span>
+                        </li>
                     <% } %>
                 </ul>
 

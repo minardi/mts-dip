@@ -1,5 +1,5 @@
 .main-container{
-    margin-top:20px auto 0;
+    margin:20px auto 0;
 }
 
 .header {
@@ -79,7 +79,7 @@
         text-shadow: 0 1px 0 #ffffff; 
     }
 
-    .nav > .active,
+    .nav > .active > .nav-action-name,
     .nav > .active > .nav-action-name:hover
     .nav > .active > .nav-action-name:focus{
         color: #555555;
@@ -87,6 +87,15 @@
         background-color: #e5e5e5; 
     }
 
+    .dropdown-menu-action .nav-action-item{
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: normal;
+        line-height: 20px;
+        color: #333333;
+        white-space: nowrap;
+    }
 } 
 
 .drop_menu_block {
