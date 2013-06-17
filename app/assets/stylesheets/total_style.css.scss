@@ -1,19 +1,18 @@
-#under-head {
-	margin-top: 2%;
+.main-container{
+    margin-top:20px auto 0;
 }
 
 .header {
-    margin:0;
-}
+    margin:0 0 10px;
 
-.header .logo{
-	width: 394px;
-	height: 152px;
-    float:left;    
-}
-
-.header .header-nav{
-    float:right;
+    .logo{
+        width: 394px;
+        height: 152px;
+        float:left;    
+    }
+    .header-nav{
+        float:right;
+    }
 }
 
 #DocTable {
@@ -26,7 +25,7 @@
 }
 
 .weekly-table {
-   padding: 10px 20px 10px;
+    padding: 10px 20px 10px;
    
     .weekly-top-info{
         text-align:center;
@@ -68,6 +67,26 @@
     .schedule-item.active{
       
     }
+}
+
+.user-navigate{
+
+    .nav-action-name{
+        float: none;
+        padding: 10px 15px 10px;
+        color: #777777;
+        text-decoration: none;
+        text-shadow: 0 1px 0 #ffffff; 
+    }
+
+    .nav > .active,
+    .nav > .active > .nav-action-name:hover
+    .nav > .active > .nav-action-name:focus{
+        color: #555555;
+        text-decoration: none;
+        background-color: #e5e5e5; 
+    }
+
 } 
 
 .drop_menu_block {
@@ -87,28 +106,6 @@
 #work-time table {
 	/*margin-top: 10px;*/
 	width: 710px;
-}
-
-/*#tab2 {
-  float: none;  Обтекание по правому краю 
-  margin-top: 20%;
-  margin-left: 2%;
-}*/
-
-.navbar .nav > li > p {
-  float: none;
-  padding: 10px 15px 10px;
-  color: #777777;
-  text-decoration: none;
-  text-shadow: 0 1px 0 #ffffff;
-}
-
-.navbar .nav > .active > p,
-.navbar .nav > .active > p:hover,
-.navbar .nav > .active > p:focus {
-  color: #555555;
-  text-decoration: none;
-  background-color: #e5e5e5;
 }
 
 .next-tickets {

@@ -2,11 +2,13 @@
     
     app.RouterView = Backbone.View.extend({
 
-        tab2Template : JST["router/tab2_template"],
+        private_schedule_template : JST["router/private-schedule_template"],
         
-        tab1Template : JST["router/tab1_template"],
+        doctor_schedule_template : JST["router/doctor-schedule_template"],
 
-        tab3Template : JST["router/tab3_template"],
+        home_template : JST["router/home_template"],
+
+        admin_panel_template : JST["router/admin-panel_template"],
         
         initialize : function() {
             
@@ -49,10 +51,10 @@
             
             this.$el.children('.action-block').addClass('hidden');
         
-            if(this.$el.children('#tab1').length === 0){
-                this.$el.append(this.tab1Template());
+            if(this.$el.children('#home-tmp').length === 0){
+                this.$el.append(this.home_template());
             } else {
-                this.$el.children('#tab1').removeClass('hidden');
+                this.$el.children('#home-tmp').removeClass('hidden');
             }
         },
         
@@ -87,48 +89,29 @@
             
             this.$el.children('.action-block').addClass('hidden');
         
-            if(this.$el.children('#tab1').length === 0){
-                this.$el.append(this.tab1Template());
+            if(this.$el.children('#home-tmp').length === 0){
+                this.$el.append(this.home_template());
             } else {
-                this.$el.children('#tab1').removeClass('hidden');
+                this.$el.children('#home-tmp').removeClass('hidden');
             }
         },
         
         handlerShowPrivateSchedule : function() {
         
         this.renderShowPrivateSchedule();
-  
-        if (app.userEx.getRole() == "doctor") {
-
-            if (mts.weekDaysDoctor instanceof CurrentSchedulesView) {
-                  mts.weekDaysDoctor.refresh();  
-                } else {
-                  mts.weekDaysDoctor = new CurrentSchedulesView({el:$("#current_schedules")});
-                }
-    
-                $('#block_schedules').removeClass("hidden");
-                $('#block_user_tickets').removeClass("hidden");
-
-        } 
-
-
-        if (app.userEx.getRole() == "patient") {
-            $('#block_schedules').addClass("hidden");
-            $('#block_user_tickets').removeClass("hidden");
-          }
-
         
-        if (app.userEx.getRole() != "guest") {
-
-          if (mts.weekDaysUser instanceof WeekDaysView) {              
-              mts.weekDaysUser.refresh()              
+        if (app.userEx.getRole() !== "guest") {
+            
+            $('#block_user_tickets').removeClass("hidden");
+            
+            if (mts.weekDaysUser instanceof WeekDaysView) {              
+                mts.weekDaysUser.refresh()              
              
-           } else {                
-               mts.weekDaysUser = new WeekDaysView({el : $('#block_user_tickets')});     
-           }   
+            } else {                
+                mts.weekDaysUser = new WeekDaysView({el : $('#block_user_tickets')});     
+            }   
 
-        } else if (app.userEx.getRole() == "guest") {
-            $('#block_schedules').addClass("hidden");            
+        } else {    
             $('#block_user_tickets').addClass("hidden");
         }
 
@@ -138,21 +121,54 @@
             
             this.$el.children('.action-block').addClass('hidden');
         
-            if(this.$el.children('#tab2').length === 0){
-                this.$el.append(this.tab2Template());
+            if(this.$el.children('#private-schedule-tmp').length === 0){
+                this.$el.append(this.private_schedule_template());
             } else {
-                this.$el.children('#tab2').removeClass('hidden');
+                this.$el.children('#private-schedule-tmp').removeClass('hidden');
             }
 
+
+        },
+
+        handlerShowDoctorSchedule : function () {
+            
+            this.renderShowDoctorSchedule();
+
+            if (app.userEx.getRole() === "doctor") {
+
+                if (mts.weekDaysDoctor instanceof CurrentSchedulesView) {
+                    mts.weekDaysDoctor.refresh();  
+                } else {
+                    mts.weekDaysDoctor = new CurrentSchedulesView({el:$("#current_schedules")});
+                }
+    
+                $('#block_schedules').removeClass("hidden");
+                $('#block_user_tickets').removeClass("hidden");
+
+            }
+
+            if (app.userEx.getRole() === "guest") {
+                $('#block_schedules').addClass("hidden");  
+            }
+
+        },
+
+        renderShowDoctorSchedule : function () {
+
+            this.$el.children('.action-block').addClass('hidden');
+        
+            if(this.$el.children('#doctor-schedule-tmp').length === 0){
+                this.$el.append(this.doctor_schedule_template());
+            } else {
+                this.$el.children('#doctor-schedule-tmp').removeClass('hidden');
+            }
 
         },
 
         hadlerShowAdminPanel : function() {
 
             this.renderShowAdminPanel();
-            //temporary
-            mts.errorProvider = new app.errorProvider();
-
+            //if()
             mts.administration = (mts.administration) 
                 ? 
                     mts.administration 
@@ -164,10 +180,10 @@
 
             this.$el.children('.action-block').addClass('hidden');
         
-            if(this.$el.children('#tab3').length === 0){
-                this.$el.append(this.tab3Template());
+            if(this.$el.children('#admin-panel').length === 0){
+                this.$el.append(this.admin_panel_template());
             } else {
-                this.$el.children('#tab3').removeClass('hidden');
+                this.$el.children('#admin-panel').removeClass('hidden');
             }
         }
         

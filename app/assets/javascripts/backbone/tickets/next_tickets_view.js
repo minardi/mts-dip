@@ -9,7 +9,6 @@
             this.Tickets.on("reset", this.render, this);
 
             Backbone.Mediator.sub("user_login", this.getCollection, this);
-            console.log("barada");
         },
 
         getCollection: function(attr) {

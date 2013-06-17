@@ -9,7 +9,8 @@
         name : '',
         login : false,
         role : {
-                 key: 'guest'
+                 key : 'guest',
+                 permition : {}
                }
     },
 

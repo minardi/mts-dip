@@ -52,11 +52,11 @@
             this.add(model);
             
             model.on('sync', this.addModel, this);
-            model.on('error', this.errorHandler , this
-            );
-                                
-            model.fetch();
+            model.on('error', this.errorHandler , this);
 
+            model.switchUrl('getschedule');
+                                
+            model.fetch({data : {id: data.id, date: '2013-06-17'}});
         },
         
         activeDoctors : function() {

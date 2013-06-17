@@ -11,6 +11,10 @@ var UserEx = (function(app, mts) {
         return (this.user.get('role')['key'] !== 'guest') ? true : false;
         
     }
+
+    function getPermition () {
+        return (this.user.get('role')['permition'])
+    }
      
     function getDoctorId() {
         

@@ -5,63 +5,56 @@ app.WeeklyModel = Backbone.Model.extend({
         defaults : {
             schedule : {
                 'sun' : {
-                    'start' : "8-00",
-                    'end' : "17-00",
+                    'start' : "8:00",
+                    'end' : "17:00",
                     'date' : "01.01.2000"
                 },
 
                 'mod' : {
-                    'start' : "8-00",
-                    'end' : "17-00",
-                    'date' : "01.01.2000"
+                    'start' : "8:00",
+                    'end' : "17:00",
+                    'date' : "02.01.2000"
                 },
 
                 'tue' : {
-                    'start' : "8-00",
-                    'end' : "17-00",
-                    'date' : "01.01.2000"
+                    'start' : "8:00",
+                    'end' : "17:00",
+                    'date' : "03.01.2000"
                 },
 
                 'wed' : {
-                    'start' : "8-00",
-                    'end' : "17-00",
-                    'date' : "01.01.2000"
+                    'start' : "8:00",
+                    'end' : "17:00",
+                    'date' : "04.01.2000"
                 },
 
                 'thu' : {
-                    'start' : "8-00",
-                    'end' : "17-00",
-                    'date' : "01.01.2000"
+                    'start' : "8:00",
+                    'end' : "17:00",
+                    'date' : "05.01.2000"
                 },
 
                 'fri' : {
-                    'start' : "8-00",
-                    'end' : "17-00",
-                    'date' : "01.01.2000"
+                    'start' : "8:00",
+                    'end' : "17:00",
+                    'date' : "06.01.2000"
                 },
                 
                 'sat' : {
-                    'start' : "8-00",
-                    'end' : "17-00",
-                    'date' : "01.01.2000"                   
+                    'start' : "8:00",
+                    'end' : "17:00",
+                    'date' : "07.01.2000"                   
                 }
             },
             doctor_id : 1,
             doctor_name : '',
             selected : false,
-            doctor_duration : 0
+            doctor_duration : 0,
+            start : '2000.01.01',
+            end : '2000.01.07'
         },
         
-        urlRoot : '/weekly_schedules',
-
-        selectDayByRule : function(day, selected) {
-            
-            if(this.isDay(day) === selected){
-                
-                this.dayTrigger(day);
-
-            }
-        },
+        url : '/weekly_schedules',
         
         isDay : function(day){
 
@@ -83,13 +76,9 @@ app.WeeklyModel = Backbone.Model.extend({
         },
          
         dayTrigger : function(day, selected){
-            
+            var selected = (selected === true || selected === false) ? selected : ((this.isDay(day) === true) ? false : true);
             if(day){
-                this.attributes.schedule[day]['selected'] = (selected === true || selected === false) 
-                        ? 
-                            selected
-                        : 
-                            ((this.isDay(day) === true) ? false : true);
+                this.attributes.schedule[day]['selected'] = selected;
                             
                 this.trigger('select:schedule_day', day, this.isDay(day));              
             } else {
@@ -99,13 +88,45 @@ app.WeeklyModel = Backbone.Model.extend({
             
         },
 
-        unselectedDays : function () {
+        unselectDays : function () {
             
             for (day in this.attributes.schedule){
                 
-                this.selectDayByRule(day, true);
+                if(this.isDay() === true){
+                    this.dayTrigger(day);    
+                }
                 
             }
+            
+        },
+
+        switchUrl : function(url, data) {
+
+            switch(url){
+
+                case 'getduration' :
+
+                    this.url = "/weekly_schedules/" + data.doctor_id +"/getduration.json";
+
+                    break;
+
+                case 'getschedule' : 
+
+                    this.url = 'weekly_schedules/get-schedule';
+
+                    break;
+
+                default : 
+                    
+                    this.url = 'weekly_schedules';  
+                    
+                    break;
+            }
+
+
+        },
+
+        dateValidate : function(date) {
             
         },
         
@@ -120,7 +141,7 @@ app.WeeklyModel = Backbone.Model.extend({
 
         getCurrent : function(doctor_id) {
 
-            this.urlRoot = "/weekly_schedules/" + doctor_id +"/getduration.json";
+             this.switchUrl('getduration', {doctor_id: doctor_id});
         },
 
         validate: function(attrs) {

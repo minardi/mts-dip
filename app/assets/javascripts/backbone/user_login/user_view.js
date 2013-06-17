@@ -18,13 +18,20 @@
         // template with user navigator 
         inrole_template: JST["backbone/user_login/user_template"],
 
-        events: {
+        login_events: {
+            "keydown" : "checkEnter", 
+            "click #btn_login" : "userLogin"
+        },
 
-            "keydown"                 : "checkEnter", 
-            "click #btn_login"        : "userLogin",
-            "click #home"             : "routHome",
-            "click #private_schedule" : "routPrivateSchedule",
-            "click #exit"             : "userLogout"
+        nav_events : {
+            "click #home" : "routHome",
+            "click #exit" : "userLogout"
+        },
+
+        permition_events : {
+            admin_panel : {"click #private-chedule": "routPrivateSchedule"},
+            my_schedule : {"click #doctor-schedule" : "routDoctorSchedule"},
+            doctor_schedule : {"click #admin-panel" : "routAdminPanel"}
         },
 
         checkEnter: function(e) {
@@ -63,8 +70,8 @@
                                                     }
                                          );
 
-                    this.$el.html(this.inrole_template({ name: this.user.get('name')}));
-
+                    this.startNavigate();
+                    
                     return this;
 
                 } else {
@@ -74,18 +81,52 @@
             }
         },
 
-        routHome: function() {
-            app.mts.router.navigate('home', {trigger:true});
-            this.navTab("#home", "#private_schedule");
-
+        render: function() {
+            this.delegateEvents(this.login_events);
+            this.$el.html(this.nav_template);
+            return this;
         },
+
+        startNavigate : function() {
+
+            var events = {};
+            _.extend(events, this.nav_events); 
+            
+            this.renderNavigate();
+            
+            for(perm in this.user.get('role')['permition']){
+                console.log(this.permition_events[perm])
+                _.extend(events, this.permition_events[perm]);
+            }
+
+            this.delegateEvents(events);
+        },
+
+        renderNavigate : function() {
+            this.$el.html(this.inrole_template({
+                                                name: this.user.get('name'),
+                                                permition : this.user.get('role')['permition']
+                                            })
+            );
+        },
+
+        routHome: function() {
+            mts.router.navigate('home', {trigger:true});
+        },  
 
         routPrivateSchedule: function() {
     
-            app.mts.router.navigate('my-private-schedule', {trigger:true});
-            $("#private_schedule").addClass("active");
-            this.navTab("#private_schedule", "#home");
+            mts.router.navigate('my-private-schedule', {trigger:true});
         }, 
+
+        routDoctorSchedule : function() {
+    
+            mts.router.navigate('my-doctor-schedule', {trigger:true});
+        },
+
+        routAdminPanel : function() {
+            mts.router.navigate('admin', {trigger:true});
+        },
 
         userLogout: function() {
 
@@ -93,7 +134,6 @@
             $("#tab2").addClass("hidden");
             $("#next-tickets").addClass("hidden");
             
-            //this.user.clear();
             this.user = new app.UserModel();
             Backbone.Mediator.pub('user_logout', 
                                                 {
@@ -102,21 +142,10 @@
                                                 }
                                  );
             this.$el.html(this.nav_template); 
-            app.mts.router.navigate('');
+            mts.router.navigate('');
             return this;
         },
 
-        navTab: function(tab1, tab2) {
-            if($(tab1).addClass("active")) {
-                $(tab2).removeClass("active");
-            }
-        },
-
-        render: function() {
-
-                this.$el.html(this.nav_template);
-                return this;
-        }
 
     });
         
