@@ -50,13 +50,13 @@
 
 	function idToDate(datestr, timestr) {
 
-		//id == doc1_dd-mm-yyyy_thhmm
+		//datestr --> dd-mm-yyyy, timestr --> thhmm
 
 		var day = datestr.slice(0, 2),
 			month = datestr.slice(3, 5) - 1,
 			year = datestr.slice(6),
-			hours = timestr.slice(1, 3),
-			minutes = timestr.slice(3);
+			hours = (timestr) ? timestr.slice(1, 3) : 0,
+			minutes = (timestr) ? timestr.slice(3) : 0;
 
 			this.date = new Date(year, month, day, hours, minutes, 0, 0);
             
