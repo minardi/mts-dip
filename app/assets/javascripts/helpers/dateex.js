@@ -14,13 +14,17 @@
 		this.date = new Date(year, month, day, hours, minutes, seconds, ms);
 	}
 
-	function dateTransFormat() {
+	function dateTransFormat(compare_flag) {
 
 		var dd = addZero(this.date.getDate()),
 			mm = addZero(this.date.getMonth() + 1),
 			yyyy = addZero(this.date.getFullYear());
 
-		return dd + "-" + mm + "-" + yyyy;
+		datestr = (compare_flag) ? 
+			yyyy + "-" + mm + "-" +dd :
+			dd + "-" + mm + "-" + yyyy;
+
+		return datestr;
 	}
 
 	function timeTransFormat() {
@@ -50,13 +54,13 @@
 
 	function idToDate(datestr, timestr) {
 
-		//id == doc1_dd-mm-yyyy_thhmm
+		//datestr --> dd-mm-yyyy, timestr --> thhmm
 
 		var day = datestr.slice(0, 2),
 			month = datestr.slice(3, 5) - 1,
 			year = datestr.slice(6),
-			hours = timestr.slice(1, 3),
-			minutes = timestr.slice(3);
+			hours = (timestr) ? timestr.slice(1, 3) : 0,
+			minutes = (timestr) ? timestr.slice(3) : 0;
 
 			this.date = new Date(year, month, day, hours, minutes, 0, 0);
             

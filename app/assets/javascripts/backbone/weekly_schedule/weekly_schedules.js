@@ -81,6 +81,10 @@
             this.trigger('weekly_error', {text : 'server is unavailable please try again later', type : 'error'});
             
             this.remove(model);
+        },
+
+        switchUrl: function(id) {
+            this.url = "/weekly_schedules/getbydoc/" + id;
         }
         
     });

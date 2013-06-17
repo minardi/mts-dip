@@ -16,9 +16,15 @@
 
     url : 'users/login.json',
 
+    //we need to get rid of this bullshit
     switchUrl: function() {
       this.url = "/users";
+    },
+
+    urlForDelete: function(id) {
+      this.url = "/users/" + id;
     }
+
     //,
 
     //validate: function(attrs) {

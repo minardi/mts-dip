@@ -32,12 +32,14 @@ MTSDip::Application.routes.draw do
   get 'weekly_schedules/get-schedule' => 'weekly_schedules#getschedule'
 
   get 'weekly_schedules' => 'weekly_schedules#index'
-    
+
   get 'weekly_schedules/:id' => 'weekly_schedules#show'
 
   post 'weekly_schedules' => 'weekly_schedules#create'
 
   put 'weekly_schedules/:id'  => 'weekly_schedules#update'
+
+  match 'weekly_schedules/getbydoc/:doctor_id' => 'weekly_schedules#getbydoc'
   
   match 'weekly_schedules/:id/getduration' => 'weekly_schedules#getduration'
 

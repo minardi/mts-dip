@@ -7,11 +7,11 @@
     <p><input id="user_password" type="password" size="15" placeholder="Password" value="<%= password %>"></p>
     <h6 class="muted">choose role</h6>
     <p>
-	    <input name="role" type="radio" id="role_p" value="patient">Patient
-        <input name="role" type="radio" id="role_d" value="doctor">Doctor
-        <input name="role" type="radio" id="role_a" value="admin">Admin
+	    <input name="role" type="radio" <%= (role["key"] == "patient") ? "checked='checked'" : "" %> value="patient">Patient
+        <input name="role" type="radio" <%= (role["key"] == "doctor") ? "checked='checked'" : "" %> value="doctor">Doctor
+        <input name="role" type="radio" <%= (role["key"] == "admin") ? "checked='checked'" : "" %> value="admin">Admin
     </p>
-    <div id="app_doc" class="hidden" >
+    <div id="app_doc" <%= (role["key"] !== "doctor") ? "class='hidden'" : "" %> >
         <h6 class="muted">Select appropriate doctor:</h6>
         <select id="select_list" name="doctor_list">
         </select>
