@@ -12,9 +12,13 @@
 		current_dashboard_view : null,
 
 		itemSelect: function() {
+			var board_type = this.model.get("name").toLowerCase();
 
 			if (mts.current_board) mts.current_board.remove();
-   			mts.current_board = new app.AdminDashboardView({board_type:this.model.get("name").toLowerCase()});
+
+   			mts.current_board = (board_type === "schedule") ? 
+   				new app.AdminSchedulesView() :
+				new app.AdminDashboardView({board_type: board_type});
 
 		},
 

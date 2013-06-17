@@ -241,6 +241,10 @@ float:none;
   height: 18px;
 }
 
+.admin_item_new {
+  float: right;
+}
+
 .admin_create {
   position: realtive;
 
@@ -300,6 +304,13 @@ float:none;
   width: 40px;
 }
 
-#blocktext {
-  color: red;
+.admin_schedule {
+  display: inline-block;
+  width: 170px;
+  border: 2px solid gray;
+  border-radius: 5px;
+
+  ul {
+    list-style: none;
+  }
 }
