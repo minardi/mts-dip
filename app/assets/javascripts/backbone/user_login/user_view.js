@@ -2,7 +2,6 @@
 
     app.UserView = Backbone.View.extend({
         
-        // el - elent-bloc "div", with login field
         el: '#login_block',
 
         initialize: function() {
