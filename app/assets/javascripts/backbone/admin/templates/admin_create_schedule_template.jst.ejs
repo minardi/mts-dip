@@ -6,7 +6,32 @@
 	<select id="select_list" name="doctor">
     </select>
 
+    <table id="period">
+
+	    <tr>
+			<td>
+				<strong>From:</strong>
+			</td>
+			<td>
+				<input id="schedule_start" type="text" size=10 value="<%= start %>">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<strong>to:</strong>
+			</td>
+			<td>
+				<input id="schedule_end" type="text" size=10 value="<%= end %>">
+			</td>
+		</tr>
+
+	</table>
+
+	<hr>
+
 	<table id="new_schedule">
+
+
 		<tr>
 			<td>
 				<strong>Sun: </strong>
@@ -57,10 +82,10 @@
 				<strong>Thu: </strong>
 			</td>
 			<td>
-				<input id="thu-start" type="text" size=5 value="<%= schedule["tue"]["start"] %>"> - 
+				<input id="thu-start" type="text" size=5 value="<%= schedule["thu"]["start"] %>"> - 
 			</td>
 			<td>
-				<input id="thu-end" type="text" size=5 value="<%= schedule["tue"]["end"] %>">
+				<input id="thu-end" type="text" size=5 value="<%= schedule["thu"]["end"] %>">
 			</td>
 		</tr>
 		<tr>

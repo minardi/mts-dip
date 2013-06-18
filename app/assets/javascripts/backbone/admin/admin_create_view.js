@@ -58,6 +58,15 @@
 			model.trigger("save");
 		},
 
+		scheduleSave: function(model) {
+			//var schedule_view = new app.AdminSchedulesItemView({model: model});
+
+			//получить доступ к коллекции шедьюлов опр доктора в mts.dashoboard
+
+			model.trigger("save");
+		},
+
+
 		userForDoctor: function(model) {
 			var doc_user = new app.UserModel();
 
@@ -178,6 +187,14 @@
 					$(option).attr("selected", "selected");
 				}
 			}
+
+			if (this.model instanceof app.WeeklyModel) {
+
+				//for doc list in ticket view
+				if (this.model.get("doctor_id") === model.get("id")) {
+					$(option).attr("selected", "selected");
+				}
+			}
 		},
 
 		createSpec: function() {
@@ -209,8 +226,11 @@
 				week[day]["end"] = $("#" + day + "-end").val();
 			});
 
-			this.model.set({schedule: schedule, doctor_id: $("#select_list").val()});
-			this.model.save({}, {success: this.modelSave});
+			this.model.set({schedule: schedule, 
+							doctor_id: $("#select_list").val(),
+							start: $("#schedule_start").val(),
+							end: $("#schedule_end").val()});
+			this.model.save({}, {success: this.scheduleSave});
 			//fix moment with weekly_schedule id/doctor_id
 		},
 
@@ -227,7 +247,7 @@
   									   doctor_id: $("#select_list").val()} });
   			}
 
-			this.model.switchUrl();//i need another url for deleting users
+			this.model.switchUrl();
 			this.model.save({}, {success: this.modelSave});
 
 		},

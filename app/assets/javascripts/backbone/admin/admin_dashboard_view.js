@@ -79,7 +79,7 @@
         },
 		
 		render: function() {
-            $("#admin_panel").html(this.el);
+      $("#admin_panel").html(this.el);
 			this.$el.html(this.template());
 			this.collection.each(this.addItem, this);
 				
