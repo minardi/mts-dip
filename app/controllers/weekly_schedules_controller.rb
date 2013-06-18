@@ -23,7 +23,7 @@
   # GET /weekly_schedules/getbydoc/1
   # GET /weekly_schedules/getbydoc/1.json
   def getbydoc
-    @weekly_schedule = WeeklySchedule.find_by_doctor_id(params[:doctor_id])
+    @weekly_schedule = WeeklySchedule.where(:doctor_id => params[:doctor_id])
     
     respond_to do |format|
       format.json { render json: @weekly_schedule }

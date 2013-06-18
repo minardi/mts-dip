@@ -115,6 +115,12 @@ app.WeeklyModel = Backbone.Model.extend({
                     this.url = 'weekly_schedules/get-schedule';
 
                     break;
+                    
+                case 'delete' : 
+
+                    this.url = 'weekly_schedules/' + data;
+
+                    break;
 
                 default : 
                     
