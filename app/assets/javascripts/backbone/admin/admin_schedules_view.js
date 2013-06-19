@@ -6,10 +6,6 @@
 
         className: "accordion",
 
-        events: {
-            "click .admin_item_new" : "createItem"
-        },
-
         template: JST["backbone/admin/templates/admin_schedules_template_new"],
       
         initialize: function() {
@@ -23,12 +19,6 @@
             var item_view = new app.AdminSchedulesItemView({model: model});
 
             this.$el.append(item_view.render().el);
-        },
-
-        createItem: function() {
-            var create_view = new app.AdminCreateView({model: new app.WeeklyModel(),
-                                                       board_type: "schedule"});
-            this.$el.prepend(create_view.render().el);
         },
 		
 		render: function() {

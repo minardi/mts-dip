@@ -29,6 +29,15 @@
       format.json { render json: @weekly_schedule }
     end
   end
+
+  def destroy
+     @weekly_schedule = WeeklySchedule.find(params[:id])
+    @weekly_schedule.destroy
+
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+  end
   
 
   # POST /weekly_schedules

@@ -59,10 +59,7 @@
 		},
 
 		scheduleSave: function(model) {
-			//var schedule_view = new app.AdminSchedulesItemView({model: model});
-
-			//получить доступ к коллекции шедьюлов опр доктора в mts.dashoboard
-
+			Backbone.Mediator.pub("schedule_saved", model);
 			model.trigger("save");
 		},
 
