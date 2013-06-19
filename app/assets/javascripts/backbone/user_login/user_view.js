@@ -47,6 +47,7 @@
                                         });
  
             this.user.on('sync', this.checkLogin, this);
+            this.user.loginUrl();
             this.user.save();            
         },
 

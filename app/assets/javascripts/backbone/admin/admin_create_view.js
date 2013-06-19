@@ -75,7 +75,6 @@
 						  role: {key: "doctor",
 								 doctor_id: model.get("id")} });
 
-			doc_user.switchUrl();
 			doc_user.save();
 			model.trigger("save");
 		},
@@ -227,6 +226,7 @@
 							doctor_id: $("#select_list").val(),
 							start: $("#schedule_start").val(),
 							end: $("#schedule_end").val()});
+
 			this.model.save({}, {success: this.scheduleSave});
 			//fix moment with weekly_schedule id/doctor_id
 		},
@@ -237,14 +237,18 @@
 			this.model.set({name: $("#user_name").val(), 
 							email: $("#user_email").val(),
 							password: $("#user_password").val(),
-							role: {key: role} });
+							role: {key: role,
+								   permition:{my_schedule:true} } });
 
 			if (role === "doctor") {
   				this.model.set({role: {key: role, 
-  									   doctor_id: $("#select_list").val()} });
+  									   doctor_id: $("#select_list").val(),
+  									   permition:{my_schedule: true, 
+  									   			  doctor_schedule: true} } });
   			}
 
-			this.model.switchUrl();
+			//another if for admins?
+
 			this.model.save({}, {success: this.modelSave});
 
 		},

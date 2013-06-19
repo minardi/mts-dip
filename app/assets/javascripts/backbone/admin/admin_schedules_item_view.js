@@ -21,7 +21,6 @@
 	    	Backbone.Mediator.sub("schedule_saved", function(model) {
 	    		if ( this.model.get("id") === model.get("doctor_id") )
 	    			this.collection.add(model, {merge: true});
-	    		console.log(this.collection);
 	    	}, this);
 		},
 
@@ -30,7 +29,7 @@
         },
 
         createItem: function() {
-            var create_view = new app.AdminCreateView({model: new app.WeeklyModel(),
+            var create_view = new app.AdminCreateView({model: new this.collection.model(),
                                                        board_type: "schedule"});
             $("#admin_panel").prepend(create_view.render().el);
         },
