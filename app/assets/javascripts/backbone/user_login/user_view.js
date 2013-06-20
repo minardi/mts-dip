@@ -12,19 +12,24 @@
 
         },
 
-        // template with logins inputs
         nav_template: JST["backbone/user_login/nav_template"],
-        
-        // template with user navigator 
+       
         inrole_template: JST["backbone/user_login/user_template"],
 
-        events: {
+        login_events: {
+            "keydown" : "checkEnter", 
+            "click #btn_login" : "userLogin"
+        },
 
-            "keydown"                 : "checkEnter", 
-            "click #btn_login"        : "userLogin",
-            "click #home"             : "routHome",
-            "click #private_schedule" : "routPrivateSchedule",
-            "click #exit"             : "userLogout"
+        nav_events : {
+            "click #home" : "routHome",
+            "click #exit" : "userLogout"
+        },
+
+        permition_events : {
+            my_schedule : {"click #private-schedule": "routPrivateSchedule"},
+            doctor_schedule : {"click #doctor-schedule" : "routDoctorSchedule"},
+            admin_panel : {"click #admin-panel" : "routAdminPanel"}
         },
 
         checkEnter: function(e) {
@@ -63,8 +68,8 @@
                                                     }
                                          );
 
-                    this.$el.html(this.inrole_template({ name: this.user.get('name')}));
-
+                    this.startNavigate();
+                    
                     return this;
 
                 } else {
@@ -74,26 +79,54 @@
             }
         },
 
-        routHome: function() {
-            app.mts.router.navigate('home', {trigger:true});
-            this.navTab("#home", "#private_schedule");
-
+        render: function() {
+            this.delegateEvents(this.login_events);
+            this.$el.html(this.nav_template);
+            return this;
         },
+
+        startNavigate : function() {
+
+            var events = {};
+            _.extend(events, this.nav_events); 
+            
+            this.renderNavigate();
+            
+            for(perm in this.user.get('role')['permition']){
+                _.extend(events, this.permition_events[perm]);
+            }
+            
+            this.delegateEvents(events);
+        },
+
+        renderNavigate : function() {
+            this.$el.html(this.inrole_template({
+                                                name: this.user.get('name'),
+                                                permition : this.user.get('role')['permition']
+                                            })
+            );
+        },
+
+        routHome: function() {
+            mts.router.navigate('home', {trigger:true});
+        },  
 
         routPrivateSchedule: function() {
     
-            app.mts.router.navigate('my-private-schedule', {trigger:true});
-            $("#private_schedule").addClass("active");
-            this.navTab("#private_schedule", "#home");
+            mts.router.navigate('my-private-schedule', {trigger:true});
         }, 
 
-        userLogout: function() {
+        routDoctorSchedule : function() {
+    
+            mts.router.navigate('my-doctor-schedule', {trigger:true});
+        },
 
-            $("#tab1").removeClass("hidden");
-            $("#tab2").addClass("hidden");
-            $("#next-tickets").addClass("hidden");
+        routAdminPanel : function() {
+            mts.router.navigate('admin', {trigger:true});
+        },
+
+        userLogout: function() {
             
-            //this.user.clear();
             this.user = new app.UserModel();
             Backbone.Mediator.pub('user_logout', 
                                                 {
@@ -101,22 +134,11 @@
                                                     role: this.user.get('role',[0])
                                                 }
                                  );
-            this.$el.html(this.nav_template); 
-            app.mts.router.navigate('');
+            this.render(); 
+            mts.router.navigate('', {trigger : true});
             return this;
         },
 
-        navTab: function(tab1, tab2) {
-            if($(tab1).addClass("active")) {
-                $(tab2).removeClass("active");
-            }
-        },
-
-        render: function() {
-
-                this.$el.html(this.nav_template);
-                return this;
-        }
 
     });
         

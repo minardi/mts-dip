@@ -12,13 +12,18 @@
   # GET /weekly_schedules/1
   # GET /weekly_schedules/1.json
   def show
-    if params[:doctor_id] != nil then   
-        @weekly_schedule =  WeeklySchedule.find_by_doctor_id(params[:doctor_id])
-    else
     
-         @weekly_schedule = WeeklySchedule.find(params[:id])
-    
+    @weekly_schedule = WeeklySchedule.find(params[:id])
+
+    respond_to do |format|
+      format.json { render json: @weekly_schedule }
     end
+  end
+
+  # GET /weekly_schedules/getbydoc/1
+  # GET /weekly_schedules/getbydoc/1.json
+  def getbydoc
+    @weekly_schedule = WeeklySchedule.find_by_doctor_id(params[:doctor_id])
     
     respond_to do |format|
       format.json { render json: @weekly_schedule }
@@ -81,14 +86,18 @@
   # GET /weekly_schedules/1/doctor
   # GET /weekly_schedules/1/doctor.json
   
-  def searchbydoctor
-  
-    if params[:id] != nil then
-        @weekly_schedule =  WeeklySchedule.find_by_doctor_id(params[:id])
+  def getschedule
+    
+    @result = {}
+
+    @schedules = WeeklySchedule.where(:doctor_id => params[:id])
+    
+    @schedules.each do |sch|
+     @result = sch.start <= params[:date] && sch.end >= params[:date] ? sch : @result
     end
     
     respond_to do |format|
-        format.json { render json:  @weekly_schedule }
+        format.json { render json: @result}
     end    
   
   end

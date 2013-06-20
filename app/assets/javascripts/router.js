@@ -4,39 +4,35 @@
 
     routes: {
       ''                    : 'index',
-
-      'home'                : 'index',
-      'home/'               : 'index',
-      'home/:sel_id'        : 'selSpecFromUrl',
+      'home'                : 'showHome',
       'my-private-schedule' : 'showPrivateSchedule',
+      'my-doctor-schedule'  : 'showDoctorSchedule',
       'admin'               : 'showAdminPanel'
     },
     
     initialize : function() {
         this.view = new app.RouterView({el : $('#mts-application')});
+
     },
 
     index: function() {
-        console.log("console.log");
         this.view.handlerIndex();
      },
 
     showHome: function() {
-      console.log("console.log");
         this.view.handlerShowHome();
     },
 
     showPrivateSchedule: function() {
-        
+
         this.view.handlerShowPrivateSchedule();
     },
 
-
-    selSpecFromUrl: function(sel_id) {
-        this.view.handlerIndex();
-
-        mts.historyHome.selSpec(sel_id);
+    showDoctorSchedule: function() {
+        
+        this.view.handlerShowDoctorSchedule();
     },
+
 
     showAdminPanel: function() {
     

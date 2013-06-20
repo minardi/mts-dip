@@ -7,11 +7,9 @@
         url : "/weekly_schedules",
         
         days : {},
-        
-        initialize : function () {            
 
-        },
-        
+        active_doctors : [],
+
         removeSchedule : function(data) {
             var model = this.haveModel(data.id);
                 if (model) {
@@ -54,18 +52,18 @@
             this.add(model);
             
             model.on('sync', this.addModel, this);
-            model.on('error', this.errorHandler , this
-            );
-                                
-            model.fetch();
+            model.on('error', this.errorHandler , this);
 
+            model.switchUrl('getschedule');
+                                
+            model.fetch({data : {id: data.id, date: '2013-06-17'}});
         },
         
         activeDoctors : function() {
             
-             var collection = this.where({selected : true});
+            var collection = this.where({selected : true});
              
-             return collection;
+            return collection;
             
         },
         
@@ -83,6 +81,10 @@
             this.trigger('weekly_error', {text : 'server is unavailable please try again later', type : 'error'});
             
             this.remove(model);
+        },
+
+        switchUrl: function(id) {
+            this.url = "/weekly_schedules/getbydoc/" + id;
         }
         
     });

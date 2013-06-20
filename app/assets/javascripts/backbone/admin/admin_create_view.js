@@ -6,7 +6,8 @@
 
 		events: {
 			"click .btn-danger" : "cancelCreation",
-			"click .btn-success" : "performCreation"
+			"click .btn-success" : "performCreation",
+			"change [name='role']" : "toggleDocList",
 
 		},
 
@@ -37,24 +38,18 @@
 			}
 
 			this.model.on("save", function() { 
-				// if (this.model.get("role") === {key:})
-					this.remove(); 
-			}, this);
-
-			this.model.on("save", function() {
-				if (this.model instanceof app.DoctorModel) this.userForDoctor();
+				this.remove(); 
 			}, this);
 
 			this.model.on("destroy", function() {
 				mts.current_board.collection.remove(this.model); this.remove();
 			}, this);
 
-			this.model.once("error", this.modelError  /*function(model, error) {
-					console.log("An error was occured:", error);
-			}*/, this);
+			this.model.on("error", this.modelError, this);
 		},
 
 		modelError: function(model, error) {
+			console.log(error);
 			Backbone.Mediator.pub("error", {el: $(".modal-body"), message: error}); 
 		},
 
@@ -63,13 +58,30 @@
 			model.trigger("save");
 		},
 
-		userForDoctor: function() {
-			var new_user = new app.UserModel({role: {key: "doctor", doctor_id: this.model.get("id")},
-						  					  name: this.model.get("name")});
-				new_user.switchUrl();
-				new_user.save();
-			
-			console.log(new_user);
+		userForDoctor: function(model) {
+			var doc_user = new app.UserModel();
+
+			mts.current_board.collection.add(model, {merge:true});
+
+			doc_user.set({name: model.get("name"), 
+						  email: $("#user_email").val(),
+						  password: $("#user_password").val(),
+						  role: {key: "doctor",
+								 doctor_id: model.get("id")} });
+
+			doc_user.switchUrl();
+			doc_user.save();
+			model.trigger("save");
+		},
+
+		toggleDocList: function(event) {
+
+			if ( $(event.target).val() === "doctor") {
+				$("#app_doc").removeClass("hidden");
+			} else {
+				$("#app_doc").addClass("hidden");
+			}
+
 		},
 
 		specsMode: function() {
@@ -83,7 +95,7 @@
   			this.template = this.doctors_tpl;
 
   			spec_list.fetch();
-  			spec_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+  			spec_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
 
 			this.creation_method = this.createDoctor;	
   		},
@@ -94,14 +106,19 @@
 			this.template = this.schedule_tpl;
 
   			doc_list.fetch();
-  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+  			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
 
   			this.creation_method = this.createSchedule;
   		},
 
   		usersMode: function() {
-  			console.log(this.model instanceof app.UserModel);
+  			var doc_list = new app.DoctorsCollection();
+
   			this.template = this.users_tpl;
+
+  			doc_list.fetch();
+  			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
+
   			this.creation_method = this.createUser;
   		},
 
@@ -113,8 +130,8 @@
 
   			user_list.fetch();
   			doc_list.fetch();
-  			user_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
-  			doc_list.on("reset", function(list) {list.each(this.addToSelect)}, this);
+  			user_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
+  			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
 
   			this.creation_method = this.createTicket;
   		},
@@ -134,9 +151,33 @@
 				select = (model instanceof app.UserModel) ? $("#user_select_list") : $("#select_list");
 
 			$(option).text(model.get("name")).attr("value", model.get("id"));
-
 			$(select).append(option);
 
+			//for spec list. refactor it!
+			if (this.model.get("specialization_id") === model.get("id")) {
+				$(option).attr("selected", "selected");
+			}
+
+			if (this.model instanceof app.UserModel) {
+
+				//for doctor list in user view.
+				if ((this.model.get("role"))["doctor_id"] === model.get("id")) {
+					$(option).attr("selected", "selected");
+				}
+			}
+
+			if (this.model instanceof app.TicketModel) {
+
+				//for doc list in ticket view
+				if (this.model.get("doctor_id") === model.get("id")) {
+					$(option).attr("selected", "selected");
+				}
+
+				//for user list in ticket view
+				if (this.model.get("user_id") === model.get("id")) {
+					$(option).attr("selected", "selected");
+				}
+			}
 		},
 
 		createSpec: function() {
@@ -145,11 +186,17 @@
 		},
 
 		createDoctor: function() {
+
 			this.model.set({name: $("#doctor_name").val(),
 						    duration: $("[name='dur']:checked").val(),
 						    specialization_id: $("#select_list").val()});
+							
+			if (this.model.isNew()) {
+				this.model.save({}, {success: this.userForDoctor});	
+			} else {
+				this.model.save({}, {success: this.modelSave});
+			}
 
-			this.model.save({}, {success: this.modelSave});
 		},
 
 		createSchedule: function() {
@@ -175,18 +222,14 @@
 							password: $("#user_password").val(),
 							role: {key: role} });
 
-			this.model.save({}, {success: this.modelSave});
-			//doesn't saving. I think, problem will be solved after adding devise
+			if (role === "doctor") {
+  				this.model.set({role: {key: role, 
+  									   doctor_id: $("#select_list").val()} });
+  			}
 
-			// if (role === "doctor") {
-			// 	this.model = new app.DoctorModel();
-			// 	this.doctorsMode();
-			// 	this.render();
-			// 	console.log(this.model);
-			// } else {
-			// 	if (this.model.isValid) this.remove();
-			// }
-			//check, will DOCTOR model (tr) be added to USERS board or not 
+			this.model.switchUrl();//i need another url for deleting users
+			this.model.save({}, {success: this.modelSave});
+
 		},
 
 		createTicket: function() {
@@ -206,7 +249,6 @@
 		},
 
 		render: function() {
-
 			this.$el.html(this.template(this.model.toJSON()));
 	        return this; 
 	    }

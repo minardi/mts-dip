@@ -68,12 +68,10 @@
 
         
         selfRemove : function (obj, selected) {
-            
-            console.log('as');
 
             if(selected === false){
                 
-                this.model.unselectedDays();
+                this.model.unselectDays();
                 this.remove();
                 
                 this.model.off('select:schedule_day');

@@ -13,7 +13,7 @@
             "click thead tr td:first-child" : "refresh"
         },
         
-        fullOfCell : {},
+        active_cell : {},
 
         days : {},
         
@@ -25,25 +25,24 @@
             Backbone.Mediator.sub('doctor_unselected', this.collection.removeSchedule, this.collection);
             
             this.collection.on('change:selected', this.handlerRenderSchedule, this);
-            this.collection.on('select:schedule_day', this.isFullOfCell, this);
+            this.collection.on('select:schedule_day', this.activeWatching, this);
             this.collection.on('weekly_error', this.throwError, this);
 
-             this.navigate = new app.NavigateWeek(this.refresh,this);
-
-             this.$el.parent().append(this.navigate.el);
+            this.navigate = new app.NavigateWeek(this.refresh,this);
+            
+            
             
             this.render();
+
+            this.$el.append(this.navigate.el);
         },
         
-        isFullOfCell : function(day, selected) {
-            //console.log(day, selected);
-            // if(fullOfCell['day'] === undefined){
-            //     fullOfCell.day = selected;
-            // }else{
-                
-            // }
+        activeWatching : function(day, selected) {
 
+        },
 
+        initActiveWather : function() {
+            //this.active_cell 
         },
 
         refresh : function() {
@@ -81,11 +80,9 @@
             this.isShow ();
         },
         
-        renderDate : function() {
+        getDate : function() {
             
             var schedule = this.navigate.getWeekDotte();
-
-
             this.collection.days = this.navigate.getWeek();
 
             return schedule;
@@ -94,13 +91,14 @@
         
         render : function() {
             
-            this.$el.empty().append(this.template({schedule : this.renderDate()}));
-            
+            this.$el.children('table').remove();
+            this.$el.prepend(this.template({schedule : this.getDate()}));
+
             return this;
         },
         
         isShow: function() {
-            console.log("hi"); 
+
             var collection = this.collection.activeDoctors();
 
             if(collection.length > 0) {

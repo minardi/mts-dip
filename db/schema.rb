@@ -60,6 +60,8 @@ ActiveRecord::Schema.define(:version => 20130521124735) do
   create_table "weekly_schedules", :force => true do |t|
     t.integer  "doctor_id"
     t.text     "schedule"
+    t.text     "start"
+    t.text     "end"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

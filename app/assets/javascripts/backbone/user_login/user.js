@@ -7,21 +7,25 @@
         email : 'x@xxxxx.xxx',
         password : '123456',
         name : 'Newuser',
+
         login : false,
         role : {
-                 key: 'guest'
+                 key : 'guest',
+                 permition : {}
                }
     },
 
     url : 'users/login.json',
 
-    //validate: function(attrs) {
-
-    urlRoot : '/users',
-
+    //we need to get rid of this bullshit
     switchUrl: function() {
-      this.url = this.urlRoot;
+      this.url = "/users";
+    },
+
+    urlForDelete: function(id) {
+      this.url = "/users/" + id;
     }
+
     //,
 
     //validate: function(attrs) {

@@ -13,18 +13,13 @@
 
 		specs_tpl: JST["backbone/admin/templates/admin_specs_item_template"],
         doctors_tpl: JST["backbone/admin/templates/admin_doctors_item_template"],
-        schedule_tpl: JST["backbone/admin/templates/admin_schedules_item_template"],
         tickets_tpl: JST["backbone/admin/templates/admin_tickets_item_template"],
         users_tpl: JST["backbone/admin/templates/admin_users_item_template"],
 
 		initialize: function() {
 
-			this.setTemplate();
 			this.model.on("change", this.render, this);
 			this.model.on("destroy", this.hideEl, this);
-		},
-
-		setTemplate: function() {
 
 			switch (this.options.board_type) {
 				case "specializations":
@@ -34,10 +29,7 @@
 					this.template = this.doctors_tpl;
 					break;
 				case "users":
-					this.template = this.users_tpl
-					break;
-				case "schedule":
-					this.template = this.schedule_tpl;
+					this.template = this.users_tpl;
 					break;
 				case "tickets":
 					this.template = this.tickets_tpl;
@@ -48,7 +40,6 @@
 		displayActions: function() {
 			this.$el.find(".admin_item_edit").toggleClass("hidden");
 			this.$el.find(".admin_item_delete").toggleClass("hidden");
-   
 		},
 
 		editItem: function() {
@@ -59,6 +50,8 @@
 
 		deleteItem: function() {
 			if (confirm("Do you really want to delete this?") === true) {
+				if (this.model instanceof app.UserModel) this.model.urlForDelete(this.model.get("id"));
+
 				this.model.destroy();
 			}  
 		},
@@ -69,6 +62,7 @@
 		},
 
 		render: function() {
+			console.log(this.el);
 			this.$el.html(this.template(this.model.toJSON()));
 	        return this; 
 	    }
