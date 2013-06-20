@@ -5,7 +5,7 @@
     defaults : {
         id : 0,
         email : 'x@xxxxx.xxx',
-        password : '12345',
+        password : '123456',
         name : 'Newuser',
         login : false,
         role : {

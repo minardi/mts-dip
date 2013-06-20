@@ -82,18 +82,23 @@
 
       ticket.type = this.type_ticket;
 
+      ticket.selector = selector_id;
+
       view = new TicketView({
                               model : ticket, 
                               el: $("#"+selector_id),    
                             });
+  
+      $("#"+selector_id).unbind();  
       view.render();
 
-      if (this.Tickets.is_set_event) {
+    if (this.Tickets.is_set_event) {
        view.setEventsWithRight(); 
       
      }
-      
+
     },
+
 
     addAllTickets: function() {
       this.Tickets.each(this.addOneTicket,this);

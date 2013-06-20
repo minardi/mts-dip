@@ -1,20 +1,44 @@
-describe "the sign in process", :js => :true do
+require 'spec_helper'
+require 'spec_seeds'
+
+
+
+
+describe "sign in", type: :feature do
   
-  before :each do
-    User.create(:email => 'user@example.com', :password => 'caplin', :name => 'Jon')
+  before (:each) do
+    run_seeds
   end
 
-  it "signs me in" do
-    visit root_path
+  it "should sign in user and show My tickets, Hello and Exit" do
+    visit root_path   
+   
+      fill_in 'in_login', :with => 'q@gmail.com'
+      fill_in 'password', :with => 'testqq'
+       
+      click_on 'Sign in'
     
-    within("#login_block") do
-      fill_in '#in_login', :with => 'user@example.com'
-      fill_in '#password', :with => 'caplin'
-    end
-    
-    click_link 'Sign in'
-    page.should have_content 'Success'
+    page.should have_content 'Hello, Alex'
+    page.should have_content 'Exit'
+    page.should have_content 'My tickets'
 
   end
+
+  it "should sign out after click Exit" do 
+    visit root_path   
+   
+      fill_in 'in_login', :with => 'q@gmail.com'
+      fill_in 'password', :with => 'testqq'
+       
+      click_on 'Sign in'
+      find("#exit").click
+
+    page.should_not have_content "Hello, Alex"  
+    page.should_not have_content "Exit"  
+    page.should_not have_content "My tickets"  
+
+  end  
+
+ 
 
 end
