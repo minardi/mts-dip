@@ -13,10 +13,6 @@
             "click thead tr td:first-child" : "refresh"
         },
         
-        active_cell : {},
-
-        days : {},
-        
         initialize : function(){
             
             this.collection = new app.WeeklyCollection();
@@ -25,24 +21,20 @@
             Backbone.Mediator.sub('doctor_unselected', this.collection.removeSchedule, this.collection);
             
             this.collection.on('change:selected', this.handlerRenderSchedule, this);
-            this.collection.on('select:schedule_day', this.activeWatching, this);
+            //this.collection.on('select:schedule_day', this.activeWatching, this);
             this.collection.on('weekly_error', this.throwError, this);
 
-            this.navigate = new app.NavigateWeek(this.refresh,this);
+            this.navigate = new app.NavigateWeek(this.navigateHandler, this);
             
-            
-            
+            this.collection.current_date = this.navigate.date;
+
             this.render();
 
             this.$el.append(this.navigate.el);
         },
-        
-        activeWatching : function(day, selected) {
 
-        },
-
-        initActiveWather : function() {
-            //this.active_cell 
+        navigateHandler : function() {
+            this.refresh();
         },
 
         refresh : function() {
@@ -53,13 +45,10 @@
                 active_doctors[model].setSelected(false);
             }
 
-            this.undelegateEvents();
-
             this.render();
             this.delegateEvents(this.events);
 
             for(model in active_doctors){
-                //this.collection.addHandler({id : active_doctors[model].get('id')});
                 active_doctors[model].setSelected(true);
             }
         },
@@ -87,6 +76,19 @@
 
             return schedule;
             
+        },  
+
+        daysSelect: function(event) {
+
+            var collection = this.collection.activeDoctors(),
+                target = ($(event.target).children().length !== 0) ? $(event.target) : $(event.target).parent(),
+                day = target.attr('id').split('-')[1],
+                id = 0;
+
+            for (id in collection){
+                collection[id].selectAll(day);
+            }
+
         },
         
         render : function() {
@@ -95,6 +97,7 @@
             this.$el.prepend(this.template({schedule : this.getDate()}));
 
             return this;
+
         },
         
         isShow: function() {
@@ -108,22 +111,7 @@
             }
             
         },
-        
-        
 
-        daysSelect: function(event) {
-
-            var collection = this.collection.activeDoctors(),
-                target = ($(event.target).children().length !== 0) ? $(event.target) : $(event.target).parent(),
-                day = target.attr('id').split('-')[1],
-                id = 0;
-
-            for (id in collection){
-                collection[id].selectDayByRule(day, false);
-            }
-
-        },
-        
         throwError : function (data){
             data.type = data.type || 'error';
             

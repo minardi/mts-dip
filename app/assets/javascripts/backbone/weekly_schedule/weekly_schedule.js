@@ -93,12 +93,18 @@ app.WeeklyModel = Backbone.Model.extend({
             for (day in this.attributes.schedule){
                 
                 if(this.isDay() === true){
-                    this.dayTrigger(day);    
+                    this.dayTrigger(day, false);    
                 }
                 
             }
             
         },
+
+        selectAll : function(day) {
+            if(!this.isDay()){
+                this.dayTrigger(day, true);
+            }
+        }
 
         switchUrl : function(url, data) {
 

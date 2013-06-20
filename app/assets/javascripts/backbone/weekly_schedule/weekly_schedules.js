@@ -22,8 +22,8 @@
         addHandler : function(data) {
 
             var model = this.haveModel(data.id);
-            
             if(model) {
+
                 model.setSelected(true); 
             } else {
                 this.getModel(data);
@@ -41,7 +41,7 @@
         },
         
         getModel : function(data) {
-
+            console.log(data)
             var model =  new this.model({
                                             id : data.id,
                                             doctor_name : data.name,
@@ -56,7 +56,9 @@
 
             model.switchUrl('getschedule');
                                 
-            model.fetch({data : {id: data.id, date: '2013-06-17'}});
+            model.fetch({data : {id: data.id, date: this.days.wed}});
+
+            model.switchUrl();
         },
         
         activeDoctors : function() {
@@ -68,6 +70,7 @@
         },
         
         addModel : function(model) {
+            console.log(model)
             model.off('sync');
             model.off('error');
             
