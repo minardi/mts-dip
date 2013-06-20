@@ -44,8 +44,12 @@
         }  
 
       }, this) 
-   }
+   },
 
-  }) 
+   // comparator: function (model) {
+   //          return model.get("name").toLowerCase();
+
+   //  }
+  });
 
  })(window);  

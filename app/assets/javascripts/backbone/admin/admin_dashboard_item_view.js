@@ -50,8 +50,6 @@
 
 		deleteItem: function() {
 			if (confirm("Do you really want to delete this?") === true) {
-				if (this.model instanceof app.UserModel) this.model.urlForDelete(this.model.get("id"));
-
 				this.model.destroy();
 			}  
 		},

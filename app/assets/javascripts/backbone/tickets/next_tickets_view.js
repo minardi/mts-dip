@@ -9,6 +9,7 @@
             this.Tickets.on("reset", this.render, this);
 
             Backbone.Mediator.sub("user_login", this.getCollection, this);
+            Backbone.Mediator.sub("user_logout", this.remove, this);
         },
 
         getCollection: function(attr) {
@@ -57,6 +58,11 @@
             this.addStickers();
             return this;
 
+        },
+
+        remove:function() {
+            this.$el.html("");
+            return this;
         },
 
     });

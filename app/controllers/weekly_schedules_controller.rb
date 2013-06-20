@@ -29,6 +29,15 @@
       format.json { render json: @weekly_schedule }
     end
   end
+
+  def destroy
+     @weekly_schedule = WeeklySchedule.find(params[:id])
+    @weekly_schedule.destroy
+
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+  end
   
 
   # POST /weekly_schedules
@@ -49,7 +58,7 @@
   # PUT /weekly_schedules/1
   # PUT /weekly_schedules/1.json
   def update
-    @doctor = WeeklySchedule.find(params[:id])
+    @weekly_schedule = WeeklySchedule.find(params[:id])
 
     respond_to do |format|
       if @weekly_schedule.update_attributes(params[:weekly_schedule])

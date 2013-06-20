@@ -54,7 +54,7 @@ app.WeeklyModel = Backbone.Model.extend({
             end : '2000.01.07'
         },
         
-        url : '/weekly_schedules',
+        urlRoot : '/weekly_schedules',
         
         isDay : function(day){
 
@@ -119,12 +119,6 @@ app.WeeklyModel = Backbone.Model.extend({
                 case 'getschedule' : 
 
                     this.url = 'weekly_schedules/get-schedule';
-
-                    break;
-                    
-                case 'delete' : 
-
-                    this.url = 'weekly_schedules/' + data;
 
                     break;
 

@@ -30,7 +30,7 @@
 
 		deleteItem: function() {
 			if (confirm("Do you really want to delete this?") === true) {
-				this.model.switchUrl("delete", this.model.get("id"));
+				//this.model.switchUrl("modify", this.model.get("id"));
 				this.model.destroy();
 				this.$el.hide(600);
 			}  
