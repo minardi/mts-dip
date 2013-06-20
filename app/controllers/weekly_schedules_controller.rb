@@ -58,7 +58,7 @@
   # PUT /weekly_schedules/1
   # PUT /weekly_schedules/1.json
   def update
-    @doctor = WeeklySchedule.find(params[:id])
+    @weekly_schedule = WeeklySchedule.find(params[:id])
 
     respond_to do |format|
       if @weekly_schedule.update_attributes(params[:weekly_schedule])
