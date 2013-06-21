@@ -17,10 +17,10 @@
             
             this.collection = new app.WeeklyCollection();
                         
-            Backbone.Mediator.sub('doctor_selected', this.collection.addHandler, this.collection);
+            Backbone.Mediator.sub('doctor_selected', this.collection.addModelHandler, this.collection);
             Backbone.Mediator.sub('doctor_unselected', this.collection.removeSchedule, this.collection);
             
-            this.collection.on('change:selected', this.handlerRenderSchedule, this);
+            this.collection.on('change:selected', this.selectTrigger, this);
             //this.collection.on('select:schedule_day', this.activeWatching, this);
             this.collection.on('weekly_error', this.throwError, this);
 
@@ -53,9 +53,11 @@
             }
         },
 
-        handlerRenderSchedule : function(model, selected){
+        selectTrigger : function(model, selected){
             if(selected === true) {
                 this.renderSchedule(model);
+            } else {
+                this.isShow();
             }
         },
 
@@ -66,7 +68,7 @@
             view = new WeeklyView({model : model});
             this.$el.children('table').append(view.render().$el);
             
-            this.isShow ();
+            this.isShow();
         },
         
         getDate : function() {

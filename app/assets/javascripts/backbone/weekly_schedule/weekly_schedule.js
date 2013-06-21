@@ -55,7 +55,7 @@ app.WeeklyModel = Backbone.Model.extend({
         },
         
         urlRoot : '/weekly_schedules',
-        
+
         isDay : function(day){
 
             return (day) ? this.attributes.schedule[day]['selected'] : undefined; 
@@ -75,12 +75,17 @@ app.WeeklyModel = Backbone.Model.extend({
             return this.attributes.selected;
         },
          
-        dayTrigger : function(day, selected){
-            var selected = (selected === true || selected === false) ? selected : ((this.isDay(day) === true) ? false : true);
+        dayTrigger : function(day, selected, silence){
+            
+            selected = (selected === true || selected === false) ? selected : ((this.isDay(day) === true) ? false : true);
+            
             if(day){
                 this.attributes.schedule[day]['selected'] = selected;
-                            
-                this.trigger('select:schedule_day', day, this.isDay(day));              
+                
+                if(!silence){
+                    this.trigger('select:schedule_day', day, this.isDay(day));    
+                }
+                              
             } else {
                 console.error('bad day value in weekly model');
             }
@@ -91,8 +96,9 @@ app.WeeklyModel = Backbone.Model.extend({
         unselectDays : function () {
             
             for (day in this.attributes.schedule){
-                
-                if(this.isDay() === true){
+               
+                if(this.isDay(day) === true){
+
                     this.dayTrigger(day, false);    
                 }
                 
@@ -101,10 +107,10 @@ app.WeeklyModel = Backbone.Model.extend({
         },
 
         selectAll : function(day) {
-            if(!this.isDay()){
+            if(this.isDay() === false){
                 this.dayTrigger(day, true);
             }
-        }
+        },
 
         switchUrl : function(url, data) {
 
@@ -112,7 +118,7 @@ app.WeeklyModel = Backbone.Model.extend({
 
                 case 'getduration' :
 
-                    this.url = "/weekly_schedules/" + data.doctor_id +"/getduration.json";
+                    this.urlRoot = "/weekly_schedules/" + data.doctor_id +"/getduration.json";
 
                     break;
 
@@ -124,23 +130,19 @@ app.WeeklyModel = Backbone.Model.extend({
 
                 default : 
                     
-                    this.url = 'weekly_schedules';  
+                    this.urlRoot = 'weekly_schedules';  
                     
                     break;
             }
 
 
         },
-
-        dateValidate : function(date) {
-            
-        },
         
         scheduleStart : function(days){
             
             for(day in this.attributes.schedule){
                 this.attributes.schedule[day]['data'] = days[day];
-                this.dayTrigger(day, false);
+                //this.dayTrigger(day, false);
             }
                 
         },
@@ -151,8 +153,10 @@ app.WeeklyModel = Backbone.Model.extend({
         },
 
         validate: function(attrs) {
+            var errors = '';
+            errors += (attrs.doctor_id.constructor.name === 'Number') ? '' : "Please set doctor id";
 
-          //  if ((typeof attrs.doctor_id) === "number") return "Please set doctor id";
+            return errors;
         }
         
  });

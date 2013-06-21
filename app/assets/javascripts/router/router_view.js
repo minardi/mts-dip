@@ -166,14 +166,17 @@
         },
 
         hadlerShowAdminPanel : function() {
-
-            this.renderShowAdminPanel();
-            //if()
-            mts.administration = (mts.administration) 
-                ? 
-                    mts.administration 
-                : 
-                    new app.AdminNavigationView({el : $("#admin_navigation")});
+            
+            if(app.userEx.getRole() === 'admin'){
+            
+                this.renderShowAdminPanel();
+                
+                mts.administration = (mts.administration) 
+                    ? 
+                        mts.administration 
+                    : 
+                        new app.AdminNavigationView({el : $("#admin_navigation")});
+            }
         },
 
         renderShowAdminPanel : function(){

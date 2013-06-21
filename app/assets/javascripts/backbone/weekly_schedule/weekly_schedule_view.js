@@ -53,13 +53,15 @@
                 
                      
                 }else{
-        
+
                     Backbone.Mediator.pub('weekly_unselectItem', 
                         {
-                            id : this.model.get('id'),
+                            id : this.model.get('doctor_id'),
                             day : this.model.get('schedule')[day]['data']                            
                         }
-                    );
+
+                        );
+
                     
                 }
         

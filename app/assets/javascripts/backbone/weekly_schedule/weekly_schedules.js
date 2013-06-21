@@ -12,6 +12,7 @@
 
         removeSchedule : function(data) {
             var model = this.haveModel(data.id);
+            console.log(model, data.id)
                 if (model) {
                     model.setSelected(false); 
                 } else {
@@ -19,9 +20,9 @@
                 }
         },
         
-        addHandler : function(data) {
+        addModelHandler : function(data) {
 
-            var model = this.haveModel(data.id);
+            var model = this.getCurrentModel(data.id);
             if(model) {
 
                 model.setSelected(true); 
@@ -31,6 +32,14 @@
            
         },
         
+        getCurrentModel : function () {
+
+        },
+
+        dateValidate : function(model) {
+            //if()
+        },
+
         haveModel : function (id){
 
             if(id.constructor.name === 'Number'){ 
@@ -41,7 +50,7 @@
         },
         
         getModel : function(data) {
-            console.log(data)
+
             var model =  new this.model({
                                             id : data.id,
                                             doctor_name : data.name,
@@ -56,10 +65,12 @@
 
             model.switchUrl('getschedule');
                                 
-            model.fetch({data : {id: data.id, date: this.days.wed}});
+            model.fetch({data : {id: data.id, date: this.dateConvert(this.days.wed)}});
 
             model.switchUrl();
         },
+
+
         
         activeDoctors : function() {
             
@@ -78,16 +89,22 @@
             
             model.setSelected(true);
         },
-
-        errorHandler : function(model, request){
-
-            this.trigger('weekly_error', {text : 'server is unavailable please try again later', type : 'error'});
-            
-            this.remove(model);
-        },
-
+        
         switchUrl: function(id) {
             this.url = "/weekly_schedules/getbydoc/" + id;
+        },
+
+        dateCompare : function(str, compare_str) {
+            compare_str = (compare_str) ? compare_str : this.current_date.dateTransFormat(true);
+            return (compare_str === str) ? true : false; 
+        },
+
+        dateConvert : function(str, format) {
+
+            format = (format) ? format : '-'; 
+            str = str.split(format);
+            return str[2] + format + str[1] + format + str[0];
+
         }
         
     });
