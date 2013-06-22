@@ -5,10 +5,9 @@
 		className: "modal admin_create",
 
 		events: {
-			"click .btn-danger" : "cancelCreation",
-			"click .btn-success" : "performCreation",
+			"click .btn-danger" : "cancel",
+			"click .btn-success" : "perform",
 			"change [name='role']" : "toggleDocList",
-
 		},
 
 		specs_tpl: JST["backbone/admin/templates/admin_create_spec_template"],
@@ -37,14 +36,7 @@
 					break;
 			}
 
-			this.model.on("save", function() { 
-				this.remove(); 
-			}, this);
-
-			this.model.on("destroy", function() {
-				mts.current_board.collection.remove(this.model); this.remove();
-			}, this);
-
+			this.model.on("save", this.remove, this);
 			this.model.on("error", this.modelError, this);
 		},
 
@@ -86,7 +78,6 @@
 			} else {
 				$("#app_doc").addClass("hidden");
 			}
-
 		},
 
 		specsMode: function() {
@@ -95,17 +86,21 @@
   		},
 
   		doctorsMode: function() {
+
   			var spec_list = new app.SpecsCollection();
 
   			this.template = this.doctors_tpl;
 
   			spec_list.fetch();
   			spec_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
+  			// console.log($("option[value=" + this.model.get("specialization_id")+ "]"));
+  			// this.$el.find("option[value=" + this.model.get("specialization_id") + "]").attr("selected", "selected");
 
 			this.creation_method = this.createDoctor;	
   		},
 
   		scheduleMode: function() {
+
   			var doc_list = new app.DoctorsCollection();
 
 			this.template = this.schedule_tpl;
@@ -117,6 +112,7 @@
   		},
 
   		usersMode: function() {
+
   			var doc_list = new app.DoctorsCollection();
 
   			this.template = this.users_tpl;
@@ -128,6 +124,7 @@
   		},
 
   		ticketsMode: function() {
+
   			var doc_list = new app.DoctorsCollection(),
   				user_list = new app.UsersCollection();
   
@@ -141,17 +138,17 @@
   			this.creation_method = this.createTicket;
   		},
 
-		cancelCreation: function() {
-			//this.model = null;
+		cancel: function() {
+			this.undelegateEvents();
 			this.remove();
-
 		},
 
-		performCreation: function() {
+		perform: function() {
 			this.creation_method();
 		},
 
 		addToSelect: function(model) {
+
 			var option = document.createElement("option"),
 				select = (model instanceof app.UserModel) ? $("#user_select_list") : $("#select_list");
 
@@ -159,38 +156,61 @@
 			$(select).append(option);
 
 			//for spec list. refactor it!
-			if (this.model.get("specialization_id") === model.get("id")) {
-				$(option).attr("selected", "selected");
+			// if (this.model.get("specialization_id") === model.get("id")) {
+			// 	$(option).attr("selected", "selected");
+			// }
+			//$(select).find("[value=" + this.model.get("specialization_id")+ "]")
+
+
+			// if (this.model instanceof app.UserModel) {
+
+			// 	//for doctor list in user view.
+			// 	if ((this.model.get("role"))["doctor_id"] === model.get("id")) {
+			// 		$(option).attr("selected", "selected");
+			// 	}
+			// }
+
+			// if (this.model instanceof app.TicketModel) {
+
+			// 	//for doc list in ticket view
+			// 	if (this.model.get("doctor_id") === model.get("id")) {
+			// 		$(option).attr("selected", "selected");
+			// 	}
+
+			// 	//for user list in ticket view
+			// 	if (this.model.get("user_id") === model.get("id")) {
+			// 		$(option).attr("selected", "selected");
+			// 	}
+			// }
+
+			// if (this.model instanceof app.WeeklyModel) {
+
+			// 	//for doc list in ticket view
+			// 	if (this.model.get("doctor_id") === model.get("id")) {
+			// 		$(option).attr("selected", "selected");
+			// 	}
+			// }
+		},
+
+		setListValue: function() {
+
+			switch (this.options.board_type) {
+
+				case "doctors":
+					$("option[value=" + this.model.get("specialization_id") + "]").attr("selected", "selected");
+					break;
+				case "users":
+					$("option[value=" + this.model.get("role")["doctor_id"] + "]").attr("selected", "selected");
+					break;
+				case "tickets":
+					$("#select_list option[value=" + this.model.get("doctor_id") + "]").attr("selected", "selected");
+					$("#user_select_list option[value=" + this.model.get("doctor_id") + "]").attr("selected", "selected");
+					break;
+				case "schedule":
+					$("option[value=" + this.model.get("doctor_id") + "]").attr("selected", "selected");
+					break;
 			}
 
-			if (this.model instanceof app.UserModel) {
-
-				//for doctor list in user view.
-				if ((this.model.get("role"))["doctor_id"] === model.get("id")) {
-					$(option).attr("selected", "selected");
-				}
-			}
-
-			if (this.model instanceof app.TicketModel) {
-
-				//for doc list in ticket view
-				if (this.model.get("doctor_id") === model.get("id")) {
-					$(option).attr("selected", "selected");
-				}
-
-				//for user list in ticket view
-				if (this.model.get("user_id") === model.get("id")) {
-					$(option).attr("selected", "selected");
-				}
-			}
-
-			if (this.model instanceof app.WeeklyModel) {
-
-				//for doc list in ticket view
-				if (this.model.get("doctor_id") === model.get("id")) {
-					$(option).attr("selected", "selected");
-				}
-			}
 		},
 
 		createSpec: function() {
@@ -228,7 +248,6 @@
 							end: $("#schedule_end").val()});
 
 			this.model.save({}, {success: this.scheduleSave});
-			//fix moment with weekly_schedule id/doctor_id
 		},
 
 		createUser: function() {
@@ -270,6 +289,7 @@
 
 		render: function() {
 			this.$el.html(this.template(this.model.toJSON()));
+			this.setListValue();		
 	        return this; 
 	    }
 

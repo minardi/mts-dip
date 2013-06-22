@@ -19,7 +19,7 @@
 		initialize: function() {
 
 			this.model.on("change", this.render, this);
-			this.model.on("destroy", this.hideEl, this);
+			this.model.on("destroy", this.remove, this);
 
 			switch (this.options.board_type) {
 				case "specializations":
@@ -55,7 +55,7 @@
             $("#admin_panel").prepend(del_view.render().el);
 		},
 
-		hideEl: function() {
+		remove: function() {
 			this.$el.children().css("background-color", "#f08080");
 			this.$el.hide(600);
 		},

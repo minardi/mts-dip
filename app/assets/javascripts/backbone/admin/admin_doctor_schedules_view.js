@@ -16,7 +16,7 @@
 		initialize: function() {
 			this.render();
 			this.model.on("change", this.render, this);
-			this.model.on("destroy", this.hideEl, this);
+			this.model.on("destroy", this.remove, this);
 		},
 
 		displayActions: function() {
@@ -36,7 +36,7 @@
             $("#admin_panel").prepend(del_view.render().el);
 		},
 
-		hideEl: function() {
+		remove: function() {
 			this.$el.css("background-color", "#f08080");
 			this.$el.hide(600);
 		},
