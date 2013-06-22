@@ -6,7 +6,7 @@
 
 		events: {
 			"click .btn-danger" : "cancel",
-			"click .btn-success" : "perform",
+			"click .btn-success" : "creation",
 			"change [name='role']" : "toggleDocList",
 		},
 
@@ -36,7 +36,7 @@
 					break;
 			}
 
-			this.model.on("save", this.remove, this);
+			this.model.on("save", this.removeEl, this);
 			this.model.on("error", this.modelError, this);
 		},
 
@@ -55,17 +55,15 @@
 			model.trigger("save");
 		},
 
-
 		userForDoctor: function(model) {
-			var doc_user = new app.UserModel();
+
+			var doc_user = new app.UserModel({name: model.get("name"), 
+						  					  email: $("#user_email").val(),
+						  					  password: $("#user_password").val(),
+						 					  role: {key: "doctor",
+								 					 doctor_id: model.get("id")} });
 
 			mts.current_board.collection.add(model, {merge:true});
-
-			doc_user.set({name: model.get("name"), 
-						  email: $("#user_email").val(),
-						  password: $("#user_password").val(),
-						  role: {key: "doctor",
-								 doctor_id: model.get("id")} });
 
 			doc_user.save();
 			model.trigger("save");
@@ -82,69 +80,61 @@
 
 		specsMode: function() {
 			this.template = this.specs_tpl;
-			this.creation_method = this.createSpec;
+			this.creation = this.createSpec;
   		},
 
   		doctorsMode: function() {
 
   			var spec_list = new app.SpecsCollection();
 
-  			this.template = this.doctors_tpl;
-
   			spec_list.fetch();
   			spec_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
-  			// console.log($("option[value=" + this.model.get("specialization_id")+ "]"));
-  			// this.$el.find("option[value=" + this.model.get("specialization_id") + "]").attr("selected", "selected");
 
-			this.creation_method = this.createDoctor;	
+			this.template = this.doctors_tpl;
+			this.creation = this.createDoctor;	
   		},
 
   		scheduleMode: function() {
 
   			var doc_list = new app.DoctorsCollection();
 
-			this.template = this.schedule_tpl;
-
   			doc_list.fetch();
   			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
 
-  			this.creation_method = this.createSchedule;
+  			this.template = this.schedule_tpl;
+  			this.creation = this.createSchedule;
   		},
 
   		usersMode: function() {
 
   			var doc_list = new app.DoctorsCollection();
 
-  			this.template = this.users_tpl;
-
+  			
   			doc_list.fetch();
   			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
 
-  			this.creation_method = this.createUser;
+  			this.template = this.users_tpl;
+  			this.creation = this.createUser;
   		},
 
   		ticketsMode: function() {
 
   			var doc_list = new app.DoctorsCollection(),
   				user_list = new app.UsersCollection();
-  
-  			this.template = this.tickets_tpl;	
 
   			user_list.fetch();
   			doc_list.fetch();
+
   			user_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
   			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
 
-  			this.creation_method = this.createTicket;
+  			this.template = this.tickets_tpl;
+  			this.creation = this.createTicket;
   		},
 
 		cancel: function() {
 			this.undelegateEvents();
 			this.remove();
-		},
-
-		perform: function() {
-			this.creation_method();
 		},
 
 		addToSelect: function(model) {
@@ -155,62 +145,31 @@
 			$(option).text(model.get("name")).attr("value", model.get("id"));
 			$(select).append(option);
 
-			//for spec list. refactor it!
-			// if (this.model.get("specialization_id") === model.get("id")) {
-			// 	$(option).attr("selected", "selected");
-			// }
-			//$(select).find("[value=" + this.model.get("specialization_id")+ "]")
-
-
-			// if (this.model instanceof app.UserModel) {
-
-			// 	//for doctor list in user view.
-			// 	if ((this.model.get("role"))["doctor_id"] === model.get("id")) {
-			// 		$(option).attr("selected", "selected");
-			// 	}
-			// }
-
-			// if (this.model instanceof app.TicketModel) {
-
-			// 	//for doc list in ticket view
-			// 	if (this.model.get("doctor_id") === model.get("id")) {
-			// 		$(option).attr("selected", "selected");
-			// 	}
-
-			// 	//for user list in ticket view
-			// 	if (this.model.get("user_id") === model.get("id")) {
-			// 		$(option).attr("selected", "selected");
-			// 	}
-			// }
-
-			// if (this.model instanceof app.WeeklyModel) {
-
-			// 	//for doc list in ticket view
-			// 	if (this.model.get("doctor_id") === model.get("id")) {
-			// 		$(option).attr("selected", "selected");
-			// 	}
-			// }
+			if (this.isCurrent(model)) $(option).attr("selected", "selected");
 		},
 
-		setListValue: function() {
+		isCurrent: function(model) {
+
+			var result = false;
 
 			switch (this.options.board_type) {
 
 				case "doctors":
-					$("option[value=" + this.model.get("specialization_id") + "]").attr("selected", "selected");
+					if (this.model.get("specialization_id") === model.get("id")) result = true;
 					break;
 				case "users":
-					$("option[value=" + this.model.get("role")["doctor_id"] + "]").attr("selected", "selected");
+					if ((this.model.get("role"))["doctor_id"] === model.get("id")) result = true;
 					break;
 				case "tickets":
-					$("#select_list option[value=" + this.model.get("doctor_id") + "]").attr("selected", "selected");
-					$("#user_select_list option[value=" + this.model.get("doctor_id") + "]").attr("selected", "selected");
+					if (this.model.get("doctor_id") === model.get("id")) result = true;
+					if (this.model.get("user_id") === model.get("id")) result = true;
 					break;
 				case "schedule":
-					$("option[value=" + this.model.get("doctor_id") + "]").attr("selected", "selected");
+					if (this.model.get("doctor_id") === model.get("id")) result = true;
 					break;
 			}
 
+			return result;
 		},
 
 		createSpec: function() {
@@ -266,7 +225,11 @@
   									   			  doctor_schedule: true} } });
   			}
 
-			//another if for admins?
+  			if (role === "admin") {
+  				this.model.set({role: {key: "admin", 
+  									   permition: {admin_panel: true, 	
+  												   my_schedule: true} } });
+  			}
 
 			this.model.save({}, {success: this.modelSave});
 
@@ -287,13 +250,16 @@
 			this.model.save({}, {success: this.modelSave});
 		},
 
+		removeEl: function() {
+			this.undelegateEvents();
+			this.remove();
+		},
+
 		render: function() {
 			this.$el.html(this.template(this.model.toJSON()));
-			this.setListValue();		
 	        return this; 
 	    }
 
 	});
-
 
 })(window);
