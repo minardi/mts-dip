@@ -53,10 +53,6 @@
 			
 			var del_view = new app.AdminDeleteView({model: this.model});
             $("#admin_panel").prepend(del_view.render().el);
-
-			// if (confirm("Do you really want to delete this?") === true) {
-			// 	this.model.destroy();
-			// }  
 		},
 
 		hideEl: function() {

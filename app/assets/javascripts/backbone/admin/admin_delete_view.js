@@ -7,15 +7,9 @@
 		events: {
 			"click .btn-danger" : "cancel",
 			"click .btn-success" : "perform",
-
 		},
 
 		template: JST["backbone/admin/templates/admin_deletion_template"],
-
-		initialize: function() {
-
-		
-		},
 
 		cancel: function() {
 			this.undelegateEvents();

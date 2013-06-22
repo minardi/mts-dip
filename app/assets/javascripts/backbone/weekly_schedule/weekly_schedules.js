@@ -83,8 +83,15 @@
             this.remove(model);
         },
 
-        switchUrl: function(id) {
-            this.url = "/weekly_schedules/getbydoc/" + id;
+        switchUrl: function(type, id) {
+
+            switch (type) {
+
+                case "getbydoc":
+                    this.url = "/weekly_schedules/getbydoc/" + id;
+                    break;
+            }
+            
         }
         
     });
