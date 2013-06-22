@@ -11,3 +11,4 @@
 //= require ./admin_schedules_item_view
 //= require ./admin_create_view
 //= require ./admin_doctor_schedules_view
+//= require ./admin_delete_view

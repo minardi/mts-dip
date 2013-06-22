@@ -43,15 +43,20 @@
 		},
 
 		editItem: function() {
+
 			var edit_view = new app.AdminCreateView({model: this.model,
                                                      board_type: this.options.board_type});
             $("#admin_panel").prepend(edit_view.render().el);
 		},
 
 		deleteItem: function() {
-			if (confirm("Do you really want to delete this?") === true) {
-				this.model.destroy();
-			}  
+			
+			var del_view = new app.AdminDeleteView({model: this.model});
+            $("#admin_panel").prepend(del_view.render().el);
+
+			// if (confirm("Do you really want to delete this?") === true) {
+			// 	this.model.destroy();
+			// }  
 		},
 
 		hideEl: function() {

@@ -265,7 +265,6 @@
 							time: $("#ticket_hours").val() + ":" + 
 								  $("#ticket_minutes").val() });
 
-			console.log(this.model.toJSON());
 			this.model.save({}, {success: this.modelSave});
 		},
 
