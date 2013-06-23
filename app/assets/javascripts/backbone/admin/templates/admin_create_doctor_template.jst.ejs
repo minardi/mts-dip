@@ -2,13 +2,13 @@
     <h5 class="muted">Enter values:</h5>
 </div>
 <div class="modal-body">
-    <span>Doctor name:</span>
+    <span class="muted">Doctor name:</span>
     <p><input id="doctor_name" type="text" size="15" value="<%= name %>"></p>
-    <span>Specialization</span>
+    <span class="muted">Specialization: </span>
     <select id="select_list" name="doctor_spec">
     </select>
 
-    	<h6 class="muted">choose duration</h6>
+    	<span class="muted">Choose duration (minutes)</span>
     <p>
 	    <input name="dur" type="radio" <%= (duration == 15) ? "checked='checked'" : "" %> value="15"> 15
 	    <input name="dur" type="radio" <%= (duration == 30) ? "checked='checked'" : "" %> value="30"> 30

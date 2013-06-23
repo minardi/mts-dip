@@ -235,21 +235,17 @@ float:none;
 
 .admin_actions {
   text-align: right;
-  width: 60px;
-}
-
-.admin_actions img, img.admin_item_new {
-  width: 18px;
-  height: 18px;
+  width: 80px;
 }
 
 .admin_item_new {
   float: right;
 }
 
-.admin_create {
+.admin_create, .admin_delete{
   top: 20%;
-  left: 55%;
+  left: 45%;
+  margin: 0 auto;
   width: 300px;
 }
 
@@ -284,7 +280,7 @@ float:none;
 }
 
 #new_schedule{
-  width: 250px;
+  width: 360px;
 
   tr td {
     font-size: 10pt;
@@ -296,10 +292,10 @@ float:none;
 }
 
 #period{
-  width: 250px;
+  width: 270px;
 
   input {
-    width: 100px;
+    width: 80px;
   }
     
 }
@@ -331,7 +327,7 @@ float:none;
     position: absolute;
     right: 0px;
     bottom: 0px;
-    width: 40px;
+    width: 80px;
 
   }
 }

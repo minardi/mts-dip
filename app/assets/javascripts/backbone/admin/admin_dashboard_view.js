@@ -72,7 +72,6 @@
 		},
 
         createItem: function() {
-            
             var create_view = new app.AdminCreateView({model: new this.collection.model(),
                                                        board_type: this.options.board_type});
             $("#admin_panel").prepend(create_view.render().el);

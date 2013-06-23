@@ -9,15 +9,21 @@
 			"click .btn-success" : "perform",
 		},
 
+		initialize: function() {
+			mts.current_board.undelegateEvents();
+		},
+
 		template: JST["backbone/admin/templates/admin_deletion_template"],
 
 		cancel: function() {
+			mts.current_board.delegateEvents();
 			this.undelegateEvents();
 			this.remove();
 		},
 
 		perform: function() {
 			this.model.destroy();
+			mts.current_board.delegateEvents();
 			this.undelegateEvents();
 			this.remove();
 		},

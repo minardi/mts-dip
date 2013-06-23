@@ -22,6 +22,8 @@
 
 		initialize: function() {
 
+			mts.current_board.undelegateEvents();
+
 			switch (this.options.board_type) {
 				case "specializations":
 					this.specsMode();
@@ -102,7 +104,7 @@
 
   		scheduleMode: function() {
 
-  			this.$el.css("width", "560px");
+  			this.$el.css("width", "430px");
   			this.template = this.schedule_tpl;
   			this.creation = this.createSchedule;
   			this.doctors.fetch();
@@ -123,7 +125,7 @@
 			this.users.fetch();
   		},
 
-		clearSelect :function(list) {
+		clearSelect: function(list) {
 			if (list === "users") $("#user_select_list").empty();
 				else $("#select_list").empty();
 		},
@@ -244,6 +246,7 @@
 		removeEl: function() {
 			this.undelegateEvents();
 			this.remove();
+			mts.current_board.delegateEvents();
 		},
 
 		render: function() {
