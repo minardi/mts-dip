@@ -42,8 +42,8 @@
 
 			this.model.on("save", this.removeEl, this);
 			this.model.on("error", this.modelError, this);
-			this.specs.on("reset", function(list) {this.clearSelect(); list.each(this.addToSelect, this)}, this);
-			this.doctors.on("reset", function(list) {this.clearSelect(); list.each(this.addToSelect, this)}, this);
+			this.specs.on("reset", function(list) {this.render(); list.each(this.addToSelect, this)}, this);
+			this.doctors.on("reset", function(list) {this.render(); list.each(this.addToSelect, this)}, this);
 			this.users.on("reset", function(list) {this.clearSelect("users"); list.each(this.addToSelect, this)}, this);
 		},
 
@@ -102,6 +102,7 @@
 
   		scheduleMode: function() {
 
+  			this.$el.css("width", "560px");
   			this.template = this.schedule_tpl;
   			this.creation = this.createSchedule;
   			this.doctors.fetch();

@@ -225,10 +225,6 @@ float:none;
   cursor: pointer;
 }
 
-#admin_dashboard {
-  position: relative;
-}
-
 #admin_dashboard table thead {
   font-weight: bold;
 }
@@ -252,11 +248,8 @@ float:none;
 }
 
 .admin_create {
-  position: realtive;
-
-  /*top: -20%;*/
-  margin: 0 auto;
-
+  top: 20%;
+  left: 55%;
   width: 300px;
 }
 
