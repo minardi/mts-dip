@@ -5,10 +5,14 @@
 		className: "modal admin_create",
 
 		events: {
-			"click .btn-danger" : "cancel",
+			"click .btn-danger" : "removeEl",
 			"click .btn-success" : "creation",
 			"change [name='role']" : "toggleDocList",
 		},
+
+		specs: new app.SpecsCollection(),
+		doctors: new app.DoctorsCollection(),
+		users: new app.UsersCollection(),
 
 		specs_tpl: JST["backbone/admin/templates/admin_create_spec_template"],
         doctors_tpl: JST["backbone/admin/templates/admin_create_doctor_template"],
@@ -38,6 +42,9 @@
 
 			this.model.on("save", this.removeEl, this);
 			this.model.on("error", this.modelError, this);
+			this.specs.on("reset", function(list) {this.clearSelect(); list.each(this.addToSelect, this)}, this);
+			this.doctors.on("reset", function(list) {this.clearSelect(); list.each(this.addToSelect, this)}, this);
+			this.users.on("reset", function(list) {this.clearSelect("users"); list.each(this.addToSelect, this)}, this);
 		},
 
 		modelError: function(model, error) {
@@ -60,8 +67,11 @@
 			var doc_user = new app.UserModel({name: model.get("name"), 
 						  					  email: $("#user_email").val(),
 						  					  password: $("#user_password").val(),
-						 					  role: {key: "doctor",
-								 					 doctor_id: model.get("id")} });
+						  					  role: {key: "doctor", 
+						  					  		 doctor_id:  model.get("id"), 
+						  					  		 permition:{my_schedule: true, 
+						  					  		 			doctor_schedule: true} } });
+
 
 			mts.current_board.collection.add(model, {merge:true});
 
@@ -85,56 +95,36 @@
 
   		doctorsMode: function() {
 
-  			var spec_list = new app.SpecsCollection();
-
-  			spec_list.fetch();
-  			spec_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
-
-			this.template = this.doctors_tpl;
+  			this.template = this.doctors_tpl;
 			this.creation = this.createDoctor;	
+  			this.specs.fetch();		
   		},
 
   		scheduleMode: function() {
 
-  			var doc_list = new app.DoctorsCollection();
-
-  			doc_list.fetch();
-  			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
-
   			this.template = this.schedule_tpl;
   			this.creation = this.createSchedule;
+  			this.doctors.fetch();
   		},
 
   		usersMode: function() {
 
-  			var doc_list = new app.DoctorsCollection();
-
-  			
-  			doc_list.fetch();
-  			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
-
   			this.template = this.users_tpl;
   			this.creation = this.createUser;
+  			this.doctors.fetch();		
   		},
 
   		ticketsMode: function() {
-
-  			var doc_list = new app.DoctorsCollection(),
-  				user_list = new app.UsersCollection();
-
-  			user_list.fetch();
-  			doc_list.fetch();
-
-  			user_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
-  			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
-
+ 			
   			this.template = this.tickets_tpl;
   			this.creation = this.createTicket;
+			this.doctors.fetch();
+			this.users.fetch();
   		},
 
-		cancel: function() {
-			this.undelegateEvents();
-			this.remove();
+		clearSelect :function(list) {
+			if (list === "users") $("#user_select_list").empty();
+				else $("#select_list").empty();
 		},
 
 		addToSelect: function(model) {
@@ -158,7 +148,7 @@
 					if (this.model.get("specialization_id") === model.get("id")) result = true;
 					break;
 				case "users":
-					if ((this.model.get("role"))["doctor_id"] === model.get("id")) result = true;
+					if ((this.model.get("role"))["doctor_id"] == model.get("id")) result = true;
 					break;
 				case "tickets":
 					if (this.model.get("doctor_id") === model.get("id")) result = true;
