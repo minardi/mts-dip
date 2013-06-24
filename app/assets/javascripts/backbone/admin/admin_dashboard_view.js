@@ -6,7 +6,7 @@
 
         id: "admin_dashboard",
 
-        className: "table table-hover table-striped table-condensed",
+        className: "table table-hover table-condensed",
 
         events: {
             "click .admin_item_new" : "createItem"
@@ -14,24 +14,25 @@
 
         specs_tpl: JST["backbone/admin/templates/admin_specializations_template"],
         doctors_tpl: JST["backbone/admin/templates/admin_doctors_template"],
-        schedule_tpl: JST["backbone/admin/templates/admin_schedules_template_new"],
         tickets_tpl: JST["backbone/admin/templates/admin_tickets_template"],
         users_tpl: JST["backbone/admin/templates/admin_users_template"],
       
         initialize: function() {
 
       		switch (this.options.board_type) {
-
-                case "specializations": this.specsMode();
-                      break;
-                case "doctors": this.doctorsMode();
-                      break;
-                case "schedule": this.scheduleMode();
-                      break;
-                 case "tickets": this.ticketsMode();
-                      break;
-                case "users": this.usersMode();
-                      break;
+  
+                case "specializations": 
+                    this.specsMode();
+                    break;
+                case "doctors": 
+                    this.doctorsMode();
+                    break;
+                case "tickets": 
+                    this.ticketsMode();
+                    break;
+                case "users": 
+                    this.usersMode();
+                    break;
             }
 
  			this.collection.fetch();
@@ -66,20 +67,19 @@
 		addItem: function(model) {
 
 			var item_view = new app.AdminDashItemView({model: model, 
-                                                 board_type: this.options.board_type});
-
+                                                       board_type: this.options.board_type});
 			this.$el.append(item_view.render().el);
 		},
 
         createItem: function() {
             var create_view = new app.AdminCreateView({model: new this.collection.model(),
                                                        board_type: this.options.board_type});
-            this.$el.prepend(create_view.render().el);
-
+            $("#admin_panel").prepend(create_view.render().el);
         },
 		
 		render: function() {
-      $("#admin_panel").html(this.el);
+
+            $("#admin_panel").html(this.el);
 			this.$el.html(this.template());
 			this.collection.each(this.addItem, this);
 				

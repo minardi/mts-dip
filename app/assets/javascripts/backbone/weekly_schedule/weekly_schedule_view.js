@@ -7,10 +7,11 @@
         template :  JST["backbone/weekly_schedule/weekly_schedule_template"],
         
         initialize : function(){
+            this.model.on('schedule:update', this.render, this);
             this.model.on('select:schedule_day', this.activeTrigger, this);
             this.model.on('select:schedule_day', this.publishTrigger, this);
             this.model.on('change:selected', this.selfRemove, this);   
-            this.model.on('schedule:update', this.render, this);
+
         },
         
         events : {
@@ -19,14 +20,16 @@
         
         render : function(){
  
-            this.$el.html(this.template(this.model.toJSON()));
-            
+            console.log('render')
+            this.$el.empty().append(this.template(this.model.toJSON()));
+
             return this;
         },
         
-        activeTrigger : function(day, trigger){
+        activeTrigger : function(day, trigger, silence){
+            console.log(day, trigger, silence);
             elem = this.$el.find('#doc'+ this.model.get('doctor_id') + '-' + day);
-            
+            console.log(elem);
             (!trigger) ? $(elem).removeClass('active') : $(elem).addClass('active');
                    
         },
@@ -39,7 +42,7 @@
         },
         
         publishTrigger : function(day, trigger, silence) {
-            
+
             if(!silence){
                 if(trigger) {
                     

@@ -17,11 +17,11 @@
         addItem: function(model) {
 
             var item_view = new app.AdminSchedulesItemView({model: model});
-
             this.$el.append(item_view.render().el);
         },
 		
 		render: function() {
+            
             $("#admin_panel").html(this.el);
     		this.$el.html(this.template());
     		this.collection.each(this.addItem, this);

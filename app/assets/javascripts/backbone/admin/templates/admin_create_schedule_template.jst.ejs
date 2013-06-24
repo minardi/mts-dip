@@ -10,15 +10,10 @@
 
 	    <tr>
 			<td>
-				<strong>From:</strong>
+				<strong>Period:</strong>
 			</td>
 			<td>
-				<input id="schedule_start" type="text" size=10 value="<%= start %>">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<strong>to:</strong>
+				<input id="schedule_start" type="text" size=10 value="<%= start %>">  - 
 			</td>
 			<td>
 				<input id="schedule_end" type="text" size=10 value="<%= end %>">
@@ -37,63 +32,37 @@
 				<strong>Sun: </strong>
 			</td>
 			<td>
-				<input id="sun-start" type="text" size=5 value="<%= schedule["sun"]["start"] %>"> - 
+				<input id="sun-start" type="text" size=5 value="<%= schedule["sun"]["start"] %>">  - 
 			</td>
 			<td>
 				<input id="sun-end" type="text" size=5 value="<%= schedule["sun"]["end"] %>">
 			</td>
-		</tr>
-		<tr>
-			<td>
-				<strong>Mon: </strong>
-			</td>
-			<td>
-				<input id="mon-start" type="text" size=5 value="<%= schedule["mon"]["start"] %>"> - 
-			</td>			
-			<td>
-				<input id="mon-end" type="text" size=5 value="<%= schedule["mon"]["end"] %>">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<strong>Tue: </strong>
-			</td>
-			<td>
-				<input id="tue-start" type="text" size=5 value="<%= schedule["tue"]["start"] %>"> - 
-			</td>
-			<td>
-				<input id="tue-end" type="text" size=5 value="<%= schedule["tue"]["end"] %>">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<strong>Wed: </strong>
-			</td>
-			<td>
-				<input id="wed-start" type="text" size=5 value="<%= schedule["wed"]["start"] %>"> - 
-			</td>
-			<td>
-				<input id="wed-end" type="text" size=5 value="<%= schedule["wed"]["end"] %>">
-			</td>
-
-		</tr>
-		<tr>
 			<td>
 				<strong>Thu: </strong>
 			</td>
 			<td>
-				<input id="thu-start" type="text" size=5 value="<%= schedule["thu"]["start"] %>"> - 
+				<input id="thu-start" type="text" size=5 value="<%= schedule["thu"]["start"] %>">  - 
 			</td>
 			<td>
 				<input id="thu-end" type="text" size=5 value="<%= schedule["thu"]["end"] %>">
 			</td>
 		</tr>
+
 		<tr>
+			<td>
+				<strong>Mon: </strong>
+			</td>
+			<td>
+				<input id="mon-start" type="text" size=5 value="<%= schedule["mon"]["start"] %>">  - 
+			</td>			
+			<td>
+				<input id="mon-end" type="text" size=5 value="<%= schedule["mon"]["end"] %>">
+			</td>
 			<td>
 				<strong>Fri: </strong>
 			</td>
 			<td>
-				<input id="fri-start" type="text" size=5 value="<%= schedule["fri"]["start"] %>"> - 
+				<input id="fri-start" type="text" size=5 value="<%= schedule["fri"]["start"] %>">  - 
 			</td>
 			<td>
 				<input id="fri-end" type="text" size=5 value="<%= schedule["fri"]["end"] %>">
@@ -101,15 +70,37 @@
 		</tr>
 		<tr>
 			<td>
+				<strong>Tue: </strong>
+			</td>
+			<td>
+				<input id="tue-start" type="text" size=5 value="<%= schedule["tue"]["start"] %>">  - 
+			</td>
+			<td>
+				<input id="tue-end" type="text" size=5 value="<%= schedule["tue"]["end"] %>">
+			</td>
+			<td>
 				<strong>Sat: </strong>
 			</td>
 			<td>
-				<input id="sat-start" type="text" size=5 value="<%= schedule["sat"]["start"] %>"> - 
+				<input id="sat-start" type="text" size=5 value="<%= schedule["sat"]["start"] %>">  - 
 			</td>
 			<td>
 				<input id="sat-end" type="text" size=5 value="<%= schedule["sat"]["end"] %>">
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<strong>Wed: </strong>
+			</td>
+			<td>
+				<input id="wed-start" type="text" size=5 value="<%= schedule["wed"]["start"] %>">  - 
+			</td>
+			<td>
+				<input id="wed-end" type="text" size=5 value="<%= schedule["wed"]["end"] %>">
+			</td>
+
+		</tr>
+
 	</table>
 </div>
 <div class="modal-footer"> 

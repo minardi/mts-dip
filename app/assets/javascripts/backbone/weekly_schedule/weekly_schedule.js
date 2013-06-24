@@ -50,8 +50,19 @@ app.WeeklyModel = Backbone.Model.extend({
         urlRoot : '/weekly_schedules',
 
         isDay : function(day){
+            
+            var select_value = {};
 
-            return (day) ? this.attributes.schedule[day]['selected'] : undefined; 
+            if(day){
+
+                select_value = this.attributes.schedule[day]['selected'];
+                select_value = (select_value !== undefined) ? select_value : false;
+                       
+            } else {
+                console('param day is not defined');
+            }
+
+            return (day) ? select_value : undefined;
         },
 
         dayTrigger : function(day, selected, silence){
@@ -107,10 +118,6 @@ app.WeeklyModel = Backbone.Model.extend({
 
         updateHandler : function(){
 
-            for(day in this.attributes.schedule){
-                this.dayTrigger(day, false, true);
-            }
-
             this.off('sync');
             this.trigger('schedule:update');    
         },
@@ -124,10 +131,11 @@ app.WeeklyModel = Backbone.Model.extend({
             }
 
             this.switchUrl('getschedule');
-            this.fetch({data : {
-                                    id: this.attributes.doctor_id, 
-                                    date: this.current_date.dateTransFormat(true)
-                                }
+            this.fetch({
+                            data : {
+                                        id: this.attributes.doctor_id, 
+                                        date: this.current_date.dateTransFormat(true)
+                                    }
                         }
             );
             this.switchUrl();

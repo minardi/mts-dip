@@ -16,12 +16,12 @@
 }
 
 #DocTable {
-	text-align: center;
+    text-align: center;
 }
 
 #list, #work-time {
-	margin: 30px 0 20px 0;
-	
+    margin: 30px 0 20px 0;
+    
 }
 
 .weekly-table {
@@ -70,13 +70,22 @@
 }
 
 .user-navigate{
-
+    
     .nav-action-name{
         float: none;
         padding: 10px 15px 10px;
         color: #777777;
         text-decoration: none;
-        text-shadow: 0 1px 0 #ffffff; 
+        text-shadow: 0 1px 0 #ffffff;
+        cursor:pointer;
+
+        &:active{
+            background:#5ce0da;
+        }
+    }
+    
+    .user-nav-action{
+        cursor:pointer;
     }
 
     .nav > .active > .nav-action-name,
@@ -99,22 +108,22 @@
 } 
 
 .drop_menu_block {
-	display: block; 
+    display: block; 
   min-width: 140px;
-	position: static;
+    position: static;
 }
 
 #list_item {
-	background: #5adfd9;	
+    background: #5adfd9;    
 }
 
 #list {
-	width: 120px;
+    width: 120px;
 }
 
 #work-time table {
-	/*margin-top: 10px;*/
-	width: 710px;
+    /*margin-top: 10px;*/
+    width: 710px;
 }
 
 .next-tickets {
@@ -144,41 +153,41 @@
 
 .missed_ticket
 {
-	background-color: red !important;
+    background-color: red !important;
 
 }
 
 .visited_ticket 
 {
-	background-color: yellow !important;
+    background-color: yellow !important;
 
 }
 
 .canceled_ticket 
 {
-	background-color: white !important;
+    background-color: white !important;
 
 }
 
 .timeline {
-	height: 40px;
-	float: left;
-	margin-right: 1px;
-	background-color: lightblue; 
+    height: 40px;
+    float: left;
+    margin-right: 1px;
+    background-color: lightblue; 
 }
 
 #daily_schedules thead td, #current_schedules thead td {
-	width: 10%;
-	text-align: center;
-	vertical-align: middle;
+    width: 10%;
+    text-align: center;
+    vertical-align: middle;
 }
 
 #daily_schedules tbody td, #current_schedules tbody td {
-	padding: 0px;
+    padding: 0px;
 }
 
 .timelines .worktime {
-	background-color: #0000ff;
+    background-color: #0000ff;
 }
 
  .doctors
@@ -216,17 +225,13 @@ float:none;
 }
 
 .selected_spec, .active{
-	background-color: #55cac5; 
+    background-color: #55cac5; 
 }
 
 
 
 #specializations li:hover, #admin_navigation li:hover, .doctors li:hover, .timelines .worktime, .weekly-table .schedule-item {
   cursor: pointer;
-}
-
-#admin_dashboard {
-  position: relative;
 }
 
 #admin_dashboard table thead {
@@ -239,24 +244,17 @@ float:none;
 
 .admin_actions {
   text-align: right;
-  width: 60px;
-}
-
-.admin_actions img, img.admin_item_new {
-  width: 18px;
-  height: 18px;
+  width: 80px;
 }
 
 .admin_item_new {
   float: right;
 }
 
-.admin_create {
-  position: realtive;
-
-  /*top: -20%;*/
+.admin_create, .admin_delete{
+  top: 20%;
+  left: 45%;
   margin: 0 auto;
-
   width: 300px;
 }
 
@@ -291,7 +289,7 @@ float:none;
 }
 
 #new_schedule{
-  width: 250px;
+  width: 360px;
 
   tr td {
     font-size: 10pt;
@@ -303,10 +301,10 @@ float:none;
 }
 
 #period{
-  width: 250px;
+  width: 270px;
 
   input {
-    width: 100px;
+    width: 80px;
   }
     
 }
@@ -338,7 +336,7 @@ float:none;
     position: absolute;
     right: 0px;
     bottom: 0px;
-    width: 40px;
+    width: 80px;
 
   }
 }

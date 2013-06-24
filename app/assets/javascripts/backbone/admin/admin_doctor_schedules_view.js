@@ -16,6 +16,7 @@
 		initialize: function() {
 			this.render();
 			this.model.on("change", this.render, this);
+			this.model.on("destroy", this.remove, this);
 		},
 
 		displayActions: function() {
@@ -23,17 +24,21 @@
 		},
 
 		editItem: function() {
+			
 			var edit_view = new app.AdminCreateView({model: this.model,
                                                      board_type: "schedule"});
             $("#admin_panel").prepend(edit_view.render().el);
 		},
 
 		deleteItem: function() {
-			if (confirm("Do you really want to delete this?") === true) {
-				//this.model.switchUrl("modify", this.model.get("id"));
-				this.model.destroy();
-				this.$el.hide(600);
-			}  
+
+			var del_view = new app.AdminDeleteView({model: this.model});
+            $("#admin_panel").prepend(del_view.render().el);
+		},
+
+		remove: function() {
+			this.$el.css("background-color", "#f08080");
+			this.$el.hide(600);
 		},
 
 		render: function() {

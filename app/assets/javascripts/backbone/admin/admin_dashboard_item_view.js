@@ -19,7 +19,7 @@
 		initialize: function() {
 
 			this.model.on("change", this.render, this);
-			this.model.on("destroy", this.hideEl, this);
+			this.model.on("destroy", this.remove, this);
 
 			switch (this.options.board_type) {
 				case "specializations":
@@ -43,18 +43,19 @@
 		},
 
 		editItem: function() {
+
 			var edit_view = new app.AdminCreateView({model: this.model,
                                                      board_type: this.options.board_type});
             $("#admin_panel").prepend(edit_view.render().el);
 		},
 
 		deleteItem: function() {
-			if (confirm("Do you really want to delete this?") === true) {
-				this.model.destroy();
-			}  
+			
+			var del_view = new app.AdminDeleteView({model: this.model});
+            $("#admin_panel").prepend(del_view.render().el);
 		},
 
-		hideEl: function() {
+		remove: function() {
 			this.$el.children().css("background-color", "#f08080");
 			this.$el.hide(600);
 		},
