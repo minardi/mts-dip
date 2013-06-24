@@ -3,37 +3,51 @@
 </div>
 <div class="modal-body">
 
-<p>	
-	<span>Doctor: </span>
-	<select id="select_list">
-	</select>
-</p>	
-
-<p>
-	<span>User: </span>
-	<select id="user_select_list">
-	</select>
-</p>
-
-<p>
-	<span>Date: </span>
-	<input type="text" id="ticket_day" value="<%= data.slice(0, 2) %>"> - 
-	<input type="text" id="ticket_month" value="<%= data.slice(3, 5) %>"> - 
-	<input type="text" id="ticket_year" value="<%= data.slice(6) %>">
-</p>
-
-<p>
-	<span>Time: </span>
-	<input type="text" id="ticket_hours" value="<%= time.slice(0, 2) %>"> :
-	<input type="text" id="ticket_minutes" value="<%= time.slice(3) %>">
-</p>
-
-<p>
-	<span>Status:</span>
-	<input type="radio" name="ticket_status" checked="checked" value="default">Default
-	<input type="radio" name="ticket_status" value="canceled">Canceled
-	<input type="radio" name="ticket_status" value="missed">Missed
-</p>
+<table>
+	<tr>
+		<td class="muted">
+			Doctor: 
+		</td>
+		<td>
+			<select id="select_list" />
+		</td>
+	</tr>
+	<tr>
+		<td class="muted">
+			User: 
+		</td>
+		<td>
+			<select id="user_select_list" />
+		</td>
+	</tr>
+	<tr>
+		<td class="muted">
+			Date: 
+		</td>
+		<td>
+			<input type="text" id="ticket_day" value="<%= data.slice(0, 2) %>"> - 
+			<input type="text" id="ticket_month" value="<%= data.slice(3, 5) %>"> - 
+			<input type="text" id="ticket_year" value="<%= data.slice(6) %>">
+		</td>
+	</tr>
+		<td class="muted">
+			Time: 
+		</td>
+		<td>
+			<input type="text" id="ticket_hours" value="<%= time.slice(0, 2) %>"> :
+			<input type="text" id="ticket_minutes" value="<%= time.slice(3) %>">
+		</td>
+	<tr>
+		<td class="muted">
+			Status:
+		</td>
+		<td>
+			<input type="radio" name="ticket_status" checked="checked" value="default">Default
+			<input type="radio" name="ticket_status" value="canceled">Canceled
+			<input type="radio" name="ticket_status" value="missed">Missed
+		</td>
+	</tr>
+</table>
 
 </div>
 <div class="modal-footer"> 

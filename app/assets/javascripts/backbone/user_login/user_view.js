@@ -2,7 +2,6 @@
 
     app.UserView = Backbone.View.extend({
         
-        // el - elent-bloc "div", with login field
         el: '#login_block',
 
         initialize: function() {
@@ -48,6 +47,7 @@
                                         });
  
             this.user.on('sync', this.checkLogin, this);
+            this.user.loginUrl();
             this.user.save();            
         },
 

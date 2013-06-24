@@ -225,10 +225,6 @@ float:none;
   cursor: pointer;
 }
 
-#admin_dashboard {
-  position: relative;
-}
-
 #admin_dashboard table thead {
   font-weight: bold;
 }
@@ -239,24 +235,17 @@ float:none;
 
 .admin_actions {
   text-align: right;
-  width: 60px;
-}
-
-.admin_actions img, img.admin_item_new {
-  width: 18px;
-  height: 18px;
+  width: 80px;
 }
 
 .admin_item_new {
   float: right;
 }
 
-.admin_create {
-  position: realtive;
-
-  /*top: -20%;*/
+.admin_create, .admin_delete{
+  top: 20%;
+  left: 45%;
   margin: 0 auto;
-
   width: 300px;
 }
 
@@ -291,7 +280,7 @@ float:none;
 }
 
 #new_schedule{
-  width: 250px;
+  width: 360px;
 
   tr td {
     font-size: 10pt;
@@ -300,6 +289,15 @@ float:none;
       width: 35px;
     }
   }  
+}
+
+#period{
+  width: 270px;
+
+  input {
+    width: 80px;
+  }
+    
 }
 
 #ticket_day, #ticket_month, #ticket_hours, #ticket_minutes {
@@ -311,12 +309,25 @@ float:none;
 }
 
 .admin_schedule {
+  position: relative;
   display: inline-block;
-  width: 170px;
+  width: 150px;
   border: 2px solid gray;
   border-radius: 5px;
+  padding: 5px;
+  margin: 2px;
+  font-size: 9pt;
 
   ul {
     list-style: none;
+    margin: 5px;
+  }
+
+  .admin_actions {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: 80px;
+
   }
 }

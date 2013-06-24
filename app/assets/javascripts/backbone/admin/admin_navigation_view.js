@@ -12,13 +12,12 @@
                                                              {name: "Schedule"},
                                                              {name: "Tickets"}]);
             this.render();
-
         },
         
         addItem: function(model) {
-
+            
             var item_view = new app.AdminNavItemView({model: model});
-            this.$el.children("ul").append(item_view.render().el);                  
+            this.$el.children(0).append(item_view.render().el);                  
         },
         
         render: function() {

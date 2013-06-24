@@ -1,10 +1,20 @@
-<img class="admin_item_delete hidden" src="/images/remove.png">
+<div class="muted">
+	From <strong><%= start %></strong>
+</div>
+<div class="muted">
+	to <strong><%= end %></strong>
+</div>
 <ul>
-	<li><strong>Sun: </strong><%= schedule["sun"]["start"] %> - <%= schedule["sun"]["end"] %></li>
-	<li><strong>Mon: </strong><%= schedule["mon"]["start"] %> - <%= schedule["mon"]["end"] %></li>
-	<li><strong>Tue: </strong><%= schedule["tue"]["start"] %> - <%= schedule["tue"]["end"] %></li>
-	<li><strong>Wed: </strong><%= schedule["wed"]["start"] %> - <%= schedule["wed"]["end"] %></li>
-	<li><strong>Thu: </strong><%= schedule["thu"]["start"] %> - <%= schedule["thu"]["end"] %></li>
-	<li><strong>Fri: </strong><%= schedule["fri"]["start"] %> - <%= schedule["fri"]["end"] %></li>
-	<li><strong>Sat: </strong><%= schedule["sat"]["start"] %> - <%= schedule["sat"]["end"] %></li>
+	<li><em>Sun: </em><%= schedule["sun"]["start"] %> - <%= schedule["sun"]["end"] %></li>
+	<li><em>Mon: </em><%= schedule["mon"]["start"] %> - <%= schedule["mon"]["end"] %></li>
+	<li><em>Tue: </em><%= schedule["tue"]["start"] %> - <%= schedule["tue"]["end"] %></li>
+	<li><em>Wed: </em><%= schedule["wed"]["start"] %> - <%= schedule["wed"]["end"] %></li>
+	<li><em>Thu: </em><%= schedule["thu"]["start"] %> - <%= schedule["thu"]["end"] %></li>
+	<li><em>Fri: </em><%= schedule["fri"]["start"] %> - <%= schedule["fri"]["end"] %></li>
+	<li><em>Sat: </em><%= schedule["sat"]["start"] %> - <%= schedule["sat"]["end"] %></li>
 </ul>
+
+<div class="admin_actions hidden">
+	<button class="btn btn-info btn-mini admin_item_edit">Edit</button>
+	<button class="btn btn-danger btn-mini admin_item_delete">Delete</button>
+</div>

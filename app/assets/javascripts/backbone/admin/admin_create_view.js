@@ -5,11 +5,14 @@
 		className: "modal admin_create",
 
 		events: {
-			"click .btn-danger" : "cancelCreation",
-			"click .btn-success" : "performCreation",
+			"click .btn-danger" : "removeEl",
+			"click .btn-success" : "creation",
 			"change [name='role']" : "toggleDocList",
-
 		},
+
+		specs: new app.SpecsCollection(),
+		doctors: new app.DoctorsCollection(),
+		users: new app.UsersCollection(),
 
 		specs_tpl: JST["backbone/admin/templates/admin_create_spec_template"],
         doctors_tpl: JST["backbone/admin/templates/admin_create_doctor_template"],
@@ -18,6 +21,8 @@
         users_tpl: JST["backbone/admin/templates/admin_create_user_template"],
 
 		initialize: function() {
+
+			mts.current_board.undelegateEvents();
 
 			switch (this.options.board_type) {
 				case "specializations":
@@ -37,15 +42,11 @@
 					break;
 			}
 
-			this.model.on("save", function() { 
-				this.remove(); 
-			}, this);
-
-			this.model.on("destroy", function() {
-				mts.current_board.collection.remove(this.model); this.remove();
-			}, this);
-
+			this.model.on("save", this.removeEl, this);
 			this.model.on("error", this.modelError, this);
+			this.specs.on("reset", function(list) {this.render(); list.each(this.addToSelect, this)}, this);
+			this.doctors.on("reset", function(list) {this.render(); list.each(this.addToSelect, this)}, this);
+			this.users.on("reset", function(list) {this.clearSelect("users"); list.each(this.addToSelect, this)}, this);
 		},
 
 		modelError: function(model, error) {
@@ -58,18 +59,24 @@
 			model.trigger("save");
 		},
 
+		scheduleSave: function(model) {
+			Backbone.Mediator.pub("schedule_saved", model);
+			model.trigger("save");
+		},
+
 		userForDoctor: function(model) {
-			var doc_user = new app.UserModel();
+
+			var doc_user = new app.UserModel({name: model.get("name"), 
+						  					  email: $("#user_email").val(),
+						  					  password: $("#user_password").val(),
+						  					  role: {key: "doctor", 
+						  					  		 doctor_id:  model.get("id"), 
+						  					  		 permition:{my_schedule: true, 
+						  					  		 			doctor_schedule: true} } });
+
 
 			mts.current_board.collection.add(model, {merge:true});
 
-			doc_user.set({name: model.get("name"), 
-						  email: $("#user_email").val(),
-						  password: $("#user_password").val(),
-						  role: {key: "doctor",
-								 doctor_id: model.get("id")} });
-
-			doc_user.switchUrl();
 			doc_user.save();
 			model.trigger("save");
 		},
@@ -81,103 +88,81 @@
 			} else {
 				$("#app_doc").addClass("hidden");
 			}
-
 		},
 
 		specsMode: function() {
 			this.template = this.specs_tpl;
-			this.creation_method = this.createSpec;
+			this.creation = this.createSpec;
   		},
 
   		doctorsMode: function() {
-  			var spec_list = new app.SpecsCollection();
 
   			this.template = this.doctors_tpl;
-
-  			spec_list.fetch();
-  			spec_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
-
-			this.creation_method = this.createDoctor;	
+			this.creation = this.createDoctor;	
+  			this.specs.fetch();		
   		},
 
   		scheduleMode: function() {
-  			var doc_list = new app.DoctorsCollection();
 
-			this.template = this.schedule_tpl;
-
-  			doc_list.fetch();
-  			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
-
-  			this.creation_method = this.createSchedule;
+  			this.$el.css("width", "430px");
+  			this.template = this.schedule_tpl;
+  			this.creation = this.createSchedule;
+  			this.doctors.fetch();
   		},
 
   		usersMode: function() {
-  			var doc_list = new app.DoctorsCollection();
 
   			this.template = this.users_tpl;
-
-  			doc_list.fetch();
-  			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
-
-  			this.creation_method = this.createUser;
+  			this.creation = this.createUser;
+  			this.doctors.fetch();		
   		},
 
   		ticketsMode: function() {
-  			var doc_list = new app.DoctorsCollection(),
-  				user_list = new app.UsersCollection();
-  
-  			this.template = this.tickets_tpl;	
-
-  			user_list.fetch();
-  			doc_list.fetch();
-  			user_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
-  			doc_list.on("reset", function(list) {list.each(this.addToSelect, this)}, this);
-
-  			this.creation_method = this.createTicket;
+ 			
+  			this.template = this.tickets_tpl;
+  			this.creation = this.createTicket;
+			this.doctors.fetch();
+			this.users.fetch();
   		},
 
-		cancelCreation: function() {
-			//this.model = null;
-			this.remove();
-
-		},
-
-		performCreation: function() {
-			this.creation_method();
+		clearSelect: function(list) {
+			if (list === "users") $("#user_select_list").empty();
+				else $("#select_list").empty();
 		},
 
 		addToSelect: function(model) {
+
 			var option = document.createElement("option"),
 				select = (model instanceof app.UserModel) ? $("#user_select_list") : $("#select_list");
 
 			$(option).text(model.get("name")).attr("value", model.get("id"));
 			$(select).append(option);
 
-			//for spec list. refactor it!
-			if (this.model.get("specialization_id") === model.get("id")) {
-				$(option).attr("selected", "selected");
+			if (this.isCurrent(model)) $(option).attr("selected", "selected");
+		},
+
+		isCurrent: function(model) {
+
+			var result = false;
+
+			switch (this.options.board_type) {
+
+				case "doctors":
+					if (this.model.get("specialization_id") === model.get("id")) result = true;
+					break;
+				case "users":
+					if ((this.model.get("role"))["doctor_id"] == model.get("id")) result = true;
+					break;
+				case "tickets":
+					if (this.model.get("doctor_id") === model.get("id")) result = true;
+					if (this.model.get("user_id") === model.get("id")) result = true;
+					break;
+				case "schedule":
+					if (this.model.get("doctor_id") === model.get("id")) result = true;
+					break;
 			}
 
-			if (this.model instanceof app.UserModel) {
-
-				//for doctor list in user view.
-				if ((this.model.get("role"))["doctor_id"] === model.get("id")) {
-					$(option).attr("selected", "selected");
-				}
-			}
-
-			if (this.model instanceof app.TicketModel) {
-
-				//for doc list in ticket view
-				if (this.model.get("doctor_id") === model.get("id")) {
-					$(option).attr("selected", "selected");
-				}
-
-				//for user list in ticket view
-				if (this.model.get("user_id") === model.get("id")) {
-					$(option).attr("selected", "selected");
-				}
-			}
+			return result;
 		},
 
 		createSpec: function() {
@@ -209,9 +194,12 @@
 				week[day]["end"] = $("#" + day + "-end").val();
 			});
 
-			this.model.set({schedule: schedule, doctor_id: $("#select_list").val()});
-			this.model.save({}, {success: this.modelSave});
-			//fix moment with weekly_schedule id/doctor_id
+			this.model.set({schedule: schedule, 
+							doctor_id: $("#select_list").val(),
+							start: $("#schedule_start").val(),
+							end: $("#schedule_end").val()});
+
+			this.model.save({}, {success: this.scheduleSave});
 		},
 
 		createUser: function() {
@@ -220,14 +208,22 @@
 			this.model.set({name: $("#user_name").val(), 
 							email: $("#user_email").val(),
 							password: $("#user_password").val(),
-							role: {key: role} });
+							role: {key: role,
+								   permition:{my_schedule:true} } });
 
 			if (role === "doctor") {
   				this.model.set({role: {key: role, 
-  									   doctor_id: $("#select_list").val()} });
+  									   doctor_id: $("#select_list").val(),
+  									   permition:{my_schedule: true, 
+  									   			  doctor_schedule: true} } });
   			}
 
-			this.model.switchUrl();//i need another url for deleting users
+  			if (role === "admin") {
+  				this.model.set({role: {key: "admin", 
+  									   permition: {admin_panel: true, 	
+  												   my_schedule: true} } });
+  			}
+
 			this.model.save({}, {success: this.modelSave});
 
 		},
@@ -244,8 +240,13 @@
 							time: $("#ticket_hours").val() + ":" + 
 								  $("#ticket_minutes").val() });
 
-			console.log(this.model.toJSON());
 			this.model.save({}, {success: this.modelSave});
+		},
+
+		removeEl: function() {
+			this.undelegateEvents();
+			this.remove();
+			mts.current_board.delegateEvents();
 		},
 
 		render: function() {
@@ -254,6 +255,5 @@
 	    }
 
 	});
-
 
 })(window);

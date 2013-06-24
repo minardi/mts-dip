@@ -6,12 +6,14 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.create(name: "Alex", password: "testqq", email: "q@gmail.com", role: {key: "doctor", doctor_id: 1, permition:{admin_panel:true, my_schedule:true, doctor_schedule: true}})
-User.create(name: "Justin", password: "testzz", email: "z@gmail.com", role: {key: "doctor", doctor_id: 2, permition:{admin_panel:true, my_schedule:true, doctor_schedule: true}})
-User.create(name: "David", password: "testdd", email: "d@gmail.com", role: {key: "doctor", doctor_id: 3, permition:{admin_panel:true, my_schedule:true, doctor_schedule: true}})
-User.create(name: "Bob", password: "testbb", email: "b@gmail.com", role: {key: "doctor", doctor_id: 4, permition:{admin_panel:true, my_schedule:true, doctor_schedule: true}})
-User.create(name: "Steve", password: "testss", email: "s@gmail.com", role: {key: "doctor", doctor_id: 5, permition:{admin_panel:true, my_schedule:true, doctor_schedule: true}})
-User.create(name: "Peter", password: "testpp", email: "p@gmail.com", role: {key: "doctor", doctor_id: 6, permition:{admin_panel:true, my_schedule:true, doctor_schedule: true}})
+User.create(name: "Thomas", password: "anderson", email: "anderson@gmail.com", role: {key: "admin", permition:{admin_panel: true, my_schedule: true}})
+
+User.create(name: "Alex", password: "testqq", email: "q@gmail.com", role: {key: "doctor", doctor_id: 1, permition:{my_schedule:true, doctor_schedule: true}})
+User.create(name: "Justin", password: "testzz", email: "z@gmail.com", role: {key: "doctor", doctor_id: 2, permition:{my_schedule:true, doctor_schedule: true}})
+User.create(name: "David", password: "testdd", email: "d@gmail.com", role: {key: "doctor", doctor_id: 3, permition:{my_schedule:true, doctor_schedule: true}})
+User.create(name: "Bob", password: "testbb", email: "b@gmail.com", role: {key: "doctor", doctor_id: 4, permition:{my_schedule:true, doctor_schedule: true}})
+User.create(name: "Steve", password: "testss", email: "s@gmail.com", role: {key: "doctor", doctor_id: 5, permition:{my_schedule:true, doctor_schedule: true}})
+User.create(name: "Peter", password: "testpp", email: "p@gmail.com", role: {key: "doctor", doctor_id: 6, permition:{my_schedule:true, doctor_schedule: true}})
 
 User.create(name: "Calvin", password: "testcc", email: "c@gmail.com", role: {key: "patient", permition:{my_schedule:true}})
 User.create(name: "Marry", password: "testmm", email: "m@gmail.com", role: {key: "patient", permition:{my_schedule:true}})

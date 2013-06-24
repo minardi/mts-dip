@@ -38,6 +38,8 @@ MTSDip::Application.routes.draw do
 
   get 'weekly_schedules/:id' => 'weekly_schedules#show'
 
+  delete 'weekly_schedules/:id' => 'weekly_schedules#destroy'
+
   post 'weekly_schedules' => 'weekly_schedules#create'
 
   put 'weekly_schedules/:id'  => 'weekly_schedules#update'

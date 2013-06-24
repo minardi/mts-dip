@@ -15,15 +15,12 @@
                }
     },
 
-    url : 'users/login.json',
+    urlRoot : '/users',
 
-    //we need to get rid of this bullshit
-    switchUrl: function() {
-      this.url = "/users";
-    },
+    loginUrl: function(type) {
 
-    urlForDelete: function(id) {
-      this.url = "/users/" + id;
+      this.urlRoot = '/users/login';                  
+    
     }
 
     //,
