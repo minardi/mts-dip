@@ -3,7 +3,6 @@
   app.UserModel = Backbone.Model.extend({
           
     defaults : {
-        id : 0,
         email : 'x@xxxxx.xxx',
         password : '123456',
         name : 'Newuser',
@@ -22,15 +21,6 @@
       this.urlRoot = '/users/login';                  
     
     }
-
-    //,
-
-    //validate: function(attrs) {
- 
-    //  if (reg_email.exec(attrs.email) == null) {
-    //      return "Please set valid email";
-    //  }
-    // } 
 
    });
  
