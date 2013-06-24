@@ -42,9 +42,9 @@
 			Status:
 		</td>
 		<td>
-			<input type="radio" name="ticket_status" checked="checked" value="default">Default
-			<input type="radio" name="ticket_status" value="canceled">Canceled
-			<input type="radio" name="ticket_status" value="missed">Missed
+			<input type="radio" name="ticket_status" <%= (status === "default") ? "checked='checked'" : "" %> value="default">Default
+			<input type="radio" name="ticket_status" <%= (status === "canceled") ? "checked='checked'" : "" %>value="canceled">Canceled
+			<input type="radio" name="ticket_status" <%= (status === "missed") ? "checked='checked'" : "" %>value="missed">Missed
 		</td>
 	</tr>
 </table>

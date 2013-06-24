@@ -9,13 +9,8 @@
 				var doctor_id = app.userEx.getDoctorId();
 
 				this.fetchSchedule(doctor_id);	
-
-				 
-				  this.navigate = new NavigateWeek(this.refresh,this);
-      
-                  this.$el.parent().append(this.navigate.el);
-
-
+				this.navigate = new NavigateWeek(this.refresh,this);
+      			this.$el.parent().append(this.navigate.el);
 			},
 
 			fetchSchedule: function(doctor_id) {
@@ -42,7 +37,6 @@
 
 				current_schedule_view = new app.DailyScheduleView( {model: daily_schedule, ticketType: "cw-doc"} );
 				current_schedule_view.template = JST["backbone/current_schedule/current_schedule_template"];
-				//VIEW REUSED! verify events on current and daily schedules
 
 				this.$el.find("tbody").append(current_schedule_view.render().el);
 
@@ -52,9 +46,7 @@
 			},
 
 			refresh: function() {
-				//this.remove();
 				this.fetchSchedule(app.userEx.getDoctorId());	
-				console.log("refresh!");
 			},
 				
 			render: function(model) {
@@ -62,15 +54,15 @@
 				var day_time = model.get("schedule"),
 				    week = this.navigate.getWeek();
 					
-
 				this.$el.html(this.template());
 				
                  _.each(week,function(date,day){
-
-                        this.addSchedule({ doctor_id: model.get("doctor_id"),
-				    	day: date,
-				    	duration: model.get("doctor_duration"),
-				     	schedule: day_time[day]["start"] + " - " + day_time[day]["end"] });
+                        this.addSchedule({doctor_id: model.get("doctor_id"),
+				    					  day: date,
+				    					  duration: model.get("doctor_duration"),
+				     					  schedule: day_time[day]["start"] + 
+				     					  			" - " + 
+				     					  			day_time[day]["end"] });
                  },this)
 	
 				return this;
