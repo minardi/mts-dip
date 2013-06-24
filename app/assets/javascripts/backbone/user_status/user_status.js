@@ -13,7 +13,7 @@
       
       var user_id = attr;
 
-         this.url = '/user_statuses/'+ user_id +'/addmiss.json';
+         this.url = '/user_statuses/'+ user_id +'/addmiss';
 
          this.fetch();
 
@@ -22,7 +22,7 @@
     removeMissUrl: function(attr) {
       var user_id = attr;
 
-         this.url = '/user_statuses/'+ user_id +'/removemiss.json';
+         this.url = '/user_statuses/'+ user_id +'/removemiss';
 
          this.fetch();
     }
