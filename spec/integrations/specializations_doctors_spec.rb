@@ -41,11 +41,11 @@ describe "Specializations view", type: :feature do
 
     within "#specializations" do
       find("#spec_2").click
-      find("#spec_3").click
+      find("#spec_1").click
     end 
 
     page.should have_content "Bob"    
-    page.should have_content "Steve"
+    page.should have_content "Alex"
   
   end  
 

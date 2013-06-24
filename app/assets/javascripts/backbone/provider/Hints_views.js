@@ -13,9 +13,10 @@
         },
 
         showHint: function(attr) {
+
             var hintEl = attr["el"],
                 self = this;
-
+                
             this.$el.addClass("hint");
             this.$el.html(this.hint_template({message: attr["message"]}));
             $(hintEl).append(this.$el);
