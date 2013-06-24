@@ -20,7 +20,6 @@
         
         render : function(){
  
-            console.log('render')
             this.$el.empty().append(this.template(this.model.toJSON()));
 
             return this;

@@ -18,6 +18,7 @@
             app.userEx = new app.UserEx();
             mts.errorProvider = new app.errorProvider();
             mts.hintProvider = new app.hintProvider();
+            mts.userStatus = new app.UserStatusView();
                 
         },
                
@@ -70,9 +71,6 @@
             
             mts.weekly = mts.weekly ||
                             new app.WeeklyCollectionView({el : $('#weekly-table')});
-            
-            mts.userStatus = mts.userStatus || 
-                                 new app.UserStatusView();
             
             mts.dayTimelines = mts.dayTimelines ||   
                                       new app.DailySchedulesView({el:$("#daily_schedules")});

@@ -12,7 +12,6 @@
         
         events: {
             "click thead .weekly-table-day" : "daysSelect",
-            "click thead tr td:first-child" : "aaa"
         },
         
         initialize : function(){
@@ -53,10 +52,6 @@
 
             this.collection.turnUpStatement(this.statement[this.position], active_doctors);
 
-        },
-
-        aaa : function () {
-            console.log(this.statement, this.position);
         },
 
         selectTrigger : function(model, selected){

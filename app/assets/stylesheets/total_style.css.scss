@@ -79,11 +79,17 @@
         text-shadow: 0 1px 0 #ffffff;
         cursor:pointer;
 
-        &:active{
+
+    }
+
+    .nav-action-item{
+        cursor:pointer;
+
+        &:hover{
             background:#5ce0da;
         }
     }
-    
+
     .user-nav-action{
         cursor:pointer;
     }
