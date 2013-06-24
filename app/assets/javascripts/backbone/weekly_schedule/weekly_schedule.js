@@ -7,43 +7,36 @@ app.WeeklyModel = Backbone.Model.extend({
                 'sun' : {
                     'start' : "8:00",
                     'end' : "17:00",
-                    'date' : "01.01.2000"
                 },
 
                 'mon' : {
                     'start' : "8:00",
                     'end' : "17:00",
-                    'date' : "02.01.2000"
                 },
 
                 'tue' : {
                     'start' : "8:00",
                     'end' : "17:00",
-                    'date' : "03.01.2000"
                 },
 
                 'wed' : {
                     'start' : "8:00",
                     'end' : "17:00",
-                    'date' : "04.01.2000"
                 },
 
                 'thu' : {
                     'start' : "8:00",
                     'end' : "17:00",
-                    'date' : "05.01.2000"
                 },
 
                 'fri' : {
                     'start' : "8:00",
                     'end' : "17:00",
-                    'date' : "06.01.2000"
                 },
                 
                 'sat' : {
                     'start' : "8:00",
-                    'end' : "17:00",
-                    'date' : "07.01.2000"                   
+                    'end' : "17:00",               
                 }
             },
             doctor_id : 1,
@@ -51,7 +44,7 @@ app.WeeklyModel = Backbone.Model.extend({
             selected : false,
             doctor_duration : 0,
             start : '2000.01.01',
-            end : '2000.01.07'
+            end : '2000.01.07',
         },
         
         urlRoot : '/weekly_schedules',
@@ -61,36 +54,34 @@ app.WeeklyModel = Backbone.Model.extend({
             return (day) ? this.attributes.schedule[day]['selected'] : undefined; 
         },
 
-        setSelected : function(trigger){
-
-            if(trigger === true || trigger === false){
-                this.set({selected : trigger});
-            } else {
-                this.set({selected : (this.attributes.selected) ? false : true});
-            }
-            
-        },
-
-        isSelected : function() {
-            return this.attributes.selected;
-        },
-         
         dayTrigger : function(day, selected, silence){
             
             selected = (selected === true || selected === false) ? selected : ((this.isDay(day) === true) ? false : true);
             
             if(day){
-                this.attributes.schedule[day]['selected'] = selected;
                 
-                if(!silence){
-                    this.trigger('select:schedule_day', day, this.isDay(day));    
-                }
+                this.attributes.schedule[day]['selected'] = selected;
+
+                this.trigger('select:schedule_day', day, this.isDay(day), silence);    
+                
                               
             } else {
                 console.error('bad day value in weekly model');
             }
+         
+        },
+
+        setSelected : function(trigger){
+
+            trigger = (trigger === true || trigger === false) ? trigger : ( (this.isSelected ()) ? false : true); 
             
+            console.log(trigger, this.attributes.doctor_name);  
+            this.set({selected : trigger});
             
+        },
+
+        isSelected : function() {
+            return this.attributes.selected;
         },
 
         unselectDays : function () {
@@ -107,9 +98,40 @@ app.WeeklyModel = Backbone.Model.extend({
         },
 
         selectAll : function(day) {
-            if(this.isDay() === false){
+
+            if(this.isDay(day) === false){
                 this.dayTrigger(day, true);
+
             }
+        },
+
+        updateHandler : function(){
+
+            for(day in this.attributes.schedule){
+                this.dayTrigger(day, false, true);
+            }
+
+            this.off('sync');
+            this.trigger('schedule:update');    
+        },
+
+        updateByDoctorId : function(is_show) {
+
+            this.on('sync', this.updateHandler, this);
+
+            if(is_show){
+                this.on('sync', this.setSelected, this);    
+            }
+
+            this.switchUrl('getschedule');
+            this.fetch({data : {
+                                    id: this.attributes.doctor_id, 
+                                    date: this.current_date.dateTransFormat(true)
+                                }
+                        }
+            );
+            this.switchUrl();
+
         },
 
         switchUrl : function(url, data) {
@@ -137,14 +159,9 @@ app.WeeklyModel = Backbone.Model.extend({
 
 
         },
-        
-        scheduleStart : function(days){
-            
-            for(day in this.attributes.schedule){
-                this.attributes.schedule[day]['data'] = days[day];
-                //this.dayTrigger(day, false);
-            }
-                
+
+        isTheDoctor : function (doc_id) {
+            return this.attributes.doctor_id === doc_id;
         },
 
         getCurrent : function(doctor_id) {
@@ -152,11 +169,19 @@ app.WeeklyModel = Backbone.Model.extend({
              this.switchUrl('getduration', {doctor_id: doctor_id});
         },
 
-        validate: function(attrs) {
-            var errors = '';
-            errors += (attrs.doctor_id.constructor.name === 'Number') ? '' : "Please set doctor id";
+        dateValidate : function () {
+            
+            var result = true;
+                current_date = this.current_date.dateTransFormat(true);
+            if(this.attributes.start > current_date || current_date > this.attributes.end){
+                result = false;
+            }
 
-            return errors;
+            return result;
+        },
+
+        validate: function(attrs) {
+            //return (attrs.doctor_id.constructor.name === 'Number') ? true : "Please set doctor id";
         }
         
  });

@@ -5,14 +5,9 @@
         model : app.WeeklyModel,
         
         url : "/weekly_schedules",
-        
-        days : {},
-
-        active_doctors : [],
 
         removeSchedule : function(data) {
             var model = this.haveModel(data.id);
-            console.log(model, data.id)
                 if (model) {
                     model.setSelected(false); 
                 } else {
@@ -20,24 +15,45 @@
                 }
         },
         
+        dateValidate : function(direct) {
+            direct = (direct) ? 'right' : 'left';
+            this.each(
+                        function(model){
+                            if(!model.dateValidate()){
+                                model.updateByDoctorId(false);
+                            }
+                        },
+                        
+                        this
+                )
+
+        },
+
         addModelHandler : function(data) {
 
-            var model = this.getCurrentModel(data.id);
-            if(model) {
+            var model = this.haveModel(data.id);
 
+            if(model) {
                 model.setSelected(true); 
             } else {
-                this.getModel(data);
+                this.createModel(data)
             }
            
         },
-        
-        getCurrentModel : function () {
 
-        },
+        createModel : function(data) {
 
-        dateValidate : function(model) {
-            //if()
+            model = new this.model ({
+                        doctor_id : data.id,
+                        doctor_name : data.name,
+                        doctor_duration : data.duration,
+                    }
+            );
+
+            this.add(model);
+            model.current_date = this.current_date;
+            
+            model.updateByDoctorId(true);
         },
 
         haveModel : function (id){
@@ -48,30 +64,7 @@
                 console.warn('parametr id is not a Number');
             }
         },
-        
-        getModel : function(data) {
 
-            var model =  new this.model({
-                                            id : data.id,
-                                            doctor_name : data.name,
-                                            doctor_duration : data.duration,
-                                        }
-            );
-
-            this.add(model);
-            
-            model.on('sync', this.addModel, this);
-            model.on('error', this.errorHandler , this);
-
-            model.switchUrl('getschedule');
-                                
-            model.fetch({data : {id: data.id, date: this.dateConvert(this.days.wed)}});
-
-            model.switchUrl();
-        },
-
-
-        
         activeDoctors : function() {
             
             var collection = this.where({selected : true});
@@ -79,33 +72,90 @@
             return collection;
             
         },
-        
-        addModel : function(model) {
-            console.log(model)
-            model.off('sync');
-            model.off('error');
-            
-            model.scheduleStart(this.days);
-            
-            model.setSelected(true);
+
+        saveStatement : function (){
+            var statement = {},
+                doctors = this.activeDoctors(),
+                doc_id = 0; 
+
+            for(model in doctors) {
+
+                doc_id = doctors[model].get('doctor_id');
+                statement[doc_id] = {};
+
+                for(day in doctors[model].get('schedule')){
+                    if(doctors[model].isDay(day)){
+                        statement[doc_id][day] = true;    
+                    }
+                    
+                }
+
+            }
+
+            return statement;
         },
-        
+
+        rollUpStatement : function (statement) {
+
+            var doctors = this.activeDoctors(),
+                doc_id = 0,
+                model = 0;
+
+            for(model in doctors){
+                doc_id = doctors[model].get('doctor_id');
+
+                for (day in statement[doc_id]){
+                    doctors[model].dayTrigger(day, false, true);                    
+                }
+
+                doctors[model].setSelected(false);
+
+            }
+
+
+        },
+
+        turnUpStatement : function (statement, active_doctors){
+
+            var model = {},
+                doc_id = 0;
+
+            for(doc_id in statement){
+
+                model = _.find(active_doctors, function(model){ 
+                                                                return model.isTheDoctor(parseInt(doc_id))
+                                                            }
+                );
+                
+                if(model){
+                   
+                    model.setSelected(true);
+
+                    for(day in statement[doc_id]){
+                        model.dayTrigger(day, true, true); 
+                    }
+
+
+                }else {
+                    model = this.where({'doctor_id' : parseInt(doc_id)})[0];
+                    model.unselectDays();
+                    model.setSelected(false);
+                }
+
+            }
+
+            for(model in active_doctors){
+                if(!active_doctors[model].isSelected()){
+                    active_doctors[model].setSelected(true);    
+                }
+                
+            }
+        },
+
         switchUrl: function(id) {
             this.url = "/weekly_schedules/getbydoc/" + id;
         },
 
-        dateCompare : function(str, compare_str) {
-            compare_str = (compare_str) ? compare_str : this.current_date.dateTransFormat(true);
-            return (compare_str === str) ? true : false; 
-        },
-
-        dateConvert : function(str, format) {
-
-            format = (format) ? format : '-'; 
-            str = str.split(format);
-            return str[2] + format + str[1] + format + str[0];
-
-        }
         
     });
 
