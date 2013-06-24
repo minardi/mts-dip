@@ -51,17 +51,17 @@
     },
 
     changeStatusVisit: function() {
-       var current_doctor = 1;
+
 
        switch (this.model.get("status")) {
           
          case "visited":
-           this.model.set({status:"canceled"})
+           this.model.set({status:"canceled"});
            this.model.save();
            break;
 
          case "canceled": 
-           this.model.set({status:"default"})
+           this.model.set({status:"default"});
            this.model.save();
            break;
 
@@ -73,7 +73,6 @@
     },
 
     changeStatusMis: function() {
-      var current_doctor = 1;
 
       switch (this.model.get("status")) {
           

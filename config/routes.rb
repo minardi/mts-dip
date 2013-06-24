@@ -1,5 +1,7 @@
 MTSDip::Application.routes.draw do
 
+  get "test/index"
+
   # devise_for :admins
 
 
@@ -22,7 +24,8 @@ MTSDip::Application.routes.draw do
 
   get "main/home"
 
-  match "home/:arg" => "main#home"  
+  match "home/:arg" => "main#home"
+  match "test" => "test#index", :via => "get"   
 
   root :to => 'main#home'
 

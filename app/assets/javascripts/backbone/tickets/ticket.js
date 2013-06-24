@@ -13,6 +13,8 @@
     
       type: "sl-doc",
 
+      selector: "",
+
 	    doctor_name: ""
 
   })

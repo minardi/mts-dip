@@ -8,3 +8,5 @@
 //= require backbone/mts
 //= require helpers/config
 
+//= require jasmine-standalone-1.3.1/config
+
