@@ -3,14 +3,14 @@
     <div id="role_nav" class="navbar-inner user-navigate">
         <p class="brand">Hello, <%= name %> </p>
         
-        <ul class="nav">
-          <li id="home" class="active">
+        <ul class="nav" id="user-navigate">
+          <li id="home-action" class="user-nav-action active">
                 <p class="nav-action-name">
                     Home
                 </p>
             </li>
             
-            <li class="dropdown">
+            <li id="user-permiosions" class="user-nav-action dropdown">
                 <p class="dropdown-toggle nav-action-name" data-toggle="dropdown" >
                     Actions
                     
@@ -45,7 +45,7 @@
 
             </li>
         
-            <li id="exit">
+            <li class="user-nav-action" id="exit-action">
                 <p class="nav-action-name">
                     Exit
                 </p>

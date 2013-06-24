@@ -23,14 +23,14 @@
     nextWeek: function() {
 
       this.date.nextWeek();
-      this.callback.call(this.context);
+      this.callback.call(this.context, true);
 
     },
 
     prevWeek: function() {
       
       this.date.prevWeek();
-      this.callback.call(this.context);
+      this.callback.call(this.context, false);
     
     },
 

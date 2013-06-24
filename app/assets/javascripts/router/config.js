@@ -3,3 +3,4 @@
 //= require ./doctor-schedule_template
 //= require ./admin-panel_template
 //= require ./router_view
+//= require ./router

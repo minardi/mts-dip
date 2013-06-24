@@ -21,8 +21,8 @@
         },
 
         nav_events : {
-            "click #home" : "routHome",
-            "click #exit" : "userLogout"
+            "click #home-action" : "routHome",
+            "click #exit-action" : "userLogout"
         },
 
         permition_events : {
@@ -107,22 +107,34 @@
             );
         },
 
+        changeActive : function(action){
+            var list = this.$el.find('#user-navigate');
+
+            list.children('.active').removeClass('active');
+
+            list.find(action).addClass('active');
+        },
+
         routHome: function() {
             mts.router.navigate('home', {trigger:true});
+            this.changeActive('#home-action');
         },  
 
         routPrivateSchedule: function() {
     
             mts.router.navigate('my-private-schedule', {trigger:true});
+            this.changeActive('#user-permiosions');
         }, 
 
         routDoctorSchedule : function() {
     
             mts.router.navigate('my-doctor-schedule', {trigger:true});
+            this.changeActive('#user-permiosions');
         },
 
         routAdminPanel : function() {
             mts.router.navigate('admin', {trigger:true});
+            this.changeActive('#user-permiosions');
         },
 
         userLogout: function() {
