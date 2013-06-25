@@ -3,9 +3,9 @@
   app.UserModel = Backbone.Model.extend({
           
     defaults : {
-        email : 'x@xxxxx.xxx',
-        password : '123456',
-        name : 'Newuser',
+        email : '',
+        password : '',
+        name : '',
 
         login : false,
         role : {

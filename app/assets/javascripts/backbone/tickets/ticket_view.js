@@ -16,7 +16,7 @@
     initialize: function() {
       this.model.on('change', this.render, this);
 
-      Backbone.Mediator.sub('user_login', this.setEventsWithRight, this);
+      this.setEventsWithRight ();
       
       Backbone.Mediator.sub('user_logout', this.unsetEventsWithRight, this);
 

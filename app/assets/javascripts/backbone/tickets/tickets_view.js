@@ -16,11 +16,9 @@
       Backbone.Mediator.sub('ticket_added', this.createTicket, this);      
       Backbone.Mediator.sub('timeline_render', this.handlerTickets, this);
          
-   
-      
-      Backbone.Mediator.sub('user_login', this.getUserSchedule, this);
+      this.getUserSchedule ();
 
-      Backbone.Mediator.sub('user_login', this.enableEvents, this);
+      this.enableEvents ();
 
       Backbone.Mediator.sub('user_logout', this.disableEvents, this);
 
@@ -45,6 +43,7 @@
        } else {
           this.Tickets.fetchByAttr(attrs);
        };
+
 
     },
 
@@ -146,7 +145,7 @@
         for(day in week_schedule) {
             
             this.Tickets.fetchByAttr({
-                user_id : user_data['id'],
+                user_id : app.userEx.getDoctorId(),
                 data : week_schedule[day]
                 
             });

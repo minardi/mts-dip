@@ -10,16 +10,14 @@
 			"click": "specSelect"
 		},
 		
-		initialize: function() {
-		  console.log('spec initialize')          
+		initialize: function() {        
           Backbone.Mediator.sub("check_spec",this.checkSpec,this)
 		},
 
 
 
   		checkSpec: function(attr) {
-  		   if (this.model.get("id") != attr["id"]) return ;
-           console.log("specializations");  
+  		   if (this.model.get("id") != attr["id"]) return ;  
            this.$el.addClass("selected_spec");		   
   		   this.model.is_selected = true;
  
