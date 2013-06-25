@@ -6,7 +6,6 @@
     }
 
     function dateConvert(str, format) {
-        console.log(str)
         format = (format) ? format : '-'; 
         str = str.split(format);
         return str[2] + format + str[1] + format + str[0];

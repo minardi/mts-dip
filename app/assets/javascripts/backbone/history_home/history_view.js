@@ -48,8 +48,7 @@
           Backbone.Mediator.pub("check_spec",{
                                                id:spec_id
                                              });
-          console.log("check");
-
+          
       },this)
 
     },
@@ -60,7 +59,7 @@
       
         this.createUrl(); 
         this.navUrl();
-        //console.log(this.model.spec_ids);
+       
     },
 
     addSpec: function(attrs) {

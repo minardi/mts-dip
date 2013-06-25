@@ -60,8 +60,8 @@
             if(parseInt(tickets[num].get('doctor_id')) !== parseInt(attrs.doctor_id)) {
                 
                 if(tickets[num].get('time') === attrs['time']){
-                    console.error('you already have tickets on this time!');
-                    Backbone.Mediator.pub('error', 'you already have ticket on this time, check your schedule!');
+                  
+                    Backbone.Mediator.pub('warning', {message : 'you already have ticket on this time, check your schedule!'});
                     result = false
                 }
             }

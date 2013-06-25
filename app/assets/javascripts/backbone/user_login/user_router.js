@@ -40,18 +40,6 @@
     },
 
     showHome: function() {
-      //var ticketsView;
-
-      // if(ticketsView) {
-      //   return ticketsView;
-      // } else {
-      //  ticketsView = new TicketsView();
-
-      // }
-      // $('#tab_schedules').addClass("hidden");
-      // $('#week_user_tickets').addClass("hidden");
-      // $('#next-tickets').removeClass("hidden");
-      // $('#tab_schedules').addClass("hidden");
 
       $('#tab2').addClass("hidden");
       app.mts.ticketsView == null ? app.mts.ticketsView = new TicketsView() : app.mts.ticketsView;
@@ -65,17 +53,9 @@
       $('#tab1').addClass("hidden");
       $('#tab2').removeClass("hidden");
 
-      // app.mts.weekdays != null ? app.mts.weekdays : 
-      //                            app.mts.weekdays = new WeekDaysView({el : $('#week_user_tickets')});    
-      // app.mts.currentTimelines != null ?  app.mts.currentTimelines :
-      //                                     app.mts.currentTimelines= new CurrentSchedulesView({el:$("#current_schedules")});
-
-      //if (app.mts.weekdays == null) {
         app.mts.weekdays = (app.userEx.getRole() == "doctor") ? 
           new CurrentSchedulesView({el:$("#current_schedules")}) :
           new WeekDaysView({el : $('#week_user_tickets')});
-          console.log("hi");
-     // }
     }
 
   });
