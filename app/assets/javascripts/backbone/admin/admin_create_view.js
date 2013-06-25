@@ -44,14 +44,14 @@
 
 			this.model.on("save", this.removeEl, this);
 			this.model.on("error", this.modelError, this);
+			this.model.on("change:status", this.changeStatus, this);
 			this.specs.on("reset", function(list) {this.render(); list.each(this.addToSelect, this)}, this);
 			this.doctors.on("reset", function(list) {this.render(); list.each(this.addToSelect, this)}, this);
 			this.users.on("reset", function(list) {this.clearSelect("users"); list.each(this.addToSelect, this)}, this);
 		},
 
 		modelError: function(model, error) {
-			console.log(error);
-			Backbone.Mediator.pub("error", {el: $(".modal-body"), message: error}); 
+			Backbone.Mediator.pub("error", {el: $(".modal-footer"), message: error.responseText || error}); 
 		},
 
 		modelSave: function(model) {
@@ -74,7 +74,6 @@
 						  					  		 permition:{my_schedule: true, 
 						  					  		 			doctor_schedule: true} } });
 
-
 			mts.current_board.collection.add(model, {merge:true});
 
 			doc_user.save();
@@ -91,6 +90,7 @@
 		},
 
 		specsMode: function() {
+
 			this.template = this.specs_tpl;
 			this.creation = this.createSpec;
   		},
@@ -126,6 +126,7 @@
   		},
 
 		clearSelect: function(list) {
+
 			if (list === "users") $("#user_select_list").empty();
 				else $("#select_list").empty();
 		},
@@ -166,81 +167,89 @@
 		},
 
 		createSpec: function() {
-			this.model.set("name", $("#spec_name").val());
-			this.model.save({}, {success: this.modelSave});
+
+			this.model.save({name: $("#spec_name").val()}, {success: this.modelSave});
 		},
 
 		createDoctor: function() {
 
-			this.model.set({name: $("#doctor_name").val(),
-						    duration: $("[name='dur']:checked").val(),
-						    specialization_id: $("#select_list").val()});
+			var attrs = {name: $("#doctor_name").val(),
+						 duration: $("[name='dur']:checked").val(),
+						 specialization_id: $("#select_list").val()};
 							
 			if (this.model.isNew()) {
-				this.model.save({}, {success: this.userForDoctor});	
+				this.model.save(attrs, {success: this.userForDoctor});	
 			} else {
-				this.model.save({}, {success: this.modelSave});
+				this.model.save(attrs, {success: this.modelSave});
 			}
 
 		},
 
 		createSchedule: function() {
-			var schedule = {
-					sun: {}, mon: {}, tue: {}, wed: {}, thu: {}, fri: {}, sat: {}
-				};
 
-			_.each(schedule, function(i, day, week) {
+			var attrs = {doctor_id: $("#select_list").val(),
+						 start: $("#schedule_start").val(),
+						 end: $("#schedule_end").val(),
+						 schedule: {
+							sun: {}, mon: {}, tue: {}, wed: {}, thu: {}, fri: {}, sat: {}
+						 } };
+
+			_.each(attrs["schedule"], function(i, day, week) {
 				week[day]["start"] = $("#" + day + "-start").val(); 
 				week[day]["end"] = $("#" + day + "-end").val();
 			});
 
-			this.model.set({schedule: schedule, 
-							doctor_id: $("#select_list").val(),
-							start: $("#schedule_start").val(),
-							end: $("#schedule_end").val()});
-
-			this.model.save({}, {success: this.scheduleSave});
+			this.model.save(attrs, {success: this.scheduleSave});
 		},
 
 		createUser: function() {
-			var role = $("[name='role']:checked").val();
 
-			this.model.set({name: $("#user_name").val(), 
-							email: $("#user_email").val(),
-							password: $("#user_password").val(),
-							role: {key: role,
-								   permition:{my_schedule:true} } });
+			var role = $("[name='role']:checked").val(),
+				attrs = {name: $("#user_name").val(), 
+						 email: $("#user_email").val(),
+						 password: $("#user_password").val(),
+						 role: {key: role,
+								permition:{my_schedule:true} } };
 
 			if (role === "doctor") {
-  				this.model.set({role: {key: role, 
-  									   doctor_id: $("#select_list").val(),
-  									   permition:{my_schedule: true, 
-  									   			  doctor_schedule: true} } });
+  				attrs["role"] = {key: role, 
+  								 doctor_id: $("#select_list").val(),
+  								 permition:{my_schedule: true, 
+  									   	    doctor_schedule: true} };
   			}
 
   			if (role === "admin") {
-  				this.model.set({role: {key: "admin", 
-  									   permition: {admin_panel: true, 	
-  												   my_schedule: true} } });
+  				attrs["role"] = {key: "admin", 
+  								 permition: {admin_panel: true, 	
+  											 my_schedule: true} };
   			}
 
-			this.model.save({}, {success: this.modelSave});
-
+			this.model.save(attrs, {success: this.modelSave});
 		},
 
 		createTicket: function() {
-			var status = $("[name='ticket_status']:checked").val();
 
-			this.model.set({doctor_id: +$("#select_list").val(),
-							user_id: +$("#user_select_list").val(),
-							status: status,
-							data: $("#ticket_day").val() + "-" + 
-								  $("#ticket_month").val() + "-" + 
-								  $("#ticket_year").val(),
-							time: $("#ticket_hours").val() + ":" + 
-								  $("#ticket_minutes").val() });
+			var attrs = {doctor_id: +$("#select_list").val(),
+						 user_id: +$("#user_select_list").val(),
+						 status: $("[name='ticket_status']:checked").val(),
+						 data: $("#ticket_day").val() + "-" + 
+						       $("#ticket_month").val() + "-" + 
+							   $("#ticket_year").val(),
+						 time: $("#ticket_hours").val() + ":" + 
+							   $("#ticket_minutes").val() };
 
-			this.model.save({}, {success: this.modelSave});
+			this.model.save(attrs, {success: this.modelSave});
+		},
+
+		changeStatus: function(model) {
+
+			if ((model.get("status") === "missed") && (model.previous("status") !== "missed")) {
+				Backbone.Mediator.pub("user_miss", model.get("user_id"));
+			}
+
+			if ((model.get("status") !== "missed") && (model.previous("status") === "missed")) {
+				Backbone.Mediator.pub("remove_user_miss", model.get("user_id"));
+			}
 		},
 
 		removeEl: function() {

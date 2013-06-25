@@ -7,13 +7,13 @@
 		template: JST["backbone/daily_schedule/daily_schedule_template"],
 		
 		events: {
-      		"click .worktime" : "timelineSelect",	
+      		"click .worktime" : "timelineSelect"
     	},
 
     	initialize: function() {
-
+			
     		this.model.on("change :visible", this.deleteSchedule, this);
-
+	
     	},
 
     	timelineSelect: function(event) {
@@ -34,7 +34,7 @@
 		},
 
 		deleteSchedule: function() {
-			delete this.model;
+			this.undelegateEvents();
 			this.remove();
 		},
 
@@ -78,7 +78,6 @@
 				parseInt($("#current_schedules").css("width")) * 0.9 - 2;
 
 			width = (((((tr_width - amount) / +amount)) * 100) / tr_width).toFixed(5) + "%";
-			//width = (((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(3) + "px";
 
 			return { duration: duration,
 					 date: date,
@@ -94,7 +93,13 @@
 			var timeline = document.createElement("div"),
 				time = t_attrs.date.timeTransFormat().slice(1);
 
-			$(timeline).attr("id", this.options.ticketType + doctor_id + "_" + t_attrs.date.dateTransFormat() + "_t" + time);
+			$(timeline).attr("id", this.options.ticketType + 
+								   doctor_id + 
+								   "_" + 
+								   t_attrs.date.dateTransFormat() + 
+								   "_t" +
+								   time);
+
 			$(timeline).css("width", width).addClass(t_attrs.cssclass);
 
 			if ( (time >= t_attrs.start) && (time < t_attrs.end) ) {
@@ -107,8 +112,6 @@
 		render: function() {
 
 			var i,
-				current_time,
-				timeline,
 				t_attrs = this.getTimelineAttrs(this.model);
 
 			this.$el.html(this.template({ doctor_name: this.model.get("doctor_name"), 

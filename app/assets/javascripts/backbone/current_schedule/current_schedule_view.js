@@ -19,7 +19,7 @@
 
 			var duration = model.get("duration"),
 				date = new app.DateEx(),
-				amount = 0,
+				amount = 540 / duration,
 				tr_width,
 				cssclass = "timeline",
 				start = this.timeFix(model.get("schedule_start")),
@@ -27,24 +27,8 @@
 
 				date.idToDate(model.get("day"), "t0800");
 
-			switch (duration) {
-				case 15:
-					amount = 36;
-					break;
-				case 30:
-					amount = 18;
-					break;
-				case 45:
-					amount = 12;
-					break;
-				case 60:
-					amount = 9;
-					break;
-			}
-
 			tr_width = parseInt($("#current_schedules").css("width")) * 0.9 - 2;
 			width = (((((tr_width - amount) / +amount)) * 100) / tr_width).toFixed(5) + "%";
-			//width = (((parseInt($("#daily_schedules").css("width")) * 0.9 - 2) - amount) / +amount).toFixed(3) + "px";
 
 			return {duration: duration,
 					date: date,
