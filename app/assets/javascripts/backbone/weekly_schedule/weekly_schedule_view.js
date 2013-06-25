@@ -3,6 +3,8 @@
 	app.WeeklyView = Backbone.View.extend({
         
         tagName : 'tr',
+
+        className : 'hidden',
         
         template :  JST["backbone/weekly_schedule/weekly_schedule_template"],
         
@@ -10,8 +12,10 @@
             this.model.on('schedule:update', this.render, this);
             this.model.on('select:schedule_day', this.activeTrigger, this);
             this.model.on('select:schedule_day', this.publishTrigger, this);
-            this.model.on('change:selected', this.selfRemove, this);   
+            this.model.on('change:selected', this.showTrigger, this);   
 
+            this.model.updateByDoctorId();
+            this.model.setSelected(true);
         },
         
         events : {
@@ -19,16 +23,18 @@
         },
         
         render : function(){
- 
+
             this.$el.empty().append(this.template(this.model.toJSON()));
+
+            this.renderActive();
 
             return this;
         },
         
         activeTrigger : function(day, trigger, silence){
-            console.log(day, trigger, silence);
+
             elem = this.$el.find('#doc'+ this.model.get('doctor_id') + '-' + day);
-            console.log(elem);
+
             (!trigger) ? $(elem).removeClass('active') : $(elem).addClass('active');
                    
         },
@@ -38,6 +44,19 @@
             target = $(e.target);
             
             this.model.dayTrigger(target.attr('id').split('-')[1]);
+        },
+
+        renderActive : function(){
+            var day = '';
+            
+            for(day in this.model.get('schedule')){
+                
+                if(this.model.isDay(day)){
+
+                    this.$el.find('#doc'+ this.model.get('doctor_id') + '-' + day).addClass('active');
+                }
+
+            }
         },
         
         publishTrigger : function(day, trigger, silence) {
@@ -74,16 +93,19 @@
         
 
         
-        selfRemove : function (obj, selected) {
+        showTrigger : function (obj, selected) {
+
 
             if(selected === false){
                 
                 this.model.unselectDays();
-                this.remove();
+
+                this.$el.addClass('hidden');
                 
-                this.model.off('select:schedule_day');
-                this.model.off('change:selected');
+            } else {
                 
+                this.$el.removeClass('hidden');
+
             }
             
         }

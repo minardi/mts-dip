@@ -45,8 +45,21 @@ app.WeeklyModel = Backbone.Model.extend({
             doctor_duration : 0,
             start : '2000.01.01',
             end : '2000.01.07',
+            
         },
         
+        initialize : function (){
+            this.days_selected = {
+                                    'sun' : false,
+                                    'mon' : false,
+                                    'tue' : false,
+                                    'wed' : false,
+                                    'thu' : false,
+                                    'fri' : false,
+                                    'sat' : false  
+                                };
+        },
+
         urlRoot : '/weekly_schedules',
 
         isDay : function(day){
@@ -55,11 +68,9 @@ app.WeeklyModel = Backbone.Model.extend({
 
             if(day){
 
-                select_value = this.attributes.schedule[day]['selected'];
+                select_value = this.days_selected[day];
                 select_value = (select_value !== undefined) ? select_value : false;
                        
-            } else {
-                console('param day is not defined');
             }
 
             return (day) ? select_value : undefined;
@@ -71,13 +82,11 @@ app.WeeklyModel = Backbone.Model.extend({
             
             if(day){
                 
-                this.attributes.schedule[day]['selected'] = selected;
+                this.days_selected[day] = selected;
 
                 this.trigger('select:schedule_day', day, this.isDay(day), silence);    
                 
                               
-            } else {
-                console.error('bad day value in weekly model');
             }
          
         },
@@ -85,8 +94,7 @@ app.WeeklyModel = Backbone.Model.extend({
         setSelected : function(trigger){
 
             trigger = (trigger === true || trigger === false) ? trigger : ( (this.isSelected ()) ? false : true); 
-            
-            console.log(trigger, this.attributes.doctor_name);  
+
             this.set({selected : trigger});
             
         },
@@ -96,7 +104,8 @@ app.WeeklyModel = Backbone.Model.extend({
         },
 
         unselectDays : function () {
-            
+            var day = '';
+
             for (day in this.attributes.schedule){
                
                 if(this.isDay(day) === true){
@@ -112,7 +121,6 @@ app.WeeklyModel = Backbone.Model.extend({
 
             if(this.isDay(day) === false){
                 this.dayTrigger(day, true);
-
             }
         },
 
@@ -120,17 +128,15 @@ app.WeeklyModel = Backbone.Model.extend({
 
             this.off('sync');
             this.trigger('schedule:update');    
+        
         },
 
         updateByDoctorId : function(is_show) {
 
             this.on('sync', this.updateHandler, this);
 
-            if(is_show){
-                this.on('sync', this.setSelected, this);    
-            }
-
             this.switchUrl('getschedule');
+            
             this.fetch({
                             data : {
                                         id: this.attributes.doctor_id, 
@@ -138,6 +144,7 @@ app.WeeklyModel = Backbone.Model.extend({
                                     }
                         }
             );
+            
             this.switchUrl();
 
         },
@@ -179,18 +186,10 @@ app.WeeklyModel = Backbone.Model.extend({
 
         dateValidate : function () {
             
-            var result = true;
-                current_date = this.current_date.dateTransFormat(true);
-            if(this.attributes.start > current_date || current_date > this.attributes.end){
-                result = false;
-            }
+            var current_date = this.current_date.dateTransFormat(true);
 
-            return result;
+            return (this.attributes.start > current_date || current_date > this.attributes.end) ? false : true;
         },
-
-        validate: function(attrs) {
-            //return (attrs.doctor_id.constructor.name === 'Number') ? true : "Please set doctor id";
-        }
         
  });
  

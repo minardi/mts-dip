@@ -42,7 +42,6 @@ var UserEx = (function(app, mts) {
         var instance = this;
         
         app.UserEx = function() {
-            console.log("I've been already created!");
             return instance;
         }
         

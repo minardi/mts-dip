@@ -1,0 +1,21 @@
+
+<thead class="weekly-table-head">
+        <tr>
+            <td class="weekly-top-info">
+                Days / Doctor name  
+            </td>
+            <%for(day in schedule) {%>
+                
+                <td class="weekly-table-day text-info" id="weekly-<%= day %>">
+                    <p class="day-name">
+                         <%= day %>
+                    </p>
+                    
+                    <p class="day-date">
+                        <%= schedule[day] %>
+                    </p>
+                </td>
+            
+            <%}%>
+        </tr>
+    </thead>

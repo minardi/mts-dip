@@ -6,17 +6,8 @@
         
         url : "/weekly_schedules",
 
-        removeSchedule : function(data) {
-            var model = this.haveModel(data.id);
-                if (model) {
-                    model.setSelected(false); 
-                } else {
-                    console.warn('something wrong with schedule remove function');
-                }
-        },
-        
-        dateValidate : function(direct) {
-            direct = (direct) ? 'right' : 'left';
+        dateValidate : function() {
+
             this.each(
                         function(model){
                             if(!model.dateValidate()){
@@ -27,18 +18,6 @@
                         this
                 )
 
-        },
-
-        addModelHandler : function(data) {
-
-            var model = this.haveModel(data.id);
-
-            if(model) {
-                model.setSelected(true); 
-            } else {
-                this.createModel(data)
-            }
-           
         },
 
         createModel : function(data) {
@@ -52,16 +31,14 @@
 
             this.add(model);
             model.current_date = this.current_date;
-            
-            model.updateByDoctorId(true);
+
+            return model;
         },
 
         haveModel : function (id){
 
             if(id.constructor.name === 'Number'){ 
                 return (this.where({doctor_id : id}).length === 0) ? false : this.where({doctor_id : id})[0];
-            } else {
-                console.warn('parametr id is not a Number');
             }
         },
 
@@ -76,7 +53,9 @@
         saveStatement : function (){
             var statement = {},
                 doctors = this.activeDoctors(),
-                doc_id = 0; 
+                doc_id = 0,
+                model = '',
+                day = ''; 
 
             for(model in doctors) {
 
@@ -85,7 +64,7 @@
 
                 for(day in doctors[model].get('schedule')){
                     if(doctors[model].isDay(day)){
-                        statement[doc_id][day] = true;    
+                        statement[doc_id][day] = this.current_date.week_days[day];    
                     }
                     
                 }
@@ -99,7 +78,8 @@
 
             var doctors = this.activeDoctors(),
                 doc_id = 0,
-                model = 0;
+                model = 0,
+                day = '';
 
             for(model in doctors){
                 doc_id = doctors[model].get('doctor_id');
@@ -118,7 +98,8 @@
         turnUpStatement : function (statement, active_doctors){
 
             var model = {},
-                doc_id = 0;
+                doc_id = 0,
+                day = '';
 
             for(doc_id in statement){
 
@@ -136,7 +117,7 @@
                     }
 
 
-                }else {
+                } else {
                     model = this.where({'doctor_id' : parseInt(doc_id)})[0];
                     model.unselectDays();
                     model.setSelected(false);

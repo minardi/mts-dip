@@ -4,7 +4,7 @@
         
         template : JST["backbone/weekly_schedule/weekly_schedules_template"],
         
-        coll_template :  JST["backbone/weekly_schedule/weekly_schedule_collTemplate"],
+        head_template :  JST["backbone/weekly_schedule/weekly_schedules_head-template"],
         
         position : 0,
 
@@ -18,10 +18,10 @@
             
             this.collection = new app.WeeklyCollection();
                         
-            Backbone.Mediator.sub('doctor_selected', this.collection.addModelHandler, this.collection);
-            Backbone.Mediator.sub('doctor_unselected', this.collection.removeSchedule, this.collection);
+            Backbone.Mediator.sub('doctor_selected', this.addModelHandler, this);
+            Backbone.Mediator.sub('doctor_unselected', this.removeSchedule, this);
             
-            this.collection.on('change:selected', this.selectTrigger, this);
+            this.collection.on('change:selected', this.isShow, this);
             this.collection.on('weekly_error', this.throwError, this);
 
             this.navigate = new app.NavigateWeek(this.navigateHandler, this);
@@ -31,49 +31,82 @@
             this.collection.current_date.updateWeek();
             
             this.render();
-            this.$el.append(this.navigate.el);
+            
         },
 
-        navigateHandler : function(is_next) {
+        navigateHandler : function(direct) {
             
             var active_doctors = this.collection.activeDoctors();
 
             this.statement[this.position] = this.collection.saveStatement();
-            
+
             this.collection.rollUpStatement(this.statement[this.position]);
 
-            this.position += (is_next) ? 1 : (-1);
+            this.position += (direct) ? 1 : (-1);
             
-            this.render();
+            this.renderHead();
             this.delegateEvents(this.events);
 
             this.navigate.date.updateWeek();
-            this.collection.dateValidate(is_next);
+            this.collection.dateValidate();
 
             this.collection.turnUpStatement(this.statement[this.position], active_doctors);
 
         },
 
-        selectTrigger : function(model, selected){
-            if(selected === true) {
-                this.renderSchedule(model);
+        removeSchedule : function(data) {
+            var model = this.collection.haveModel(data.id),
+                position = 0,
+                doctor_statement = {},
+                day = '';
+
+            if (model) {
+                model.setSelected(false); 
             } 
-            
-            this.isShow();
+
+            for(position in this.statement){ 
+                
+                if(parseInt(position) === this.position) {
+                    continue;
+                }
+
+                doctor_statement = this.statement[position][data.id];
+
+                if(doctor_statement !== undefined) {
+                    for(day in doctor_statement){
+
+                        Backbone.Mediator.pub('weekly_unselectItem', 
+                            {
+                                id : data.id,
+                                day : doctor_statement[day]                            
+                            }
+                        );
+                    }
+
+                    delete this.statement[position][data.id];
+                }
+            }
+
         },
-
-        renderSchedule : function (model){
-             
-            var view = {};
         
-            view = new WeeklyView({model : model});
-            this.$el.children('table').append(view.render().$el);
 
+        addModelHandler : function(data) {
+
+            var model = this.collection.haveModel(data.id)
+                view = {};
+
+            if(model) {
+                model.setSelected(true); 
+            } else {
+               view = new app.WeeklyView({model : this.collection.createModel(data)});
+               this.$el.children('table').append(view.$el);
+            }
+           
         },
         
         getDate : function() {
             
-            return this.navigate.date.getCurrentWeek({"transport":false});
+            return this.navigate.date.getCurrentWeek({'transport' : false});
             
         },  
 
@@ -89,12 +122,17 @@
             }
 
         },
+
+        renderHead : function() {
+            this.$el.find('.weekly-table-head').remove();
+            this.$el.children('table').prepend(this.head_template({schedule : this.getDate()}))
+        },
         
         render : function() {
             
-            this.$el.children('table').remove();
-            this.$el.prepend(this.template({schedule : this.getDate()}));
-
+            this.$el.prepend(this.template());
+            this.renderHead();
+            this.$el.append(this.navigate.el);
             return this;
 
         },
@@ -121,8 +159,6 @@
                     message : (data.text) ? data.text : 'internal error '
                 }
             );
-            
-            console.warn(data.text, data.type);
             
         }
         

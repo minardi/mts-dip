@@ -42,9 +42,11 @@
             var user_email = this.$el.find('input[type=text]').val(),
                 user_password = this.$el.find('input[type=password]').val();
             
-            this.user = new app.UserModel({ email: user_email,
+            this.user = new app.UserModel({ 
+                                            email: user_email,
                                             password: user_password
-                                        });
+                                          }
+            );
  
             this.user.on('sync', this.checkLogin, this);
             this.user.loginUrl();
@@ -52,13 +54,13 @@
         },
 
         checkLogin: function() {
-            //add check user role before login and show message of block
-            if (this.user.get('role') == 'blocked') {
+
+            if (this.user.get('role') === 'blocked') {
 
                 Backbone.Mediator.pub("error", {el:$('#btn_login'), message:"Your account was BLOCKED! You have more than three missed reception!"});
 
             } else {
-                // check: user come in or not
+
                 if(this.user.get('login')) {    
                     this.routHome();
                     Backbone.Mediator.pub('user_login', 
@@ -101,9 +103,10 @@
 
         renderNavigate : function() {
             this.$el.html(this.inrole_template({
-                                                name: this.user.get('name'),
-                                                permition : this.user.get('role')['permition']
-                                            })
+                                                    name: this.user.get('name'),
+                                                    permition : this.user.get('role')['permition']
+                                                }
+                                )
             );
         },
 
